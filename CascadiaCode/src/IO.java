@@ -1,42 +1,81 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class IO {
+public class IO
+{
 
     String participants;
     int participantsInt;
     ArrayList<String> playerNames;
 
-    public static String takeInput(){
+    public static String takeInput()
+    {
         Scanner in =new Scanner(System.in);
         String input=in.nextLine();
         return makeLowerCase(input);
     }
 
-    public static String makeLowerCase(String str){
+    public static String makeLowerCase(String str)
+    {
         return str.toLowerCase();
     }
 
-    public void welcomeMessage(){
+    public void welcomeMessage()
+    {
         System.out.println("Welcome to Cascadia! Let's start the game!");
     }
 
-    public void numberOfPlayers(){
+    public void numberOfPlayers()
+    {
         System.out.println("How many players are going to play? (between 2 and 4)");
         participants=takeInput();
         participantsInt=Integer.parseInt(participants);
-        if(participantsInt<2 || participantsInt>4){
+        if(participantsInt<2 || participantsInt>4)
+        {
             System.out.println("Sorry, the number of players has to be between 2 and 4, try again");
             numberOfPlayers();
         }
-        else{
+        else
+        {
             System.out.println(participants+ " players, great!");
         }
     }
+    public static void starterTiles()
+    {
 
-    public static void main(String[] args) {
-        IO newGame = new IO();
-        newGame.welcomeMessage();
-        newGame.numberOfPlayers();
+        System.out.println(DisplayColour.BLACK+"\t\t\t* * * * * * * *");
+        System.out.println("\t\t\t*\t\t\t  *");
+        System.out.println("\t\t\t*\t\t\t  *");
+        System.out.println("\t\t\t*\t\t\t  *");
+        System.out.println("\t\t\t* * * * * * * *");
+        //////////
+        System.out.print("\t* * * * * * * *\t* * * * * * * *\n");
+        System.out.print("\t*\t\t\t  *\t*\t\t\t  *\n");
+        System.out.print("\t*\t\t\t  *\t*\t\t\t  *\n");
+        System.out.print("\t*\t\t\t  *\t*\t\t\t  *\n");
+        System.out.print("\t* * * * * * * *\t* * * * * * * *");
+
+        ////////
+
+    }
+    public void makeTile()
+    {
+
+        System.out.println("\t\t\t\t* * * * * * * *");
+        System.out.println("\t\t\t\t*\t\t\t  *");
+        System.out.println("\t\t\t\t*\t\t\t  *");
+        System.out.println("\t\t\t\t*\t\t\t  *");
+        System.out.println("\t\t\t\t* * * * * * * *");
+    }
+
+
+
+    public static void main(String[] args)
+    {
+        //IO newGame = new IO();
+        //newGame.welcomeMessage();
+        //newGame.numberOfPlayers();
+        starterTiles();
     }
 }
