@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class IO {
 
     String participants;
     int participantsInt;
+    ArrayList<String> playerNames;
 
     public static String takeInput(){
         Scanner in =new Scanner(System.in);
