@@ -88,6 +88,7 @@ public class IOcascadia {
         return rand.nextInt(upperBound);
     }
 
+
     public static void main(String[] args) {
         IOcascadia newGame = new IOcascadia();
         newGame.welcomeMessage();
