@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class IO {
+public class IOcascadia {
 
     String participants;
     int participantsInt;
@@ -89,7 +89,7 @@ public class IO {
     }
 
     public static void main(String[] args) {
-        IO newGame = new IO();
+        IOcascadia newGame = new IOcascadia();
         newGame.welcomeMessage();
         newGame.numberOfPlayers();
         newGame.playerNames();
