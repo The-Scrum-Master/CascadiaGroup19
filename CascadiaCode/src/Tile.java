@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Tile {
-    public enum tileType {
+    public enum tileType { //types of tiles available to make
         NORMAL,
         SOLO,
         START,
@@ -18,9 +18,7 @@ public class Tile {
         ArrayList<Wildlife> slots = new ArrayList<>();
         ArrayList<Habitat> habitats = new ArrayList<>();
         boolean Played = false;
-    }
-    public void populateTile() {
-        if (this.type == tileType.NORMAL) {
+        if (this.type == tileType.NORMAL) { //creates a two biome tile with either 3 or 2 slots for tokens
             this.habitats.add(randomHabitat());
             this.habitats.add(randomHabitat());
             if (randomNumberGenerator(1) == 0) {
@@ -31,16 +29,17 @@ public class Tile {
                 this.slots.add(randomSlot());
                 this.slots.add(randomSlot());
             }
-        } else if (this.type == tileType.SOLO) {
+        } else if (this.type == tileType.SOLO) { // creates a solo-tile with one biome and one token slot
             this.habitats.add(randomHabitat());
             this.slots.add(randomSlot());
-        } else if (this.type == tileType.START) {
+        } else if (this.type == tileType.START) { // still need to manually put in
             //need to fill
         } else {
             throw new IllegalArgumentException("not a valid type of tile");
         }
     }
-    public Habitat randomHabitat(){
+
+    public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
         switch (randomNumberGenerator(5)){
             case 0:
                 return Habitat.RIVER;
@@ -57,7 +56,7 @@ public class Tile {
         }
     }
     public Wildlife randomSlot(){
-        switch (randomNumberGenerator(5)){
+        switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
             case 0:
                 return Wildlife.HAWK;
             case 1:
@@ -73,7 +72,7 @@ public class Tile {
         }
     }
 
-    public tileType getType() {
+    public tileType getType() { // accesssor and getter methods
         return this.type;
     }
 
@@ -97,20 +96,10 @@ public class Tile {
     }
 
 
-    public String printHabitat(ArrayList<Habitat> arrayList) {
-        String total = null;
-        String strLine;
-        for(int i = 0; i < arrayList.size(); i++) {
-            strLine = "Index " + i + " contains " + arrayList.get(i);
-            total.concat( "\n" + strLine);
-        }
-        return total;
-    }
 
     @Override
     public String toString() {
-       String h = printHabitat(getHabitats());
-        return "Tile{" + h +
+        return "Tile{" +
                 "\n type=" + type +
                 ", Played=" + Played +
                 '}';
