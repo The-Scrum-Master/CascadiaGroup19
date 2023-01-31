@@ -5,7 +5,7 @@ public class IO {
 
     String participants;
     int participantsInt;
-    ArrayList<String> playerNames;
+    ArrayList<String> playerNamesTest;
 
     public static String takeInput(){
         Scanner in =new Scanner(System.in);
