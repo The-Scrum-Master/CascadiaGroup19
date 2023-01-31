@@ -7,8 +7,8 @@ public class Tile {
         SOLO,
         START,
     }
-    private ArrayList<Wildlife> slots;
-    private ArrayList<Habitat> habitats;
+    private ArrayList<Wildlife> slots = new ArrayList<>();
+    private ArrayList<Habitat> habitats = new ArrayList<>();
 
     private tileType type;
     private boolean Played;
@@ -110,15 +110,16 @@ public class Tile {
         }
         return total;
     }
+*/
 
-    public String printSlots(ArrayList<Wildlife> arrayList) {
-        String total = null;
-        String strLine;
-        for(int i = 0; i < arrayList.size(); i++) {
-            strLine = "Index " + i + " contains " + arrayList.get(i);
-            total = total + "\n" + strLine;
-        }
-        return total;
-    }*/
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "slots=" + slots +
+                ", habitats=" + habitats +
+                ", type=" + type +
+                ", Played=" + Played +
+                '}';
+    }
 }
 
