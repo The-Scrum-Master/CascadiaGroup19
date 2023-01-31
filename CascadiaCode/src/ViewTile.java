@@ -4,14 +4,15 @@ public class ViewTile {
     public void starterTiles()
     {
         topTileForStarterTile();
-        //////////
-        System.out.print("   * * * * * * * * * * * * * * * *\n");
+        bottomTilesForStarterTile();
+
+        /*System.out.print("   * * * * * * * * * * * * * * * *\n");
         System.out.print("   *             * *             *\n");
         System.out.print("   *             * *             *\n");
         System.out.print("   *             * *             *\n");
         //System.out.print(DisplayColour.RED + totalWidthForInitialTile() + DisplayColour.RESET + DisplayColour.BLUE + totalWidthForInitialTile() + DisplayColour.RESET);
         //System.out.print(totalWidthForInitialBottomTile()+totalWidthForInitialBottomTile());
-        System.out.print("   * * * * * * * * * * * * * * * *\n");
+        System.out.print("   * * * * * * * * * * * * * * * *\n");*/
 
     }
     public void topTileForStarterTile()
@@ -23,8 +24,15 @@ public class ViewTile {
         System.out.println("  "+ DisplayColour.RED + totalWidthForInitialUpperTile() + DisplayColour.RESET);
     }
 
+    public void bottomTilesForStarterTile()
+    {
+        System.out.println(totalWidthForInitialBottomTile());
+        System.out.println(totalHeightForInitialBottomTile());
+        System.out.println(totalHeightForInitialBottomTile());
+        System.out.println(totalHeightForInitialBottomTile());
+        System.out.println(totalWidthForInitialBottomTile());
 
-
+    }
     public String totalWidth(){
         return "* * * * * * * *";
     }
@@ -34,11 +42,12 @@ public class ViewTile {
     public String totalWidthForInitialUpperTile(){
         return "         * * * * * * * *";
     }
-    public String totalHeightForInitialUpperTile(){
-        return "         *           *";
-    }
     public String totalWidthForInitialBottomTile(){
-        return DisplayColour.RED + "   * * * * * * * *" + DisplayColour.RESET;
+        return "   * * * * * * * * * * * * * * * *";
+        //return "\t* * * * * * * *";
+    }
+    public String totalHeightForInitialBottomTile(){
+        return "   *             * *             *";
         //return "\t* * * * * * * *";
     }
 
@@ -73,5 +82,18 @@ public class ViewTile {
         for(int i=0; i<whiteSpaces; i++){
             System.out.print(" ");
         } System.out.println(totalWidth() + DisplayColour.RESET);
+    }
+
+    public static void main(String[] args)
+    {
+        ViewTile a = new ViewTile();
+        //IO newGame = new IO();
+        //newGame.welcomeMessage();
+        //newGame.numberOfPlayers();
+        a.starterTiles();
+        //System.out.println(DisplayColour.RED + "This text is red!" );
+        System.out.println();
+        System.out.println(a.makeSingleTile());
+        a.finalPrint();
     }
 }
