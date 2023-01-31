@@ -34,6 +34,7 @@ public class IO {
         }
     }
 
+
     public static void main(String[] args) {
         IO newGame = new IO();
         newGame.welcomeMessage();
