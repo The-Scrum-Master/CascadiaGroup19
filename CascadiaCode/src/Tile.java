@@ -18,8 +18,6 @@ public class Tile {
         ArrayList<Wildlife> slots = new ArrayList<>();
         ArrayList<Habitat> habitats = new ArrayList<>();
         boolean Played = false;
-    }
-    public void populateTile() {
         if (this.type == tileType.NORMAL) {
             this.habitats.add(randomHabitat());
             this.habitats.add(randomHabitat());
@@ -40,6 +38,7 @@ public class Tile {
             throw new IllegalArgumentException("not a valid type of tile");
         }
     }
+
     public Habitat randomHabitat(){
         switch (randomNumberGenerator(5)){
             case 0:
@@ -97,20 +96,10 @@ public class Tile {
     }
 
 
-    public String printHabitat(ArrayList<Habitat> arrayList) {
-        String total = null;
-        String strLine;
-        for(int i = 0; i < arrayList.size(); i++) {
-            strLine = "Index " + i + " contains " + arrayList.get(i);
-            total.concat( "\n" + strLine);
-        }
-        return total;
-    }
 
     @Override
     public String toString() {
-       String h = printHabitat(getHabitats());
-        return "Tile{" + h +
+        return "Tile{" +
                 "\n type=" + type +
                 ", Played=" + Played +
                 '}';
