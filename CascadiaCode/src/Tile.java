@@ -7,10 +7,10 @@ public class Tile {
         SOLO,
         START,
     }
-    private ArrayList<Wildlife> slots = new ArrayList<>();
-    private ArrayList<Habitat> habitats = new ArrayList<>();
+    private final ArrayList<Wildlife> slots = new ArrayList<>();
+    private final ArrayList<Habitat> habitats = new ArrayList<>();
 
-    private tileType type;
+    private final tileType type;
     private boolean Played;
 
     public Tile(tileType type){
@@ -18,30 +18,26 @@ public class Tile {
         ArrayList<Wildlife> slots = new ArrayList<>();
         ArrayList<Habitat> habitats = new ArrayList<>();
         boolean Played = false;
-        if(type == tileType.NORMAL) {
-                habitats.add(randomHabitat());
-                habitats.add(randomHabitat());
-                if(randomNumberGenerator(1) == 0){
-                    slots.add(randomSlot());
-                    slots.add(randomSlot());
-                }else{
-                    slots.add(randomSlot());
-                    slots.add(randomSlot());
-                    slots.add(randomSlot());
-                }
-        } else if (type == tileType.SOLO) {
-            habitats.add(randomHabitat());
-            slots.add(randomSlot());
-        } else if (type == tileType.START) {
+    }
+    public void populateTile() {
+        if (this.type == tileType.NORMAL) {
+            this.habitats.add(randomHabitat());
+            this.habitats.add(randomHabitat());
+            if (randomNumberGenerator(1) == 0) {
+                this.slots.add(randomSlot());
+                this.slots.add(randomSlot());
+            } else {
+                this.slots.add(randomSlot());
+                this.slots.add(randomSlot());
+                this.slots.add(randomSlot());
+            }
+        } else if (this.type == tileType.SOLO) {
+            this.habitats.add(randomHabitat());
+            this.slots.add(randomSlot());
+        } else if (this.type == tileType.START) {
             //need to fill
-        } else{
+        } else {
             throw new IllegalArgumentException("not a valid type of tile");
-        }
-        if(habitats.size() > 2 || habitats.size() < 1){
-            throw new IllegalArgumentException( habitats.size() + " habitats is outside parameters");
-        }
-        if(slots.size() > 3 || slots.size() < 1) {
-            throw new IllegalArgumentException(slots.size() + " slots is outside parameters");
         }
     }
     public Habitat randomHabitat(){
@@ -100,24 +96,22 @@ public class Tile {
         return this.habitats;
     }
 
-    /*
+
     public String printHabitat(ArrayList<Habitat> arrayList) {
         String total = null;
         String strLine;
         for(int i = 0; i < arrayList.size(); i++) {
             strLine = "Index " + i + " contains " + arrayList.get(i);
-            total = total + "\n" + strLine;
+            total.concat( "\n" + strLine);
         }
         return total;
     }
-*/
 
     @Override
     public String toString() {
-        return "Tile{" +
-                "slots=" + slots +
-                ", habitats=" + habitats +
-                ", type=" + type +
+       String h = printHabitat(getHabitats());
+        return "Tile{" + h +
+                "\n type=" + type +
                 ", Played=" + Played +
                 '}';
     }

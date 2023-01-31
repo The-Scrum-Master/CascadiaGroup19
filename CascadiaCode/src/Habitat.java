@@ -11,6 +11,14 @@ public enum Habitat{
                 this.name = name;
                 this.colour = colour;
         }
+
+        @Override
+        public String toString() {
+                return "Habitat{" +
+                        "colour=" + colour +
+                        ", name='" + name + '\'' +
+                        '}';
+        }
 }
 
 

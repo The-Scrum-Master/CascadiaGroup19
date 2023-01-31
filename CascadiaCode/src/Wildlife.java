@@ -8,4 +8,11 @@ public enum Wildlife {
     Wildlife(String symbol) {
         this.symbol =symbol;
     }
+
+    @Override
+    public String toString() {
+        return "Wildlife{" +
+                "symbol='" + symbol + '\'' +
+                '}';
+    }
 }
