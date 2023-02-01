@@ -7,31 +7,35 @@ public class Tile {
         SOLO,
         START,
     }
-    private final ArrayList<Wildlife> slots = new ArrayList<>();
-    private final ArrayList<Habitat> habitats = new ArrayList<>();
-
     private final tileType type;
     private boolean Played;
 
+    private Wildlife[] slots;
+    private Habitat[] habitats;
+
     public Tile(tileType type){
         this.type = type;
-        ArrayList<Wildlife> slots = new ArrayList<>();
-        ArrayList<Habitat> habitats = new ArrayList<>();
-        boolean Played = false;
-        if (this.type == tileType.NORMAL) { //creates a two biome tile with either 3 or 2 slots for tokens
-            this.habitats.add(randomHabitat());
-            this.habitats.add(randomHabitat());
+        Played = false;
+        if (this.type == tileType.NORMAL) { //creates a two biomes tile with either 3 or 2 slots for tokens
+            habitats = new Habitat[]{randomHabitat(), randomHabitat()};
+            while(habitats[0] == habitats[1]){ //makes sure the habitats are not the same on the two biomes tiles
+                habitats[1] = randomHabitat();
+            }
             if (randomNumberGenerator(1) == 0) {
-                this.slots.add(randomSlot());
-                this.slots.add(randomSlot());
+                slots = new Wildlife[]{randomSlot(), randomSlot()};
+                while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS
+                    slots[1] = randomSlot();}
             } else {
-                this.slots.add(randomSlot());
-                this.slots.add(randomSlot());
-                this.slots.add(randomSlot());
+                slots = new Wildlife[]{randomSlot(), randomSlot(), randomSlot()};
+                while(slots[0] == slots[1]){ //makes sure the habitats are not the MATCHING biomesS
+                    slots[1] = randomSlot();}
+                while(slots[0] == slots[2] || slots[1] == slots[2]){
+                    slots[2] = randomSlot();
+                }
             }
         } else if (this.type == tileType.SOLO) { // creates a solo-tile with one biome and one token slot
-            this.habitats.add(randomHabitat());
-            this.slots.add(randomSlot());
+            habitats = new Habitat[]{randomHabitat()};
+            slots = new Wildlife[]{randomSlot()};
         } else if (this.type == tileType.START) { // still need to manually put in
             //need to fill
         } else {
@@ -72,7 +76,7 @@ public class Tile {
         }
     }
 
-    public tileType getType() { // accesssor and getter methods
+    public tileType getType() { // accessor and getter methods
         return this.type;
     }
 
@@ -87,12 +91,18 @@ public class Tile {
         return rand.nextInt(upperBound);
     }
 
-    public ArrayList<Wildlife> getSlots() {
-        return this.slots;
+    public Wildlife[] getSlots() {
+        return slots;
+    }
+    public Wildlife getSlot(int index){
+        return slots[index];
     }
 
-    public ArrayList<Habitat> getHabitats() {
-        return this.habitats;
+    public Habitat getHabitat(int index){
+        return habitats[index];
+    }
+    public Habitat[] getHabitats() {
+        return habitats;
     }
 
 
