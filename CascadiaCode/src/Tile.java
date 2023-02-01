@@ -91,10 +91,10 @@ public class Tile {
         return rand.nextInt(upperBound);
     }
 
-    public Wildlife[] getSlots() {
+    public Wildlife[] getSlots() { //gives array
         return slots;
     }
-    public Wildlife getSlot(int index){
+    public Wildlife getSlot(int index){ //gives wildlife
         return slots[index];
     }
 
