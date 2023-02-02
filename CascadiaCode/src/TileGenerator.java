@@ -44,6 +44,7 @@ public class TileGenerator {
 
 
     public static void main(String[] args) {
+        MapGenerator map=new MapGenerator();
         TileGenerator a =new TileGenerator();
         a.generateBlankTile();
         a.generateBlankTile();
