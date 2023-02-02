@@ -6,6 +6,7 @@ public class ViewTile {
         topTileForStarterTile();
         bottomTilesForStarterTile();
 
+        //ANSI
         /*System.out.print("   * * * * * * * * * * * * * * * *\n");
         System.out.print("   *             * *             *\n");
         System.out.print("   *             * *             *\n");
