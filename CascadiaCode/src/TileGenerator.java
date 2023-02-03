@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class TileGenerator {
 
@@ -8,13 +7,11 @@ public class TileGenerator {
 
     }
 
-    public void generateBlankTile(){
+    public void blankTile(){
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {
                 tile[i][j] = "   ";
-                System.out.print(tile[i][j]);
             }
-            System.out.println(DisplayColour.RESET);
         }
     }
 
@@ -26,15 +23,13 @@ public class TileGenerator {
                         tile[i][j] = color + "   "+DisplayColour.RESET;
                     }
                     else{
-                        tile[i][j] = " "+String.valueOf(letter)+" ";
+                        tile[i][j] = " "+ letter +" ";
                     }
                 }
                 else{
                     tile[i][j] = color + "   "+DisplayColour.RESET;
                 }
-                System.out.print(tile[i][j]);
             }
-            System.out.println(DisplayColour.RESET);
         }
     }
 
@@ -42,12 +37,33 @@ public class TileGenerator {
         tileUniqueColor(color, letter);
     }
 
+    public void printTile(){
+        for(int i=0;i< tile.length;i++) {
+            for (int j = 0; j < tile.length; j++) {
+                System.out.print(tile[i][j]);
+            }
+            System.out.println(DisplayColour.RESET);
+        }
+    }
+
 
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
-        TileGenerator a =new TileGenerator();
-        a.generateBlankTile();
-        a.generateBlankTile();
-        a.generateTile("\033[42m", 'F');
+        TileGenerator unique =new TileGenerator();
+        TileGenerator blank =new TileGenerator();
+        blank.blankTile();
+        blank.printTile();
+        blank.printTile();
+        unique.generateTile("\033[42m", 'F');
+        unique.printTile();
+        blank.printTile();
+        blank.printTile();
+        blank.printTile();blank.printTile();
+        blank.printTile();blank.printTile();blank.printTile();blank.printTile();
+
+
+        map.addTile(unique);
+        map.fillMap(unique);
+        map.printMap();
     }
 }
