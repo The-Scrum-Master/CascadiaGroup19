@@ -55,11 +55,14 @@ public class TileGenerator {
 
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
-        TileGenerator unique =new TileGenerator();
         TileGenerator blank =new TileGenerator();
-        unique.generateTile("\033[42m", 'F');
         blank.blankTile();
+        TileGenerator unique1 =new TileGenerator();
+        unique1.generateTile("\033[42m", 'F');
         TileGenerator unique2 =new TileGenerator();
+        unique2.generateTile("\033[44m", 'F');
+        TileGenerator unique3 =new TileGenerator();
+        unique3.generateTile("\033[43m", 'F');
 
 
         /*
@@ -77,8 +80,8 @@ public class TileGenerator {
          */
 
 
-        map.addTile(unique);
-        map.fillMap(unique);
+        //map.addTile(unique);
+        map.fillMap(unique1, unique2, unique3);
         map.printMap();
     }
 }

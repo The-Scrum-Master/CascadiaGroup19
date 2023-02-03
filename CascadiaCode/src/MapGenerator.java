@@ -6,10 +6,18 @@ public class MapGenerator {
         //map[0][0].printTile();
     }
 
-    public void fillMap(TileGenerator tile){
+    public void fillMap(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3){
         for(int i=0;i< map.length;i++) {
             for (int j = 0; j < map.length; j++) {
-                map[i][j]=tile;
+                if(j%3==0){
+                    map[i][j]=tile1;
+                }
+                else if(j%3==1){
+                    map[i][j]=tile2;
+                }
+                else{
+                    map[i][j]=tile3;
+                }
             }
         }
     }
