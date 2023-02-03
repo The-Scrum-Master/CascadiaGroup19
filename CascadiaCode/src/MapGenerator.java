@@ -16,7 +16,12 @@ public class MapGenerator {
 
     public void printMap(){
         for(int i=0;i< map.length;i++) {
+
             for(int k=0; k<4; k++){
+                if(i%2!=0)
+                {
+                    System.out.print("      ");
+                }
                 for (int j = 0; j < map.length; j++) {
                     map[i][j].printTilePerRow(k);
                 }

@@ -59,6 +59,9 @@ public class TileGenerator {
         TileGenerator blank =new TileGenerator();
         unique.generateTile("\033[42m", 'F');
         blank.blankTile();
+        TileGenerator unique2 =new TileGenerator();
+
+
         /*
         blank.printTile();
         blank.printTile();
