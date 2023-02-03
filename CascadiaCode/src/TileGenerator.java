@@ -46,20 +46,32 @@ public class TileGenerator {
         }
     }
 
+    public void printTilePerRow(int row){
+        for(int j=0;j< tile.length;j++) {
+            System.out.print(tile[row][j]);
+        }
+    }
+
 
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
         TileGenerator unique =new TileGenerator();
         TileGenerator blank =new TileGenerator();
-        blank.blankTile();
-        blank.printTile();
-        blank.printTile();
         unique.generateTile("\033[42m", 'F');
+        blank.blankTile();
+        /*
+        blank.printTile();
+        blank.printTile();
+
         unique.printTile();
         blank.printTile();
         blank.printTile();
         blank.printTile();blank.printTile();
+        blank.printTile();blank.printTile();blank.printTile();blank.printTile();*/
+
+        /*unique.printTilePerRow(0);
         blank.printTile();blank.printTile();blank.printTile();blank.printTile();
+         */
 
 
         map.addTile(unique);

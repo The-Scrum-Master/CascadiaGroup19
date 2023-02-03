@@ -3,7 +3,7 @@ public class MapGenerator {
 
     public void addTile(TileGenerator tile){
         map[0][0]=tile;
-        map[0][0].printTile();
+        //map[0][0].printTile();
     }
 
     public void fillMap(TileGenerator tile){
@@ -16,10 +16,12 @@ public class MapGenerator {
 
     public void printMap(){
         for(int i=0;i< map.length;i++) {
-            for (int j = 0; j < map.length; j++) {
-                map[i][j].printTile();
+            for(int k=0; k<4; k++){
+                for (int j = 0; j < map.length; j++) {
+                    map[i][j].printTilePerRow(k);
+                }
+                System.out.println();
             }
-            System.out.println(DisplayColour.RESET);
         }
     }
 
