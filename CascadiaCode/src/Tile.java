@@ -12,6 +12,7 @@ public class Tile {
 
     private Wildlife[] slots;
     private Habitat[] habitats;
+    private char symbol;
 
     public Tile(tileType type){
         this.type = type;
@@ -46,14 +47,23 @@ public class Tile {
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
         switch (randomNumberGenerator(5)){
             case 0:
+                symbol = 'R';
                 return Habitat.RIVER;
             case 1:
+                symbol = 'F';
+
                 return Habitat.FOREST;
             case 2:
+                symbol = 'M';
+
                 return Habitat.MOUNTAIN;
             case 3:
+                symbol = 'W';
+
                 return Habitat.WETLANDS;
             case 4:
+                symbol = 'P';
+
                 return Habitat.PRAIRIE;
             default:
                 throw new IllegalArgumentException("random num generator limit error");
@@ -91,6 +101,7 @@ public class Tile {
         return rand.nextInt(upperBound);
     }
 
+
     public Wildlife[] getSlots() { //gives array
         return slots;
     }
@@ -106,6 +117,10 @@ public class Tile {
     }
 
 
+    public char getSymbol()
+    {
+        return symbol;
+    }
 
     @Override
     public String toString() {
@@ -113,6 +128,34 @@ public class Tile {
                 "\n type=" + type +
                 ", Played=" + Played +
                 '}';
+    }
+    public String colourConverter(char s)
+    {
+        switch (s)
+        {
+            case 'R':
+                return "\033[0;34m"; //Blue
+            case 'F':
+                return "\033[0;32m"; //Green
+            case 'M':
+                return "\033[0;37m"; //White
+            case 'W':
+                return "\033[0;36m";//Cyan
+            case 'P':
+                return "\033[0;33m";//Yellow
+            default:
+                throw new IllegalArgumentException("Error");
+        }
+    }
+
+    public static void main(String[] args) {
+        Tile t =new Tile(tileType.SOLO);
+        System.out.println(t.randomHabitat());
+        System.out.println(t.getSymbol());
+        System.out.println(t.colourConverter(t.getSymbol())+"Hi do I work?");
+
+
+
     }
 }
 

@@ -5,6 +5,8 @@ public enum Wildlife {
     HAWK("H"),
     FOX("F");
     private String symbol;
+
+
     Wildlife(String symbol) {
         this.symbol =symbol;
     }
@@ -15,4 +17,6 @@ public enum Wildlife {
                 "symbol='" + symbol + '\'' +
                 '}';
     }
+
+
 }

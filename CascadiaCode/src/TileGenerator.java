@@ -56,13 +56,19 @@ public class TileGenerator {
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
+        Tile t = new Tile(Tile.tileType.SOLO);
+
+        t.randomHabitat();
+
+        System.out.println(t.colourConverter(t.getSymbol()));
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
-        unique1.generateTile("\033[42m", 'F');
+        unique1.generateTile(t.colourConverter(t.getSymbol()),t.getSymbol());
         TileGenerator unique2 =new TileGenerator();
         unique2.generateTile("\033[44m", 'F');
         TileGenerator unique3 =new TileGenerator();
         unique3.generateTile("\033[43m", 'F');
+
 
 
         /*
