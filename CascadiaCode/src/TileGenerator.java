@@ -130,7 +130,7 @@ public class TileGenerator {
         unique3.tileUniqueColor("\033[43m", 'F', 'B');
 
         TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors("\033[42m", "\033[43m", 'F', ' ', 'B');
+        double1.tileTwoColors("\033[42m", t.colourConverter(t.getSymbol()), 'F', ' ', 'B');
         TileGenerator double2 =new TileGenerator();
         double2.tileTwoColors("\033[41m", "\033[45m", 'E', 'B', 'S');
 

@@ -134,15 +134,15 @@ public class Tile {
         switch (s)
         {
             case 'R':
-                return "\033[0;34m"; //Blue
+                return "\033[44m"; //Blue
             case 'F':
-                return "\033[0;32m"; //Green
+                return "\033[42m"; //Green
             case 'M':
-                return "\033[0;37m"; //White
+                return "\033[47m"; //White
             case 'W':
-                return "\033[0;36m";//Cyan
+                return "\033[46m";//Cyan
             case 'P':
-                return "\033[0;33m";//Yellow
+                return "\033[43m";//Yellow
             default:
                 throw new IllegalArgumentException("Error");
         }
