@@ -125,9 +125,9 @@ public class TileGenerator {
         unique3.tileUniqueColor("\033[43m", 'F', 'B');
 
         TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors("\033[42m", "\033[43m", 'F', 'B', ' ');
-        double1.printTile();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        double1.tileTwoColors("\033[42m", "\033[43m", 'F', ' ', 'B');
+        TileGenerator double2 =new TileGenerator();
+        double2.tileTwoColors("\033[41m", "\033[45m", 'E', 'B', 'S');
 
 
         /*
@@ -146,7 +146,9 @@ public class TileGenerator {
 
 
         //map.addTile(unique);
-        map.fillMap(unique1, unique2, unique3);
-        map.printMap();
+        map.fillMapBlank(blank);
+        map.starterTiles(unique2, double1, double2);
+        //map.fillMap(unique1, unique2, unique3);
+        map.printMapTotal();
     }
 }
