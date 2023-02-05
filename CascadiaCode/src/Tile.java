@@ -14,6 +14,8 @@ public class Tile {
     private Habitat[] habitats;
     private char symbol;
 
+    private char animal;
+
     public Tile(tileType type){
         this.type = type;
         Played = false;
@@ -72,14 +74,19 @@ public class Tile {
     public Wildlife randomSlot(){
         switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
             case 0:
+                animal = 'H';
                 return Wildlife.HAWK;
             case 1:
+                animal = 'S';
                 return Wildlife.SALMON;
             case 2:
+                animal = 'E';
                 return Wildlife.ELK;
             case 3:
+                animal = 'B';
                 return Wildlife.BEAR;
             case 4:
+                animal = 'F';
                 return Wildlife.FOX;
             default:
                 throw new IllegalArgumentException("random num generator limit error");
@@ -122,6 +129,10 @@ public class Tile {
         return symbol;
     }
 
+    public char getAnimal(){
+        return animal;
+    }
+
     @Override
     public String toString() {
         return "Tile{" +
@@ -146,13 +157,32 @@ public class Tile {
             default:
                 throw new IllegalArgumentException("Error");
         }
+    }public String colourAnimal(char s)
+    {
+        switch (s)
+        {
+            case 'H':
+                return "\033[0;34m" + "H"; //Blue
+            case 'F':
+                return "\033[0;33m" + "F";//Orange
+            case 'E':
+                return "\033[0;30m" + "E"; //BLACK
+            case 'S':
+                return "\033[0;31m"+ "S";//RED
+            case 'B':
+                return "\033[0;35m" + "B";//PURPLE
+            default:
+                throw new IllegalArgumentException("Error");
+        }
     }
+
 
     public static void main(String[] args) {
         Tile t =new Tile(tileType.SOLO);
         System.out.println(t.randomHabitat());
         System.out.println(t.getSymbol());
         System.out.println(t.colourConverter(t.getSymbol())+"Hi do I work?");
+        System.out.println(t.colourAnimal(t.getAnimal()));
 
 
 
