@@ -22,6 +22,7 @@ public class MapGenerator {
         }
     }
 
+
     public void printMap(){
         for(int i=0;i< map.length;i++) {
 
