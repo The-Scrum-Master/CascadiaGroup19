@@ -24,6 +24,7 @@ public class GameRunner {
             }
             else{
                 //System.out.println(players.get(playersTurn).name + "'s turn:");
+                System.out.println(players.get(playersTurn).getName()+ "'s turn:");
 
                 //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
                 //here, the 4 pairs habitats-tokens have to be displayed for a player to choose

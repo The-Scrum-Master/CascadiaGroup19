@@ -132,7 +132,11 @@ public class TileGenerator {
         TileGenerator double2 =new TileGenerator();
         double2.tileTwoColors("\033[41m", "\033[45m", "", " ", " ");
 //COMMENTS??????
+        t.randomSlot();
+        double2.tileTwoColors("\033[41m", "\033[45m", t.colourAnimal(t.getAnimal()), " ", " ");
 
+
+//COMMENTS??????
 
         /*
         blank.printTile();
@@ -150,9 +154,15 @@ public class TileGenerator {
 
 
         //map.addTile(unique);
-        map.fillMapBlank(blank);
-        map.starterTiles(unique2, double1, double2);
         //map.fillMap(unique1, unique2, unique3);
-        map.printMapTotal();
+
+
+        //map.fillMapBlank(blank);
+        //map.starterTiles(unique2, double1, double2);
+        //map.printMapTotal();
+
+        map.fillMapBlankByParts(blank);
+        map.starterTilesReducedMap(unique2, double1, double2);
+        map.printMapTotalByParts();
     }
 }
