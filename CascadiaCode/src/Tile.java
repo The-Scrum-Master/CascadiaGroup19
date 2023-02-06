@@ -22,12 +22,16 @@ public class Tile {
     private char symbol2;
     private  int count = 0;
 
-
+    private final int select;
 
     private char animal;
     private char animal2;
 
-    public Tile(tileType type){
+    public Tile(tileType type, int select){
+        this.select = select;
+        if(select > 4 || select < 2){
+            select = randomNumberGenerator(1);
+        }
         this.type = type;
         Played = false;
         if (this.type == tileType.NORMAL) { //creates a two biomes tile with either 3 or 2 slots for tokens
@@ -35,9 +39,9 @@ public class Tile {
             while(habitats[0] == habitats[1]){ //makes sure the habitats are not the same on the two biomes tiles
                 habitats[1] = randomHabitat();
             }
-            if (randomNumberGenerator(1) == 0) {
+            if (select == 0 || select == 2){
                 slots = new Wildlife[]{randomSlot(), randomSlot()};
-                while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS sometimes they r p.s
+                while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS
                     slots[1] = randomSlot();}
             } else {
                 slots = new Wildlife[]{randomSlot(), randomSlot(), randomSlot()};
@@ -50,8 +54,6 @@ public class Tile {
         } else if (this.type == tileType.SOLO) { // creates a solo-tile with one biome and one token slot
             habitats = new Habitat[]{randomHabitat()};
             slots = new Wildlife[]{randomSlot()};
-        } else if (this.type == tileType.START) { // still need to manually put in
-            //need tlo fill
         } else {
             throw new IllegalArgumentException("not a valid type of tile");
         }
@@ -285,7 +287,7 @@ public class Tile {
 
 
     public static void main(String[] args) {
-        Tile t =new Tile(tileType.NORMAL);
+        Tile t =new Tile(tileType.NORMAL, 0);
        t.generateTile(t);
 
 

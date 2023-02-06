@@ -118,7 +118,7 @@ public class TileGenerator {
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
-        Tile t = new Tile(Tile.tileType.SOLO);
+        Tile t = new Tile(Tile.tileType.SOLO, 0);
 
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();

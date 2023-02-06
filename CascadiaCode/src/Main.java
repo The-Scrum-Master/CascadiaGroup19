@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        Tile test1 = new Tile(Tile.tileType.NORMAL);
+        Tile test1 = new Tile(Tile.tileType.NORMAL,0);
         System.out.println(test1);
         for( int i = 0; i < test1.getHabitats().length;i++){
             System.out.println(test1.getHabitat(i));
