@@ -19,8 +19,13 @@ public class Tile {
     private Wildlife[] slots;
     private Habitat[] habitats;
     private char symbol;
+    private char symbol2;
+    private  int count = 0;
+
+
 
     private char animal;
+    private char animal2;
 
     public Tile(tileType type){
         this.type = type;
@@ -32,7 +37,7 @@ public class Tile {
             }
             if (randomNumberGenerator(1) == 0) {
                 slots = new Wildlife[]{randomSlot(), randomSlot()};
-                while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS
+                while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS sometimes they r p.s
                     slots[1] = randomSlot();}
             } else {
                 slots = new Wildlife[]{randomSlot(), randomSlot(), randomSlot()};
@@ -58,23 +63,53 @@ public class Tile {
     }
 
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
+        count++;
         switch (randomNumberGenerator(5)){
+
             case 0:
                 symbol = 'R';
+                if (count>1)
+                {
+                    symbol2=symbol;
+                }
+
                 return Habitat.RIVER;
             case 1:
+                if (count>1)
+                {
+                    symbol2=symbol;
+                }
+
+
                 symbol = 'F';
 
                 return Habitat.FOREST;
             case 2:
+                if (count>1)
+                {
+                    symbol2=symbol;
+                }
+
                 symbol = 'M';
 
                 return Habitat.MOUNTAIN;
             case 3:
+                if (count>1)
+                {
+                    symbol2=symbol;
+                }
+
+
                 symbol = 'W';
 
                 return Habitat.WETLANDS;
             case 4:
+                if (count>0)
+                {
+                    symbol2=symbol;
+                }
+
+
                 symbol = 'P';
 
                 return Habitat.PRAIRIE;
@@ -83,20 +118,42 @@ public class Tile {
         }
     }
     public Wildlife randomSlot(){
+        count++;
+
         switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
             case 0:
+                if (count>1)
+                {
+                    animal2=animal;
+                }
                 animal = 'H';
                 return Wildlife.HAWK;
             case 1:
+                if (count>1)
+                {
+                    animal2=animal;
+                }
                 animal = 'S';
                 return Wildlife.SALMON;
             case 2:
+                if (count>1)
+                {
+                    animal2=animal;
+                }
                 animal = 'E';
                 return Wildlife.ELK;
             case 3:
+                if (count>1)
+                {
+                    animal2=animal;
+                }
                 animal = 'B';
                 return Wildlife.BEAR;
             case 4:
+                if (count>1)
+                {
+                    animal2=animal;
+                }
                 animal = 'F';
                 return Wildlife.FOX;
             default:
@@ -140,11 +197,17 @@ public class Tile {
     {
         return symbol;
     }
+    public char getSymbol2()
+    {
+        return symbol2;
+    }
 
     public char getAnimal(){
         return animal;
     }
-
+    public char getAnimal2(){
+        return animal2;
+    }
     @Override
     public String toString() {
         return "Tile{" +
@@ -187,15 +250,43 @@ public class Tile {
                 throw new IllegalArgumentException("Error");
         }
     }
+    public void generateTile(Tile t)
+    {
+        MapGenerator map=new MapGenerator();
+        TileGenerator blank =new TileGenerator();
+        map.fillMapBlank(blank);
+        blank.blankTile();
+
+
+        TileGenerator g = new TileGenerator();
+        if(tileType.SOLO==t.type)
+        {
+            g.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
+
+
+            map.addTile(g);
+
+            map.printMapTotal();
+        }
+        if(tileType.NORMAL==t.type)
+        {
+
+
+            g.tileTwoColors(t.colourConverter(t.getSymbol2()), t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal2()), " ", t.colourAnimal(t.getAnimal()));
+            map.addTile(g);
+
+            map.printMapTotal();
+
+        }
+
+
+
+    }
 
 
     public static void main(String[] args) {
-        Tile t =new Tile(tileType.SOLO);
-        System.out.println(t.randomHabitat());
-        System.out.println(t.getSymbol());
-        System.out.println(t.colourConverter(t.getSymbol())+"Hi do I work?");
-        System.out.println(t.colourAnimal(t.getAnimal()));
-
+        Tile t =new Tile(tileType.NORMAL);
+       t.generateTile(t);
 
 
     }

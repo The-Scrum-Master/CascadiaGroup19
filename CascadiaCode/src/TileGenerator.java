@@ -15,7 +15,7 @@ public class TileGenerator {
         }
     }
 
-    public void tileUniqueColor(String color,String letter1, String letter2){
+    public void tileUniqueColor(String color,String letter1){
         boolean placing1=true;
         boolean placing2=false;
         for(int i=0;i< tile.length;i++) {
@@ -27,12 +27,14 @@ public class TileGenerator {
                     else if(placing1){
                         tile[i][j] = " "+ letter1 +" ";
                         placing1=false;
-                        placing2=true;
+                        //placing2=true;
                     }
-                    else if(placing2){
+                    /*else if(placing2){
                         tile[i][j] = " "+ letter2 +" ";
                         placing2=false;
                     }
+
+                     */
                     else{
                         tile[i][j] = "   ";
                     }
@@ -120,19 +122,15 @@ public class TileGenerator {
 
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
-        unique1.tileUniqueColor("\033[42m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
+       // unique1.tileUniqueColor("\033[42m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator unique2 =new TileGenerator();
-        t.randomSlot();
-        unique2.tileUniqueColor("\033[44m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
+        //unique2.tileUniqueColor("\033[44m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator unique3 =new TileGenerator();
-        t.randomSlot();
-        unique3.tileUniqueColor("\033[43m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
-
+        //unique3.tileUniqueColor("\033[43m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator double1 =new TileGenerator();
         double1.tileTwoColors("\033[42m", t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()), " ", t.colourAnimal(t.getAnimal()));
         TileGenerator double2 =new TileGenerator();
-        t.randomSlot();
-        double2.tileTwoColors("\033[41m", "\033[45m", t.colourAnimal(t.getAnimal()), " ", " ");
+        double2.tileTwoColors("\033[41m", "\033[45m", "", " ", " ");
 //COMMENTS??????
 
 
