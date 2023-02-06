@@ -34,6 +34,9 @@ public class GameRunner {
 
                 boolean wrongCommand=true;
                 while(wrongCommand){
+                    if(!players.get(playersTurn).isFirstTurnPlayed()) {
+                        players.get(playersTurn).generateInitialMap();
+                    }
                     System.out.println("Your turn has ended. What do you want to do, finish your turn (type next) or end the game (type quit)?");
                     String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
                     switch(decision) {
