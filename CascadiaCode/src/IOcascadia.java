@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class IOcascadia {
 
-    String participants;
-    int participantsInt;
-    ArrayList<String> playerNames= new ArrayList<String>();
-    ArrayList<Integer> order= new ArrayList<Integer>();
+    static private String participants;
+    static private int participantsInt;
+    static private ArrayList<String> playerNames= new ArrayList<String>();
+    static private ArrayList<Integer> order= new ArrayList<Integer>();
     static Scanner in =new Scanner(System.in);
 
     public static String takeInput(){
@@ -18,11 +18,11 @@ public class IOcascadia {
         return str.toLowerCase();
     }
 
-    public void welcomeMessage(){
+    public static void welcomeMessage(){
         System.out.println("Welcome to Cascadia! Let's start the game!");
     }
 
-    public void numberOfPlayers(){
+    public static void numberOfPlayers(){
         System.out.println("How many players are going to play? (between 2 and 4)");
         participants=takeInput();
         participantsInt=Integer.parseInt(participants);
@@ -35,17 +35,25 @@ public class IOcascadia {
         }
     }
 
-    public void playerNames(){
+    public static void playerNames(){
         System.out.println("Enter player names: ");
         playerNames.add(takeInput());
         for(int i=1; i<participantsInt; i++){
             System.out.println("Enter next player's name: ");
             playerNames.add(takeInput());
         }
-        printPlayerNames();
+        System.out.print("Hello ");
+        int i=0;
+        while(i<participantsInt-1){
+            System.out.print(playerNames.get(i));
+            System.out.print(", ");
+            i++;
+        }
+        System.out.print(playerNames.get(i));
+        System.out.println("!\n");
     }
 
-    public void playerOrder(){
+    public static void playerOrder(){
         System.out.println("The player order will be as follows: ");
         for(int i=0; i<participantsInt; i++){
             boolean reGenerate=false;
@@ -71,23 +79,32 @@ public class IOcascadia {
         printPlayerNamesInOrder();
     }
 
-    public void printPlayerNames(){
+    public static void printPlayerNames(){
         for(int i=0; i<participantsInt; i++){
-            System.out.println(playerNames.get(i));
+            System.out.print(playerNames.get(i));
+            System.out.print(", ");
         }
     }
 
-    public void printPlayerNamesInOrder(){
+    public static void printPlayerNamesInOrder(){
         for(int i=0; i<participantsInt; i++){
+            System.out.print(i+1 + ") ");
             System.out.println(playerNames.get(order.get(i)));
         }
     }
 
-    public int randomNumberGenerator(int upperBound){
+    public static int randomNumberGenerator(int upperBound){
         Random rand = new Random ();
         return rand.nextInt(upperBound);
     }
 
+    public static ArrayList<String> getPlayerNames() {
+        return playerNames;
+    }
+
+    public static ArrayList<Integer> getOrder() {
+        return order;
+    }
 
     public static void main(String[] args) {
         IOcascadia newGame = new IOcascadia();
