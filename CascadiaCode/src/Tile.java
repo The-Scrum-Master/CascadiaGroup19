@@ -1,6 +1,12 @@
+import java.awt.event.HierarchyBoundsAdapter;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This is class constructs and holds the functions for the Object Tile
+ * The index of the array that holds the habitat is the orientation of the tile.
+ * @author Patrick Kelly
+ */
 public class Tile {
     public enum tileType { //types of tiles available to make
         NORMAL,
@@ -40,10 +46,15 @@ public class Tile {
             habitats = new Habitat[]{randomHabitat()};
             slots = new Wildlife[]{randomSlot()};
         } else if (this.type == tileType.START) { // still need to manually put in
-            //need to fill
+            //need tlo fill
         } else {
             throw new IllegalArgumentException("not a valid type of tile");
         }
+    }
+    public void flipTile(){ //flips tiles by swapping its orientation in array
+       Habitat temp =  habitats[0];
+       habitats[0] = habitats[1];
+       habitats[1] = temp;
     }
 
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
@@ -92,6 +103,7 @@ public class Tile {
                 throw new IllegalArgumentException("random num generator limit error");
         }
     }
+
 
     public tileType getType() { // accessor and getter methods
         return this.type;
