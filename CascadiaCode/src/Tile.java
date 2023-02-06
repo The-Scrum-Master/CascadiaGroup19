@@ -11,7 +11,6 @@ public class Tile {
     public enum tileType { //types of tiles available to make
         NORMAL,
         SOLO,
-        START,
     }
     private final tileType type;
     private boolean Played;
