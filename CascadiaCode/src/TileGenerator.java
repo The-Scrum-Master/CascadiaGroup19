@@ -129,9 +129,9 @@ public class TileGenerator {
         TileGenerator unique3 =new TileGenerator();
         //unique3.tileUniqueColor("\033[43m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors(t.colourConverter(t.getSymbol()), t.colourConverter(t.getSymbol2()), t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
+        double1.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
         TileGenerator double2 =new TileGenerator();
-        double2.tileTwoColors(t.colourConverter(t.getSymbol()), t.colourConverter(t.getSymbol2()), t.colourAnimal(t.getAnimal()), " ", t.colourAnimal(t.getAnimal()));
+        double2.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), " ", t2.colourAnimal(t2.getAnimal()));
 //COMMENTS??????
         t.randomSlot();
 
