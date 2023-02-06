@@ -6,8 +6,8 @@ public class IOcascadia {
 
     static private String participants;
     static private int participantsInt;
-    static private ArrayList<String> playerNames= new ArrayList<String>();
-    static private ArrayList<Integer> order= new ArrayList<Integer>();
+    static public ArrayList<String> playerNames= new ArrayList<String>();
+    static public ArrayList<Integer> order= new ArrayList<Integer>();
     static Scanner in =new Scanner(System.in);
 
     public static String takeInput(){
@@ -106,11 +106,7 @@ public class IOcascadia {
         return order;
     }
 
-    public static void main(String[] args) {
-        IOcascadia newGame = new IOcascadia();
-        newGame.welcomeMessage();
-        newGame.numberOfPlayers();
-        newGame.playerNames();
-        newGame.playerOrder();
+    public static int getParticipantsInt() {
+        return participantsInt;
     }
 }
