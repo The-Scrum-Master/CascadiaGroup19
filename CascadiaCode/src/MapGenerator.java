@@ -33,15 +33,35 @@ public class MapGenerator {
 
     public void fillMapBlankByParts(TileGenerator blank){ //NEED TO WORK ON THIS FUNCTION AND CREATE A PRINTMAPBYPARTS ONE, MAKING THEM FILL THE CENTER OF
         // THE ARRAY AND WHEN THE MAP HAS TO GET BIGGER FILL IN ADJACENT CIRCLES
-        for(int i=0;i< currentMapWidth;i++) {
-            for (int j = 0; j < currentMapWidth; j++) {
+        for(int i=0+8;i< map.length-8;i++) {
+            for (int j = 0+8; j < map.length-8; j++) {
                 map[i][j]=blank;
             }
         }
     }
+    public void printMapTotalByParts(){
+        for(int i=0+8;i< map.length-8;i++) {
+
+            for(int k=0; k<4; k++){
+                if(i%2!=0)
+                {
+                    System.out.print("      ");
+                }
+                for (int j = 0+8; j < map.length-8; j++) {
+                    map[i][j].printTilePerRow(k);
+                }
+                System.out.println();
+            }
+        }
+    }
+    public void starterTilesReducedMap(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3){
+        map[9][9]=tile1;
+        map[10][9]=tile2;
+        map[10][10]=tile3;
+    }
 
     public void starterTiles(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3){
-        map[0][1]=tile1;
+        map[0][0]=tile1;
         map[1][0]=tile2;
         map[1][1]=tile3;
     }
@@ -50,7 +70,7 @@ public class MapGenerator {
         for(int i=0;i< map.length;i++) {
 
             for(int k=0; k<4; k++){
-                if(i%2!=0)
+                if(i%2!=1)
                 {
                     System.out.print("      ");
                 }
@@ -63,6 +83,5 @@ public class MapGenerator {
     }
 
     public static void main(String[] args) {
-
     }
 }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class GameRunner {
-    private ArrayList<Player> players= new ArrayList<Player>();
+    private static ArrayList<Player> players= new ArrayList<Player>();
     private static int numberOfPlayers;
     public static void main(String[] args) {
         GameRunner game = new GameRunner();
@@ -23,7 +23,7 @@ public class GameRunner {
                 playersTurn=0;
             }
             else{
-                System.out.println(players.get(playersTurn).name + "'s turn:");
+                System.out.println(players.get(playersTurn).getName()+ "'s turn:");
 
                 //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
                 //here, the 4 pairs habitats-tokens have to be displayed for a player to choose
