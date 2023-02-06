@@ -119,21 +119,22 @@ public class TileGenerator {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
         Tile t = new Tile(Tile.tileType.SOLO, 0);
+        Tile t2 = new Tile(Tile.tileType.NORMAL, 0);
 
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
-       // unique1.tileUniqueColor("\033[42m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
+        unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
         TileGenerator unique2 =new TileGenerator();
         //unique2.tileUniqueColor("\033[44m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator unique3 =new TileGenerator();
         //unique3.tileUniqueColor("\033[43m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors("\033[42m", t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()), " ", t.colourAnimal(t.getAnimal()));
+        double1.tileTwoColors(t.colourConverter(t.getSymbol()), t.colourConverter(t.getSymbol2()), t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
         TileGenerator double2 =new TileGenerator();
-        double2.tileTwoColors("\033[41m", "\033[45m", "", " ", " ");
+        double2.tileTwoColors(t.colourConverter(t.getSymbol()), t.colourConverter(t.getSymbol2()), t.colourAnimal(t.getAnimal()), " ", t.colourAnimal(t.getAnimal()));
 //COMMENTS??????
         t.randomSlot();
-        double2.tileTwoColors("\033[41m", "\033[45m", t.colourAnimal(t.getAnimal()), " ", " ");
+
 
 
 //COMMENTS??????
@@ -161,8 +162,11 @@ public class TileGenerator {
         //map.starterTiles(unique2, double1, double2);
         //map.printMapTotal();
 
-        map.fillMapBlankByParts(blank);
-        map.starterTilesReducedMap(unique2, double1, double2);
-        map.printMapTotalByParts();
+        //map.fillMapBlankByParts(blank);
+        //map.starterTilesReducedMap(unique2, double1, double2);
+        //map.printMapTotalByParts();
+
+        map.fillArrayToTest(unique1, double1, double2, unique1, blank);
+        map.tileDisplay();
     }
 }
