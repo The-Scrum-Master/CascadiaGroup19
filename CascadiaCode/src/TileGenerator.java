@@ -3,7 +3,7 @@ public class TileGenerator {
 
     public String [][] tile= new String[4][4];
 
-    public TileGenerator (){ //put the habitats and the placeholders as inputs into the constructor
+    public TileGenerator (){ //put the habitats and the placeholders as inputs into the constructor?
 
     }
 
