@@ -179,23 +179,5 @@ public class TileGenerator {
         //map.fillMapBlankByParts(blank);
         //map.starterTilesReducedMap(unique1, double1, double2);
         //map.printMapTotalByParts();
-
-
-        Tile letter1 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter2 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter3 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter4 = new Tile(Tile.tileType.SOLO, 0);
-
-        TileGenerator blankTileWIthToken1 =new TileGenerator();
-        blankTileWIthToken1.blankTileWIthToken(letter1.colourAnimal(letter1.getAnimal()));
-        TileGenerator blankTileWIthToken2 =new TileGenerator();
-        blankTileWIthToken2.blankTileWIthToken(letter2.colourAnimal(letter2.getAnimal()));
-        TileGenerator blankTileWIthToken3 =new TileGenerator();
-        blankTileWIthToken3.blankTileWIthToken(letter3.colourAnimal(letter3.getAnimal()));
-        TileGenerator blankTileWIthToken4 =new TileGenerator();
-        blankTileWIthToken4.blankTileWIthToken(letter4.colourAnimal(letter4.getAnimal()));
-
-        map.fillArrayToTestWIthTokens(unique1, double1, double2, unique2, blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
-        map.tileDisplay();
     }
 }

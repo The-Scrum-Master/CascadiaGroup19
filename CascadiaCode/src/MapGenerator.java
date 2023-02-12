@@ -1,7 +1,5 @@
 public class MapGenerator {
     public TileGenerator [][] map= new TileGenerator[20][20];
-    public TileGenerator [] displayTilesToChooseFrom= new TileGenerator[8];
-    int currentMapWidth=4;
 
     public void addTile(TileGenerator tile){
         map[0][0]=tile;
@@ -82,43 +80,5 @@ public class MapGenerator {
                 System.out.println();
             }
         }
-    }
-
-    public void fillArrayToTest(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3, TileGenerator tile4, TileGenerator blank){
-        for(int i=0;i<8;i++) {
-            if (i % 2 == 1) {
-                displayTilesToChooseFrom[i] = blank;
-            }
-        }
-        displayTilesToChooseFrom[0]=tile1;
-        displayTilesToChooseFrom[2]=tile2;
-        displayTilesToChooseFrom[4]=tile3;
-        displayTilesToChooseFrom[6]=tile4;
-    }
-
-    public void fillArrayToTestWIthTokens(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3, TileGenerator tile4, TileGenerator token1, TileGenerator token2, TileGenerator token3, TileGenerator token4){
-        displayTilesToChooseFrom[0]=tile1;
-        displayTilesToChooseFrom[1]=token1;
-        displayTilesToChooseFrom[2]=tile2;
-        displayTilesToChooseFrom[3]=token2;
-        displayTilesToChooseFrom[4]=tile3;
-        displayTilesToChooseFrom[5]=token3;
-        displayTilesToChooseFrom[6]=tile4;
-        displayTilesToChooseFrom[7]=token4;
-    }
-
-    public void tileDisplay(){ //there has to be an array of
-        for(int k=0; k<4; k++){
-            for (int j = 0; j < displayTilesToChooseFrom.length; j++) {
-                displayTilesToChooseFrom[j].printTilePerRow(k);
-            }
-            System.out.println();
-        }
-    }
-
-
-
-
-    public static void main(String[] args) {
     }
 }

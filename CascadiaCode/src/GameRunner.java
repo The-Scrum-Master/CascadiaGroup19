@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 
 public class GameRunner {
-    private static ArrayList<Player> players= new ArrayList<Player>();
-    private static int numberOfPlayers;
+    private static final ArrayList<Player> players= new ArrayList<Player>();
+    public static PairDisplay p =new PairDisplay();
+
     public static void main(String[] args) {
-        GameRunner game = new GameRunner();
         IOcascadia.welcomeMessage();
         IOcascadia.numberOfPlayers();
         IOcascadia.playerNames();
         IOcascadia.playerOrder();
 
-        numberOfPlayers=IOcascadia.getParticipantsInt();
-        for(int i=0;i<numberOfPlayers;i++){
+        int numberOfPlayers = IOcascadia.getParticipantsInt();
+        for(int i = 0; i< numberOfPlayers; i++){
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
 
@@ -19,7 +19,7 @@ public class GameRunner {
         int playersTurn=0;
 
         while(continueGame){
-            if(playersTurn==numberOfPlayers){
+            if(playersTurn== numberOfPlayers){
                 playersTurn=0;
             }
             else{
@@ -36,6 +36,13 @@ public class GameRunner {
                 while(wrongCommand){
                     if(!players.get(playersTurn).isFirstTurnPlayed()) {
                         players.get(playersTurn).generateInitialMap();
+                    }
+                    else{
+                        System.out.println();
+                        p.showPairs();
+                        System.out.println();
+                        IOcascadia.instructionsToChoosePair();
+                        System.out.println();
                     }
                     System.out.println("Your turn has ended. What do you want to do, finish your turn (type next) or end the game (type quit)?");
                     String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
