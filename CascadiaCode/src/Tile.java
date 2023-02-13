@@ -157,11 +157,9 @@ public class Tile {
         }
     }
 
-
-    public tileType getType() { // accessor and getter methods
-        return this.type;
+    public int getSelect(){
+        return this.select;
     }
-
     public boolean isPlayed() {
         return this.Played;
     }
@@ -207,7 +205,6 @@ public class Tile {
     @Override
     public String toString() {
         return "Tile{" +
-                "\n type=" + type +
                 ", Played=" + Played +
                 '}';
     }
