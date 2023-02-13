@@ -131,10 +131,10 @@ public class TileGenerator {
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
-        Tile t = new Tile(Tile.tileType.SOLO, 0);
-        Tile t1 = new Tile(Tile.tileType.NORMAL, 0);
-        Tile t2 = new Tile(Tile.tileType.NORMAL, 0);
-        Tile t3 = new Tile(Tile.tileType.NORMAL, 0);
+        Tile t = new Tile( 0);
+        Tile t1 = new Tile( 0);
+        Tile t2 = new Tile( 0);
+        Tile t3 = new Tile( 0);
 
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();

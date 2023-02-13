@@ -101,7 +101,7 @@ public class Tile {
 
                 return Habitat.WETLANDS;
             case 4:
-                if (count>0)
+                if (count>1)
                 {
                     symbol2=symbol;
                 }
@@ -226,7 +226,8 @@ public class Tile {
             default:
                 throw new IllegalArgumentException("Error");
         }
-    }public String colourAnimal(char s)
+    }
+    public String colourAnimal(char s)
     {
         switch (s)
         {
@@ -253,7 +254,7 @@ public class Tile {
 
 
         TileGenerator g = new TileGenerator();
-        if(tileType.SOLO==t.type)
+        if(getSelect()==1)//Solo tile
         {
             g.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
 
@@ -262,7 +263,7 @@ public class Tile {
 
             map.printMapTotal();
         }
-        if(tileType.NORMAL==t.type)
+        if(getSelect()==2)//2 biome tile
         {
 
 
@@ -276,16 +277,15 @@ public class Tile {
     }
 
 
-    public static void main(String[] args) {
-        Tile t =new Tile(tileType.NORMAL, 0);
+    public static void main(String[] args)
+    {
+
+        Tile t =new Tile( 0);
        t.generateTile(t);
        TileGenerator g = new TileGenerator();
-        System.out.println(t.getSymbol2());
-        System.out.println(t.getHabitat(0));
+        System.out.println();
         System.out.println(t.getSymbol());
-        System.out.println(t.getHabitat(1));
 
 
     }
 }
-
