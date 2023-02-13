@@ -14,7 +14,7 @@ public class Tile {
     private Habitat[] habitats;
     private char symbol;
     private char symbol2;
-    private  int count = 0;
+    private  static  int count = 0;
 
     private final int select;
 
@@ -63,11 +63,12 @@ public class Tile {
         switch (randomNumberGenerator(5)){
 
             case 0:
-                symbol = 'R';
                 if (count>1)
                 {
                     symbol2=symbol;
                 }
+                symbol = 'R';
+
 
                 return Habitat.RIVER;
             case 1:
@@ -230,15 +231,15 @@ public class Tile {
         switch (s)
         {
             case 'H':
-                return "\033[0;34m" + "H"; //Blue
+                return "\033[0;34m" + "H"+ DisplayColour.RESET; //Blue
             case 'F':
-                return "\033[0;33m" + "F";//Orange
+                return "\033[0;33m" + "F"+ DisplayColour.RESET;//Orange
             case 'E':
-                return "\033[0;30m" + "E"; //BLACK
+                return "\033[0;30m" + "E"+ DisplayColour.RESET; //BLACK
             case 'S':
-                return "\033[0;31m"+ "S";//RED
+                return "\033[0;31m"+ "S"+ DisplayColour.RESET;//RED
             case 'B':
-                return "\033[0;35m" + "B";//PURPLE
+                return "\033[0;35m" + "B"+ DisplayColour.RESET;//PURPLE
             default:
                 throw new IllegalArgumentException("Error");
         }
@@ -278,6 +279,11 @@ public class Tile {
     public static void main(String[] args) {
         Tile t =new Tile(tileType.NORMAL, 0);
        t.generateTile(t);
+       TileGenerator g = new TileGenerator();
+        System.out.println(t.getSymbol2());
+        System.out.println(t.getHabitat(0));
+        System.out.println(t.getSymbol());
+        System.out.println(t.getHabitat(1));
 
 
     }
