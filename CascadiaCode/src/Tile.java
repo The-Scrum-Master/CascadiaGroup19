@@ -19,7 +19,7 @@ public class Tile {
     private Habitat[] habitats;
     private char symbol;
     private char symbol2;
-    private  int count = 0;
+    private  static  int count = 0;
 
     private final int select;
 
@@ -68,11 +68,12 @@ public class Tile {
         switch (randomNumberGenerator(5)){
 
             case 0:
-                symbol = 'R';
                 if (count>1)
                 {
                     symbol2=symbol;
                 }
+                symbol = 'R';
+
 
                 return Habitat.RIVER;
             case 1:
@@ -286,6 +287,11 @@ public class Tile {
     public static void main(String[] args) {
         Tile t =new Tile(tileType.NORMAL, 0);
        t.generateTile(t);
+       TileGenerator g = new TileGenerator();
+        System.out.println(t.getSymbol2());
+        System.out.println(t.getHabitat(0));
+        System.out.println(t.getSymbol());
+        System.out.println(t.getHabitat(1));
 
 
     }
