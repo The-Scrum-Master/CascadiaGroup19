@@ -5,8 +5,8 @@ public enum Wildlife {
     HAWK("H"),
     FOX("F");
     private String symbol;
-
-
+    public Wildlife randWildlife(){
+    }
     Wildlife(String symbol) {
         this.symbol =symbol;
     }

@@ -8,11 +8,6 @@ import java.util.Random;
  * @author Patrick Kelly
  */
 public class Tile {
-    public enum tileType { //types of tiles available to make
-        NORMAL,
-        SOLO,
-    }
-    private final tileType type;
     private boolean Played;
 
     private Wildlife[] slots;
@@ -26,36 +21,36 @@ public class Tile {
     private char animal;
     private char animal2;
 
-    public Tile(tileType type, int select){
+    public Tile( int select){
         this.select = select;
-        if(select > 4 || select < 2){
-            select = randomNumberGenerator(1);
+        if(select > 4 || select < 0){
+            select = randomNumberGenerator(3);
         }
-        this.type = type;
         Played = false;
-        if (this.type == tileType.NORMAL) { //creates a two biomes tile with either 3 or 2 slots for tokens
-            habitats = new Habitat[]{randomHabitat(), randomHabitat()};
-            while(habitats[0] == habitats[1]){ //makes sure the habitats are not the same on the two biomes tiles
-                habitats[1] = randomHabitat();
-            }
-            if (select == 0 || select == 2){
+            if (select == 2){
+                habitats = new Habitat[]{randomHabitat(), randomHabitat()};
+                while(habitats[0].equals(habitats[1])){ //makes sure the habitats are not the same on the two biomes tiles
+                    habitats[1] = randomHabitat();
+                }
                 slots = new Wildlife[]{randomSlot(), randomSlot()};
+                habitats = new Habitat[]{randomHabitat(), randomHabitat()};
                 while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS
                     slots[1] = randomSlot();}
-            } else {
+            } else if (select == 3) {
+                habitats = new Habitat[]{randomHabitat(), randomHabitat()};
+                while(habitats[0].equals(habitats[1])){ //makes sure the habitats are not the same on the two biomes tiles
+                    habitats[1] = randomHabitat();
+                }
                 slots = new Wildlife[]{randomSlot(), randomSlot(), randomSlot()};
                 while(slots[0] == slots[1]){ //makes sure the habitats are not the MATCHING biomesS
                     slots[1] = randomSlot();}
                 while(slots[0] == slots[2] || slots[1] == slots[2]){
                     slots[2] = randomSlot();
                 }
+            } else if (select == 1) {
+                habitats = new Habitat[]{randomHabitat()};
+                slots = new Wildlife[]{randomSlot()};
             }
-        } else if (this.type == tileType.SOLO) { // creates a solo-tile with one biome and one token slot
-            habitats = new Habitat[]{randomHabitat()};
-            slots = new Wildlife[]{randomSlot()};
-        } else {
-            throw new IllegalArgumentException("not a valid type of tile");
-        }
     }
     public void flipTile(){ //flips tiles by swapping its orientation in array
        Habitat temp =  habitats[0];
