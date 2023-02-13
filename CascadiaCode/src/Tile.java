@@ -21,7 +21,7 @@ public class Tile {
     private char animal;
     private char animal2;
 
-    public Tile( int select){
+    public Tile(int select){
         this.select = select;
         if(select > 4 || select < 0){
             select = randomNumberGenerator(3);
