@@ -47,10 +47,10 @@ public class PairDisplay {
     }
 
     public void showPairs(){
-        Tile t = new Tile(Tile.tileType.SOLO, 0);
-        Tile t1 = new Tile(Tile.tileType.NORMAL, 0);
-        Tile t2 = new Tile(Tile.tileType.NORMAL, 0);
-        Tile t3 = new Tile(Tile.tileType.NORMAL, 0);
+        Tile t = new Tile(0);
+        Tile t1 = new Tile( 0);
+        Tile t2 = new Tile(0);
+        Tile t3 = new Tile(0);
 
         TileGenerator unique1 =new TileGenerator();
         unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
@@ -61,10 +61,10 @@ public class PairDisplay {
         TileGenerator double1 =new TileGenerator();
         double1.tileTwoColors(t1.colourConverter(t1.getSymbol()), t1.colourConverter(t1.getSymbol2()), t1.colourAnimal(t1.getAnimal2()), t1.colourAnimal(t1.getAnimal()), t1.colourAnimal(t1.getAnimal()));
 
-        Tile letter1 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter2 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter3 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter4 = new Tile(Tile.tileType.SOLO, 0);
+        Tile letter1 = new Tile( 0);
+        Tile letter2 = new Tile( 0);
+        Tile letter3 = new Tile(0);
+        Tile letter4 = new Tile(0);
 
         TileGenerator blankTileWIthToken1 =new TileGenerator();
         blankTileWIthToken1.blankTileWIthToken(letter1.colourAnimal(letter1.getAnimal()));
@@ -87,10 +87,10 @@ public class PairDisplay {
         TileGenerator blank =new TileGenerator();
 
 
-        Tile t = new Tile(Tile.tileType.SOLO, 0);
-        Tile t1 = new Tile(Tile.tileType.NORMAL, 0);
-        Tile t2 = new Tile(Tile.tileType.NORMAL, 0);
-        Tile t3 = new Tile(Tile.tileType.NORMAL, 0);
+        Tile t = new Tile(0);
+        Tile t1 = new Tile( 0);
+        Tile t2 = new Tile(0);
+        Tile t3 = new Tile(0);
 
         TileGenerator unique1 =new TileGenerator();
         unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
@@ -101,10 +101,10 @@ public class PairDisplay {
         TileGenerator double1 =new TileGenerator();
         double1.tileTwoColors(t1.colourConverter(t1.getSymbol()), t1.colourConverter(t1.getSymbol2()), t1.colourAnimal(t1.getAnimal2()), t1.colourAnimal(t1.getAnimal()), t1.colourAnimal(t1.getAnimal()));
 
-        Tile letter1 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter2 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter3 = new Tile(Tile.tileType.SOLO, 0);
-        Tile letter4 = new Tile(Tile.tileType.SOLO, 0);
+        Tile letter1 = new Tile( 0);
+        Tile letter2 = new Tile( 0);
+        Tile letter3 = new Tile(0);
+        Tile letter4 = new Tile(0);
 
         TileGenerator blankTileWIthToken1 =new TileGenerator();
         blankTileWIthToken1.blankTileWIthToken(letter1.colourAnimal(letter1.getAnimal()));
