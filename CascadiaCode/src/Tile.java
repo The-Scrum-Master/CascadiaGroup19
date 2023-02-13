@@ -239,15 +239,15 @@ public class Tile {
         switch (s)
         {
             case 'H':
-                return "\033[0;34m" + "H"; //Blue
+                return "\033[0;34m" + "H"+ DisplayColour.RESET; //Blue
             case 'F':
-                return "\033[0;33m" + "F";//Orange
+                return "\033[0;33m" + "F"+ DisplayColour.RESET;//Orange
             case 'E':
-                return "\033[0;30m" + "E"; //BLACK
+                return "\033[0;30m" + "E"+ DisplayColour.RESET; //BLACK
             case 'S':
-                return "\033[0;31m"+ "S";//RED
+                return "\033[0;31m"+ "S"+ DisplayColour.RESET;//RED
             case 'B':
-                return "\033[0;35m" + "B";//PURPLE
+                return "\033[0;35m" + "B"+ DisplayColour.RESET;//PURPLE
             default:
                 throw new IllegalArgumentException("Error");
         }
