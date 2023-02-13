@@ -20,12 +20,11 @@ public class TileDeck extends Stack<Tile> {
     public void playRiver(){
         TileDeck deck = new TileDeck();
         deck.shuffle();
-        Tile[] riverTiles = new Tile;
+        Tile[] riverTiles = new Tile[4];
         Wildlife[] riverTokens = new Wildlife[4];
         for(int i = 0; i < 5; i++){
-            riverTokens[i] = Tile.randomSlot();
+            riverTokens[i] = Wildlife.randWildlife();
             riverTiles[i] = pop();
         }
-
     }
 }
