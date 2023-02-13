@@ -1,5 +1,6 @@
 public class PairDisplay {
-    public TileGenerator [] displayTilesToChooseFrom= new TileGenerator[8];
+    public TileGenerator [] displayTilesToChooseFrom= new TileGenerator[4];
+    public TileGenerator [] displayTokensToChooseFrom= new TileGenerator[4];
 
     public void fillArrayToTest(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3, TileGenerator tile4, TileGenerator blank){
         for(int i=0;i<8;i++) {
@@ -13,15 +14,11 @@ public class PairDisplay {
         displayTilesToChooseFrom[6]=tile4;
     }
 
-    public void fillArrayToTestWIthTokens(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3, TileGenerator tile4, TileGenerator token1, TileGenerator token2, TileGenerator token3, TileGenerator token4){
+    public void fillArrayToTestWIthTokens(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3, TileGenerator tile4){
         displayTilesToChooseFrom[0]=tile1;
-        displayTilesToChooseFrom[1]=token1;
-        displayTilesToChooseFrom[2]=tile2;
-        displayTilesToChooseFrom[3]=token2;
-        displayTilesToChooseFrom[4]=tile3;
-        displayTilesToChooseFrom[5]=token3;
-        displayTilesToChooseFrom[6]=tile4;
-        displayTilesToChooseFrom[7]=token4;
+        displayTilesToChooseFrom[1]=tile2;
+        displayTilesToChooseFrom[2]=tile3;
+        displayTilesToChooseFrom[3]=tile4;
     }
 
     public void tileDisplay(){ //there has to be an array of
@@ -31,6 +28,22 @@ public class PairDisplay {
             }
             System.out.println();
         }
+    }
+
+    public void tokensDisplay(){ //there has to be an array of
+        for(int k=0; k<4; k++){
+            for (int j = 0; j < displayTokensToChooseFrom.length; j++) {
+                displayTokensToChooseFrom[j].printTilePerRow(k);
+            }
+            System.out.println();
+        }
+    }
+
+    public void fillTokenArray(TileGenerator token1, TileGenerator token2, TileGenerator token3, TileGenerator token4){
+        displayTokensToChooseFrom[0]=token1;
+        displayTokensToChooseFrom[1]=token2;
+        displayTokensToChooseFrom[2]=token3;
+        displayTokensToChooseFrom[3]=token4;
     }
 
     public void showPairs(){
@@ -62,12 +75,17 @@ public class PairDisplay {
         TileGenerator blankTileWIthToken4 =new TileGenerator();
         blankTileWIthToken4.blankTileWIthToken(letter4.colourAnimal(letter4.getAnimal()));
 
-        fillArrayToTestWIthTokens(unique1, double1, double2, double3, blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
+        fillArrayToTestWIthTokens(unique1, double1, double2, double3);
+        fillTokenArray(blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
         tileDisplay();
+        tokensDisplay();
     }
 
     public static void main(String[] args) {
         PairDisplay p= new PairDisplay();
+
+        TileGenerator blank =new TileGenerator();
+
 
         Tile t = new Tile(Tile.tileType.SOLO, 0);
         Tile t1 = new Tile(Tile.tileType.NORMAL, 0);
@@ -97,7 +115,9 @@ public class PairDisplay {
         TileGenerator blankTileWIthToken4 =new TileGenerator();
         blankTileWIthToken4.blankTileWIthToken(letter4.colourAnimal(letter4.getAnimal()));
 
-        p.fillArrayToTestWIthTokens(unique1, double1, double2, double3, blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
+        p.fillArrayToTestWIthTokens(unique1, double1, double2, double3);
+        p.fillTokenArray(blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
         p.tileDisplay();
+        p.tokensDisplay();
     }
 }
