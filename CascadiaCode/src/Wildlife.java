@@ -6,7 +6,7 @@ public enum Wildlife {
     SALMON("S"),
     HAWK("H"),
     FOX("F");
-    private String symbol;
+    private final String symbol;
     public static Wildlife randWildlife(){
         switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
             case 0:
@@ -26,23 +26,31 @@ public enum Wildlife {
                 throw new IllegalArgumentException("random num generator limit error");
         }
     }
+    public String animalSymbol(Wildlife token){
+        switch (token){
+            case HAWK -> {
+                return HAWK.symbol;
+            }
+            case ELK -> {
+                return ELK.symbol;
+            }
+            case BEAR -> {
+                return BEAR.symbol;
+            }
+            case FOX -> {
+                return FOX.symbol;
+            }
+            case SALMON -> {
+                return SALMON.symbol;
+            }
+            default -> throw new IllegalArgumentException("Invalid Enum placed into converter");
+        }
+    }
     public static int randomNumberGenerator(int upperBound){
         Random rand = new Random ();
         return rand.nextInt(upperBound);
     }
     Wildlife(String symbol) {
-        this.symbol =symbol;
+        this.symbol = symbol;
     }
-    public String getSymbol(){
-        return symbol;
-    }
-
-    @Override
-    public String toString() {
-        return "Wildlife{" +
-                "symbol='" + symbol + '\'' +
-                '}';
-    }
-
-
 }

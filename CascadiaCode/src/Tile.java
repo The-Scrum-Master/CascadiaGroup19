@@ -77,7 +77,6 @@ public class Tile {
                     symbol2=symbol;
                 }
 
-
                 symbol = 'F';
 
                 return Habitat.FOREST;
@@ -253,7 +252,7 @@ public class Tile {
 
 
         TileGenerator g = new TileGenerator();
-        if(tileType.SOLO==t.type)
+        if(select ==1)
         {
             g.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
 
@@ -262,7 +261,7 @@ public class Tile {
 
             map.printMapTotal();
         }
-        if(tileType.NORMAL==t.type)
+        if(select == 2 || select == 3)
         {
 
 
@@ -277,14 +276,13 @@ public class Tile {
 
 
     public static void main(String[] args) {
-        Tile t =new Tile(tileType.NORMAL, 0);
+        Tile t =new Tile(0);
        t.generateTile(t);
        TileGenerator g = new TileGenerator();
         System.out.println(t.getSymbol2());
         System.out.println(t.getHabitat(0));
         System.out.println(t.getSymbol());
         System.out.println(t.getHabitat(1));
-
 
     }
 }
