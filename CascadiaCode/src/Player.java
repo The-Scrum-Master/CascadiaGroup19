@@ -60,9 +60,9 @@ public class Player {
         blank.blankTile();
 
 
-        TileGenerator InitialTileSingleColoured = new TileGenerator(generateSpecificTile(1));
-        TileGenerator InitialTileDoubleColoured1 = new TileGenerator(generateSpecificTile(2));
-        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(generateSpecificTile(3));
+        TileGenerator InitialTileSingleColoured = new TileGenerator(Tile.generateSpecificTile(1));
+        TileGenerator InitialTileDoubleColoured1 = new TileGenerator(Tile.generateSpecificTile(2));
+        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(Tile.generateSpecificTile(3));
 
         map.fillMapBlankByParts(blank);
         map.starterTilesReducedMap(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
@@ -114,17 +114,7 @@ public class Player {
         TileDeck.ReplaceRiverTilesIndex(indexOfSelected);
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
     }
-    public Tile generateRandomTile()
-    {
-        Tile t = new Tile(0);
-        return t;
-    }
 
-    public Tile generateSpecificTile(int x)
-    {
-        Tile t = new Tile(x);
-        return t;
-    }
 
 }
 

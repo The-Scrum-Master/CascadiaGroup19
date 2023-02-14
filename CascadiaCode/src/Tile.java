@@ -25,10 +25,10 @@ public class Tile {
     private char animal3;
 
     public Tile(int select){
-        this.select = select;
-        if(select > 4 || select < 0){
-            select = randomNumberGenerator(3);
+        if(select > 3 || select < 1){
+            select = randomNumberGenerator(3)+1; //this generates a number between 0 and 2
         }
+        this.select = select;
         Played = false;
             if (select == 2){
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
@@ -192,7 +192,7 @@ public class Tile {
 
     public void playTile(){this.Played = true;}
 
-    public int randomNumberGenerator(int upperBound){
+    public static int randomNumberGenerator(int upperBound){
         Random rand = new Random ();
         return rand.nextInt(upperBound);
     }
@@ -301,7 +301,30 @@ public class Tile {
             map.printMapTotal();
 
         }
+        if(t.getSelect()==3)//2 biome tile 2 placeholders
+        {
 
+
+            g.tileTwoColors(t.colourConverter(t.getColour2()), t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal3()), t.colourAnimal(t.getAnimal2()), t.colourAnimal(t.getAnimal()));
+            map.addTile(g);
+
+            map.printMapTotal();
+
+        }
+
+
+    }
+
+    public static Tile generateRandomTile()
+    {
+        Tile t = new Tile(0);
+        return t;
+    }
+
+    public static Tile generateSpecificTile(int x)
+    {
+        Tile t = new Tile(x);
+        return t;
     }
 
 
