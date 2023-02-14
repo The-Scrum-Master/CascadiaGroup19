@@ -57,9 +57,16 @@ public class Player {
 
         firstTurnPlayed=true;
     }
-    public void generateRandomTile()
+    public Tile generateRandomTile()
     {
         Tile t = new Tile(0);
+        return t;
+    }
+
+    public Tile generateSpecificTile(int x)
+    {
+        Tile t = new Tile(x);
+        return t;
     }
 
 }
