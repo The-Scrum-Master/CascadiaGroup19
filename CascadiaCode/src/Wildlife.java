@@ -26,7 +26,7 @@ public enum Wildlife {
                 throw new IllegalArgumentException("random num generator limit error");
         }
     }
-    public String animalSymbol(Wildlife token){
+    public static String animalSymbol(Wildlife token){
         switch (token){
             case HAWK -> {
                 return HAWK.symbol;

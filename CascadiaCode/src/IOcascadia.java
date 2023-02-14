@@ -114,4 +114,20 @@ public class IOcascadia {
         System.out.println("Choose a pair tile-token from 1 (left-most) to 4 (right-most), ask for a cull (5) or" +
                 " use a nature token to cull again (6) or to choose one tile and one token that are not paired (7)");
     }
+    public static boolean cullOption(){
+        System.out.println("There is 3 of the same animal tokens in the river. \n " +
+                "Would you like to cull? Enter yes and no.");
+        String choice = takeInput();
+        choice = choice.toLowerCase();
+        while(!"yes".equals(choice) || !"no".equals(choice)){
+            System.out.println("Your input was invalid, try again.");
+            choice = takeInput();
+            choice = choice.toLowerCase();
+        }
+        if(choice.equals("yes")){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

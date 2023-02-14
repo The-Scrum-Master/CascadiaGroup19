@@ -1,7 +1,19 @@
-
 import java.util.*;
 
+/**
+ * This class creates a stack of deck of object tiles and has the functions for the river, and the cull options
+ * Notes -- we may want to fix the fact that every time we call function repopulate the river we generate 85 tile for the stack;
+ *Functions: createNewDeck= fills the deck variable with new 85 tiles;
+ *           playRiver= takes in deck and fills in the two arrays of tiles and tokens;
+ *           cullCheck= checks if a cull is needed and calls the function cullOption from IO if relevant
+ * @author Patrick Kelly
+ */
 public class TileDeck extends Stack<Tile> {
+
+    Tile[] riverTiles = new Tile[4];
+    Wildlife[] riverTokens = new Wildlife[4];
+    TileDeck deck;
+
     TileDeck(){
         for(int i = 0; i < 85; i++){
             if(i < 25){
@@ -17,14 +29,39 @@ public class TileDeck extends Stack<Tile> {
         Collections.shuffle(this);
     }
 
-    public void playRiver(){
-        TileDeck deck = new TileDeck();
+    public TileDeck getDeck(){return deck;}
+    public Tile[] getRiverTiles(){ return riverTiles;}
+     public Wildlife[] getRiverTokens(){return riverTokens;}
+
+    public TileDeck createNewDeck(){
+        deck = new TileDeck();
         deck.shuffle();
-        Tile[] riverTiles = new Tile[4];
-        Wildlife[] riverTokens = new Wildlife[4];
-        for(int i = 0; i < 5; i++){
+        return deck;
+    }
+
+    public void playRiver(TileDeck deck){
+        for(int i = 0; i < 4; i++){
             riverTokens[i] = Wildlife.randWildlife();
-            riverTiles[i] = pop();
+            riverTiles[i] = deck.pop();
+        }
+    }
+    public void cullCheck(){
+        for(int j = 0; j < 4; j++){
+            int cullCount = 0;
+            for(int k = 0; k < 4; k++){
+                if(riverTokens[j] == riverTokens[k]){
+                    cullCount++;
+                }
+                if(cullCount == 3){
+                    if(IOcascadia.cullOption()){
+                        playRiver(deck);
+                        cullCheck();
+                    }
+                } else if (cullCount > 3){
+                    playRiver(deck);
+                    cullCheck();
+                }
+            }
         }
     }
 }
