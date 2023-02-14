@@ -35,9 +35,9 @@ public class Player {
 
     public void generateInitialMap(){
         TileGenerator blank =new TileGenerator();
-        Tile t = new Tile( 0);
-        Tile t2 = new Tile( 0);
-        Tile t3 = new Tile(0);
+        Tile t = new Tile( 1);
+        Tile t2 = new Tile( 2);
+        Tile t3 = new Tile(3);
 
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
@@ -56,6 +56,10 @@ public class Player {
         map.printMapTotalByParts();
 
         firstTurnPlayed=true;
+    }
+    public void generateRandomTile()
+    {
+        Tile t = new Tile(0);
     }
 
 }

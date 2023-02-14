@@ -14,7 +14,7 @@ public class Tile {
     private Habitat[] habitats;
     private char symbol;
     private char symbol2;
-    private  static  int count = 0;
+    private   int count = 0;
 
     private final int select;
 
@@ -29,7 +29,7 @@ public class Tile {
         Played = false;
             if (select == 2){
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
-                while(habitats[0].equals(habitats[1])){ //makes sure the habitats are not the same on the two biomes tiles
+                while(habitats[0].toString().equals(habitats[1].toString())){ //makes sure the habitats are not the same on the two biomes tiles
                     habitats[1] = randomHabitat();
                 }
                 slots = new Wildlife[]{randomSlot(), randomSlot()};
@@ -254,7 +254,7 @@ public class Tile {
 
 
         TileGenerator g = new TileGenerator();
-        if(getSelect()==1)//Solo tile
+        if(t.getSelect()==1)//Solo tile
         {
             g.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
 
@@ -263,7 +263,7 @@ public class Tile {
 
             map.printMapTotal();
         }
-        if(getSelect()==2)//2 biome tile
+        if(t.getSelect()==2)//2 biome tile
         {
 
 
@@ -280,10 +280,10 @@ public class Tile {
     public static void main(String[] args)
     {
 
-        Tile t =new Tile( 0);
+        Tile t =new Tile( 2);
        t.generateTile(t);
        TileGenerator g = new TileGenerator();
-        System.out.println();
+        System.out.println(t.getSymbol2());
         System.out.println(t.getSymbol());
 
 
