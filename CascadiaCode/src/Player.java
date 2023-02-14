@@ -35,10 +35,19 @@ public class Player {
 
     public void generateInitialMap(){
         TileGenerator blank =new TileGenerator();
-        Tile t = new Tile( 1);
-        Tile t2 = new Tile( 2);
-        Tile t3 = new Tile(3);
+        blank.blankTile();
 
+
+        TileGenerator InitialTileSingleColoured = new TileGenerator(generateSpecificTile(1));
+        TileGenerator InitialTileDoubleColoured1 = new TileGenerator(generateSpecificTile(2));
+        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(generateSpecificTile(3));
+
+        map.fillMapBlankByParts(blank);
+        map.starterTilesReducedMap(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
+        map.printMapTotalByParts();
+
+
+        /*
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
         unique1.tileUniqueColor(t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal()));
@@ -51,9 +60,14 @@ public class Player {
         TileGenerator double2 =new TileGenerator();
         double2.tileTwoColors(t3.colourConverter(t3.getColour()), t3.colourConverter(t3.getColour2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
 
+
+
+
         map.fillMapBlankByParts(blank);
-        map.starterTilesReducedMap(unique1, double1, double2);
+        map.starterTilesReducedMap(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
         map.printMapTotalByParts();
+
+         */
 
         firstTurnPlayed=true;
     }

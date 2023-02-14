@@ -2,10 +2,26 @@
 public class TileGenerator {
 
     public String [][] tile= new String[4][4];
+    public static String [][] blankTile= new String[4][4];
 
-    public TileGenerator (){ //put the habitats and the placeholders as inputs into the constructor?
+    Tile constructorTile;
+
+    public TileGenerator(){
 
     }
+    public TileGenerator (Tile constructorTile){ //put the habitats and the placeholders as inputs into the constructor?
+        this.constructorTile = constructorTile;
+        if(constructorTile.getSelect()==1){
+            tileUniqueColor(constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()));
+        }
+        else if(constructorTile.getSelect()==2){
+            tileTwoColors(constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), " ");
+        }
+        else if(constructorTile.getSelect()==3){
+            tileTwoColors(constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), constructorTile.colourAnimal(constructorTile.getAnimal3()));
+        }
+    }
+
 
     public void blankTile(){
         for(int i=0;i< tile.length;i++) {
@@ -14,6 +30,31 @@ public class TileGenerator {
             }
         }
     }
+
+
+
+/*
+    public static void blankTileFiller(TileGenerator tile){
+        for(int i=0;i< blankTile.length;i++) {
+            for (int j = 0; j < blankTile.length; j++) {
+                blankTile[i][j] = "   ";
+            }
+        }
+    }
+
+    public static TileGenerator blankTile(){
+        TileGenerator blank=new TileGenerator();
+        for(int i=0;i< blankTile.length;i++) {
+            for (int j = 0; j < blankTile.length; j++) {
+                blankTile[i][j] = "   ";
+            }
+        }
+        return blank;
+    }
+
+ */
+
+
 
     public void blankTileWIthToken(String letter1){
         for(int i=0;i< tile.length;i++) {
@@ -58,6 +99,7 @@ public class TileGenerator {
             }
         }
     }
+
 
     public void tileTwoColors(String color1, String color2, String letter1, String letter2, String letter3){
         String color;
@@ -171,10 +213,10 @@ public class TileGenerator {
         //map.addTile(unique);
         //map.fillMap(unique1, unique2, unique3);
 
-
+        //map.fillMapBlank(blank);
         map.fillMapBlank(blank);
         //map.starterTiles(unique2, double1, double2);
-        //map.printMapTotal();
+        map.printMapTotal();
 
         //map.fillMapBlankByParts(blank);
         //map.starterTilesReducedMap(unique1, double1, double2);
