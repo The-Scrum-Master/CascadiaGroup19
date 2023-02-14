@@ -1,4 +1,8 @@
 public class PairDisplay {
+    public Tile tile1;
+    public Tile tile2;
+    public Tile tile3;
+    public Tile tile4;
     public TileGenerator [] displayTilesToChooseFrom= new TileGenerator[4];
     public TileGenerator [] displayTokensToChooseFrom= new TileGenerator[4];
 

@@ -276,7 +276,7 @@ public class Tile {
     {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
-        map.fillMapBlank(blank);
+        //map.fillMapBlank(blank);
         blank.blankTile();
 
 

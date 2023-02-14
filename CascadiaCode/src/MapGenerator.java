@@ -1,6 +1,8 @@
 public class MapGenerator {
     public TileGenerator [][] map= new TileGenerator[20][20];
 
+
+
     public void addTile(TileGenerator tile){
         map[0][0]=tile;
         //map[0][0].printTile();
@@ -22,6 +24,7 @@ public class MapGenerator {
         }
     }
 
+
     public void fillMapBlank(TileGenerator blank){
         for(int i=0;i< map.length;i++) {
             for (int j = 0; j < map.length; j++) {
@@ -29,6 +32,21 @@ public class MapGenerator {
             }
         }
     }
+
+
+
+/*
+    public void fillMapBlank(){
+        for(int i=0;i< map.length;i++) {
+            for (int j = 0; j < map.length; j++) {
+                map[i][j]=TileGenerator.blankTile();
+            }
+        }
+    }
+
+ */
+
+
 
 
     public void fillMapBlankByParts(TileGenerator blank){ //NEED TO WORK ON THIS FUNCTION AND CREATE A PRINTMAPBYPARTS ONE, MAKING THEM FILL THE CENTER OF
