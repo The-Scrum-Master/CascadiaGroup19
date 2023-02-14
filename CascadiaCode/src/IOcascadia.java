@@ -119,7 +119,7 @@ public class IOcascadia {
                 "Would you like to cull? Enter yes and no.");
         String choice = takeInput();
         choice = choice.toLowerCase();
-        while(!"yes".equals(choice) || !"no".equals(choice)){
+        while(!"yes".equals(choice) && !"no".equals(choice)){
             System.out.println("Your input was invalid, try again.");
             choice = takeInput();
             choice = choice.toLowerCase();

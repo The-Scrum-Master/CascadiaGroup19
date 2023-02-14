@@ -1,3 +1,20 @@
+
+/**
+ * This Class creates the object Player that hold the information relevant to the individual Players in
+ * the game such as board and tiles held. As well as the function necessary to run the backend action
+ * of the player
+ *
+ * Major Methods: generate initial map .... sergio did it
+ *          - placeTile, takes in x and y coordinates checks to make sure it picked location is adjaent
+ *          to another tile, if true puts into board at index
+ *          -pickPair, takes int, grabs the tile and token from that index of the river and moves it into player
+ *          variable "heldTile" and replaces location on the river
+ * @author Patrick Kelly, Sergio Jjjiemmemnnezz
+ */
+
+
+
+
 public class Player {
     private final int order;
     private final String name;
@@ -14,7 +31,6 @@ public class Player {
         this.order = order;
         heldTile = null;
         heldToken = null;
-
         playerBoard= new Tile[20][20]; //new board of 20 by 20 tiles
         playerBoard[9][9] = new Tile(0); //generates the three starting tiles
         playerBoard[9][9].playTile(); //changes boolean on tile to played.
@@ -76,6 +92,20 @@ public class Player {
          */
 
         firstTurnPlayed=true;
+    }
+    public void placeTile(int x, int y){
+        if(heldTile == null){
+            throw new IllegalArgumentException("held tile is null when calling place tile");
+        }
+        this.heldTile.playTile();
+        while(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
+        playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null){
+            System.out.println("The board location for the tile placement is not a valid location,\n" +
+                    " you must place it adjacent to another tile. Please try again");
+            placeTile(x,y);
+        }
+        playerBoard[x][y] = heldTile;
+        heldTile = null;
     }
 
     public void pickPair(int indexOfSelected){
