@@ -6,9 +6,15 @@ public class Player {
     public Tile [][] playerBoard;
     public MapGenerator map=new MapGenerator();
 
+    public Tile heldTile;
+    public Wildlife heldToken;
+
     public Player(String name, int order){
         this.name = name;
         this.order = order;
+        heldTile = null;
+        heldToken = null;
+
         playerBoard= new Tile[20][20]; //new board of 20 by 20 tiles
         playerBoard[9][9] = new Tile(0); //generates the three starting tiles
         playerBoard[9][9].playTile(); //changes boolean on tile to played.
@@ -70,6 +76,13 @@ public class Player {
          */
 
         firstTurnPlayed=true;
+    }
+
+    public void pickPair(int indexOfSelected){
+        this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
+        this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
+        TileDeck.ReplaceRiverTilesIndex(indexOfSelected);
+        TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
     }
     public Tile generateRandomTile()
     {

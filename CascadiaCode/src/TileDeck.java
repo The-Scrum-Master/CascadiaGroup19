@@ -10,9 +10,9 @@ import java.util.*;
  */
 public class TileDeck extends Stack<Tile> {
 
-    Tile[] riverTiles = new Tile[4];
-    Wildlife[] riverTokens = new Wildlife[4];
-    TileDeck deck;
+    public static Tile[] riverTiles = new Tile[4];
+    public static Wildlife[] riverTokens = new Wildlife[4];
+    static TileDeck deck;
 
     TileDeck(){
         for(int i = 0; i < 85; i++){
@@ -30,8 +30,13 @@ public class TileDeck extends Stack<Tile> {
     }
 
     public TileDeck getDeck(){return deck;}
-    public Tile[] getRiverTiles(){ return riverTiles;}
-     public Wildlife[] getRiverTokens(){return riverTokens;}
+    public static Tile[] getRiverTiles(){ return riverTiles;}
+
+    public static Wildlife[] getRiverTokens(){return riverTokens;}
+    public static Tile getRiverTilesIndex(int index){ return riverTiles[index];}
+     public static Wildlife getRiverTokensIndex(int index){return riverTokens[index];}
+    public static void ReplaceRiverTilesIndex(int index){  riverTiles[index] = deck.pop();}
+    public static void ReplaceRiverTokensIndex(int index){ riverTokens[index] = Wildlife.randWildlife();}
 
     public TileDeck createNewDeck(){
         deck = new TileDeck();
