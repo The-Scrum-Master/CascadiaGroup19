@@ -53,13 +53,13 @@ public class PairDisplay {
         Tile t3 = new Tile(0);
 
         TileGenerator unique1 =new TileGenerator();
-        unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
+        //unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
         TileGenerator double2 =new TileGenerator();
-        double2.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
+        //double2.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
         TileGenerator double3 =new TileGenerator();
-        double3.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
+        //double3.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
         TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors(t1.colourConverter(t1.getSymbol()), t1.colourConverter(t1.getSymbol2()), t1.colourAnimal(t1.getAnimal2()), t1.colourAnimal(t1.getAnimal()), t1.colourAnimal(t1.getAnimal()));
+        //double1.tileTwoColors(t1.colourConverter(t1.getSymbol()), t1.colourConverter(t1.getSymbol2()), t1.colourAnimal(t1.getAnimal2()), t1.colourAnimal(t1.getAnimal()), t1.colourAnimal(t1.getAnimal()));
 
         Tile letter1 = new Tile( 0);
         Tile letter2 = new Tile( 0);
@@ -93,13 +93,13 @@ public class PairDisplay {
         Tile t3 = new Tile(0);
 
         TileGenerator unique1 =new TileGenerator();
-        unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
+        //unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
         TileGenerator double2 =new TileGenerator();
-        double2.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
-        TileGenerator double3 =new TileGenerator();
-        double3.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
-        TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors(t1.colourConverter(t1.getSymbol()), t1.colourConverter(t1.getSymbol2()), t1.colourAnimal(t1.getAnimal2()), t1.colourAnimal(t1.getAnimal()), t1.colourAnimal(t1.getAnimal()));
+        //double2.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
+        //TileGenerator double3 =new TileGenerator();
+        //double3.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
+        //TileGenerator double1 =new TileGenerator();
+        //double1.tileTwoColors(t1.colourConverter(t1.getSymbol()), t1.colourConverter(t1.getSymbol2()), t1.colourAnimal(t1.getAnimal2()), t1.colourAnimal(t1.getAnimal()), t1.colourAnimal(t1.getAnimal()));
 
         Tile letter1 = new Tile( 0);
         Tile letter2 = new Tile( 0);
@@ -115,7 +115,7 @@ public class PairDisplay {
         TileGenerator blankTileWIthToken4 =new TileGenerator();
         blankTileWIthToken4.blankTileWIthToken(letter4.colourAnimal(letter4.getAnimal()));
 
-        p.fillArrayToTestWIthTokens(unique1, double1, double2, double3);
+       // p.fillArrayToTestWIthTokens(unique1, double1, double2, double3);
         p.fillTokenArray(blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
         p.tileDisplay();
         p.tokensDisplay();

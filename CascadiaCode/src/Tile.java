@@ -12,14 +12,17 @@ public class Tile {
 
     private Wildlife[] slots;
     private Habitat[] habitats;
-    private char symbol;
-    private char symbol2;
-    private   int count = 0;
+    private char colour2; // colours for tiles
+    private char colour; // colours for tiles
+    private   int count = 0; // count for colours
+    private int animalCount =0; // count for tokens
 
     private final int select;
 
     private char animal;
     private char animal2;
+
+    private char animal3;
 
     public Tile(int select){
         this.select = select;
@@ -63,51 +66,51 @@ public class Tile {
         switch (randomNumberGenerator(5)){
 
             case 0:
-                if (count>1)
+                if (count>1) //if function called twice store first colour in colour2
                 {
-                    symbol2=symbol;
+                    colour2=colour;
                 }
-                symbol = 'R';
+                colour = 'R';
 
 
                 return Habitat.RIVER;
             case 1:
                 if (count>1)
                 {
-                    symbol2=symbol;
+                    colour2=colour;
                 }
 
 
-                symbol = 'F';
+                colour = 'F';
 
                 return Habitat.FOREST;
             case 2:
                 if (count>1)
                 {
-                    symbol2=symbol;
+                    colour2=colour;
                 }
 
-                symbol = 'M';
+                colour = 'M';
 
                 return Habitat.MOUNTAIN;
             case 3:
                 if (count>1)
                 {
-                    symbol2=symbol;
+                    colour2=colour;
                 }
 
 
-                symbol = 'W';
+                colour = 'W';
 
                 return Habitat.WETLANDS;
             case 4:
                 if (count>1)
                 {
-                    symbol2=symbol;
+                    colour2=colour;
                 }
 
 
-                symbol = 'P';
+                colour = 'P';
 
                 return Habitat.PRAIRIE;
             default:
@@ -115,41 +118,62 @@ public class Tile {
         }
     }
     public Wildlife randomSlot(){
-        count++;
+        animalCount++;
 
         switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
             case 0:
-                if (count>1)
+                if (animalCount==2)//if function called twice store first colour in colour2
                 {
                     animal2=animal;
                 }
+                if (animalCount>2)//if function called 3 times store first animal in animal3 and second animal in animal2
+                {
+                    animal3 = animal;
+                }
+
                 animal = 'H';
                 return Wildlife.HAWK;
             case 1:
-                if (count>1)
+                if (animalCount==2)
                 {
                     animal2=animal;
+                }
+                if (animalCount>2)
+                {
+                    animal3 = animal;
                 }
                 animal = 'S';
                 return Wildlife.SALMON;
             case 2:
-                if (count>1)
+                if (animalCount==2)
                 {
                     animal2=animal;
+                }
+                if (animalCount>2)
+                {
+                    animal3 = animal;
                 }
                 animal = 'E';
                 return Wildlife.ELK;
             case 3:
-                if (count>1)
+                if (animalCount==2)
                 {
                     animal2=animal;
+                }
+                if (animalCount>2)
+                {
+                    animal3 = animal;
                 }
                 animal = 'B';
                 return Wildlife.BEAR;
             case 4:
-                if (count>1)
+                if (animalCount==2)
                 {
                     animal2=animal;
+                }
+                if (animalCount>2)
+                {
+                    animal3 = animal;
                 }
                 animal = 'F';
                 return Wildlife.FOX;
@@ -188,13 +212,13 @@ public class Tile {
     }
 
 
-    public char getSymbol()
+    public char getColour()
     {
-        return symbol;
+        return colour;
     }
-    public char getSymbol2()
+    public char getColour2()
     {
-        return symbol2;
+        return colour2;
     }
 
     public char getAnimal(){
@@ -202,6 +226,9 @@ public class Tile {
     }
     public char getAnimal2(){
         return animal2;
+    }
+    public char getAnimal3(){
+        return animal3;
     }
     @Override
     public String toString() {
@@ -256,18 +283,18 @@ public class Tile {
         TileGenerator g = new TileGenerator();
         if(t.getSelect()==1)//Solo tile
         {
-            g.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
+            g.tileUniqueColor(t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal()));
 
 
             map.addTile(g);
 
             map.printMapTotal();
         }
-        if(t.getSelect()==2)//2 biome tile
+        if(t.getSelect()==2)//2 biome tile 2 placeholders
         {
 
 
-            g.tileTwoColors(t.colourConverter(t.getSymbol2()), t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal2()), " ", t.colourAnimal(t.getAnimal()));
+            g.tileTwoColors(t.colourConverter(t.getColour2()), t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal2()), " ", t.colourAnimal(t.getAnimal()));
             map.addTile(g);
 
             map.printMapTotal();
@@ -280,11 +307,13 @@ public class Tile {
     public static void main(String[] args)
     {
 
-        Tile t =new Tile( 2);
+        Tile t =new Tile( 3);
        t.generateTile(t);
        TileGenerator g = new TileGenerator();
-        System.out.println(t.getSymbol2());
-        System.out.println(t.getSymbol());
+        System.out.println(t.getAnimal());
+        System.out.println(t.getAnimal2());
+        System.out.println(t.getAnimal3());
+
 
 
     }
