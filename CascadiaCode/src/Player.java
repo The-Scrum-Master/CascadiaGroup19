@@ -9,7 +9,7 @@
  *          to another tile, if true puts into board at index
  *          -pickPair, takes int, grabs the tile and token from that index of the river and moves it into player
  *          variable "heldTile" and replaces location on the river
- * @author Patrick Kelly, Sergio Jjjiemmemnnezz
+ * @author Patrick Kelly, Sergio Jjjiemmemnnezz.
  */
 
 
