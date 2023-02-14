@@ -131,22 +131,22 @@ public class TileGenerator {
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
-        Tile t = new Tile( 0);
-        Tile t1 = new Tile( 0);
-        Tile t2 = new Tile( 0);
-        Tile t3 = new Tile( 0);
+        Tile t = new Tile( 1);
+        Tile t1 = new Tile( 1);
+        Tile t2 = new Tile( 2);
+        Tile t3 = new Tile( 2);
 
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
-        unique1.tileUniqueColor(t.colourConverter(t.getSymbol()), t.colourAnimal(t.getAnimal()));
-        TileGenerator unique2 =new TileGenerator();
-        unique2.tileUniqueColor(t1.colourConverter(t1.getSymbol()), t1.colourAnimal(t1.getAnimal()));
-        TileGenerator unique3 =new TileGenerator();
+        unique1.tileUniqueColor(t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal()));
+        //TileGenerator unique2 =new TileGenerator();
+        //unique2.tileUniqueColor(t1.colourConverter(t1.getSymbol()), t1.colourAnimal(t1.getAnimal()));
+        //TileGenerator unique3 =new TileGenerator();
         //unique3.tileUniqueColor("\033[43m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
-        TileGenerator double1 =new TileGenerator();
-        double1.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
-        TileGenerator double2 =new TileGenerator();
-        double2.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
+        //TileGenerator double1 =new TileGenerator();
+        //double1.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
+        //TileGenerator double2 =new TileGenerator();
+        //double2.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
 //COMMENTS??????
 
 
@@ -172,7 +172,7 @@ public class TileGenerator {
         //map.fillMap(unique1, unique2, unique3);
 
 
-        //map.fillMapBlank(blank);
+        map.fillMapBlank(blank);
         //map.starterTiles(unique2, double1, double2);
         //map.printMapTotal();
 
