@@ -47,8 +47,9 @@ public class Tile {
                 slots = new Wildlife[]{randomSlot(), randomSlot(), randomSlot()};
                 while(slots[0] == slots[1]){ //makes sure the habitats are not the MATCHING biomesS
                     slots[1] = randomSlot();}
-                while(slots[0] == slots[2] || slots[1] == slots[2]){
+                while(slots[0] == slots[2] || slots[1] == slots[2] || slots[0] == slots[1]){
                     slots[2] = randomSlot();
+                    slots[1] = randomSlot();
                 }
             } else if (select == 1) {
                 habitats = new Habitat[]{randomHabitat()};
