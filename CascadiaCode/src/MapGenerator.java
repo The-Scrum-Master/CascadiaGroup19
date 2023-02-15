@@ -78,10 +78,14 @@ public class MapGenerator {
         map[10][10]=tile3;
     }
 
+    public void setTile(TileGenerator tile, int x, int y){
+        map[x][y]=tile;
+    }
+
     public void starterTiles(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3){
-        map[0][0]=tile1;
-        map[1][0]=tile2;
-        map[1][1]=tile3;
+        map[9][9]=tile1;
+        map[10][9]=tile2;
+        map[10][10]=tile3;
     }
 
     public void printMapTotal(){

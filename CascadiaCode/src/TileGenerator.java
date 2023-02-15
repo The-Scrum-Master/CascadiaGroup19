@@ -231,6 +231,30 @@ public class TileGenerator {
         //map.starterTiles(unique2, double1, double2);
         map.printMapTotal();
 
+
+
+
+
+
+
+
+        MapGenerator mapencio=new MapGenerator();
+        TileGenerator blankencio =new TileGenerator();
+        blank.blankTile();
+
+
+        TileGenerator tileTrail = new TileGenerator(Tile.generateRandomTile());
+        TileGenerator InitialTileSingleColoured = new TileGenerator(Tile.generateSpecificTile(1));
+        TileGenerator InitialTileDoubleColoured1 = new TileGenerator(Tile.generateSpecificTile(2));
+        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(Tile.generateSpecificTile(3));
+
+        mapencio.fillMapBlank(blank);
+        mapencio.starterTilesReducedMap(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
+        mapencio.setTile(tileTrail, 9, 10 );
+
+        mapencio.printMapTotal();
+
+
         //map.fillMapBlankByParts(blank);
         //map.starterTilesReducedMap(unique1, double1, double2);
         //map.printMapTotalByParts();

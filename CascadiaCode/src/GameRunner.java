@@ -1,29 +1,33 @@
+/**
+ * This class is in charge of running the game. This is the main that will be run and will invoke other classe's functions
+ */
+
 import java.util.ArrayList;
 
 public class GameRunner {
-    private static final ArrayList<Player> players= new ArrayList<Player>();
-    public static PairDisplay p =new PairDisplay();
+    private static final ArrayList<Player> players= new ArrayList<Player>(); //arrayList of Player class to store players
+    public static PairDisplay p =new PairDisplay(); // to use the functions in the PairDisplay class to display the river
 
     public static void main(String[] args) {
-        IOcascadia.welcomeMessage();
-        IOcascadia.numberOfPlayers();
-        IOcascadia.playerNames();
-        IOcascadia.playerOrder();
+        IOcascadia.welcomeMessage(); //output welcome message
+        IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
+        IOcascadia.playerNames(); //output messages asking for player names
+        IOcascadia.playerOrder(); //output message informing of the order the players are going to follow
 
-        int numberOfPlayers = IOcascadia.getParticipantsInt();
-        for(int i = 0; i< numberOfPlayers; i++){
+        int numberOfPlayers = IOcascadia.getParticipantsInt(); //stores number of players into the variable numberOfPlayers
+        for(int i = 0; i< numberOfPlayers; i++){ //using a loop to add the players in order into the players ArrayList and creating
+                                                 //an instance of Player for each
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
 
-        boolean continueGame=true;
-        int playersTurn=0;
+        boolean continueGame=true; //boolean to stop the game
+        int playersTurn=0; //int to rotate around players in order
 
-        while(continueGame){
-            if(playersTurn== numberOfPlayers){
+        while(continueGame){ //main loop that runs the game until continueGame is changed to false
+            if(playersTurn == numberOfPlayers){
                 playersTurn=0;
             }
             else{
-                //System.out.println(players.get(playersTurn).name + "'s turn:");
                 System.out.println(players.get(playersTurn).getName()+ "'s turn:");
 
                 //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
