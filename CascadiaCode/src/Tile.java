@@ -5,7 +5,6 @@ import java.util.Random;
 /**
  * This is class constructs and holds the functions for the Object Tile
  * The index of the array that holds the habitat is the orientation of the tile.
- * @author Patrick Kelly
  */
 public class Tile {
     private boolean Played;
