@@ -125,8 +125,10 @@ public class IOcascadia {
             choice = choice.toLowerCase();
         }
         if(choice.equals("yes")){
+            System.out.println("You have chosen to cull the river.");
             return true;
         }else{
+            System.out.println("You have Not chosen to cull the river.");
             return false;
         }
     }
