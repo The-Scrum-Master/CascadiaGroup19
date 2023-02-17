@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.zip.InflaterInputStream;
 
 public class IOcascadia {
 
@@ -14,6 +15,7 @@ public class IOcascadia {
         return in.nextLine();
     }
 
+
     public static String makeLowerCase(String str){
         return str.toLowerCase();
     }
@@ -25,7 +27,13 @@ public class IOcascadia {
     public static void numberOfPlayers(){
         System.out.println("How many players are going to play? (between 2 and 4)");
         participants=takeInput();
-        participantsInt=Integer.parseInt(participants);
+            try {
+                participantsInt = Integer.parseInt(participants);
+
+            } catch (Exception ex) {
+                System.out.println("Expected a number here wrong input try again");
+            }
+
         if(participantsInt<2 || participantsInt>4){
             System.out.println("Sorry, the number of players has to be between 2 and 4, try again");
             numberOfPlayers();
@@ -37,7 +45,10 @@ public class IOcascadia {
 
     public static void playerNames(){
         System.out.println("Enter player names: ");
-        playerNames.add(takeInput());
+
+            playerNames.add(takeInput());
+
+
         for(int i=1; i<participantsInt; i++){
             System.out.println("Enter next player's name: ");
             playerNames.add(takeInput());

@@ -50,6 +50,7 @@ public class TileDeck extends Stack<Tile> {
             riverTiles[i] = deck.pop();
         }
     }
+
     public static void cullCheck(){
         for(int j = 0; j < 4; j++){
             int cullCount = 0;
