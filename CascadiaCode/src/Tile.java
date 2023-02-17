@@ -55,10 +55,11 @@ public class Tile {
                 slots = new Wildlife[]{randomSlot()};
             }
     }
-    public void flipTile(){ //flips tiles by swapping its orientation in array
-       Habitat temp =  habitats[0];
-       habitats[0] = habitats[1];
-       habitats[1] = temp;
+    public void flipTile(Tile t){ //flips tiles by swapping its orientation in array
+       Habitat temp =  t.getHabitat(0);
+       t.habitats[0] = t.habitats[1];
+       t.habitats[1] = temp;
+       t.generateTile(t);
     }
 
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
@@ -276,7 +277,7 @@ public class Tile {
     {
         MapGenerator map=new MapGenerator();
         TileGenerator blank =new TileGenerator();
-        //map.fillMapBlank(blank);
+        map.fillMapBlank(blank);
         blank.blankTile();
 
 
@@ -330,12 +331,13 @@ public class Tile {
     public static void main(String[] args)
     {
 
-        Tile t =new Tile( 3);
+        Tile t =new Tile( 2);
        t.generateTile(t);
        TileGenerator g = new TileGenerator();
-        System.out.println(t.getAnimal());
-        System.out.println(t.getAnimal2());
-        System.out.println(t.getAnimal3());
+       t.flipTile(t);
+
+
+
 
 
 

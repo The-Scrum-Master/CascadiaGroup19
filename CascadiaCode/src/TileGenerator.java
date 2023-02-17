@@ -35,6 +35,18 @@ public class TileGenerator {
         }
     }
 
+    public void generateFlipTile()
+    {
+        if(constructorTile.getSelect()==1)
+        {
+            System.out.println("This is a unique tile cannot be flipped");
+        }
+        else
+        {
+
+        }
+    }
+
 
     public void blankTile(){
         for(int i=0;i< tile.length;i++) {
