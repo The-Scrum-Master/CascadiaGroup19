@@ -31,7 +31,7 @@ public class Tile {
         Played = false;
             if (select == 2){
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
-                while(habitats[0].toString().equals(habitats[1].toString())){ //makes sure the habitats are not the same on the two biomes tiles
+                while(habitats[0].getSymbol()==(habitats[1].getSymbol())){ //makes sure the habitats are not the same on the two biomes tiles
                     habitats[1] = randomHabitat();
                 }
                 slots = new Wildlife[]{randomSlot(), randomSlot()};
@@ -59,7 +59,9 @@ public class Tile {
        Habitat temp =  t.getHabitat(0);
        t.habitats[0] = t.habitats[1];
        t.habitats[1] = temp;
-       t.generateTile(t);
+       TileGenerator g = new TileGenerator(t);
+       g.generateFlipTile();
+       g.printTile();
     }
 
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
@@ -332,8 +334,8 @@ public class Tile {
     {
 
         Tile t =new Tile( 2);
-       t.generateTile(t);
-       TileGenerator g = new TileGenerator();
+        TileGenerator tg = new TileGenerator(t);
+       tg.printTile();
        t.flipTile(t);
 
 

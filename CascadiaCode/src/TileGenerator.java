@@ -45,8 +45,44 @@ public class TileGenerator {
         else
         {
 
+           String colour= constructorTile.colourConverter(constructorTile.getHabitat(0).getSymbol());
+            System.out.println(constructorTile.getHabitat(0).getSymbol());
+            String colour2= constructorTile.colourConverter(constructorTile.getHabitat(1).getSymbol());
+            System.out.println(constructorTile.getHabitat(1).getSymbol());
+            generateNewFlippedTile(colour,colour2);
         }
     }
+    public void generateNewFlippedTile(String color1,String color2)
+    {
+        String color;
+        int toggle=0;
+        for(int i=0;i< tile.length;i++) {
+            for (int j = 0; j < tile.length; j++) {
+                if(i==1 || i==2){
+                    if(toggle%2==0){
+                        color=color1;
+                    }
+                    else{
+                        color=color2;
+                    }
+                    toggle++;
+                    if(j==0 || j==3){
+                        tile[i][j] = color + "   "+DisplayColour.RESET;
+                    }
+                    else{
+
+                    }
+                }
+                else if(i==0){
+                    tile[i][j] = color1 + "   "+DisplayColour.RESET;
+                }
+                else{
+                    tile[i][j] = color2 + "   "+DisplayColour.RESET;
+                }
+            }
+        }
+    }
+
 
 
     public void blankTile(){

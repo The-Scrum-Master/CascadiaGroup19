@@ -40,6 +40,10 @@ public enum Habitat{
                         ", name='" + symbol + '\'' +
                         '}';
         }
+        public char getSymbol()
+        {
+                return symbol;
+        }
 }
 
 
