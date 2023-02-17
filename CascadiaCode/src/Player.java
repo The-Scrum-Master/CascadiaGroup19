@@ -99,7 +99,7 @@ public class Player {
         }
         this.heldTile.playTile();
         while(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
-        playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null){
+        playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null && playerBoard[x][y] != null){
             System.out.println("The board location for the tile placement is not a valid location,\n" +
                     " you must place it adjacent to another tile. Please try again");
             placeTile(x,y);

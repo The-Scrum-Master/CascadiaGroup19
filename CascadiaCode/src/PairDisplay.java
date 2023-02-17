@@ -1,3 +1,5 @@
+import org.w3c.dom.html.HTMLTitleElement;
+
 public class PairDisplay {
     public Tile tile1;
     public Tile tile2;
@@ -51,12 +53,10 @@ public class PairDisplay {
     }
 
     public void showPairs(){
-
-        TileGenerator riverTile1 = new TileGenerator(Tile.generateRandomTile());
-        TileGenerator riverTile2 = new TileGenerator(Tile.generateRandomTile());
-        TileGenerator riverTile3 = new TileGenerator(Tile.generateRandomTile());
-        TileGenerator riverTile4 = new TileGenerator(Tile.generateRandomTile());
-
+        TileGenerator riverTile1 = new TileGenerator(TileDeck.getRiverTilesIndex(0));
+        TileGenerator riverTile2 = new TileGenerator(TileDeck.getRiverTilesIndex(1));
+        TileGenerator riverTile3 = new TileGenerator(TileDeck.getRiverTilesIndex(2));
+        TileGenerator riverTile4 = new TileGenerator(TileDeck.getRiverTilesIndex(3));
 
         /*
 
@@ -94,6 +94,7 @@ public class PairDisplay {
         fillTokenArray(blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
         tileDisplay();
         tokensDisplay();
+        TileDeck.cullCheck();
     }
 
     public static void main(String[] args) {

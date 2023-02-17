@@ -38,19 +38,19 @@ public class TileDeck extends Stack<Tile> {
     public static void ReplaceRiverTilesIndex(int index){  riverTiles[index] = deck.pop();}
     public static void ReplaceRiverTokensIndex(int index){ riverTokens[index] = Wildlife.randWildlife();}
 
-    public TileDeck createNewDeck(){
+    public static TileDeck createNewDeck(){
         deck = new TileDeck();
         deck.shuffle();
         return deck;
     }
 
-    public void playRiver(TileDeck deck){
+    public  static void playRiver(TileDeck deck){
         for(int i = 0; i < 4; i++){
             riverTokens[i] = Wildlife.randWildlife();
             riverTiles[i] = deck.pop();
         }
     }
-    public void cullCheck(){
+    public static void cullCheck(){
         for(int j = 0; j < 4; j++){
             int cullCount = 0;
             for(int k = 0; k < 4; k++){
@@ -68,5 +68,15 @@ public class TileDeck extends Stack<Tile> {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        TileDeck deckTest = createNewDeck();
+        deckTest.shuffle();
+        playRiver(deck);
+        PairDisplay p = new PairDisplay();
+        p.showPairs();
+        cullCheck();
+        p.showPairs();
     }
 }
