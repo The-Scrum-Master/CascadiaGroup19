@@ -14,6 +14,10 @@ public class IOcascadia {
         return in.nextLine();
     }
 
+    public static int takeIntInput(){
+        return in.nextInt();
+    }
+
     public static String makeLowerCase(String str){
         return str.toLowerCase();
     }

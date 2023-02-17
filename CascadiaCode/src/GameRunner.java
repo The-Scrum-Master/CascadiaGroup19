@@ -47,6 +47,7 @@ public class GameRunner {
                         p.showPairs();
                         System.out.println();
                         IOcascadia.instructionsToChoosePair();
+                        players.get(playersTurn).pickPair(IOcascadia.takeIntInput() - 1);
                         System.out.println();
                     }
                     System.out.println("Your turn has ended. What do you want to do, finish your turn (type next) or end the game (type quit)?");
