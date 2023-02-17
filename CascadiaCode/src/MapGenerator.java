@@ -57,9 +57,28 @@ public class MapGenerator {
             }
         }
     }
+
+    /*           NEED TO CHANGE THIS TO TAKE IN AN INT THAT UPDATES FROM 8 TO 0 EVERY TURN SO THAT IN EACH TURN A BIGGER CIRCLE IS PRINTED
+    public void printMapTotalByParts(int w){
+        for(int w=8; w>=0; w--){
+            for(int i=w;i< map.length-w;i++) {
+                for(int k=0; k<4; k++){
+                    if(i%2!=0)
+                    {
+                        System.out.print("      ");
+                    }
+                    for (int j = w; j < map.length-w; j++) {
+                        map[i][j].printTilePerRow(k);
+                    }
+                    System.out.println();
+                }
+            }
+        }
+    }
+     */
+
     public void printMapTotalByParts(){
         for(int i=0+8;i< map.length-8;i++) {
-
             for(int k=0; k<4; k++){
                 if(i%2!=0)
                 {
@@ -71,11 +90,6 @@ public class MapGenerator {
                 System.out.println();
             }
         }
-    }
-    public void starterTilesReducedMap(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3){
-        map[9][9]=tile1;
-        map[10][9]=tile2;
-        map[10][10]=tile3;
     }
 
     public void setTile(TileGenerator tile, int x, int y){

@@ -9,6 +9,7 @@ public class TileGenerator {
     public TileGenerator(){
 
     }
+
     public TileGenerator (Tile constructorTile){ //put the habitats and the placeholders as inputs into the constructor?
         this.constructorTile = constructorTile;
         if(constructorTile.getSelect()==1){
@@ -261,7 +262,7 @@ public class TileGenerator {
         TileGenerator InitialTileDoubleColoured2 = new TileGenerator(Tile.generateSpecificTile(3));
 
         mapencio.fillMapBlank(blank);
-        mapencio.starterTilesReducedMap(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
+        mapencio.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
         mapencio.setTile(tileTrail, 9, 10 );
 
         mapencio.printMapTotal();

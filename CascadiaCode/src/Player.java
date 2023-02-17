@@ -64,8 +64,8 @@ public class Player {
         TileGenerator InitialTileDoubleColoured1 = new TileGenerator(Tile.generateSpecificTile(2));
         TileGenerator InitialTileDoubleColoured2 = new TileGenerator(Tile.generateSpecificTile(3));
 
-        map.fillMapBlankByParts(blank);
-        map.starterTilesReducedMap(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
+        map.fillMapBlank(blank);
+        map.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
         map.printMapTotalByParts();
 
 
