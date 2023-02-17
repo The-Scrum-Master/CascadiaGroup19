@@ -48,12 +48,16 @@ public class GameRunner {
                         System.out.println();
                         IOcascadia.instructionsToChoosePair();
                         players.get(playersTurn).pickPair(IOcascadia.takeIntInput() - 1);
-                        System.out.println();
+                        TileGenerator heldTile = new TileGenerator(players.get(playersTurn).heldTile);
+                        heldTile.printTile();
+                        String token=Wildlife.animalSymbol(players.get(playersTurn).heldToken);
+                        System.out.println(token);
 
+                        System.out.println();
                     }
                     System.out.println("Your turn has ended. What do you want to do, finish your turn (type next) or end the game (type quit)?");
-                    String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
-                    switch(decision) {
+                    String decision=(IOcascadia.takeInput());
+                    switch(IOcascadia.makeLowerCase(decision)) {
                         case "next":
                             wrongCommand=false;
                             break;
@@ -65,6 +69,7 @@ public class GameRunner {
                             System.out.println("You have entered an invalid command, try again");
                     }
                 }
+
 
                 playersTurn++;
             }

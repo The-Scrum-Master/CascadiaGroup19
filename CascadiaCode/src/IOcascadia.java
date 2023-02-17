@@ -8,12 +8,14 @@ public class IOcascadia {
     static private int participantsInt;
     static public ArrayList<String> playerNames= new ArrayList<String>();
     static public ArrayList<Integer> order= new ArrayList<Integer>();
-    static Scanner in =new Scanner(System.in);
+
 
     public static String takeInput(){
+        Scanner in =new Scanner(System.in);
         return in.nextLine();
     }
     public static int takeIntInput(){
+        Scanner in =new Scanner(System.in);
         return in.nextInt();
     }
 
@@ -131,7 +133,7 @@ public class IOcascadia {
             System.out.println("You have chosen to cull the river.");
             return true;
         }else{
-            System.out.println("You have Not chosen to cull the river.");
+            System.out.println("You have chosen Not to cull the river.");
             return false;
         }
     }
