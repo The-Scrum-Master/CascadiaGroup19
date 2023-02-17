@@ -114,8 +114,8 @@ public class IOcascadia {
     }
 
     public static void instructionsToChoosePair(){
-        System.out.println("Choose a pair tile-token from 1 (left-most) to 4 (right-most), ask for a cull (5) or" +
-                " use a nature token to cull again (6) or to choose one tile and one token that are not paired (7)");
+        System.out.println("Choose a pair tile-token from 1 (left-most) to 4 (right-most) or" +
+                " use a nature token to cull again (5) or to choose one tile and one token that are not paired (6)");
     }
     public static boolean cullOption(){
         System.out.println("There is 3 of the same animal tokens in the river. \n " +
