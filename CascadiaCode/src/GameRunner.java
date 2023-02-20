@@ -44,9 +44,8 @@ public class GameRunner {
                         players.get(playersTurn).generateInitialMap();
                     }
                     else{
+                        players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                         players.get(playersTurn).printMap();
-                        //players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
-                        //players.get(playersTurn).printMap();
                         p.showPairs();
                         IOcascadia.instructionsToChoosePair();
                         players.get(playersTurn).pickPair(IOcascadia.takeIntInput() - 1);

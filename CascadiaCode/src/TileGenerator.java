@@ -8,7 +8,6 @@ public class TileGenerator {
     boolean emptyTile=false;
 
     public TileGenerator(){
-
     }
 
     public TileGenerator (Tile constructorTile){ //put the habitats and the placeholders as inputs into the constructor?
@@ -134,15 +133,25 @@ public class TileGenerator {
         }
     }
 
-    public void blankTileWIthCords(String cord1, String cord2){
+    public void blankTileWIthCords(int cord1, int cord2){
         emptyTile=true;
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {
                 if(i==1 && j==1){
-                    tile[i][j] = " "+ cord1 +",";
+                    if(cord1<10){
+                        tile[i][j] = " "+ cord1 +",";
+                    }
+                    else{
+                        tile[i][j] = " "+ cord1 +",";
+                    }
                 }
                 else if(i==1 && j==2){
-                    tile[i][j] = " "+ cord2 +" ";
+                    if(cord1<10){
+                        tile[i][j] = " "+ cord2 +" ";
+                    }
+                    else{
+                        tile[i][j] = " "+ cord2 +"";
+                    }
                 }
                 else{
                     tile[i][j] = "   ";
@@ -182,7 +191,7 @@ public class TileGenerator {
         boolean placing1=true;
         boolean placing2=false;
         boolean placing3=false;
-        emptyTile=true;
+        emptyTile=false;
         int toggle=0;
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {

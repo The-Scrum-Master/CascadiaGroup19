@@ -110,7 +110,7 @@ public class MapGenerator {
         for(int i=0;i< map.length;i++) {
 
             for(int k=0; k<4; k++){
-                if(i%2!=1)
+                if(i%2!=0)
                 {
                     System.out.print("      ");
                 }
@@ -128,62 +128,70 @@ public class MapGenerator {
             for (int j = 0; j < map.length; j++) {
                 if(i==0 && j==0){
                     if(map[i][j].getEmptyTile() && (!map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(i==0 && j== map.length-1){
                     if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(i== map.length -1 && j== 0){
                     if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i-1][j+1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(j== map.length -1 && j== map.length-1){
                     if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() || !map[i][j-1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(i==0){
                     if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile() ||
                             !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(i== map.length-1){
                     if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
                             !map[i-1][j+1].getEmptyTile() || !map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(j==0){
                     if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i-1][j+1].getEmptyTile() ||
                             !map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else if(j==map.length-1){
                     if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
                             !map[i][j-1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
                 else {
@@ -191,12 +199,31 @@ public class MapGenerator {
                             !map[i-1][j+1].getEmptyTile() || !map[i][j-1].getEmptyTile() ||
                             !map[i][j+1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() ||
                             !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
-                        String cord1=""+i;
-                        String cord2=""+j;
-                        map[i][j].blankTileWIthCords(cord1, cord2);
+
+                        TileGenerator blankTileWIthCords=new TileGenerator();
+                        blankTileWIthCords.blankTileWIthCords(i, j);
+                        map[i][j]=blankTileWIthCords;
                     }
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        MapGenerator map=new MapGenerator();
+
+        TileGenerator blank =new TileGenerator();
+        blank.blankTile();
+
+        TileGenerator InitialTileSingleColoured = new TileGenerator(Tile.generateSpecificTile(1));
+        TileGenerator InitialTileDoubleColoured1 = new TileGenerator(Tile.generateSpecificTile(2));
+        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(Tile.generateSpecificTile(3));
+
+        map.fillMapBlank(blank);
+        map.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
+        map.printMapTotalByParts();
+
+        map.fillMapWithAllowedTilePlacements();
+        map.printMapTotalByParts();
     }
 }
