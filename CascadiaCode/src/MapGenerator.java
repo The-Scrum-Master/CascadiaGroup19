@@ -58,7 +58,9 @@ public class MapGenerator {
         }
     }
 
-    /*           NEED TO CHANGE THIS TO TAKE IN AN INT THAT UPDATES FROM 8 TO 0 EVERY TURN SO THAT IN EACH TURN A BIGGER CIRCLE IS PRINTED
+
+
+/*         NEED TO CHANGE THIS TO TAKE IN AN INT THAT UPDATES FROM 8 TO 0 EVERY TURN SO THAT IN EACH TURN A BIGGER CIRCLE IS PRINTED
     public void printMapTotalByParts(int w){
         for(int w=8; w>=0; w--){
             for(int i=w;i< map.length-w;i++) {
@@ -75,7 +77,9 @@ public class MapGenerator {
             }
         }
     }
-     */
+
+ */
+
 
     public void printMapTotalByParts(){
         for(int i=0+8;i< map.length-8;i++) {
@@ -114,6 +118,84 @@ public class MapGenerator {
                     map[i][j].printTilePerRow(k);
                 }
                 System.out.println();
+            }
+        }
+    }
+
+
+    public void fillMapWithAllowedTilePlacements(){
+        for(int i=0;i< map.length;i++) {
+            for (int j = 0; j < map.length; j++) {
+                if(i==0 && j==0){
+                    if(map[i][j].getEmptyTile() && (!map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(i==0 && j== map.length-1){
+                    if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(i== map.length -1 && j== 0){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i-1][j+1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(j== map.length -1 && j== map.length-1){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() || !map[i][j-1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(i==0){
+                    if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile() ||
+                            !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(i== map.length-1){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
+                            !map[i-1][j+1].getEmptyTile() || !map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(j==0){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i-1][j+1].getEmptyTile() ||
+                            !map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else if(j==map.length-1){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
+                            !map[i][j-1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
+                else {
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
+                            !map[i-1][j+1].getEmptyTile() || !map[i][j-1].getEmptyTile() ||
+                            !map[i][j+1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() ||
+                            !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                        String cord1=""+i;
+                        String cord2=""+j;
+                        map[i][j].blankTileWIthCords(cord1, cord2);
+                    }
+                }
             }
         }
     }

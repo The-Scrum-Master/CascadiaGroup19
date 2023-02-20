@@ -5,6 +5,7 @@ public class TileGenerator {
     public static String [][] blankTile= new String[4][4];
 
     Tile constructorTile;
+    boolean emptyTile=false;
 
     public TileGenerator(){
 
@@ -86,6 +87,7 @@ public class TileGenerator {
 
 
     public void blankTile(){
+        emptyTile=true;
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {
                 tile[i][j] = "   ";
@@ -119,6 +121,7 @@ public class TileGenerator {
 
 
     public void blankTileWIthToken(String letter1){
+        emptyTile=true;
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {
                 if(i==1 && j==1){
@@ -131,9 +134,27 @@ public class TileGenerator {
         }
     }
 
+    public void blankTileWIthCords(String cord1, String cord2){
+        emptyTile=true;
+        for(int i=0;i< tile.length;i++) {
+            for (int j = 0; j < tile.length; j++) {
+                if(i==1 && j==1){
+                    tile[i][j] = " "+ cord1 +",";
+                }
+                else if(i==1 && j==2){
+                    tile[i][j] = " "+ cord2 +" ";
+                }
+                else{
+                    tile[i][j] = "   ";
+                }
+            }
+        }
+    }
+
+
     public void tileUniqueColor(String color,String letter1){
         boolean placing1=true;
-        boolean placing2=false;
+        emptyTile=false;
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {
                 if(i==1 || i==2){
@@ -143,14 +164,7 @@ public class TileGenerator {
                     else if(placing1){
                         tile[i][j] = " "+ letter1 +" ";
                         placing1=false;
-                        //placing2=true;
                     }
-                    /*else if(placing2){
-                        tile[i][j] = " "+ letter2 +" ";
-                        placing2=false;
-                    }
-
-                     */
                     else{
                         tile[i][j] = "   ";
                     }
@@ -168,6 +182,7 @@ public class TileGenerator {
         boolean placing1=true;
         boolean placing2=false;
         boolean placing3=false;
+        emptyTile=true;
         int toggle=0;
         for(int i=0;i< tile.length;i++) {
             for (int j = 0; j < tile.length; j++) {
@@ -229,6 +244,10 @@ public class TileGenerator {
         for(int j=0;j< tile.length;j++) {
             System.out.print(tile[row][j]);
         }
+    }
+
+    public boolean getEmptyTile() {
+        return emptyTile;
     }
 
 

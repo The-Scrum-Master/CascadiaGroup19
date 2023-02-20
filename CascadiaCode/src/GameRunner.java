@@ -39,27 +39,30 @@ public class GameRunner {
                 //then the player will terminate his turn or the game (for the sake of terminating the program, in the future
                 //the game will end when the players reach 20 turns
 
-                boolean wrongCommand=true;
-                while(wrongCommand){
+
                     if(!players.get(playersTurn).isFirstTurnPlayed()) {
                         players.get(playersTurn).generateInitialMap();
                     }
                     else{
-                        System.out.println();
+                        players.get(playersTurn).printMap();
+                        //players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
+                        //players.get(playersTurn).printMap();
                         p.showPairs();
-                        System.out.println();
                         IOcascadia.instructionsToChoosePair();
                         players.get(playersTurn).pickPair(IOcascadia.takeIntInput() - 1);
                         TileGenerator heldTile = new TileGenerator(players.get(playersTurn).heldTile);
+                        System.out.println();
                         heldTile.printTile();
                         String token=Wildlife.animalSymbol(players.get(playersTurn).heldToken);
-                        System.out.println(token);
-
-                        System.out.println();
+                        System.out.println(token + "\n");
                     }
+
+                boolean wrongCommand=true;
+                while(wrongCommand){
                     System.out.println("Your turn has ended. What do you want to do, finish your turn (type next) or end the game (type quit)?");
-                    String decision=(IOcascadia.takeInput());
-                    switch(IOcascadia.makeLowerCase(decision)) {
+                    String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
+
+                    switch((decision)) {
                         case "next":
                             wrongCommand=false;
                             break;
@@ -69,6 +72,7 @@ public class GameRunner {
                             break;
                         default:
                             System.out.println("You have entered an invalid command, try again");
+                            break;
                     }
                 }
 
