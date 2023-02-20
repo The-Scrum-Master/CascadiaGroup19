@@ -25,12 +25,14 @@ public class Player {
 
     public Tile heldTile;
     public Wildlife heldToken;
+    public int natureTokenNumber;
 
     public Player(String name, int order){
         this.name = name;
         this.order = order;
         heldTile = null;
         heldToken = null;
+        natureTokenNumber = 0;
         playerBoard= new Tile[20][20]; //new board of 20 by 20 tiles
         playerBoard[9][9] = new Tile(0); //generates the three starting tiles
         playerBoard[9][9].playTile(); //changes boolean on tile to played.
@@ -98,7 +100,7 @@ public class Player {
             throw new IllegalArgumentException("held tile is null when calling place tile");
         }
         this.heldTile.playTile();
-        while(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
+        if(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
         playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null && playerBoard[x][y] != null){
             System.out.println("The board location for the tile placement is not a valid location,\n" +
                     " you must place it adjacent to another tile. Please try again");
@@ -107,10 +109,34 @@ public class Player {
         playerBoard[x][y] = heldTile;
         heldTile = null;
     }
+    public String placeToken(int x, int y) {
+        Wildlife WildlifeType = heldToken;
+        if (heldToken == null) {
+            throw new IllegalArgumentException("held tile is null when calling place tile");
+        }
+        if (playerBoard[x][y] != null && (playerBoard[x][y].getSlot(0) == heldToken
+                || playerBoard[x][y].getSlot(1) == heldToken)
+                || playerBoard[x][y].getSlot(3) == heldToken) {
+            if (playerBoard[x][y].getSelect() == 1) {
+                natureTokenNumber++;
+            }
+            playerBoard[x][y].playToken();
+            heldToken = null;
+            return Wildlife.animalSymbol(WildlifeType);
+        } else {
+            System.out.println("The board location for the Token placement is not a valid location,\n" +
+                    " you must place it on a previously played tile. Please try again");
+            placeToken(x, y);
+        }
+        throw new IllegalArgumentException("error in place token");
+    }
 
     public void pickPair(int indexOfSelected){
         this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
         this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
+        if(TileDeck.deck.empty()) {
+            GameRunner.setContinueGame(false);
+        }
         TileDeck.ReplaceRiverTilesIndex(indexOfSelected);
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
     }

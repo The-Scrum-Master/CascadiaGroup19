@@ -7,7 +7,8 @@ import java.util.Random;
  * The index of the array that holds the habitat is the orientation of the tile.
  */
 public class Tile {
-    private boolean Played;
+    public boolean Played;
+    public boolean tokenPlayed;
 
     private Wildlife[] slots;
     private Habitat[] habitats;
@@ -29,6 +30,7 @@ public class Tile {
         }
         this.select = select;
         Played = false;
+        tokenPlayed = false;
             if (select == 2){
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
                 while(habitats[0].getSymbol()==(habitats[1].getSymbol())){ //makes sure the habitats are not the same on the two biomes tiles
@@ -193,6 +195,8 @@ public class Tile {
     }
 
     public void playTile(){this.Played = true;}
+
+    public void playToken(){this.tokenPlayed = true;}
 
     public static int randomNumberGenerator(int upperBound){
         Random rand = new Random ();

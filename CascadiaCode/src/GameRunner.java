@@ -8,6 +8,9 @@ public class GameRunner {
     private static final ArrayList<Player> players= new ArrayList<Player>(); //arrayList of Player class to store players
     public static PairDisplay p =new PairDisplay(); // to use the functions in the PairDisplay class to display the river
 
+    public static boolean continueGame = true; //boolean to stop the game
+
+
     public static void main(String[] args) {
         IOcascadia.welcomeMessage(); //output welcome message
         IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
@@ -21,7 +24,6 @@ public class GameRunner {
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
 
-        boolean continueGame=true; //boolean to stop the game
         int playersTurn=0; //int to rotate around players in order
 
         while(continueGame){ //main loop that runs the game until continueGame is changed to false
@@ -75,5 +77,9 @@ public class GameRunner {
             }
         }
         System.out.println("Thanks for playing!");
+    }
+
+    public static void setContinueGame(boolean cont) {
+        continueGame = cont;
     }
 }
