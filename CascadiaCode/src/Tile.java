@@ -24,6 +24,8 @@ public class Tile {
 
     private char animal3;
 
+    private boolean notRand= false;
+
     public Tile(int select){
         if(select > 3 || select < 1){
             select = randomNumberGenerator(3)+1; //this generates a number between 0 and 2
@@ -33,12 +35,22 @@ public class Tile {
         tokenPlayed = false;
             if (select == 2){
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
-                while(habitats[0].getSymbol()==(habitats[1].getSymbol())){ //makes sure the habitats are not the same on the two biomes tiles
+                if(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol())))
+                {
+                    notRand =true;
+                }
+                while(notRand)               //makes sure the habitats are not the same on the two biomes tiles
+                {
                     habitats[1] = randomHabitat();
+                    if(!(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol()))))
+                    {
+                        notRand = false;
+                    }
+
                 }
                 slots = new Wildlife[]{randomSlot(), randomSlot()};
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
-                while(slots[0] == slots[1]){ //makes sure the habitats are not the same on the two biomesS
+                while(slots[0] == slots[1]){ //makes sure the placeholders are not the same on the two biomesS
                     slots[1] = randomSlot();}
             } else if (select == 3) {
                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
@@ -58,9 +70,24 @@ public class Tile {
             }
     }
     public void flipTile(Tile t){ //flips tiles by swapping its orientation in array
+        if(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol())))
+        {
+            notRand =true;
+        }
+        while(notRand)               //makes sure the habitats are not the same on the two biomes tiles
+        {
+            habitats[1] = randomHabitat();
+            if(!(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol()))))
+            {
+                notRand = false;
+            }
+
+        }
+
        Habitat temp =  t.getHabitat(0);
        t.habitats[0] = t.habitats[1];
        t.habitats[1] = temp;
+
        TileGenerator g = new TileGenerator(t);
        g.generateFlipTile();
        g.printTile();

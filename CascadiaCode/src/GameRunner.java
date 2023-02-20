@@ -53,7 +53,7 @@ public class GameRunner {
                         TileGenerator heldTile = new TileGenerator(players.get(playersTurn).heldTile);
                         System.out.println();
                         heldTile.printTile();
-                        String token=Wildlife.animalSymbol(players.get(playersTurn).heldToken);
+                        String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                         System.out.println(token + "\n");
                     }
 
