@@ -1,3 +1,4 @@
+
 public enum Habitat{
         RIVER('R', HabitatColour.BLUE),
         FOREST('F',HabitatColour.GREEN),
@@ -44,6 +45,8 @@ public enum Habitat{
         {
                 return symbol;
         }
+
+
 }
 
 

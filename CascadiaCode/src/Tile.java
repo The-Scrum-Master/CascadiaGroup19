@@ -14,7 +14,7 @@ public class Tile {
     private Habitat[] habitats;
     private char colour2; // colours for tiles
     private char colour; // colours for tiles
-    private   int count = 0; // count for colours
+    private  static int count = 0; // count for colours
     private int animalCount =0; // count for tokens
 
     private final int select;
@@ -34,7 +34,7 @@ public class Tile {
         Played = false;
         tokenPlayed = false;
             if (select == 2){
-                habitats = new Habitat[]{randomHabitat(), randomHabitat()};
+                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
                 if(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol())))
                 {
                     notRand =true;
@@ -70,19 +70,9 @@ public class Tile {
             }
     }
     public void flipTile(Tile t){ //flips tiles by swapping its orientation in array
-        if(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol())))
-        {
-            notRand =true;
-        }
-        while(notRand)               //makes sure the habitats are not the same on the two biomes tiles
-        {
-            habitats[1] = randomHabitat();
-            if(!(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol()))))
-            {
-                notRand = false;
-            }
 
-        }
+
+
 
        Habitat temp =  t.getHabitat(0);
        t.habitats[0] = t.habitats[1];
