@@ -56,11 +56,9 @@ public class TileDeck extends Stack<Tile> {
         if(cullCount == 2){
             if(IOcascadia.cullOption()) {
                 playRiver(deck);
-                cullCheck();
             }
         } else if (cullCount == 1) {
             playRiver(deck);
-            cullCheck();
         }
     }
 
