@@ -52,22 +52,15 @@ public class TileDeck extends Stack<Tile> {
     }
 
     public static void cullCheck(){
-        for(int j = 0; j < 4; j++){
-            int cullCount = 0;
-            for(int k = 0; k < 4; k++){
-                if(riverTokens[j] == riverTokens[k]){
-                    cullCount++;
-                }
-                if(cullCount == 3){
-                    if(IOcascadia.cullOption()){
-                        playRiver(deck);
-                        cullCheck();
-                    }
-                } else if (cullCount > 3){
-                    playRiver(deck);
-                    cullCheck();
-                }
+        int cullCount = Wildlife.countDistinct(riverTokens, 4);
+        if(cullCount == 2){
+            if(IOcascadia.cullOption()) {
+                playRiver(deck);
+                cullCheck();
             }
+        } else if (cullCount == 1) {
+            playRiver(deck);
+            cullCheck();
         }
     }
 

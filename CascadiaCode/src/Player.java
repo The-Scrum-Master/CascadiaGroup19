@@ -49,6 +49,13 @@ public class Player {
         return name;
     }
 
+    public Tile getHeldTile() {
+        return heldTile;
+    }
+    public Wildlife getHeldToken(){
+        return heldToken;
+    }
+
     public int getOrder() {
         return order;
     }
@@ -76,10 +83,6 @@ public class Player {
     public void printMap(){
         map.printMapTotalByParts();
     }
-
-
-
-
 
     public void placeTile(int x, int y){
         if(heldTile == null){

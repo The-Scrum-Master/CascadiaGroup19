@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
 import java.util.Random;
 
 public enum Wildlife {
@@ -46,6 +48,21 @@ public enum Wildlife {
             default -> throw new IllegalArgumentException("Invalid Enum placed into converter");
         }
     }
+    static int countDistinct(Wildlife[] array, int n)
+    {
+        int distinctCount = 1;
+        for (int i = 1; i < n; i++) {
+            int j = 0;
+            for (j = 0; j < i; j++) {
+                if (array[i].equals(array[j]))
+                    break;
+                if (i == j)
+                    distinctCount++;
+            }
+        }
+        return distinctCount;
+    }
+
     public static int randomNumberGenerator(int upperBound){
         Random rand = new Random ();
         return rand.nextInt(upperBound);
