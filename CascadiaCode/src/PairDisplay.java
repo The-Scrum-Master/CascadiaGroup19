@@ -82,13 +82,13 @@ public class PairDisplay {
         Tile letter4 = new Tile(1);
 
         TileGenerator blankTileWIthToken1 =new TileGenerator();
-        blankTileWIthToken1.blankTileWIthToken(letter1.colourAnimal(letter1.getAnimal()));
+        blankTileWIthToken1.blankTileWIthToken(Wildlife.animalSymbol(TileDeck.getRiverTokensIndex(0)));
         TileGenerator blankTileWIthToken2 =new TileGenerator();
-        blankTileWIthToken2.blankTileWIthToken(letter2.colourAnimal(letter2.getAnimal()));
+        blankTileWIthToken2.blankTileWIthToken(Wildlife.animalSymbol(TileDeck.getRiverTokensIndex(1)));
         TileGenerator blankTileWIthToken3 =new TileGenerator();
-        blankTileWIthToken3.blankTileWIthToken(letter3.colourAnimal(letter3.getAnimal()));
+        blankTileWIthToken3.blankTileWIthToken(Wildlife.animalSymbol(TileDeck.getRiverTokensIndex(2)));
         TileGenerator blankTileWIthToken4 =new TileGenerator();
-        blankTileWIthToken4.blankTileWIthToken(letter4.colourAnimal(letter4.getAnimal()));
+        blankTileWIthToken4.blankTileWIthToken(Wildlife.animalSymbol(TileDeck.getRiverTokensIndex(3)));
 
         fillTileArray(riverTile1, riverTile2, riverTile3, riverTile4);
         fillTokenArray(blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);

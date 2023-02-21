@@ -54,6 +54,16 @@ public class GameRunner {
                         heldTile.printTile();
                         String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                         System.out.println(token + "\n");
+
+                        System.out.println("Do you want to place the token? (yes or no)");
+                        String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
+                        if(decision.equals("yes")){
+                            //place token
+                        }
+                        else if(decision.equals("no")){
+                            //dont
+                        }
+
                     }
 
                 boolean wrongCommand=true;

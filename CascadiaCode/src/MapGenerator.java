@@ -86,7 +86,7 @@ public class MapGenerator {
             for(int k=0; k<4; k++){
                 if(i%2!=0)
                 {
-                    System.out.print("      ");
+                    //System.out.print("      ");
                 }
                 for (int j = 0+8; j < map.length-8; j++) {
                     map[i][j].printTilePerRow(k);
@@ -112,7 +112,7 @@ public class MapGenerator {
             for(int k=0; k<4; k++){
                 if(i%2!=0)
                 {
-                    System.out.print("      ");
+                    //System.out.print("      ");
                 }
                 for (int j = 0; j < map.length; j++) {
                     map[i][j].printTilePerRow(k);
@@ -127,7 +127,7 @@ public class MapGenerator {
         for(int i=0;i< map.length;i++) {
             for (int j = 0; j < map.length; j++) {
                 if(i==0 && j==0){
-                    if(map[i][j].getEmptyTile() && (!map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -135,7 +135,7 @@ public class MapGenerator {
                     }
                 }
                 else if(i==0 && j== map.length-1){
-                    if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -143,7 +143,7 @@ public class MapGenerator {
                     }
                 }
                 else if(i== map.length -1 && j== 0){
-                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i-1][j+1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -151,7 +151,7 @@ public class MapGenerator {
                     }
                 }
                 else if(j== map.length -1 && j== map.length-1){
-                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() || !map[i][j-1].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i][j-1].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -160,7 +160,7 @@ public class MapGenerator {
                 }
                 else if(i==0){
                     if(map[i][j].getEmptyTile() && (!map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile() ||
-                            !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                            !map[i+1][j].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -168,8 +168,7 @@ public class MapGenerator {
                     }
                 }
                 else if(i== map.length-1){
-                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
-                            !map[i-1][j+1].getEmptyTile() || !map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i][j-1].getEmptyTile() || !map[i][j+1].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -177,8 +176,8 @@ public class MapGenerator {
                     }
                 }
                 else if(j==0){
-                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i-1][j+1].getEmptyTile() ||
-                            !map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() ||
+                            !map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -186,8 +185,8 @@ public class MapGenerator {
                     }
                 }
                 else if(j==map.length-1){
-                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
-                            !map[i][j-1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() ||
+                            !map[i][j-1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
@@ -195,10 +194,8 @@ public class MapGenerator {
                     }
                 }
                 else {
-                    if(map[i][j].getEmptyTile() && (!map[i-1][j-1].getEmptyTile() || !map[i-1][j].getEmptyTile() ||
-                            !map[i-1][j+1].getEmptyTile() || !map[i][j-1].getEmptyTile() ||
-                            !map[i][j+1].getEmptyTile() || !map[i+1][j-1].getEmptyTile() ||
-                            !map[i+1][j].getEmptyTile() || !map[i+1][j+1].getEmptyTile()) ){
+                    if(map[i][j].getEmptyTile() && (!map[i-1][j].getEmptyTile() || !map[i][j-1].getEmptyTile() ||
+                            !map[i][j+1].getEmptyTile() || !map[i+1][j].getEmptyTile()) ){
 
                         TileGenerator blankTileWIthCords=new TileGenerator();
                         blankTileWIthCords.blankTileWIthCords(i, j);
