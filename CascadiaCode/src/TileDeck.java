@@ -51,24 +51,46 @@ public class TileDeck extends Stack<Tile> {
         }
     }
 
-    public static void cullCheck(){
-        int cullCount = Wildlife.countDistinct(riverTokens, 4);
-        if(cullCount == 2){
-            if(IOcascadia.cullOption()) {
-                playRiver(deck);
+    public static void cullCheck(TileDeck deck){
+        int hawkNum = 0;
+        int elkNum = 0;
+        int bearNum = 0;
+        int foxNum = 0;
+        int salmonNum = 0;
+        for(int i = 0; i < 4; i++){
+            if(getRiverTokensIndex(i) == Wildlife.HAWK){
+                hawkNum++;
+            } else if (getRiverTokensIndex(i) == Wildlife.BEAR){
+                bearNum++;
+            } else if(getRiverTokensIndex(i) == Wildlife.FOX){
+                foxNum++;
+            } else if (getRiverTokensIndex(i) == Wildlife.ELK) {
+                elkNum++;
+            } else if (getRiverTokensIndex(i) == Wildlife.SALMON) {
+                salmonNum++;
             }
-        } else if (cullCount == 1) {
-            playRiver(deck);
+        }
+        if (hawkNum == 3 || elkNum == 3 || bearNum == 3 || foxNum == 3 || salmonNum ==3){
+            if (IOcascadia.cullOption()){
+                playRiver(deck);
+                cullCheck(deck);
+            }
+        }
+        if (hawkNum == 4 || elkNum == 4 || bearNum == 4 || foxNum == 4 || salmonNum ==4){
+        playRiver(deck);
+        cullCheck(deck);
         }
     }
 
     public static void main(String[] args) {
         TileDeck deckTest = createNewDeck();
         deckTest.shuffle();
-        playRiver(deck);
         PairDisplay p = new PairDisplay();
-        p.showPairs();
-        cullCheck();
+        playRiver(deckTest);
+//        p.showPairs();
+        cullCheck(deckTest);
+//        Player jimmy = new Player("pat", 3);
+//        jimmy.pickPair(2);
         p.showPairs();
     }
 }
