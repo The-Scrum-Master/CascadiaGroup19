@@ -12,12 +12,17 @@ public class Tile {
 
     private Wildlife[] slots;
     private Habitat[] habitats;
-    private char colour2; // colours for tiles
-    private char colour; // colours for tiles
-    private  static int count = 0; // count for colours
-    private int animalCount =0; // count for tokens
+    private char colour2;
+    private char colour;
 
+    private boolean firstHabitat;
+    private boolean secondHabitat;
     private final int select;
+    private boolean firstPlaceHolder = false;
+
+    private boolean secondPlaceHolder = false;
+
+
 
     private char animal;
     private char animal2;
@@ -34,36 +39,75 @@ public class Tile {
         Played = false;
         tokenPlayed = false;
             if (select == 2){
-                 habitats = new Habitat[]{randomHabitat(), randomHabitat()};
-                if(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol())))
+                Habitat h;
+                Habitat h2;
+                 habitats = new Habitat[2];
+                 firstHabitat = false;
+                 habitats[0] = randomHabitat();
+                 firstHabitat= true;
+                 habitats[1] = randomHabitat();
+
+               // System.out.println(habitats[0]);
+                //System.out.println(habitats[1]);
+                //System.out.println((habitats[0].getSymbol()));
+                //System.out.println(notRand+"before if");
+                if((habitats[0].getSymbol())==(habitats[1].getSymbol()))
                 {
                     notRand =true;
                 }
+                //System.out.println(notRand+"after if");
                 while(notRand)               //makes sure the habitats are not the same on the two biomes tiles
                 {
                     habitats[1] = randomHabitat();
-                    if(!(String.valueOf(habitats[0].getSymbol()).equals(String.valueOf(habitats[1].getSymbol()))))
+                  //  System.out.println(habitats[1]+"habitat in while");
+                   // System.out.println(notRand+"while loop");
+                    if((habitats[0].getSymbol())!=(habitats[1].getSymbol()))
                     {
                         notRand = false;
                     }
 
                 }
-                slots = new Wildlife[]{randomSlot(), randomSlot()};
-                habitats = new Habitat[]{randomHabitat(), randomHabitat()};
+
+                //System.out.println(notRand+"after while loop");
+                //System.out.println(habitats[0]);
+                //System.out.println(habitats[1]);
+                //System.out.println(colour);
+                //System.out.println(colour2);
+                firstPlaceHolder = false;
+                slots = new Wildlife[2];
+                slots[0] = randomSlot();
+                firstPlaceHolder = true;
+                slots[1] = randomSlot();
+
                 while(slots[0] == slots[1]){ //makes sure the placeholders are not the same on the two biomesS
                     slots[1] = randomSlot();}
             } else if (select == 3) {
-                habitats = new Habitat[]{randomHabitat(), randomHabitat()};
+                habitats = new Habitat[2];
+                firstHabitat = false;
+                habitats[0]= randomHabitat();
+                firstHabitat = true;
+                habitats[1]= randomHabitat();
                 while(habitats[0].equals(habitats[1])){ //makes sure the habitats are not the same on the two biomes tiles
                     habitats[1] = randomHabitat();
                 }
-                slots = new Wildlife[]{randomSlot(), randomSlot(), randomSlot()};
+                firstPlaceHolder = false;
+
+                slots = new Wildlife[3];
+                slots[0] = randomSlot();
+                firstPlaceHolder = true;
+                slots[1] = randomSlot();
+
+
                 while(slots[0] == slots[1]){ //makes sure the habitats are not the MATCHING biomesS
                     slots[1] = randomSlot();}
-                while(slots[0] == slots[2] || slots[1] == slots[2] || slots[0] == slots[1]){
+                secondPlaceHolder = true;
+                slots[2] = randomSlot();
+
+                while(slots[0] == slots[2] || slots[1] == slots[2]){
                     slots[2] = randomSlot();
-                    slots[1] = randomSlot();
+
                 }
+
             } else if (select == 1) {
                 habitats = new Habitat[]{randomHabitat()};
                 slots = new Wildlife[]{randomSlot()};
@@ -71,12 +115,16 @@ public class Tile {
     }
     public void flipTile(Tile t){ //flips tiles by swapping its orientation in array
 
-
-
+        //System.out.println("Pre- flipped:");
+        //System.out.println(t.habitats[0]);
+        //System.out.println(t.habitats[1]);
 
        Habitat temp =  t.getHabitat(0);
        t.habitats[0] = t.habitats[1];
        t.habitats[1] = temp;
+        //System.out.println("Post flipped");
+        //System.out.println(t.habitats[0]);
+        //System.out.println(t.habitats[1]);
 
        TileGenerator g = new TileGenerator(t);
        g.generateFlipTile();
@@ -84,120 +132,148 @@ public class Tile {
     }
 
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
-        count++;
+
         switch (randomNumberGenerator(5)){
 
             case 0:
-                if (count>1) //if function called twice store first colour in colour2
+                if (firstHabitat)
                 {
-                    colour2=colour;
+                    colour2 = 'R';
+
                 }
-                colour = 'R';
+                else
+                {
+                    colour = 'R';
+                }
 
 
                 return Habitat.RIVER;
             case 1:
-                if (count>1)
+                if (firstHabitat)
                 {
-                    colour2=colour;
+                    colour2='F';
+
                 }
-
-
-                colour = 'F';
-
+                else
+                {
+                    colour = 'F';
+                }
                 return Habitat.FOREST;
             case 2:
-                if (count>1)
+                if (firstHabitat)
                 {
-                    colour2=colour;
+                    colour2= 'M';
                 }
+                else
+                {
 
-                colour = 'M';
-
+                    colour = 'M';
+                }
                 return Habitat.MOUNTAIN;
             case 3:
-                if (count>1)
+                if (firstHabitat)
                 {
-                    colour2=colour;
+                    colour2='W';
                 }
+                else
+                {
 
 
-                colour = 'W';
-
+                    colour = 'W';
+                }
                 return Habitat.WETLANDS;
             case 4:
-                if (count>1)
+                if (firstHabitat)
                 {
-                    colour2=colour;
+                    colour2='P';
                 }
-
-
-                colour = 'P';
-
+                else
+                {
+                    colour = 'P';
+                }
                 return Habitat.PRAIRIE;
             default:
                 throw new IllegalArgumentException("random num generator limit error");
         }
     }
     public Wildlife randomSlot(){
-        animalCount++;
+
 
         switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
             case 0:
-                if (animalCount==2)//if function called twice store first colour in colour2
+                if(!(firstPlaceHolder))
                 {
-                    animal2=animal;
+                    animal = 'H';
                 }
-                if (animalCount>2)//if function called 3 times store first animal in animal3 and second animal in animal2
+                if (firstPlaceHolder&&!secondPlaceHolder)
                 {
-                    animal3 = animal;
+                    animal2 = 'H';
+                }
+                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                {
+                    animal3 = 'H';
                 }
 
-                animal = 'H';
                 return Wildlife.HAWK;
             case 1:
-                if (animalCount==2)
+                if(!(firstPlaceHolder))
                 {
-                    animal2=animal;
+                    animal = 'S';
                 }
-                if (animalCount>2)
+                if (firstPlaceHolder&&!secondPlaceHolder)
                 {
-                    animal3 = animal;
+                    animal2 = 'S';
                 }
-                animal = 'S';
+                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                {
+                    animal3 = 'S';
+                }
+
                 return Wildlife.SALMON;
             case 2:
-                if (animalCount==2)
+                if(!(firstPlaceHolder))
                 {
-                    animal2=animal;
+                    animal = 'E';
                 }
-                if (animalCount>2)
+                if (firstPlaceHolder&&!secondPlaceHolder)
                 {
-                    animal3 = animal;
+                    animal2 = 'E';
                 }
-                animal = 'E';
+                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                {
+                    animal3 = 'E';
+               }
+
                 return Wildlife.ELK;
             case 3:
-                if (animalCount==2)
+                if(!(firstPlaceHolder))
                 {
-                    animal2=animal;
+                    animal = 'B';
                 }
-                if (animalCount>2)
+                if (firstPlaceHolder&&!secondPlaceHolder)
                 {
-                    animal3 = animal;
+                    animal2 = 'B';
                 }
-                animal = 'B';
+                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                {
+                    animal3 = 'B';
+                }
+
                 return Wildlife.BEAR;
             case 4:
-                if (animalCount==2)
+                if(!(firstPlaceHolder))
                 {
-                    animal2=animal;
+                    animal = 'F';
                 }
-                if (animalCount>2)
+                if (firstPlaceHolder&&!secondPlaceHolder)
                 {
-                    animal3 = animal;
+                    animal2 = 'F';
                 }
-                animal = 'F';
+                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                {
+                    animal3 = 'F';
+                }
+
                 return Wildlife.FOX;
             default:
                 throw new IllegalArgumentException("random num generator limit error");
@@ -354,9 +430,12 @@ public class Tile {
     public static void main(String[] args)
     {
 
-        Tile t =new Tile( 2);
-        TileGenerator tg = new TileGenerator(t);
-       tg.printTile();
+
+            Tile t =new Tile( 2);
+            TileGenerator tg = new TileGenerator(t);
+            tg.printTile();
+
+
        t.flipTile(t);
 
 

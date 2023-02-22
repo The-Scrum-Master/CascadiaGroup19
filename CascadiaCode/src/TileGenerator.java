@@ -6,6 +6,9 @@ public class TileGenerator {
 
     Tile constructorTile;
     boolean emptyTile=false;
+    private String stringColour2;
+    private String stringColour;
+
 
     public TileGenerator(){
     }
@@ -16,7 +19,7 @@ public class TileGenerator {
             tileUniqueColor(constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()));
         }
         else if(constructorTile.getSelect()==2){
-            tileTwoColors(constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), " ");
+            tileTwoColors(constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), " ");
         }
         else if(constructorTile.getSelect()==3){
             tileTwoColors(constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), constructorTile.colourAnimal(constructorTile.getAnimal3()));
@@ -45,11 +48,10 @@ public class TileGenerator {
         else
         {
 
-           String colour= constructorTile.colourConverter(constructorTile.getHabitat(0).getSymbol());
-            System.out.println(constructorTile.getHabitat(0).getSymbol());
-            String colour2= constructorTile.colourConverter(constructorTile.getHabitat(1).getSymbol());
-            System.out.println(constructorTile.getHabitat(1).getSymbol());
-            generateNewFlippedTile(colour,colour2);
+            stringColour= constructorTile.colourConverter(constructorTile.getHabitat(0).getSymbol());
+
+            stringColour2= constructorTile.colourConverter(constructorTile.getHabitat(1).getSymbol());
+            generateNewFlippedTile(stringColour,stringColour2);
         }
     }
     public void generateNewFlippedTile(String color1,String color2)
