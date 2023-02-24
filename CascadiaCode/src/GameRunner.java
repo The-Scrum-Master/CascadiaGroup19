@@ -54,6 +54,28 @@ public class GameRunner {
                         heldTile.printTile();
                         String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                         System.out.println(token + "\n");
+                        System.out.println("Would you like to rotate tiles(yes or no)");
+                        boolean wrongFlipTileCommand = true;
+                        while(wrongFlipTileCommand){
+                            String rotate=IOcascadia.makeLowerCase(IOcascadia.takeInput());
+                            if(rotate.equals("yes"))
+                            {
+                                players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
+                                TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
+                                g.generateFlipTile();
+                                g.printTile();
+                                wrongFlipTileCommand = false;
+                            }
+                            else if(rotate.equals("no"))
+                            {
+                                wrongFlipTileCommand = false;
+                            }
+                            else
+                            {
+                                System.out.println("Wrong input please try again");
+                            }
+                        }
+
 
                         System.out.println("Where would you like to place a tile?");
                         int x = IOcascadia.takeIntInput();

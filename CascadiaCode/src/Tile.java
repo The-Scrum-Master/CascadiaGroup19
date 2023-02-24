@@ -126,9 +126,7 @@ public class Tile {
         //System.out.println(t.habitats[0]);
         //System.out.println(t.habitats[1]);
 
-       TileGenerator g = new TileGenerator(t);
-       g.generateFlipTile();
-       g.printTile();
+
     }
 
     public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
@@ -433,19 +431,5 @@ public class Tile {
 
     public static void main(String[] args)
     {
-
-
-            Tile t =new Tile( 2);
-            TileGenerator tg = new TileGenerator(t);
-            tg.printTile();
-
-
-       t.flipTile(t);
-
-
-
-
-
-
     }
 }
