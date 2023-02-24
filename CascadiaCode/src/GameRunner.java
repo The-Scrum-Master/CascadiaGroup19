@@ -46,7 +46,7 @@ public class GameRunner {
                     else{
                         players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                         players.get(playersTurn).printMap();
-                        p.showPairs();
+                        PairDisplay.showPairs();
                         IOcascadia.instructionsToChoosePair();
                         players.get(playersTurn).pickPair(IOcascadia.takeIntInput() - 1);
                         TileGenerator heldTile = new TileGenerator(players.get(playersTurn).heldTile);
