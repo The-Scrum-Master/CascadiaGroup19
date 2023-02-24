@@ -372,6 +372,10 @@ public class Tile {
                 throw new IllegalArgumentException("Error");
         }
     }
+    public void placeToken(Tile t,String  animal)
+    {
+        //function that takes in the tile you want to place the token on and the token you wish to place on it needs to check if the placeholder for the token you wish to place is avaioable and if not porint error message
+    }
     public void generateTile(Tile t)
     {
         MapGenerator map=new MapGenerator();

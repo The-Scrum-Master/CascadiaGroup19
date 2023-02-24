@@ -33,13 +33,8 @@ public class Player {
         heldTile = null;
         heldToken = null;
         natureTokenNumber = 0;
-        playerBoard= new Tile[20][20]; //new board of 20 by 20 tiles
-        playerBoard[9][9] = new Tile(0); //generates the three starting tiles
-        playerBoard[9][9].playTile(); //changes boolean on tile to played.
-        playerBoard[10][9] = new Tile(2);
-        playerBoard[10][9].playTile();
-        playerBoard[10][10] = new Tile(3);
-        playerBoard[10][10].playTile();
+        playerBoard = new Tile[20][20];
+
     }
     public Tile[][] getPlayerBoard(){return  playerBoard;}
     public Tile getBoardIndex(int column, int row){
@@ -68,10 +63,17 @@ public class Player {
         TileGenerator blank =new TileGenerator();
         blank.blankTile();
 
+        playerBoard[9][9] = new Tile(1); //generates the three starting tiles
+        playerBoard[9][9].playTile(); //changes boolean on tile to played.
+        playerBoard[10][9] = new Tile(2);
+        playerBoard[10][9].playTile();
+        playerBoard[10][10] = new Tile(3);
+        playerBoard[10][10].playTile();
 
-        TileGenerator InitialTileSingleColoured = new TileGenerator(Tile.generateSpecificTile(1));
-        TileGenerator InitialTileDoubleColoured1 = new TileGenerator(Tile.generateSpecificTile(2));
-        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(Tile.generateSpecificTile(3));
+
+        TileGenerator InitialTileSingleColoured = new TileGenerator(playerBoard[9][9]);
+        TileGenerator InitialTileDoubleColoured1 = new TileGenerator( playerBoard[10][9]);
+        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(playerBoard[10][10]);
 
         map.fillMapBlank(blank);
         map.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
@@ -89,14 +91,22 @@ public class Player {
             throw new IllegalArgumentException("held tile is null when calling place tile");
         }
         this.heldTile.playTile();
-        if(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
-        playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null && playerBoard[x][y] != null){
+        if(playerBoard[x][y] != null||(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
+        playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null )){
             System.out.println("The board location for the tile placement is not a valid location,\n" +
-                    " you must place it adjacent to another tile. Please try again");
-            placeTile(x,y);
+                    " you must place it adjacent to another tile. Please try again,input x and y");
+            int newX = IOcascadia.takeIntInput();
+            int newY = IOcascadia.takeIntInput();
+            placeTile(newX,newY);//recursive call to allow player to place tile again
         }
-        playerBoard[x][y] = heldTile;
-        heldTile = null;
+        else {
+            playerBoard[x][y] = heldTile;
+            TileGenerator helpTileGenerator = new TileGenerator(heldTile);
+            map.setTile(helpTileGenerator,x,y);
+            heldTile = null;
+
+
+        }
     }
     public String placeToken(int x, int y) {
         Wildlife WildlifeType = heldToken;
