@@ -17,7 +17,7 @@ public class TileDeck extends Stack<Tile> {
     TileDeck(){
         for(int i = 0; i < 85; i++){
             if(i < 25){
-                super.add(new Tile(0));
+                super.add(new Tile(1));
             } else if (i < 55) {
                 super.add(new Tile(2));
             }else{
@@ -29,7 +29,7 @@ public class TileDeck extends Stack<Tile> {
         Collections.shuffle(this);
     }
 
-    public TileDeck getDeck(){return deck;}
+    public static TileDeck getDeck(){return deck;}
     public static Tile[] getRiverTiles(){ return riverTiles;}
 
     public static Wildlife[] getRiverTokens(){return riverTokens;}
@@ -38,20 +38,25 @@ public class TileDeck extends Stack<Tile> {
     public static void ReplaceRiverTilesIndex(int index){  riverTiles[index] = deck.pop();}
     public static void ReplaceRiverTokensIndex(int index){ riverTokens[index] = Wildlife.randWildlife();}
 
-    public static TileDeck createNewDeck(){
+    public static void createDeck(){
         deck = new TileDeck();
         deck.shuffle();
-        return deck;
     }
 
-    public  static void playRiver(TileDeck deck){
+    public static void playRiver(){
         for(int i = 0; i < 4; i++){
             riverTokens[i] = Wildlife.randWildlife();
             riverTiles[i] = deck.pop();
         }
     }
 
-    public static void cullCheck(TileDeck deck){
+    public static void emptyDeckCheck(){
+        if(TileDeck.deck.empty()) {
+            GameRunner.setContinueGame(false);
+        }
+    }
+
+    public static void cullCheck(){
         int hawkNum = 0;
         int elkNum = 0;
         int bearNum = 0;
@@ -72,28 +77,20 @@ public class TileDeck extends Stack<Tile> {
         }
         if (hawkNum == 4 || elkNum == 4 || bearNum == 4 || foxNum == 4 || salmonNum ==4){
             System.out.println("The river has been automatically culled\n\n");
-            playRiver(deck);
+            playRiver();
             PairDisplay.showPairs();
-            cullCheck(deck);
+            cullCheck();
         }
         else if (hawkNum == 3 || elkNum == 3 || bearNum == 3 || foxNum == 3 || salmonNum ==3){
             if (IOcascadia.cullOption()){
-                playRiver(deck);
+                playRiver();
                 PairDisplay.showPairs();
-                cullCheck(deck);
+                cullCheck();
             }
         }
     }
 
     public static void main(String[] args) {
-        TileDeck deckTest = createNewDeck();
-        deckTest.shuffle();
-        PairDisplay p = new PairDisplay();
-        playRiver(deckTest);
-//        p.showPairs();
-        cullCheck(deckTest);
-//        Player jimmy = new Player("pat", 3);
-//        jimmy.pickPair(2);
-        PairDisplay.showPairs();
+
     }
 }

@@ -91,7 +91,7 @@ public class PairDisplay {
         fillTokenArray(blankTileWIthToken1, blankTileWIthToken2, blankTileWIthToken3, blankTileWIthToken4);
         tileDisplay();
         tokensDisplay();
-        TileDeck.cullCheck(TileDeck.createNewDeck());
+        TileDeck.cullCheck();
     }
 
     public static void main(String[] args) {

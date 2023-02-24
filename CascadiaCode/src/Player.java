@@ -1,9 +1,9 @@
+import java.sql.SQLOutput;
 
 /**
  * This Class creates the object Player that hold the information relevant to the individual Players in
  * the game such as board and tiles held. As well as the function necessary to run the backend action
  * of the player
- *
  * Major Methods: generate initial map .... sergio did it
  *          - placeTile, takes in x and y coordinates checks to make sure it picked location is adjaent
  *          to another tile, if true puts into board at index
@@ -117,6 +117,7 @@ public class Player {
                 || playerBoard[x][y].getSlot(1) == heldToken)
                 || playerBoard[x][y].getSlot(3) == heldToken) {
             if (playerBoard[x][y].getSelect() == 1) {
+                System.out.println("You have gained a nature token because you placed a wildlife token on a Keystone tile");
                 natureTokenNumber++;
             }
             playerBoard[x][y].playToken();
@@ -130,14 +131,34 @@ public class Player {
         throw new IllegalArgumentException("error in place token");
     }
 
+    public void splitPick(){
+        System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
+                "\n Enter the index of the tile you would like to chose:");
+        int indexChoiceTile = IOcascadia.takeIntInput();
+       while(indexChoiceTile < 1 || indexChoiceTile > 4){
+           System.out.println("The number you have inputted is not a valid index.");
+           indexChoiceTile = IOcascadia.takeIntInput();
+       }
+       this.heldTile = TileDeck.getRiverTilesIndex(indexChoiceTile);
+       TileDeck.ReplaceRiverTilesIndex(indexChoiceTile);
+       TileDeck.emptyDeckCheck();
+        int indexChoiceToken = IOcascadia.takeIntInput();
+        while(indexChoiceToken < 1 || indexChoiceToken > 4) {
+            System.out.println("The number you have inputted is not a valid index.");
+            indexChoiceToken = IOcascadia.takeIntInput();
+        }
+        this.heldToken = TileDeck.getRiverTokensIndex(indexChoiceToken);
+        TileDeck.ReplaceRiverTokensIndex(indexChoiceToken);
+        natureTokenNumber--;
+        System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
+    }
+
     public void pickPair(int indexOfSelected){
         this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
         this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
-        if(TileDeck.deck.empty()) {
-            GameRunner.setContinueGame(false);
-        }
         TileDeck.ReplaceRiverTilesIndex(indexOfSelected);
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
+        TileDeck.emptyDeckCheck();
     }
 
 

@@ -16,8 +16,8 @@ public class GameRunner {
         IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
         IOcascadia.playerNames(); //output messages asking for player names
         IOcascadia.playerOrder(); //output message informing of the order the players are going to follow
-        TileDeck gameDeck = TileDeck.createNewDeck();//Creates the deck for this game (85 tiles shuffled in a stack)
-        TileDeck.playRiver(gameDeck);
+        TileDeck.createDeck();//Creates the deck for this game (85 tiles shuffled in a stack)
+        TileDeck.playRiver();
         int numberOfPlayers = IOcascadia.getParticipantsInt(); //stores number of players into the variable numberOfPlayers
         for(int i = 0; i< numberOfPlayers; i++){ //using a loop to add the players in order into the players ArrayList and creating
                                                  //an instance of Player for each
