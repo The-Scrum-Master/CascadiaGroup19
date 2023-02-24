@@ -12,7 +12,7 @@ public class IOcascadia {
 
     public static String takeInput(){
         Scanner in =new Scanner(System.in);
-        return in.nextLine();
+        return in.nextLine().trim();
     }
     public static int takeIntInput(){
         Scanner in =new Scanner(System.in);
