@@ -48,6 +48,26 @@ public enum Wildlife {
             default -> throw new IllegalArgumentException("Invalid Enum placed into converter");
         }
     }
+    //function to colour background when token is placed
+    public String colourBackground(String s)
+    {
+        switch (s)
+        {
+            case "H":
+                return "\u001B[44m" + "H"+ DisplayColour.RESET; //Blue
+            case "F":
+                return "\033[0;33m" + "F"+ DisplayColour.RESET;//Dont have orange
+            case "E":
+                return "\u001B[40m" + "E"+ DisplayColour.RESET; //BLACK
+            case "S":
+                return "\u001B[41m"+ "S"+ DisplayColour.RESET;//RED
+            case "B":
+                return "\u001B[45m" + "B"+ DisplayColour.RESET;//PURPLE
+            default:
+                throw new IllegalArgumentException("Error");
+        }
+    }
+
     static int countDistinct(Wildlife[] array, int n)
     {
         int distinctCount = 1;

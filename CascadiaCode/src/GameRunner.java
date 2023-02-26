@@ -90,10 +90,16 @@ public class GameRunner {
                         System.out.println("Do you want to place the token? (yes or no)");
                         String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
                         if(decision.equals("yes")){
-                            //place token
+                            System.out.println("Where would you like to place a token");
+                            int coordinate = IOcascadia.takeIntInput();
+                            int coordinate2 = IOcascadia.takeIntInput();
+                            players.get(playersTurn).placeToken(coordinate,coordinate2);
+                            players.get(playersTurn).printMap();
+
+
                         }
                         else if(decision.equals("no")){
-                            //dont
+                            continue;
                         }
 
                     }

@@ -58,6 +58,7 @@ public class Player {
     public boolean isFirstTurnPlayed() {
         return firstTurnPlayed;
     }
+    private boolean isFilled = false;
 
     public void generateInitialMap(){
         TileGenerator blank =new TileGenerator();
@@ -95,9 +96,9 @@ public class Player {
         playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null )){
             System.out.println("The board location for the tile placement is not a valid location,\n" +
                     " you must place it adjacent to another tile. Please try again,input x and y");
-            int newX = IOcascadia.takeIntInput();
-            int newY = IOcascadia.takeIntInput();
-            placeTile(newX,newY);//recursive call to allow player to place tile again
+            int x_axis = IOcascadia.takeIntInput();
+            int y_axis = IOcascadia.takeIntInput();
+            placeTile(x_axis,y_axis);//recursive call to allow player to place tile again
         }
         else {
             playerBoard[x][y] = heldTile;
@@ -108,28 +109,91 @@ public class Player {
 
         }
     }
-    public String placeToken(int x, int y) {
+    public void placeToken(int x, int y) {
         Wildlife WildlifeType = heldToken;
-        if (heldToken == null) {
-            throw new IllegalArgumentException("held tile is null when calling place tile");
-        }
-        if (playerBoard[x][y] != null && (playerBoard[x][y].getSlot(0) == heldToken
-                || playerBoard[x][y].getSlot(1) == heldToken)
-                || playerBoard[x][y].getSlot(3) == heldToken) {
-            if (playerBoard[x][y].getSelect() == 1) {
-                System.out.println("You have gained a nature token because you placed a wildlife token on a Keystone tile");
-                natureTokenNumber++;
-            }
-            playerBoard[x][y].playToken();
-            heldToken = null;
-            return Wildlife.animalSymbol(WildlifeType);
-        } else {
+        if (this.playerBoard[x][y] ==null)
+        {
             System.out.println("The board location for the Token placement is not a valid location,\n" +
-                    " you must place it on a previously played tile. Please try again");
-            placeToken(x, y);
+                    "you must place it on a previously played tile. Please try again");
+            int x_axis = IOcascadia.takeIntInput();
+            int y_axis = IOcascadia.takeIntInput();
+            placeToken(x_axis, y_axis);       //if they pick a location when there is no tile recall function
+        } else
+        {
+
+
+
+            playerBoard[x][y].playToken();//ask pat what this means
+            for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
+            {
+                if (playerBoard[x][y].getSlot(i) == heldToken)
+                {
+                    TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
+                    if (playerBoard[x][y].getSelect() == 1)
+                    {
+                        helpTileGenerator.tileUniqueColor(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)));
+
+                        System.out.println("You have gained a nature token because you placed a wildlife token on a Keystone tile");
+                        natureTokenNumber++;
+                        isFilled =true;
+
+                    } else if (playerBoard[x][y].getSelect() == 2)
+                    {
+
+                        if (i == 0)
+                        {
+                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()), " ");
+
+                        }
+                        if (i == 1)
+                        {
+                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), " ");
+
+                        }
+                        isFilled =true;
+
+                    } else if (playerBoard[x][y].getSelect() == 3)
+                    {
+                        if (i == 0)
+                        {
+                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal3()));
+
+                        }
+                        if (i == 1)
+                        {
+                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal3()));
+
+                        }
+                        if (i == 2)
+                        {
+                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)));
+
+                        }
+                        isFilled =true;
+
+                    }
+                    map.setTile(helpTileGenerator, x, y);
+
+
+                    heldToken = null;
+
+
+                }
+
+            }
+            if(isFilled==false)
+            {
+                System.out.println("No placeholder matches your held token");
+                System.out.println("Please pick a different tile input x and y below");
+                int x_axis = IOcascadia.takeIntInput();
+                int y_axis = IOcascadia.takeIntInput();
+                placeToken(x_axis,y_axis);
+                // if tile they have selected does not have placeholder that matches heldtoken retry
+            }
         }
-        throw new IllegalArgumentException("error in place token");
+
     }
+    //need to go through every tile on the board and be able to check if placeholder matches held token
 
     public void splitPick(){
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +

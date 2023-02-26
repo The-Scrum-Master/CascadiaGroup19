@@ -118,10 +118,17 @@ public class Tile {
         //System.out.println("Pre- flipped:");
         //System.out.println(t.habitats[0]);
         //System.out.println(t.habitats[1]);
+        if(t.getSelect()==1)
+        {
+            System.out.println("Unable to flip one habitat tile ");
+        }
+        else {
 
-       Habitat temp =  t.getHabitat(0);
-       t.habitats[0] = t.habitats[1];
-       t.habitats[1] = temp;
+
+            Habitat temp = t.getHabitat(0);
+            t.habitats[0] = t.habitats[1];
+            t.habitats[1] = temp;
+        }
         //System.out.println("Post flipped");
         //System.out.println(t.habitats[0]);
         //System.out.println(t.habitats[1]);
@@ -370,10 +377,7 @@ public class Tile {
                 throw new IllegalArgumentException("Error");
         }
     }
-    public void placeToken(Tile t,String  animal)
-    {
-        //function that takes in the tile you want to place the token on and the token you wish to place on it needs to check if the placeholder for the token you wish to place is avaioable and if not porint error message
-    }
+
     public void generateTile(Tile t)
     {
         MapGenerator map=new MapGenerator();
