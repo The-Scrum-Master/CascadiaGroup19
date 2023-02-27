@@ -22,7 +22,7 @@ public class TileGenerator {
             tileTwoColors(constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), " ");
         }
         else if(constructorTile.getSelect()==3){
-            tileTwoColors(constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), constructorTile.colourAnimal(constructorTile.getAnimal3()));
+            tileTwoColors(constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), constructorTile.colourAnimal(constructorTile.getAnimal3()));
         }
         else if(constructorTile.getSelect()==0){
             int rand=Tile.randomNumberGenerator(3) + 1;
@@ -41,7 +41,7 @@ public class TileGenerator {
 
     public void generateFlipTile()
     {
-        if(constructorTile.getSelect()==1)
+        if(this.constructorTile.getSelect()==1)
         {
             System.out.println("This is a unique tile cannot be flipped");
 
@@ -49,9 +49,10 @@ public class TileGenerator {
         else
         {
 
-            stringColour= constructorTile.colourConverter(constructorTile.getHabitat(0).getSymbol());
+            stringColour= this.constructorTile.colourConverter(this.constructorTile.getHabitat(0).getSymbol());
 
-            stringColour2= constructorTile.colourConverter(constructorTile.getHabitat(1).getSymbol());
+            stringColour2= this.constructorTile.colourConverter(this.constructorTile.getHabitat(1).getSymbol());
+
             generateNewFlippedTile(stringColour,stringColour2);
         }
     }
@@ -237,11 +238,54 @@ public class TileGenerator {
         }
     }
 
+    public void tileTwoColorsPlacedToken (String color1, String color2, String letter1){
+        String color;
+        boolean placing1=true;
+        emptyTile=false;
+
+        int toggle=0;
+        for(int i=0;i< tile.length;i++) {
+            for (int j = 0; j < tile.length; j++) {
+                if(i==1 || i==2){
+                    if(toggle%2==0){
+                        color=color1;
+                    }
+                    else{
+                        color=color2;
+                    }
+                    toggle++;
+                    if(j==0 || j==3){
+                        tile[i][j] = color + "   "+DisplayColour.RESET;
+                    }
+                    else if(placing1){
+                        tile[i][j] = "\u001B[40m" +" "+  "\u001B[40m"+ removeBackground(letter1) + "\u001B[40m" +" "+DisplayColour.RESET;
+                        placing1=false;
+                    }
+                    else{
+                        tile[i][j] = "\u001B[40m" + "   "+DisplayColour.RESET;
+                    }
+                }
+                else if(i==0){
+                    tile[i][j] = color1 + "   "+DisplayColour.RESET;
+                }
+                else{
+                    tile[i][j] = color2 + "   "+DisplayColour.RESET;
+                }
+            }
+        }
+    }
+
     /*
     public void generateTile(String color, char letter){
         tileUniqueColor(color, letter);
     }
      */
+    public String removeBackground(String s)
+    {
+        String ANSI_RESET = "\u001B[0m";
+        String returnString =ANSI_RESET +s+ ANSI_RESET;
+        return returnString;
+    }
 
     public void printTile(){
         for(int i=0;i< tile.length;i++) {

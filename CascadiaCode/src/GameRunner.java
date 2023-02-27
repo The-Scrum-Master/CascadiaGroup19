@@ -46,21 +46,30 @@ public class GameRunner {
                     else{
                         players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                         players.get(playersTurn).printMap();
+
                         PairDisplay.showPairs();
                         IOcascadia.instructionsToChoosePair();
                         players.get(playersTurn).pickPair(IOcascadia.takeIntInput() - 1);
-                        TileGenerator heldTile = new TileGenerator(players.get(playersTurn).heldTile);
+
+                        TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                         System.out.println();
-                        heldTile.printTile();
+                        heldTileGenerator.printTile();
                         String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                         System.out.println(token + "\n");
+
                         System.out.println("Would you like to rotate tiles(yes or no)");
                         boolean wrongFlipTileCommand = true;
                         while(wrongFlipTileCommand){
                             String rotate=IOcascadia.makeLowerCase(IOcascadia.takeInput());
                             if(rotate.equals("yes"))
                             {
+
+
                                 players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
+
+
+
+
                                 TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
                                 g.generateFlipTile();
                                 g.printTile();
@@ -86,20 +95,32 @@ public class GameRunner {
                         players.get(playersTurn).printMap();
 
 
-
-                        System.out.println("Do you want to place the token? (yes or no)");
-                        String decision=IOcascadia.makeLowerCase(IOcascadia.takeInput());
-                        if(decision.equals("yes")){
-                            System.out.println("Where would you like to place a token");
-                            int coordinate = IOcascadia.takeIntInput();
-                            int coordinate2 = IOcascadia.takeIntInput();
-                            players.get(playersTurn).placeToken(coordinate,coordinate2);
-                            players.get(playersTurn).printMap();
+                        if(players.get(playersTurn).checkToken())
+                        {
 
 
                         }
-                        else if(decision.equals("no")){
-                            continue;
+                        else
+                        {
+
+
+                            System.out.println("Do you want to place the token? (yes or no)");
+
+
+                            String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
+
+                            if (decision.equals("yes")) {
+
+                                System.out.println("Where would you like to place token " + token);
+                                int coordinate = IOcascadia.takeIntInput();
+                                int coordinate2 = IOcascadia.takeIntInput();
+                                players.get(playersTurn).placeToken(coordinate, coordinate2);
+                                players.get(playersTurn).printMap();
+
+
+                            } else if (decision.equals("no")) {
+
+                            }
                         }
 
                     }

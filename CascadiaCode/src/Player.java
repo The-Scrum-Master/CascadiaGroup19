@@ -9,7 +9,6 @@ import java.sql.SQLOutput;
  *          to another tile, if true puts into board at index
  *          -pickPair, takes int, grabs the tile and token from that index of the river and moves it into player
  *          variable "heldTile" and replaces location on the river
- * @author Patrick Kelly, Sergio Jjjiemmemnnezz.
  */
 
 
@@ -26,6 +25,7 @@ public class Player {
     public Tile heldTile;
     public Wildlife heldToken;
     public int natureTokenNumber;
+
 
     public Player(String name, int order){
         this.name = name;
@@ -59,6 +59,7 @@ public class Player {
         return firstTurnPlayed;
     }
     private boolean isFilled = false;
+    private boolean hasToken = false;
 
     public void generateInitialMap(){
         TileGenerator blank =new TileGenerator();
@@ -109,7 +110,8 @@ public class Player {
 
         }
     }
-    public void placeToken(int x, int y) {
+    public void placeToken(int x, int y)
+    {
         Wildlife WildlifeType = heldToken;
         if (this.playerBoard[x][y] ==null)
         {
@@ -120,10 +122,7 @@ public class Player {
             placeToken(x_axis, y_axis);       //if they pick a location when there is no tile recall function
         } else
         {
-
-
-
-            playerBoard[x][y].playToken();//ask pat what this means
+            playerBoard[x][y].playToken();
             for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
             {
                 if (playerBoard[x][y].getSlot(i) == heldToken)
@@ -131,7 +130,7 @@ public class Player {
                     TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
                     if (playerBoard[x][y].getSelect() == 1)
                     {
-                        helpTileGenerator.tileUniqueColor(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)));
+                        helpTileGenerator.tileUniqueColor(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
 
                         System.out.println("You have gained a nature token because you placed a wildlife token on a Keystone tile");
                         natureTokenNumber++;
@@ -142,12 +141,12 @@ public class Player {
 
                         if (i == 0)
                         {
-                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()), " ");
+                            helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
 
                         }
                         if (i == 1)
                         {
-                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), " ");
+                            helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()));
 
                         }
                         isFilled =true;
@@ -156,17 +155,17 @@ public class Player {
                     {
                         if (i == 0)
                         {
-                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal3()));
+                            helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
 
                         }
                         if (i == 1)
                         {
-                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal3()));
+                            helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()));
 
                         }
                         if (i == 2)
                         {
-                            helpTileGenerator.tileTwoColors(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()), playerBoard[x][y].getSlot(i).colourBackground(Wildlife.animalSymbol(WildlifeType)));
+                            helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal3()));
 
                         }
                         isFilled =true;
@@ -195,6 +194,55 @@ public class Player {
     }
     //need to go through every tile on the board and be able to check if placeholder matches held token
 
+    public boolean checkToken()
+    {
+        for(int i=0;i<playerBoard.length;i++)
+        {
+            for(int j=0;j<playerBoard.length;j++)
+            {
+                if(playerBoard[i][j]!=null)
+                {
+                    if(playerBoard[i][j].getSelect()==1)
+                    {
+                        if(playerBoard[i][j].getSlot(0)==heldToken)
+                        {
+                            hasToken=true;
+                        }
+                    }
+
+                    else if(playerBoard[i][j].getSelect()==2)
+                    {
+                        for(int k=0;k<2;k++)
+                        {
+                            if (playerBoard[i][j].getSlot(k) == heldToken) {
+                                hasToken = true;
+                            }
+                        }
+                    }
+                    else if(playerBoard[i][j].getSelect()==3)
+                    {
+                        for(int k=0;k<3;k++)
+                        {
+                            if (playerBoard[i][j].getSlot(k) == heldToken) {
+                                hasToken = true;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
+        if(hasToken==false)
+        {
+            System.out.println("No placeholders match your held token");
+            return true;
+
+        }
+        else {
+            return false;
+        }
+    }
     public void splitPick(){
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
                 "\n Enter the index of the tile you would like to chose:");
