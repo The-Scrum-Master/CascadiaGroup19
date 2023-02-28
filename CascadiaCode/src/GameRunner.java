@@ -23,7 +23,6 @@ public class GameRunner {
                                                  //an instance of Player for each
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
-
         int playersTurn=0; //int to rotate around players in order
 
         while(continueGame){ //main loop that runs the game until continueGame is changed to false

@@ -45,8 +45,13 @@ public class TileDeck extends Stack<Tile> {
 
     public static void playRiver(){
         for(int i = 0; i < 4; i++){
-            riverTokens[i] = Wildlife.randWildlife();
             riverTiles[i] = deck.pop();
+        }
+        cullRiver();
+    }
+    public static void cullRiver(){
+        for(int j =0; j < 4; j++){
+            riverTokens[j] = Wildlife.randWildlife();
         }
     }
 
@@ -77,20 +82,16 @@ public class TileDeck extends Stack<Tile> {
         }
         if (hawkNum == 4 || elkNum == 4 || bearNum == 4 || foxNum == 4 || salmonNum ==4){
             System.out.println("The river has been automatically culled\n\n");
-            playRiver();
+            cullRiver();
             PairDisplay.showPairs();
             cullCheck();
         }
         else if (hawkNum == 3 || elkNum == 3 || bearNum == 3 || foxNum == 3 || salmonNum ==3){
             if (IOcascadia.cullOption()){
-                playRiver();
+                cullRiver();
                 PairDisplay.showPairs();
                 cullCheck();
             }
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }
