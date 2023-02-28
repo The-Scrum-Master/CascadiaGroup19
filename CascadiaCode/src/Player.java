@@ -113,7 +113,6 @@ public class Player {
     }
     public void placeToken(int x, int y)
     {
-        Wildlife WildlifeType = heldToken;
         if (this.playerBoard[x][y] ==null)
         {
             System.out.println("The board location for the Token placement is not a valid location,\n" +
@@ -124,6 +123,7 @@ public class Player {
         } else
         {
             playerBoard[x][y].playToken();
+            playerBoard[x][y].tokenPlayedType = heldToken;
             for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
             {
                 if (playerBoard[x][y].getSlot(i) == heldToken)

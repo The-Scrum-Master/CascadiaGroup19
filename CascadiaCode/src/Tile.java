@@ -11,6 +11,8 @@ public class Tile {
     public boolean Played;
     public boolean tokenPlayed;
 
+    public Wildlife tokenPlayedType;
+
     private Wildlife[] slots;
     private Habitat[] habitats;
     private char colour2;
@@ -39,6 +41,7 @@ public class Tile {
         this.select = select;
         Played = false;
         tokenPlayed = false;
+        tokenPlayedType = null;
             if (select == 2){
                 Habitat h;
                 Habitat h2;
