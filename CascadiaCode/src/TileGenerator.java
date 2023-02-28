@@ -189,6 +189,30 @@ public class TileGenerator {
         }
     }
 
+    public void tileUniqueColorPlacedToken(String color,String letter1){
+        boolean placing1=true;
+        emptyTile=false;
+        for(int i=0;i< tile.length;i++) {
+            for (int j = 0; j < tile.length; j++) {
+                if(i==1 || i==2){
+                    if(j==0 || j==3){
+                        tile[i][j] = color + "   "+DisplayColour.RESET;
+                    }
+                    else if(placing1){
+                        tile[i][j] = "\u001B[40m" +" "+  "\u001B[40m"+ removeBackground(letter1) + "\u001B[40m" +" "+DisplayColour.RESET;
+                        placing1=false;
+                    }
+                    else{
+                        tile[i][j] = "\u001B[40m" + "   "+DisplayColour.RESET;
+                    }
+                }
+                else{
+                    tile[i][j] = color + "   "+DisplayColour.RESET;
+                }
+            }
+        }
+    }
+
 
     public void tileTwoColors(String color1, String color2, String letter1, String letter2, String letter3){
         String color;

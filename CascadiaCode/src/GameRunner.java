@@ -24,10 +24,12 @@ public class GameRunner {
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
         int playersTurn=0; //int to rotate around players in order
-
+        int helperIntToPrintMap=-1;
         while(continueGame){ //main loop that runs the game until continueGame is changed to false
             if(playersTurn == numberOfPlayers){
                 playersTurn=0;
+
+                helperIntToPrintMap++;
             }
             else{
                 System.out.println(players.get(playersTurn).getName()+ "'s turn:");
@@ -44,7 +46,7 @@ public class GameRunner {
                     }
                     else{
                         players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
-                        players.get(playersTurn).printMap();
+                        players.get(playersTurn).printMap(helperIntToPrintMap);
 
                         PairDisplay.showPairs();
                         IOcascadia.instructionsToChoosePair();
@@ -91,21 +93,15 @@ public class GameRunner {
                         players.get(playersTurn).placeTile(x,y);
                         players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
 
-                        players.get(playersTurn).printMap();
+                        players.get(playersTurn).printMap(helperIntToPrintMap);
 
 
                         if(players.get(playersTurn).checkToken())
                         {
-
-
                         }
                         else
                         {
-
-
                             System.out.println("Do you want to place the token? (yes or no)");
-
-
                             String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
 
                             if (decision.equals("yes")) {
@@ -114,7 +110,7 @@ public class GameRunner {
                                 int coordinate = IOcascadia.takeIntInput();
                                 int coordinate2 = IOcascadia.takeIntInput();
                                 players.get(playersTurn).placeToken(coordinate, coordinate2);
-                                players.get(playersTurn).printMap();
+                                players.get(playersTurn).printMap(helperIntToPrintMap);
 
 
                             } else if (decision.equals("no")) {

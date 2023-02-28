@@ -77,6 +77,7 @@ public class Player {
         TileGenerator InitialTileDoubleColoured1 = new TileGenerator( playerBoard[10][9]);
         TileGenerator InitialTileDoubleColoured2 = new TileGenerator(playerBoard[10][10]);
 
+        //map.fillMapBlank(blank);
         map.fillMapBlank(blank);
         map.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
         map.printMapTotalByParts();
@@ -84,8 +85,8 @@ public class Player {
         firstTurnPlayed=true;
     }
 
-    public void printMap(){
-        map.printMapTotalByParts();
+    public void printMap(int helperInt){
+        map.printMapTotalByCircle(helperInt);
     }
 
     public void placeTile(int x, int y){
@@ -130,9 +131,9 @@ public class Player {
                     TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
                     if (playerBoard[x][y].getSelect() == 1)
                     {
-                        helpTileGenerator.tileUniqueColor(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
+                        helpTileGenerator.tileUniqueColorPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
 
-                        System.out.println("You have gained a nature token because you placed a wildlife token on a Keystone tile");
+                        System.out.println("You have gained a nature token because you placed a wildlife token on a single-habitat tile");
                         natureTokenNumber++;
                         isFilled =true;
 

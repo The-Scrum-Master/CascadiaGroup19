@@ -379,48 +379,6 @@ public class Tile {
         }
     }
 
-    public void generateTile(Tile t)
-    {
-        MapGenerator map=new MapGenerator();
-        TileGenerator blank =new TileGenerator();
-        map.fillMapBlank(blank);
-        blank.blankTile();
-
-
-        TileGenerator g = new TileGenerator();
-        if(t.getSelect()==1)//Solo tile
-        {
-            g.tileUniqueColor(t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal()));
-
-
-            map.addTile(g);
-
-            map.printMapTotal();
-        }
-        if(t.getSelect()==2)//2 biome tile 2 placeholders
-        {
-
-
-            g.tileTwoColors(t.colourConverter(t.getColour2()), t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal2()), " ", t.colourAnimal(t.getAnimal()));
-            map.addTile(g);
-
-            map.printMapTotal();
-
-        }
-        if(t.getSelect()==3)//2 biome tile 2 placeholders
-        {
-
-
-            g.tileTwoColors(t.colourConverter(t.getColour2()), t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal3()), t.colourAnimal(t.getAnimal2()), t.colourAnimal(t.getAnimal()));
-            map.addTile(g);
-
-            map.printMapTotal();
-
-        }
-
-
-    }
-
     public static Tile generateRandomTile()
     {
         Tile t = new Tile(0);
