@@ -52,6 +52,9 @@ public class TileGenerator {
             stringColour= this.constructorTile.colourConverter(this.constructorTile.getHabitat(0).getSymbol());
 
             stringColour2= this.constructorTile.colourConverter(this.constructorTile.getHabitat(1).getSymbol());
+            //System.out.println("Tilegnerator colours");
+            //System.out.println(stringColour);
+            //System.out.println(stringColour2);
 
             generateNewFlippedTile(stringColour,stringColour2);
         }
