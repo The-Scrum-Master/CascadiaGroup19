@@ -55,6 +55,7 @@ public class GameRunner {
                         TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                         System.out.println();
                         heldTileGenerator.printTile();
+                       // System.out.println("pre-flipped"+players.get(playersTurn).heldTile.getColour()+ players.get(playersTurn).heldTile.getColour2() );
                         String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                         System.out.println(token + "\n");
 
@@ -64,21 +65,21 @@ public class GameRunner {
                             String rotate=IOcascadia.makeLowerCase(IOcascadia.takeInput());
                             if(rotate.equals("yes"))
                             {
-
-
                                 players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
-
-
-
-
                                 TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
                                 g.generateFlipTile();
                                 g.printTile();
+                                //System.out.println("post-flipped"+players.get(playersTurn).heldTile.getColour()+ players.get(playersTurn).heldTile.getColour2() );
+
+                                players.get(playersTurn).printMap(helperIntToPrintMap);
+
                                 wrongFlipTileCommand = false;
                             }
                             else if(rotate.equals("no"))
                             {
                                 wrongFlipTileCommand = false;
+                                players.get(playersTurn).printMap(helperIntToPrintMap);
+
                             }
                             else
                             {
@@ -90,6 +91,8 @@ public class GameRunner {
                         System.out.println("Where would you like to place a tile?");
                         int x = IOcascadia.takeIntInput();
                         int y = IOcascadia.takeIntInput();
+                        //System.out.println(players.get(playersTurn).heldTile.getColour());
+                        //System.out.println(players.get(playersTurn).heldTile.getColour2());
                         players.get(playersTurn).placeTile(x,y);
                         players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
 

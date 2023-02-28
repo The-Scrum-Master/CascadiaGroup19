@@ -5,11 +5,11 @@ import java.util.Random;
 /**
  * This is class constructs and holds the functions for the Object Tile
  * The index of the array that holds the habitat is the orientation of the tile.
- * @author Timi Sergio
  */
 public class Tile {
     public boolean Played;
     public boolean tokenPlayed;
+    private boolean tokenPlaced = false;
 
     public Wildlife tokenPlayedType;
 
@@ -33,6 +33,7 @@ public class Tile {
     private char animal3;
 
     private boolean notRand= false;
+
 
     public Tile(int select){
         if(select > 3 || select < 1){
@@ -117,6 +118,15 @@ public class Tile {
                 slots = new Wildlife[]{randomSlot()};
             }
     }
+
+    public boolean isTokenPlaced() {
+        return tokenPlaced;
+    }
+
+    public void setTokenPlaced(boolean tokenPlaced) {
+        this.tokenPlaced = tokenPlaced;
+    }
+
     public void flipTile(Tile t){ //flips tiles by swapping its orientation in array
 
         //System.out.println("Pre- flipped:");
@@ -128,10 +138,15 @@ public class Tile {
         }
         else {
 
+            char tempColor=colour;
+            setColour(colour2);
+            setColour2(tempColor);
 
             Habitat temp = t.getHabitat(0);
             t.habitats[0] = t.habitats[1];
             t.habitats[1] = temp;
+
+
         }
         //System.out.println("Post flipped");
         //System.out.println(t.habitats[0]);
@@ -328,6 +343,14 @@ public class Tile {
     public char getColour2()
     {
         return colour2;
+    }
+
+    public void setColour2(char colour2) {
+        this.colour2 = colour2;
+    }
+
+    public void setColour(char colour) {
+        this.colour = colour;
     }
 
     public char getAnimal(){
