@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class IOcascadia {
 
-    static private String participants;
     static private int participantsInt;
     static public ArrayList<String> playerNames= new ArrayList<String>();
     static public ArrayList<Integer> order= new ArrayList<Integer>();
@@ -14,9 +13,34 @@ public class IOcascadia {
         Scanner in =new Scanner(System.in);
         return in.nextLine().trim();
     }
+    public static boolean onlyDigits(String str, int n)
+    {
+        // Traverse the string from
+        // start to end
+        for (int i = 0; i < n; i++) {
+
+            // Check if character is
+            // not a digit between 0-9
+            // then return false
+            if (str.charAt(i) < '0'|| str.charAt(i) > '9') {
+                return false;
+            }
+        }
+        // If we reach here, that means
+        // all characters were digits.
+        return true;
+    }
     public static int takeIntInput(){
         Scanner in =new Scanner(System.in);
-        return in.nextInt();
+        String input=in.next();
+        if(onlyDigits(input, input.length())){
+            return Integer.parseInt(input);
+        }
+        else{
+            System.out.println("Wrong input (expected digits), try again :)");
+            takeIntInput();
+            return -1;
+        }
     }
 
     public static String makeLowerCase(String str){
@@ -29,14 +53,13 @@ public class IOcascadia {
 
     public static void numberOfPlayers(){
         System.out.println("How many players are going to play? (between 2 and 4)");
-        participants=takeInput();
-        participantsInt=Integer.parseInt(participants);
+        participantsInt=takeIntInput();
         if(participantsInt<2 || participantsInt>4){
             System.out.println("Sorry, the number of players has to be between 2 and 4, try again");
             numberOfPlayers();
         }
         else{
-            System.out.println(participants+ " players, great!");
+            System.out.println(participantsInt+ " players, great!");
         }
     }
 

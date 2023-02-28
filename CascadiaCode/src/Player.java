@@ -26,13 +26,12 @@ public class Player {
     public Wildlife heldToken;
     public int natureTokenNumber;
 
-
     public Player(String name, int order){
         this.name = name;
         this.order = order;
         heldTile = null;
         heldToken = null;
-        natureTokenNumber = 0;
+        natureTokenNumber = 5;
         playerBoard = new Tile[20][20];
 
     }
@@ -60,6 +59,7 @@ public class Player {
     }
     private boolean isFilled = false;
     private boolean hasToken = false;
+    private boolean tokenPlaced = false;
 
     public void generateInitialMap(){
         TileGenerator blank =new TileGenerator();
@@ -95,7 +95,7 @@ public class Player {
         }
         this.heldTile.playTile();
         if(playerBoard[x][y] != null||(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
-        playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null )){
+                playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null )){
             System.out.println("The board location for the tile placement is not a valid location,\n" +
                     " you must place it adjacent to another tile. Please try again,input x and y");
             int x_axis = IOcascadia.takeIntInput();
@@ -114,7 +114,7 @@ public class Player {
     public void placeToken(int x, int y)
     {
         Wildlife WildlifeType = heldToken;
-        if (this.playerBoard[x][y] ==null)
+        if (this.playerBoard[x][y] ==null||this.playerBoard[x][y].isTokenPlaced())
         {
             System.out.println("The board location for the Token placement is not a valid location,\n" +
                     "you must place it on a previously played tile. Please try again");
@@ -128,10 +128,12 @@ public class Player {
             {
                 if (playerBoard[x][y].getSlot(i) == heldToken)
                 {
+
                     TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
                     if (playerBoard[x][y].getSelect() == 1)
                     {
                         helpTileGenerator.tileUniqueColorPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
+                        playerBoard[x][y].setTokenPlaced(true);
 
                         System.out.println("You have gained a nature token because you placed a wildlife token on a single-habitat tile");
                         natureTokenNumber++;
@@ -143,12 +145,12 @@ public class Player {
                         if (i == 0)
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
-
+                            playerBoard[x][y].setTokenPlaced(true);
                         }
                         if (i == 1)
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()));
-
+                            playerBoard[x][y].setTokenPlaced(true);
                         }
                         isFilled =true;
 
@@ -157,17 +159,17 @@ public class Player {
                         if (i == 0)
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
-
+                            playerBoard[x][y].setTokenPlaced(true);
                         }
                         if (i == 1)
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()));
-
+                            playerBoard[x][y].setTokenPlaced(true);
                         }
                         if (i == 2)
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal3()));
-
+                            playerBoard[x][y].setTokenPlaced(true);
                         }
                         isFilled =true;
 
@@ -201,32 +203,39 @@ public class Player {
         {
             for(int j=0;j<playerBoard.length;j++)
             {
+
                 if(playerBoard[i][j]!=null)
                 {
+
                     if(playerBoard[i][j].getSelect()==1)
                     {
-                        if(playerBoard[i][j].getSlot(0)==heldToken)
+                        if(playerBoard[i][j].getSlot(0)==heldToken&& !playerBoard[i][j].isTokenPlaced())
                         {
                             hasToken=true;
                         }
+
                     }
 
                     else if(playerBoard[i][j].getSelect()==2)
                     {
                         for(int k=0;k<2;k++)
                         {
-                            if (playerBoard[i][j].getSlot(k) == heldToken) {
+                            if (playerBoard[i][j].getSlot(k) == heldToken&&!playerBoard[i][j].isTokenPlaced()) {
                                 hasToken = true;
                             }
+
                         }
                     }
                     else if(playerBoard[i][j].getSelect()==3)
                     {
                         for(int k=0;k<3;k++)
                         {
-                            if (playerBoard[i][j].getSlot(k) == heldToken) {
+                            if (playerBoard[i][j].getSlot(k) == heldToken&&!playerBoard[i][j].isTokenPlaced()) {
                                 hasToken = true;
                             }
+
+                            //idk where to put the istoken playe thng in this function
+                            //its gonna check and be like oh space available then itll see if there is atoken there alresaad
                         }
                     }
 
@@ -240,23 +249,30 @@ public class Player {
             return true;
 
         }
+        if(tokenPlaced)
+        {
+            System.out.println("Tile already has a token");//do later need to check for all scenerios
+            return true;
+        }
+
         else {
             return false;
         }
-    }
+    }//if tile already has a token not let place
     public void splitPick(){
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
-                "\n Enter the index of the tile you would like to chose:");
-        int indexChoiceTile = IOcascadia.takeIntInput();
-       while(indexChoiceTile < 1 || indexChoiceTile > 4){
-           System.out.println("The number you have inputted is not a valid index.");
-           indexChoiceTile = IOcascadia.takeIntInput();
-       }
-       this.heldTile = TileDeck.getRiverTilesIndex(indexChoiceTile);
-       TileDeck.ReplaceRiverTilesIndex(indexChoiceTile);
-       TileDeck.emptyDeckCheck();
-        int indexChoiceToken = IOcascadia.takeIntInput();
-        while(indexChoiceToken < 1 || indexChoiceToken > 4) {
+                "\nEnter the index of the tile you would like to chose:");
+        int indexChoiceTile = IOcascadia.takeIntInput()-1;
+        while(indexChoiceTile < 0 || indexChoiceTile > 3){
+            System.out.println("The number you have inputted is not a valid index.");
+            indexChoiceTile = IOcascadia.takeIntInput();
+        }
+        this.heldTile = TileDeck.getRiverTilesIndex(indexChoiceTile);
+        TileDeck.ReplaceRiverTilesIndex(indexChoiceTile);
+        TileDeck.emptyDeckCheck();
+        System.out.println("Enter the index of the token you would like to chose:");
+        int indexChoiceToken = IOcascadia.takeIntInput()-1;
+        while(indexChoiceToken < 0 || indexChoiceToken > 3) {
             System.out.println("The number you have inputted is not a valid index.");
             indexChoiceToken = IOcascadia.takeIntInput();
         }
@@ -274,6 +290,11 @@ public class Player {
         TileDeck.emptyDeckCheck();
     }
 
+    public int getNatureTokenNumber() {
+        return natureTokenNumber;
+    }
 
+    public void reduceNatureTokenNumberByOne() {
+        natureTokenNumber--;
+    }
 }
-
