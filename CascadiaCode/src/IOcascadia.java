@@ -38,8 +38,7 @@ public class IOcascadia {
         }
         else{
             System.out.println("Wrong input (expected digits), try again :)");
-            takeIntInput();
-            return -1;
+            return takeIntInput();
         }
     }
 
