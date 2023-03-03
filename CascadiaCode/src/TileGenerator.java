@@ -149,11 +149,11 @@ public class TileGenerator {
                         tile[i][j] = " "+ cord1 +",";
                     }
                     else{
-                        tile[i][j] = " "+ cord1 +",";
+                        tile[i][j] = ""+ cord1 +",";
                     }
                 }
                 else if(i==1 && j==2){
-                    if(cord1<10){
+                    if(cord2<10){
                         tile[i][j] = " "+ cord2 +" ";
                     }
                     else{

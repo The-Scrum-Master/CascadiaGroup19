@@ -1,5 +1,5 @@
 public class MapGenerator {
-    public TileGenerator [][] map= new TileGenerator[20][20];
+    public TileGenerator [][] map= new TileGenerator[46][46];
 
 
     public void fillMapBlank(TileGenerator blank){
@@ -14,21 +14,21 @@ public class MapGenerator {
 
     public void fillMapBlankByParts(TileGenerator blank){ //NEED TO WORK ON THIS FUNCTION AND CREATE A PRINTMAPBYPARTS ONE, MAKING THEM FILL THE CENTER OF
         // THE ARRAY AND WHEN THE MAP HAS TO GET BIGGER FILL IN ADJACENT CIRCLES
-        for(int i=0+8;i< map.length-8;i++) {
-            for (int j = 0+8; j < map.length-8; j++) {
+        for(int i=0+21;i< map.length-21;i++) {
+            for (int j = 0+21; j < map.length-21; j++) {
                 map[i][j]=blank;
             }
         }
     }
 
     public void printMapTotalByCircle(int helperInt){ //handle whenever helperInt gets too big, need to see what value is "too big"
-        for(int i=0+8-helperInt;i< map.length-8+helperInt;i++) {
+        for(int i=0+21-helperInt;i< map.length-21+helperInt;i++) {
             for(int k=0; k<4; k++){
                 if(i%2!=0)
                 {
                     //System.out.print("      ");
                 }
-                for (int j = 0+8-helperInt; j < map.length-8+helperInt; j++) {
+                for (int j = 0+21-helperInt; j < map.length-21+helperInt; j++) {
                     map[i][j].printTilePerRow(k);
                 }
                 System.out.println();
@@ -37,13 +37,13 @@ public class MapGenerator {
     }
 
     public void printMapTotalByParts(){
-        for(int i=0+8;i< map.length-8;i++) {
+        for(int i=0+21;i< map.length-21;i++) {
             for(int k=0; k<4; k++){
                 if(i%2!=0)
                 {
                     //System.out.print("      ");
                 }
-                for (int j = 0+8; j < map.length-8; j++) {
+                for (int j = 0+21; j < map.length-21; j++) {
                     map[i][j].printTilePerRow(k);
                 }
                 System.out.println();
@@ -56,17 +56,17 @@ public class MapGenerator {
     }
 
     public void fillStarterMapBlank(TileGenerator blank){
-        for(int i=8;i< map.length-8;i++) {
-            for (int j = 8; j < map.length-8; j++) {
+        for(int i=21;i< map.length-21;i++) {
+            for (int j = 21; j < map.length-21; j++) {
                 map[i][j]=blank;
             }
         }
     }
 
     public void starterTiles(TileGenerator tile1, TileGenerator tile2, TileGenerator tile3){
-        map[9][9]=tile1;
-        map[10][9]=tile2;
-        map[10][10]=tile3;
+        map[22][22]=tile1;
+        map[23][22]=tile2;
+        map[23][23]=tile3;
     }
 
     public void printMapTotal(){
@@ -183,9 +183,9 @@ public class MapGenerator {
 
         map.fillMapBlank(blank);
         map.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
-        map.printMapTotalByParts();
+        map.printMapTotal();
 
         map.fillMapWithAllowedTilePlacements();
-        map.printMapTotalByParts();
+        map.printMapTotal();
     }
 }

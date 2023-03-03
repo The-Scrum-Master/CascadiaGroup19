@@ -12,8 +12,6 @@ import java.sql.SQLOutput;
  */
 
 
-
-
 public class Player {
     private final int order;
     private final String name;
@@ -32,7 +30,7 @@ public class Player {
         heldTile = null;
         heldToken = null;
         natureTokenNumber = 5;
-        playerBoard = new Tile[20][20];
+        playerBoard = new Tile[46][46];
 
     }
     public Tile[][] getPlayerBoard(){return  playerBoard;}
@@ -65,17 +63,17 @@ public class Player {
         TileGenerator blank =new TileGenerator();
         blank.blankTile();
 
-        playerBoard[9][9] = new Tile(1); //generates the three starting tiles
-        playerBoard[9][9].playTile(); //changes boolean on tile to played.
-        playerBoard[10][9] = new Tile(2);
-        playerBoard[10][9].playTile();
-        playerBoard[10][10] = new Tile(3);
-        playerBoard[10][10].playTile();
+        playerBoard[22][22] = new Tile(1); //generates the three starting tiles
+        playerBoard[22][22].playTile(); //changes boolean on tile to played.
+        playerBoard[23][22] = new Tile(2);
+        playerBoard[23][22].playTile();
+        playerBoard[23][23] = new Tile(3);
+        playerBoard[23][23].playTile();
 
 
-        TileGenerator InitialTileSingleColoured = new TileGenerator(playerBoard[9][9]);
-        TileGenerator InitialTileDoubleColoured1 = new TileGenerator( playerBoard[10][9]);
-        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(playerBoard[10][10]);
+        TileGenerator InitialTileSingleColoured = new TileGenerator(playerBoard[22][22]);
+        TileGenerator InitialTileDoubleColoured1 = new TileGenerator( playerBoard[23][22]);
+        TileGenerator InitialTileDoubleColoured2 = new TileGenerator(playerBoard[23][23]);
 
         //map.fillMapBlank(blank);
         map.fillMapBlank(blank);
