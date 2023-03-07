@@ -7,7 +7,9 @@ public class BearScoreCard_A extends BearScoreCard{
     }
     @Override
     public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
+        for(int i=0; i<arrayOfTokens.size(); i++){
 
+        }
         return 0;
     }
 
