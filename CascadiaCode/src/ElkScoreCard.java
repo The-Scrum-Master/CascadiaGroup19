@@ -14,8 +14,8 @@ public abstract class ElkScoreCard implements ScoreCard{
     }
 
     public void getIndexes(Tile[][] playerBoard) {
-        for(int rows = 0; rows < 20; rows++ ){
-            for(int columns =0; columns < 20; columns++){
+        for(int rows = 0; rows < 46; rows++ ){
+            for(int columns =0; columns < 46; columns++){
                 if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.ELK)){
                    cordinateX.add(columns);
                    cordinateY.add(rows);
@@ -25,7 +25,7 @@ public abstract class ElkScoreCard implements ScoreCard{
     }
     @Override
     public void explainCard() {
-        System.out.println("This Scorecard is used to determine the points for the Wildlife type Elk.\n" +
+        System.out.println("This Scorecard is used to determine the points for the Wildlife type Bear.\n" +
                 "There are 3 types of this card.");
     }
 }
