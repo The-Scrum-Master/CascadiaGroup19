@@ -174,9 +174,9 @@ public class Player {
                     }
                     map.setTile(helpTileGenerator, x, y);
 
-
+                    playerBoard[x][y].tokenPlayedType = heldToken;
                     heldToken = null;
-
+                    
 
                 }
 

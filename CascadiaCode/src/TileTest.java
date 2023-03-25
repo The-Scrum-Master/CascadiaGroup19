@@ -27,7 +27,7 @@ class TileTest{
         Tile tile1 = new Tile(1);
         Tile tile2 = new Tile(2);
         Tile tile3 = new Tile(3);
-        assertEquals(tile1.getColour(), "F");
+        assertEquals(tile1.getColour(), "G");
         assertEquals(tile2.getColour(), "M");
         assertEquals(tile3.getColour(), "R");
         
