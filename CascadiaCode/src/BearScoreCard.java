@@ -24,8 +24,7 @@ public abstract class BearScoreCard implements ScoreCard{
                         //cordinateX.add(columns);
                         //cordinateY.add(rows);
                     }
-                } catch (Exception nullPointer){
-                    continue;
+                } catch (Exception ignored){
                 }
             }
         }
