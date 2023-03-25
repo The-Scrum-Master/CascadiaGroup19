@@ -5,7 +5,7 @@ public class ElkScoreCard_A extends ElkScoreCard{
         super(player);
     }
     @Override
-    public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
+    public int countScore() {
         return 0;
     }
     public void getIndexes(Tile[][] playerBoard){}

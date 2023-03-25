@@ -7,7 +7,7 @@ public class BearScoreCard_A extends BearScoreCard{
         super(player);
     }
     @Override
-    public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
+    public int countScore() {
         for(int i=0; i<arrayOfTokens.size(); i++){
             if(arrayOfTokens.get(i).getValid()){
                 continue;

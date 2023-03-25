@@ -10,6 +10,7 @@
             getIndexes(player.getPlayerBoard());
             Tile[][] playerBoard = player.getPlayerBoard();
 
+            return -1;
         }
         public void getIndexes(Tile[][] playerBoard){
 

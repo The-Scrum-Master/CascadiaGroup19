@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class HawkScoreCard_A extends BearScoreCard{
+public class HawkScoreCard_A extends HawkScoreCard{
     int numberOfHawks=0;
 
     public HawkScoreCard_A (Player player) {
         super(player);
     }
     @Override
-    public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
+    public int countScore() {
         for(int i=0; i<arrayOfTokens.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){

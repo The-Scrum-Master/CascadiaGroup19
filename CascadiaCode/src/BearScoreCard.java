@@ -11,18 +11,23 @@ public abstract class BearScoreCard implements ScoreCard{
     }
 
     @Override
-    public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
+    public int countScore() {
         return 0;
     }
 
     public void getIndexes(Tile[][] playerBoard) {
         for(int rows = 0; rows < 46; rows++ ){
             for(int columns =0; columns < 46; columns++){
-                if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.BEAR)){
-                    arrayOfTokens.add(new TokenForPoints(columns, rows));
-                    //cordinateX.add(columns);
-                    //cordinateY.add(rows);
+                try{
+                    if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.BEAR)){
+                        arrayOfTokens.add(new TokenForPoints(columns, rows));
+                        //cordinateX.add(columns);
+                        //cordinateY.add(rows);
+                    }
+                } catch (Exception nullPointer){
+                    continue;
                 }
+
             }
         }
     }

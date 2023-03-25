@@ -9,7 +9,7 @@ public abstract class ElkScoreCard implements ScoreCard{
     }
 
     @Override
-    public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
+    public int countScore() {
         return 0;
     }
 

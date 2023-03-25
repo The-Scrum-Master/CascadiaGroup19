@@ -24,7 +24,7 @@ public class GameRunner {
         int helperIntToPrintMap=-1;
         int turnTheGameIsAt=0;
 
-        while(turnTheGameIsAt<=20 && continueGame){ //main loop that runs the game until 20 turns pass
+        while(turnTheGameIsAt<=1 && continueGame){ //main loop that runs the game until 20 turns pass
             if(playersTurn == numberOfPlayers){
                 playersTurn=0;
                 turnTheGameIsAt++;
@@ -154,6 +154,22 @@ public class GameRunner {
             }
         }
 
+        playersTurn=0;
+        while(playersTurn<numberOfPlayers){
+            System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
+
+            HawkScoreCard_A hawkScore=new HawkScoreCard_A(players.get(playersTurn));
+            hawkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
+            System.out.println("Points awarded for hawks: " + hawkScore.countScore());
+
+            BearScoreCard_A bearScore=new BearScoreCard_A(players.get(playersTurn));
+            bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
+            System.out.println("Points awarded for bears: " + bearScore.countScore());
+
+
+
+            playersTurn++;
+        }
 
         System.out.println("Thanks for playing!");
     }
