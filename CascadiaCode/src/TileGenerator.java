@@ -59,6 +59,7 @@ public class TileGenerator {
             generateNewFlippedTile(stringColour,stringColour2);
         }
     }
+
     public void generateNewFlippedTile(String color1,String color2)
     {
         String color;
@@ -112,6 +113,7 @@ public class TileGenerator {
         }
     }
 
+
     public static TileGenerator blankTile(){
         TileGenerator blank=new TileGenerator();
         for(int i=0;i< blankTile.length;i++) {
@@ -123,6 +125,8 @@ public class TileGenerator {
     }
 
  */
+
+
 
 
 
@@ -404,7 +408,6 @@ public class TileGenerator {
         mapencio.setTile(tileTrail, 9, 10 );
 
         mapencio.printMapTotal();
-
 
         //map.fillMapBlankByParts(blank);
         //map.starterTilesReducedMap(unique1, double1, double2);

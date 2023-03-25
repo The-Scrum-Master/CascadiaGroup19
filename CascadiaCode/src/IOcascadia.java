@@ -39,7 +39,7 @@ public class IOcascadia {
         else{
             System.out.println("Wrong input (expected digits), try again :)");
             return takeIntInput();
-        }
+            }
     }
 
     public static String makeLowerCase(String str){
