@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public abstract class BearScoreCard implements ScoreCard{
+public abstract class HawkScoreCard implements ScoreCard{
     protected ArrayList<TokenForPoints> arrayOfTokens;
     //public ArrayList<Integer> cordinateX;
     //public  ArrayList<Integer> cordinateY;
-    public BearScoreCard(Player player){
+    public HawkScoreCard(Player player){
         arrayOfTokens = new ArrayList<>();
         //cordinateX = new ArrayList<>();
         //cordinateY = new ArrayList<>();
@@ -28,6 +28,6 @@ public abstract class BearScoreCard implements ScoreCard{
     }
     @Override
     public void explainCard() {
-        System.out.println("This Scorecard is used to determine the points for the Wildlife type Bear.");
+        System.out.println("This Scorecard is used to determine the points for the Wildlife type Hawk.");
     }
 }

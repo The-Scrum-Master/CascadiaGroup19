@@ -7,10 +7,7 @@ import java.util.ArrayList;
 public class GameRunner {
     private static final ArrayList<Player> players= new ArrayList<Player>(); //arrayList of Player class to store players
     public static PairDisplay p =new PairDisplay(); // to use the functions in the PairDisplay class to display the river
-
-    public static boolean continueGame = true; //boolean to stop the game
-
-
+    public static boolean continueGame=true;
     public static void main(String[] args) {
         IOcascadia.welcomeMessage(); //output welcome message
         IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
@@ -25,10 +22,12 @@ public class GameRunner {
         }
         int playersTurn=0; //int to rotate around players in order
         int helperIntToPrintMap=-1;
-        while(continueGame){ //main loop that runs the game until continueGame is changed to false
+        int turnTheGameIsAt=0;
+
+        while(turnTheGameIsAt<=20 && continueGame){ //main loop that runs the game until 20 turns pass
             if(playersTurn == numberOfPlayers){
                 playersTurn=0;
-
+                turnTheGameIsAt++;
                 helperIntToPrintMap++;
             }
             else {
@@ -149,26 +148,13 @@ public class GameRunner {
                             }
                         }
                     }
-
                 }
-
-                boolean hasGameEnded = true;
-                while (hasGameEnded)
-                {
-                    System.out.println("Your turn has ended.");
-                    if (!hasGameEnded)
-                    {
-                        continueGame = false;
-                    } else
-                    {
-                        hasGameEnded = false;
-                    }
-
-
-                    playersTurn++;
-                }
+                System.out.println("Your turn has ended.");
+                playersTurn++;
             }
         }
+
+
         System.out.println("Thanks for playing!");
     }
 

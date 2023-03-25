@@ -1,25 +1,15 @@
 import java.util.ArrayList;
 
-public class BearScoreCard_A extends BearScoreCard{
-    int numberOfPairs=0;
+public class HawkScoreCard_A extends BearScoreCard{
+    int numberOfHawks=0;
 
-    public BearScoreCard_A(Player player) {
+    public HawkScoreCard_A (Player player) {
         super(player);
     }
     @Override
     public int countScore(ArrayList<Integer> Xcords, ArrayList<Integer> Ycords) {
         for(int i=0; i<arrayOfTokens.size(); i++){
-            if(arrayOfTokens.get(i).getValid()){
-                continue;
-            }
-
-            /*for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getValid()){
-                    arrayOfTokens.remove(j);
-                    j--;
-                }
-            }
-             */
+            boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){
                 if(arrayOfTokens.get(j).getValid()){
                     continue;
@@ -32,25 +22,30 @@ public class BearScoreCard_A extends BearScoreCard{
                         if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
                                 arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
                                 arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
-
-                            arrayOfTokens.get(j).setValid(true);
-                            arrayOfTokens.get(i).setValid(true);
-                            numberOfPairs++;
+                            foundAdjacentHawk=true;
                             break;
                         }
                     }
                 }
             }
+            if(!foundAdjacentHawk){
+                arrayOfTokens.get(i).setValid(true);
+                numberOfHawks++;
+            }
         }
-        return turnNumberOfPairsIntoPoints(numberOfPairs);
+        return turnNumberOfHawksIntoPoints(numberOfHawks);
     }
 
-    public int turnNumberOfPairsIntoPoints(int pairs){
-        if(pairs==0) return 0;
-        else if(pairs==1) return 4;
-        else if(pairs==2) return 11;
-        else if(pairs==3) return 19;
-        else if(pairs>=4) return 27;
+    public int turnNumberOfHawksIntoPoints(int hawks){
+        if(hawks==0) return 0;
+        else if(hawks==1) return 2;
+        else if(hawks==2) return 5;
+        else if(hawks==3) return 8;
+        else if(hawks==4) return 11;
+        else if(hawks==5) return 14;
+        else if(hawks==6) return 18;
+        else if(hawks==7) return 22;
+        else if(hawks>=8) return 26;
         else{
             throw new IllegalArgumentException("number of pairs can't be negative");
         }
