@@ -32,6 +32,7 @@ public class HawkScoreCard_A extends HawkScoreCard{
                 arrayOfTokens.get(i).setValid(true);
                 numberOfHawks++;
             }
+            //System.out.println(numberOfHawks);
         }
         return turnNumberOfHawksIntoPoints(numberOfHawks);
     }

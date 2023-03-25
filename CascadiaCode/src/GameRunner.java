@@ -24,7 +24,7 @@ public class GameRunner {
         int helperIntToPrintMap=-1;
         int turnTheGameIsAt=0;
 
-        while(turnTheGameIsAt<=1 && continueGame){ //main loop that runs the game until 20 turns pass
+        while(turnTheGameIsAt<=0 && continueGame){ //main loop that runs the game until 20 turns pass
             if(playersTurn == numberOfPlayers){
                 playersTurn=0;
                 turnTheGameIsAt++;
@@ -149,10 +149,12 @@ public class GameRunner {
                         }
                     }
                 }
-                System.out.println("Your turn has ended.");
+                System.out.println("Your turn has ended.\n");
                 playersTurn++;
             }
         }
+        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n" +
+                "The game has finished!\n");
 
         playersTurn=0;
         while(playersTurn<numberOfPlayers){
@@ -166,8 +168,7 @@ public class GameRunner {
             bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for bears: " + bearScore.countScore());
 
-
-
+            System.out.println();
             playersTurn++;
         }
 
