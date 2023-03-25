@@ -27,7 +27,6 @@ public abstract class BearScoreCard implements ScoreCard{
                 } catch (Exception nullPointer){
                     continue;
                 }
-
             }
         }
     }

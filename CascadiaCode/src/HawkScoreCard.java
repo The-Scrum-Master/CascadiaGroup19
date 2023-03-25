@@ -18,10 +18,14 @@ public abstract class HawkScoreCard implements ScoreCard{
     public void getIndexes(Tile[][] playerBoard) {
         for(int rows = 0; rows < 46; rows++ ){
             for(int columns =0; columns < 46; columns++){
-                if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.BEAR)){
-                    arrayOfTokens.add(new TokenForPoints(columns, rows));
-                    //cordinateX.add(columns);
-                    //cordinateY.add(rows);
+                try{
+                    if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.HAWK)){
+                        arrayOfTokens.add(new TokenForPoints(columns, rows));
+                        //cordinateX.add(columns);
+                        //cordinateY.add(rows);
+                    }
+                } catch (Exception nullPointer){
+                    continue;
                 }
             }
         }
