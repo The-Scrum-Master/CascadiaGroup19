@@ -324,17 +324,25 @@ public class Tile {
     public Wildlife[] getSlots() { //gives array
         return slots;
     }
+    
     public Wildlife getSlot(int index){ //gives wildlife
         return slots[index];
+    }
+    public void setSlots(Wildlife wildlife, int index){ //sets wildlife in array
+        this.slots[index] = wildlife;
     }
 
     public Habitat getHabitat(int index){
         return habitats[index];
     }
+
     public Habitat[] getHabitats() {
         return habitats;
     }
 
+    public void setHabitats(Habitat habitat, int index) {
+        this.habitats[index] = habitat;
+    }
 
     public char getColour()
     {
