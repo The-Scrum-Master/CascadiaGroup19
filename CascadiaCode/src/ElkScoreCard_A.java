@@ -1,22 +1,115 @@
 import java.util.ArrayList;
 
 public class ElkScoreCard_A extends ElkScoreCard{
-    public ElkScoreCard_A(Player player) {
+
+    public ElkScoreCard_A (Player player) {
         super(player);
     }
+
+    public void recursiveHorizontalLineCheck(TokenForPoints validElk){
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //making sure that the element we are looking at isn't the same one we are comparing it to
+            if((validElk.getCordY()==arrayOfTokens.get(j).getCordY() && validElk.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+                continue;
+            else{
+                if(validElk.getCordY()==arrayOfTokens.get(j).getCordY() &&
+                        (validElk.getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                                validElk.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                                validElk.getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
+
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveHorizontalLineCheck(arrayOfTokens.get(j));
+                }
+            }
+        }
+    }
+
+    public void recursiveVerticalLineCheck(TokenForPoints validElk){
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //making sure that the element we are looking at isn't the same one we are comparing it to
+            if((validElk.getCordY()==arrayOfTokens.get(j).getCordY() && validElk.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+                continue;
+            else{
+                if(validElk.getCordX()==arrayOfTokens.get(j).getCordX() &&
+                        (validElk.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                                validElk.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                                validElk.getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
+
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveVerticalLineCheck(arrayOfTokens.get(j));
+                }
+            }
+        }
+    }
+
     @Override
     public int countScore() {
-        return 0;
+        int totalPoints=0;
+        for(int i=0; i<arrayOfTokens.size(); i++){
+            int length=0;
+            for(int j=0; j<arrayOfTokens.size(); j++){
+                if(arrayOfTokens.get(j).getValid()){
+                    continue;
+                }
+                if(j!=i) { //making sure that the element we are looking at isn't the same one we are comparing it to
+                    if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY() &&
+                            (arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
+
+                        arrayOfTokens.get(i).setValid(true);
+                        arrayOfTokens.get(j).setValid(true);
+                        recursiveHorizontalLineCheck(arrayOfTokens.get(i));
+                        recursiveHorizontalLineCheck(arrayOfTokens.get(j));
+                        break;
+                    }
+                    else if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX() &&
+                            (arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                                    arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                                    arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
+
+                        arrayOfTokens.get(i).setValid(true);
+                        arrayOfTokens.get(j).setValid(true);
+                        recursiveVerticalLineCheck(arrayOfTokens.get(i));
+                        recursiveVerticalLineCheck(arrayOfTokens.get(j));
+                        break;
+                    }
+                }
+            }
+            for(int j=0; j<arrayOfTokens.size(); j++){
+                if(arrayOfTokens.get(j).getValid()){
+                    length++;
+                }
+            }
+            totalPoints+=turnLenghtOfElksIntoPoints(length);
+            //System.out.println(lengthOfElks);
+        }
+        return turnLenghtOfElksIntoPoints(totalPoints);
     }
-    public void getIndexes(Tile[][] playerBoard){}
+
+    public int turnLenghtOfElksIntoPoints(int elks){
+        if(elks==0) return 0;
+        else if(elks==1) return 2;
+        else if(elks==2) return 5;
+        else if(elks==3) return 8;
+        else if(elks==4) return 11;
+        else if(elks==5) return 14;
+        else if(elks==6) return 18;
+        else if(elks==7) return 22;
+        else if(elks>=8) return 26;
+        else{
+            throw new IllegalArgumentException("number of pairs can't be negative");
+        }
+    }
+
 
     @Override
     public void explainCard() {
         System.out.println(" You have chosen Elk Scorecard A, Score points shown for each straight line of adjacent Elk, depending on length of the line. \n" +
                 "Two lines of Elk may be adjacent to one another, however, each Elk may only count for a single line. Lines do not need to be horizontal.");
         System.out.println( "A solo ElK:             2 points\n" +
-                            "2 Elk line:             5 points\n" +
-                            "3 Elk line:             9 points\n" +
-                            "4 Elk line:             13 points");
+                "2 Elk line:             5 points\n" +
+                "3 Elk line:             9 points\n" +
+                "4 Elk line:             13 points");
     }
 }

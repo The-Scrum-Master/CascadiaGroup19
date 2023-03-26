@@ -176,8 +176,6 @@ public class Player {
 
                     playerBoard[x][y].tokenPlayedType = heldToken;
                     heldToken = null;
-                    
-
                 }
 
             }

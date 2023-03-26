@@ -24,7 +24,7 @@ public class GameRunner {
         int helperIntToPrintMap=-1;
         int turnTheGameIsAt=0;
 
-        while(turnTheGameIsAt<=0 && continueGame){ //main loop that runs the game until 20 turns pass
+        while(turnTheGameIsAt<=1 && continueGame){ //main loop that runs the game until 20 turns pass
             if(playersTurn == numberOfPlayers){
                 playersTurn=0;
                 turnTheGameIsAt++;
@@ -149,7 +149,20 @@ public class GameRunner {
                         }
                     }
                 }
-                System.out.println("Your turn has ended.\n");
+                System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
+                boolean wrongInputGameQuit = true;
+                while (wrongInputGameQuit) {
+                    String quitGameDecision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
+                    if (quitGameDecision.equals("yes")) {
+                        continueGame=false;
+                        wrongInputGameQuit = false;
+                    } else if (quitGameDecision.equals("no")) {
+                        wrongInputGameQuit = false;
+
+                    } else {
+                        System.out.println("Wrong input please try again");
+                    }
+                }
                 playersTurn++;
             }
         }
@@ -167,6 +180,10 @@ public class GameRunner {
             BearScoreCard_A bearScore=new BearScoreCard_A(players.get(playersTurn));
             bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for bears: " + bearScore.countScore());
+
+            ElkScoreCard_A elkScore=new ElkScoreCard_A(players.get(playersTurn));
+            elkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
+            System.out.println("Points awarded for elks: " + elkScore.countScore());
 
             System.out.println();
             playersTurn++;
