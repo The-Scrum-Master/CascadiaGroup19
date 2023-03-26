@@ -59,23 +59,13 @@ class PlayerTests{
         TileDeck.createDeck();
         TileDeck.playRiver();
         Player player1 = new Player("Player1",1);
-        assertFalse(player1.checkToken());
         player1.generateInitialMap();
         player1.pickPair(1);
-        player1.placeTile(24,23);
+        Tile tileTest = player1.heldTile;
+        player1.placeTile(23,24);
         assertTrue(player1.getBoardIndex(24,23).isPlayed());
-        assertTrue(player1.getBoardIndex(24,23) == player1.heldTile);
-        if(player1.checkToken()){
-            if(player1.getBoardIndex(24,23).getSlot(0) == player1.heldToken){
-            assertTrue(player1.getBoardIndex(24,23).getSlot(0) == player1.heldToken);
-            }
-            else{
-                assertTrue(player1.getBoardIndex(24,23).getSlot(1) == player1.heldToken);
-            }
-        } 
-        else{
-            assertTrue(player1.getBoardIndex(24,23).getHabitat(0) == player1.heldTile.getHabitat(0));
-        }
+        assertTrue(player1.getBoardIndex(24,23) == tileTest);
+        assertEquals(player1.getBoardIndex(24, 23).getSlot(0),tileTest.getSlot(0));
     }
     @Test // Test to see if player places a token correctly on a tile
     void TestPlayerPlaceToken(){

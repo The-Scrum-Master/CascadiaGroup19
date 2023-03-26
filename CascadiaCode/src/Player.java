@@ -113,6 +113,7 @@ public class Player {
             placeTile(x_axis,y_axis);//recursive call to allow player to place tile again
         }
         else {
+            heldTile.playTile();   
             playerBoard[x][y] = heldTile;
             TileGenerator helpTileGenerator = new TileGenerator(heldTile);
             map.setTile(helpTileGenerator,x,y);
@@ -121,7 +122,7 @@ public class Player {
 
         }
     }
-    public void placeToken(int x, int y) //places token on tile
+    public void placeToken(int y, int x) //places token on tile
     {
         Wildlife WildlifeType = heldToken;
         if (this.playerBoard[x][y] ==null||this.playerBoard[x][y].isTokenPlaced())
@@ -185,7 +186,6 @@ public class Player {
 
                     }
                     map.setTile(helpTileGenerator, x, y);
-
                     playerBoard[x][y].tokenPlayedType = heldToken;
                     heldToken = null;
                     
