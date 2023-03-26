@@ -120,7 +120,7 @@ public class Player {
 
         }
     }
-    public void placeToken(int x, int y)
+    public void placeToken(int x, int y) //places token on tile
     {
         Wildlife WildlifeType = heldToken;
         if (this.playerBoard[x][y] ==null||this.playerBoard[x][y].isTokenPlaced())
@@ -133,13 +133,13 @@ public class Player {
         } else
         {
             playerBoard[x][y].playToken();
-            for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
+            for (int i = 0; i < playerBoard[x][y].getSlots().length; i++) //checks to see if the tiles has a slot for the token on the board
             {
                 if (playerBoard[x][y].getSlot(i) == heldToken)
                 {
 
                     TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
-                    if (playerBoard[x][y].getSelect() == 1)
+                    if (playerBoard[x][y].getSelect() == 1) //checks to see if the tile is a single habitat tile
                     {
                         helpTileGenerator.tileUniqueColorPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
                         playerBoard[x][y].setTokenPlaced(true);
@@ -148,22 +148,22 @@ public class Player {
                         natureTokenNumber++;
                         isFilled =true;
 
-                    } else if (playerBoard[x][y].getSelect() == 2)
+                    } else if (playerBoard[x][y].getSelect() == 2) //checks to see if the tile is a double wildlife tile
                     {
 
-                        if (i == 0)
+                        if (i == 0)//checks to see if the token is the first token on the tile
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()), playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal()));
                             playerBoard[x][y].setTokenPlaced(true);
                         }
-                        if (i == 1)
+                        if (i == 1)//checks to see if the token is the second token on the tile
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()), playerBoard[x][y].colourConverter(playerBoard[x][y].getColour2()),playerBoard[x][y].colourAnimal(playerBoard[x][y].getAnimal2()));
                             playerBoard[x][y].setTokenPlaced(true);
                         }
                         isFilled =true;
 
-                    } else if (playerBoard[x][y].getSelect() == 3)
+                    } else if (playerBoard[x][y].getSelect() == 3) //checks to see if the tile is a triple wildlife tile
                     {
                         if (i == 0)
                         {
@@ -187,6 +187,8 @@ public class Player {
 
                     playerBoard[x][y].tokenPlayedType = heldToken;
                     heldToken = null;
+                    
+
                 }
 
             }
@@ -266,7 +268,7 @@ public class Player {
             return false;
         }
     }//if tile already has a token not let place
-    public void splitPick(){
+    public void splitPick(){ //this is the method that is called when the player chooses to pick a tile and a token from the river at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
                 "\nEnter the index of the tile you would like to chose:");
         int indexChoiceTile = IOcascadia.takeIntInput()-1;
@@ -289,7 +291,7 @@ public class Player {
         System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
     }
 
-    public void pickPair(int indexOfSelected){
+    public void pickPair(int indexOfSelected){ //this is the method that is called when the player chooses to pick a tile and a token from the river at the same index
         this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
         this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
         TileDeck.ReplaceRiverTilesIndex(indexOfSelected);

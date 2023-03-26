@@ -50,9 +50,7 @@ class PlayerTests{
         player1.pickPair(1);
         assertTrue(player1.heldTile != null);
         assertTrue(player1.heldToken != null);
-        player1.splitPick();
-        System.out.print(1);
-        System.out.print(2);
+        // player1.splitPick(); 
         assertTrue(player1.heldTile != null);
         assertTrue(player1.heldToken != null);
     }

@@ -35,7 +35,7 @@ public class Tile {
     private boolean notRand= false;
 
 
-    public Tile(int select){
+    public Tile(int select){ //this is the constructor for the tile class that takes in a number between 1 and 3 to determine the type of tile
         if(select > 3 || select < 1){
             select = randomNumberGenerator(3)+1; //this generates a number between 0 and 2
         }
