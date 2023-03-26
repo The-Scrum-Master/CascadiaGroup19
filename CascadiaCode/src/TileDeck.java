@@ -34,7 +34,7 @@ public class TileDeck extends Stack<Tile> {
 
     public static Wildlife[] getRiverTokens(){return riverTokens;}
     public static Tile getRiverTilesIndex(int index){ return riverTiles[index];}
-     public static Wildlife getRiverTokensIndex(int index){return riverTokens[index];}
+    public static Wildlife getRiverTokensIndex(int index){return riverTokens[index];}
     public static void ReplaceRiverTilesIndex(int index){  riverTiles[index] = deck.pop();}
     public static void ReplaceRiverTokensIndex(int index){ riverTokens[index] = Wildlife.randWildlife();}
 
