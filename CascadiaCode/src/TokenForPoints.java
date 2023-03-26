@@ -2,7 +2,6 @@ public class TokenForPoints {
     private int cordX;
     private int cordY;
     private boolean valid=false;
-
     private boolean alreadyAccountedFor=false;
 
     public TokenForPoints(int cordX, int cordY){
