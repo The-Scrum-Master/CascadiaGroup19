@@ -24,7 +24,7 @@ public class GameRunner {
         int helperIntToPrintMap=-1;
         int turnTheGameIsAt=0;
 
-        while(turnTheGameIsAt<=1 && continueGame){ //main loop that runs the game until 20 turns pass
+        while(turnTheGameIsAt<=4 && continueGame){ //main loop that runs the game until 20 turns pass
             if(playersTurn == numberOfPlayers){
                 playersTurn=0;
                 turnTheGameIsAt++;
@@ -184,6 +184,9 @@ public class GameRunner {
             ElkScoreCard_A elkScore=new ElkScoreCard_A(players.get(playersTurn));
             elkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for elks: " + elkScore.countScore());
+            FoxScoreCard_A foxScore=new FoxScoreCard_A(players.get(playersTurn));
+            foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
+            System.out.println("Points awarded for fox: " + foxScore.countScore());
 
             System.out.println();
             playersTurn++;
