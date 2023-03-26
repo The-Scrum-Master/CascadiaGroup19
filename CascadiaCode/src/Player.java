@@ -29,7 +29,7 @@ public class Player {
         this.order = order;
         heldTile = null;
         heldToken = null;
-        natureTokenNumber = 5;
+        natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
 
     }
@@ -40,6 +40,9 @@ public class Player {
     public String getName() {
         return name;
     }
+    public int getNatureTokenNumber() {
+        return natureTokenNumber;
+    }
 
     public Tile getHeldTile() {
         return heldTile;
@@ -47,9 +50,18 @@ public class Player {
     public Wildlife getHeldToken(){
         return heldToken;
     }
+    public void setHeldToken(Wildlife token){
+        heldToken=token;
+    }
+    public void setHeldTile(Tile tile){
+        heldTile=tile;
+    }
 
     public int getOrder() {
         return order;
+    }
+    public void reduceNatureTokenNumberByOne() {
+        natureTokenNumber--;
     }
 
     public boolean isFirstTurnPlayed() {
@@ -62,7 +74,6 @@ public class Player {
     public void generateInitialMap(){
         TileGenerator blank =new TileGenerator();
         blank.blankTile();
-
         playerBoard[22][22] = new Tile(1); //generates the three starting tiles
         playerBoard[22][22].playTile(); //changes boolean on tile to played.
         playerBoard[23][22] = new Tile(2);
@@ -286,11 +297,4 @@ public class Player {
         TileDeck.emptyDeckCheck();
     }
 
-    public int getNatureTokenNumber() {
-        return natureTokenNumber;
-    }
-
-    public void reduceNatureTokenNumberByOne() {
-        natureTokenNumber--;
-    }
 }
