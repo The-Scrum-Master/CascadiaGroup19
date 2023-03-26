@@ -3,6 +3,8 @@ public class TokenForPoints {
     private int cordY;
     private boolean valid=false;
 
+    private boolean alreadyAccountedFor=false;
+
     public TokenForPoints(int cordX, int cordY){
         this.cordX = cordX;
         this.cordY = cordY;
@@ -30,5 +32,13 @@ public class TokenForPoints {
 
     public void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    public boolean getAlreadyAccountedFor() {
+        return alreadyAccountedFor;
+    }
+
+    public void setAlreadyAccountedFor(boolean alreadyAccountedFor) {
+        this.alreadyAccountedFor = alreadyAccountedFor;
     }
 }

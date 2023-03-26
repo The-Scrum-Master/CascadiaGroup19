@@ -45,10 +45,16 @@ public class ElkScoreCard_A extends ElkScoreCard{
     @Override
     public int countScore() {
         int totalPoints=0;
+        //System.out.println("size=" + arrayOfTokens.size());
         for(int i=0; i<arrayOfTokens.size(); i++){
             int length=0;
+            if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
+                continue;
+            }
+            arrayOfTokens.get(i).setValid(true);
             for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getValid()){
+                //System.out.println("iteration= i=" + i + "     j= "+j);
+                if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
                     continue;
                 }
                 if(j!=i) { //making sure that the element we are looking at isn't the same one we are comparing it to
@@ -57,7 +63,6 @@ public class ElkScoreCard_A extends ElkScoreCard{
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
 
-                        arrayOfTokens.get(i).setValid(true);
                         arrayOfTokens.get(j).setValid(true);
                         recursiveHorizontalLineCheck(arrayOfTokens.get(i));
                         recursiveHorizontalLineCheck(arrayOfTokens.get(j));
@@ -68,7 +73,6 @@ public class ElkScoreCard_A extends ElkScoreCard{
                                     arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
                                     arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
 
-                        arrayOfTokens.get(i).setValid(true);
                         arrayOfTokens.get(j).setValid(true);
                         recursiveVerticalLineCheck(arrayOfTokens.get(i));
                         recursiveVerticalLineCheck(arrayOfTokens.get(j));
@@ -76,27 +80,25 @@ public class ElkScoreCard_A extends ElkScoreCard{
                     }
                 }
             }
-            for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getValid()){
+            //System.out.println("length="+length);
+            for(int k=0; k<arrayOfTokens.size(); k++){
+                if(arrayOfTokens.get(k).getValid()){
                     length++;
+                    arrayOfTokens.get(k).setAlreadyAccountedFor(true);
+                    arrayOfTokens.get(k).setValid(false);
                 }
             }
-            totalPoints+=turnLenghtOfElksIntoPoints(length);
-            //System.out.println(lengthOfElks);
+            totalPoints+=turnLengthOfElksIntoPoints(length);
         }
-        return turnLenghtOfElksIntoPoints(totalPoints);
+        return totalPoints;
     }
 
-    public int turnLenghtOfElksIntoPoints(int elks){
+    public int turnLengthOfElksIntoPoints(int elks){
         if(elks==0) return 0;
         else if(elks==1) return 2;
         else if(elks==2) return 5;
-        else if(elks==3) return 8;
-        else if(elks==4) return 11;
-        else if(elks==5) return 14;
-        else if(elks==6) return 18;
-        else if(elks==7) return 22;
-        else if(elks>=8) return 26;
+        else if(elks==3) return 9;
+        else if(elks>=4) return 13;
         else{
             throw new IllegalArgumentException("number of pairs can't be negative");
         }
