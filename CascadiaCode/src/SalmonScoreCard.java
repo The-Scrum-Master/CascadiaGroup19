@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 
-public abstract class SalmonScoreCard implements ScoreCard {
-
-    public ArrayList<Integer> cordinateX;
-    public  ArrayList<Integer> cordinateY;
-    Player player;
+public abstract class SalmonScoreCard implements ScoreCard{
+    protected ArrayList<TokenForPoints> arrayOfTokens;
+    //public ArrayList<Integer> cordinateX;
+    //public  ArrayList<Integer> cordinateY;
     public SalmonScoreCard(Player player){
-        cordinateX = new ArrayList<>();
-        cordinateY = new ArrayList<>();
-        this.player=player;
+        arrayOfTokens = new ArrayList<>();
+        //cordinateX = new ArrayList<>();
+        //cordinateY = new ArrayList<>();
     }
 
     @Override
@@ -19,18 +18,19 @@ public abstract class SalmonScoreCard implements ScoreCard {
     public void getIndexes(Tile[][] playerBoard) {
         for(int rows = 0; rows < 46; rows++ ){
             for(int columns =0; columns < 46; columns++){
-                if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.SALMON)){
-                    cordinateX.add(columns);
-                    cordinateY.add(rows);
+                try{
+                    if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.SALMON)){
+                        arrayOfTokens.add(new TokenForPoints(columns, rows));
+                        //cordinateX.add(columns);
+                        //cordinateY.add(rows);
+                    }
+                } catch (Exception ignored){
                 }
             }
         }
     }
     @Override
     public void explainCard() {
-        System.out.println("This Scorecard is used to determine the points for the Wildlife type Fox.\n" +
-                "There are 3 types of this card.");
+        System.out.println("This Scorecard is used to determine the points for the Wildlife type Hawk.");
     }
 }
-
-

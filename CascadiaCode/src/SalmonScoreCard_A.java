@@ -1,30 +1,131 @@
+import java.util.ArrayList;
 
-    public class SalmonScoreCard_A extends SalmonScoreCard{
-        public int SalmonScore= 0;
+public class SalmonScoreCard_A extends SalmonScoreCard{
 
-        public SalmonScoreCard_A(Player player) {
-            super(player);
+    public SalmonScoreCard_A (Player player) {
+        super(player);
+    }
+    public void recursiveHorizontalLineCheck(TokenForPoints validSalmon){
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //making sure that the element we are looking at isn't the same one we are comparing it to
+            if((validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+                continue;
+            else{
+                if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() &&
+                        (validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
+
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveHorizontalLineCheck(arrayOfTokens.get(j));
+                }
+            }
         }
-        @Override
-        public int countScore() {
-            getIndexes(player.getPlayerBoard());
-            Tile[][] playerBoard = player.getPlayerBoard();
+    }
+    public void recursiveRunCheck(TokenForPoints validSalmon){
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //making sure that the element we are looking at isn't the same one we are comparing it to
+            if((validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+                continue;
+            else{
+                if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() &&
+                        (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
 
-            return -1;
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveRunCheck(arrayOfTokens.get(j));
+                }
+            }
         }
-        public void getIndexes(Tile[][] playerBoard){
 
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //System.out.println("iteration= i=" + i + "     j= "+j);
+            if(arrayOfTokens.get(j).getAlreadyAccountedFor() || (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || validSalmon.getNumberOfAdjacent()>2){
+                continue;
+            }
+            else{
+                if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                        validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                        validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
+
+                    if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                            validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                            validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
+
+                        validSalmon.setNumberOfAdjacent(validSalmon.getNumberOfAdjacent()+1);
+                        validSalmon.setValid(true);
+                        recursiveRunCheck(validSalmon);
+                        recursiveRunCheck(arrayOfTokens.get(j));
+                        break;
+                    }
+                }
+            }
         }
+    }
+    @Override
+    public int countScore() {
+        int totalPoints=0;
+        //System.out.println("size=" + arrayOfTokens.size());
+        for(int i=0; i<arrayOfTokens.size(); i++){
+            int length=0;
+            if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
+                continue;
+            }
+            arrayOfTokens.get(i).setValid(true);
+            for(int j=0; j<arrayOfTokens.size(); j++){
+                //System.out.println("iteration= i=" + i + "     j= "+j);
+                if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
+                    continue;
+                }
+                if(j!=i && arrayOfTokens.get(i).getNumberOfAdjacent()<3) { //making sure that the element we are looking at isn't the same one we are comparing it to
+                    if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
 
-        @Override
-        public void explainCard() {
-            System.out.println(" You have chosen Fox Scorecard A, Score points shown for each straight line of adjacent fox, depending on length of the line. \n" +
-                    "Two lines of Fox may be adjacent to one another, however, each Fox may only count for a single line. Lines do not need to be horizontal.");
-            System.out.println( "A solo Fox:             2 points\n" +
-                    "2 Fox line:             5 points\n" +
-                    "3 Fox line:             9 points\n" +
-                    "4 Fox line:             13 points");
+                        if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
+
+                            arrayOfTokens.get(i).setNumberOfAdjacent(arrayOfTokens.get(i).getNumberOfAdjacent()+1);
+                            arrayOfTokens.get(i).setValid(true);
+                            recursiveRunCheck(arrayOfTokens.get(i));
+                            recursiveRunCheck(arrayOfTokens.get(j));
+                            break;
+                        }
+                    }
+                }
+            }
+            //System.out.println("length="+length);
+            for(int k=0; k<arrayOfTokens.size(); k++){
+                if(arrayOfTokens.get(k).getValid()){
+                    length++;
+                    arrayOfTokens.get(k).setAlreadyAccountedFor(true);
+                    arrayOfTokens.get(k).setValid(false);
+                }
+            }
+            totalPoints+=turnLengthOfSalmonsIntoPoints(length);
+        }
+        return totalPoints;
+    }
+
+    public int turnLengthOfSalmonsIntoPoints(int Salmons){
+        if(Salmons==0) return 0;
+        else if(Salmons==1) return 2;
+        else if(Salmons==2) return 4;
+        else if(Salmons==3) return 7;
+        else if(Salmons==4) return 11;
+        else if(Salmons==5) return 15;
+        else if(Salmons==6) return 20;
+        else if(Salmons>=7) return 26;
+        else{
+            throw new IllegalArgumentException("number of pairs can't be negative");
         }
     }
 
 
+    @Override
+    public void explainCard() {
+        System.out.println(" You have chosen Salmon Scorecard A");
+    }
+}
