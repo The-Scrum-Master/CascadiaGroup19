@@ -62,6 +62,7 @@ public class Player {
     }
     public void reduceNatureTokenNumberByOne() {
         natureTokenNumber--;
+        System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
     }
 
     public boolean isFirstTurnPlayed() {
