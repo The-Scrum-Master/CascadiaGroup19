@@ -4,6 +4,7 @@ public abstract class SalmonScoreCard implements ScoreCard{
     protected ArrayList<TokenForPoints> arrayOfTokens;
     //public ArrayList<Integer> cordinateX;
     //public  ArrayList<Integer> cordinateY;
+
     public SalmonScoreCard(Player player){
         arrayOfTokens = new ArrayList<>();
         //cordinateX = new ArrayList<>();
@@ -29,8 +30,5 @@ public abstract class SalmonScoreCard implements ScoreCard{
             }
         }
     }
-    @Override
-    public void explainCard() {
-        System.out.println("This Scorecard is used to determine the points for the Wildlife type Hawk.");
-    }
+
 }

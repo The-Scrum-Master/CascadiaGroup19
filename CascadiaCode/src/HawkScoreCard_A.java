@@ -53,13 +53,7 @@ public class HawkScoreCard_A extends HawkScoreCard{
     }
 
 
-    @Override
-    public void explainCard() {
-        System.out.println(" You have chosen Elk Scorecard A, Score points shown for each straight line of adjacent Elk, depending on length of the line. \n" +
-                "Two lines of Elk may be adjacent to one another, however, each Elk may only count for a single line. Lines do not need to be horizontal.");
-        System.out.println( "A solo ElK:             2 points\n" +
-                "2 Elk line:             5 points\n" +
-                "3 Elk line:             9 points\n" +
-                "4 Elk line:             13 points");
+    public static void explainCard() {
+        System.out.println("This is Hawk Scorecard A. Points are given for total number of hawks that are not adjacent to any other hawk.\n");
     }
 }

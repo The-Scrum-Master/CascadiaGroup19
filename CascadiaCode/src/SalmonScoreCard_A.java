@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class SalmonScoreCard_A extends SalmonScoreCard{
-
     public SalmonScoreCard_A (Player player) {
         super(player);
     }
@@ -124,8 +123,8 @@ public class SalmonScoreCard_A extends SalmonScoreCard{
     }
 
 
-    @Override
-    public void explainCard() {
-        System.out.println(" You have chosen Salmon Scorecard A");
+    public static void explainCard() {
+        System.out.println("This is Salmon Scorecard A. Points are given for each run of salmon, depending on its length. \nA run is defined " +
+                "as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.\n");
     }
 }

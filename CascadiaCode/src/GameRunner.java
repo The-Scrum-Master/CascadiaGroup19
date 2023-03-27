@@ -10,6 +10,13 @@ public class GameRunner {
     public static boolean continueGame=true;
     public static void main(String[] args) {
         IOcascadia.welcomeMessage(); //output welcome message
+        System.out.println("\n");
+        int elkRand=IOcascadia.selectScoreCardElk();
+        int BearRand=IOcascadia.selectScoreCardBear();
+        int hawkRand=IOcascadia.selectScoreCardHawk();
+        int salmonRand=IOcascadia.selectScoreCardSalmon();
+        int foxRand=IOcascadia.selectScoreCardFox();
+        System.out.println("\n");
         IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
         IOcascadia.playerNames(); //output messages asking for player names
         IOcascadia.playerOrder(); //output message informing of the order the players are going to follow
@@ -187,6 +194,10 @@ public class GameRunner {
         while(playersTurn<numberOfPlayers){
             System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
 
+            //the ints elkRand, bearRand, etc would be used here to utilise the scorecard that was randomly selected
+            //at the beggining of the main if we had implemented more than one scorecard. Because we have not had time,
+            //the following lines only use scorecards A, as they are the only implemented ones
+
             HawkScoreCard_A hawkScore=new HawkScoreCard_A(players.get(playersTurn));
             hawkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for hawks: " + hawkScore.countScore());
@@ -202,6 +213,7 @@ public class GameRunner {
             SalmonScoreCard_A salmonScore=new SalmonScoreCard_A(players.get(playersTurn));
             salmonScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for salmon: " + salmonScore.countScore());
+
             FoxScoreCard_A foxScore =new FoxScoreCard_A(players.get(playersTurn));
             foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for fox: " + foxScore.countScore());

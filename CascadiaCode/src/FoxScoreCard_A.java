@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class FoxScoreCard_A extends FoxScoreCard{
     private int foxScore= 0;
-
-
     public FoxScoreCard_A(Player player) {
         super(player);
     }
@@ -136,8 +134,7 @@ public class FoxScoreCard_A extends FoxScoreCard{
         return foxScore;
     }
 
-    @Override
-    public void explainCard() {
-        System.out.println("This is Fox Scorecard A. Points are given depending on the number of unique wildlife types adjacent to it.");
+    public static void explainCard() {
+        System.out.println("This is Fox Scorecard A. Points are given depending on the number of unique wildlife types adjacent to it.\n");
     }
 }

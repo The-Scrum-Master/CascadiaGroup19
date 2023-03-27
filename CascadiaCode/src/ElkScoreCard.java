@@ -29,8 +29,4 @@ public abstract class ElkScoreCard implements ScoreCard{
             }
         }
     }
-    @Override
-    public void explainCard() {
-        System.out.println("This Scorecard is used to determine the points for the Wildlife type Hawk.");
-    }
 }

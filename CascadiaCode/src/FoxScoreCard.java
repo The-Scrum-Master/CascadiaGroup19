@@ -32,11 +32,6 @@ public abstract class FoxScoreCard implements ScoreCard {
                 }
             }
         }
-        @Override
-        public void explainCard() {
-            System.out.println("This Scorecard is used to determine the points for the Wildlife type Fox.\n" +
-                    "There are 3 types of this card.");
-        }
     }
 
 
