@@ -205,7 +205,9 @@ public class GameRunner {
             FoxScoreCard_A foxScore =new FoxScoreCard_A(players.get(playersTurn));
             foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for fox: " + foxScore.countScore());
-         
+
+            System.out.println("largest Habitats");
+            System.out.println("Forest: " + players.get(playersTurn).getForestMax());
 
             System.out.println();
             playersTurn++;
