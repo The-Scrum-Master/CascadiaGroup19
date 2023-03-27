@@ -19,6 +19,7 @@ public abstract class FoxScoreCard implements ScoreCard {
             return 0;
         }
 
+      //function to get indexes of all fox tokens
         public void getIndexes(Tile[][] playerBoard) {
             for(int rows = 0; rows < 46; rows++ ){
                 for(int columns =0; columns < 46; columns++){

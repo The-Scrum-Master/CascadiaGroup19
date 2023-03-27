@@ -13,7 +13,8 @@ public class TileGenerator {
     public TileGenerator(){
     }
 
-    public TileGenerator (Tile constructorTile){ //put the habitats and the placeholders as inputs into the constructor?
+    public TileGenerator (Tile constructorTile){
+        //put the habitats and the placeholders as inputs into the constructor?
         this.constructorTile = constructorTile;
         if(constructorTile.getSelect()==1){
             tileUniqueColor(constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()));
@@ -35,7 +36,6 @@ public class TileGenerator {
             else if(rand==3){
                 tileTwoColors(constructorTile.colourConverter(constructorTile.getColour2()), constructorTile.colourConverter(constructorTile.getColour()), constructorTile.colourAnimal(constructorTile.getAnimal()), constructorTile.colourAnimal(constructorTile.getAnimal2()), constructorTile.colourAnimal(constructorTile.getAnimal3()));
             }
-            //generate random number and use that number with some if else statements to generate either single colour or double
         }
     }
 
@@ -52,9 +52,7 @@ public class TileGenerator {
             stringColour= this.constructorTile.colourConverter(this.constructorTile.getHabitat(0).getSymbol());
 
             stringColour2= this.constructorTile.colourConverter(this.constructorTile.getHabitat(1).getSymbol());
-            //System.out.println("Tilegnerator colours");
-            //System.out.println(stringColour);
-            //System.out.println(stringColour2);
+
 
             generateNewFlippedTile(stringColour,stringColour2);
         }
@@ -104,27 +102,6 @@ public class TileGenerator {
 
 
 
-/*
-    public static void blankTileFiller(TileGenerator tile){
-        for(int i=0;i< blankTile.length;i++) {
-            for (int j = 0; j < blankTile.length; j++) {
-                blankTile[i][j] = "   ";
-            }
-        }
-    }
-
-
-    public static TileGenerator blankTile(){
-        TileGenerator blank=new TileGenerator();
-        for(int i=0;i< blankTile.length;i++) {
-            for (int j = 0; j < blankTile.length; j++) {
-                blankTile[i][j] = "   ";
-            }
-        }
-        return blank;
-    }
-
- */
 
 
 
@@ -306,11 +283,7 @@ public class TileGenerator {
         }
     }
 
-    /*
-    public void generateTile(String color, char letter){
-        tileUniqueColor(color, letter);
-    }
-     */
+
     public String removeBackground(String s)
     {
         String ANSI_RESET = "\u001B[0m";
@@ -349,41 +322,11 @@ public class TileGenerator {
         blank.blankTile();
         TileGenerator unique1 =new TileGenerator();
         unique1.tileUniqueColor(t.colourConverter(t.getColour()), t.colourAnimal(t.getAnimal()));
-        //TileGenerator unique2 =new TileGenerator();
-        //unique2.tileUniqueColor(t1.colourConverter(t1.getSymbol()), t1.colourAnimal(t1.getAnimal()));
-        //TileGenerator unique3 =new TileGenerator();
-        //unique3.tileUniqueColor("\033[43m", t.colourAnimal(t.getAnimal()), t.colourAnimal(t.getAnimal()));
-        //TileGenerator double1 =new TileGenerator();
-        //double1.tileTwoColors(t2.colourConverter(t2.getSymbol()), t2.colourConverter(t2.getSymbol2()), t2.colourAnimal(t2.getAnimal2()), t2.colourAnimal(t2.getAnimal()), t2.colourAnimal(t2.getAnimal()));
-        //TileGenerator double2 =new TileGenerator();
-        //double2.tileTwoColors(t3.colourConverter(t3.getSymbol()), t3.colourConverter(t3.getSymbol2()), t3.colourAnimal(t3.getAnimal2()), " ", t3.colourAnimal(t3.getAnimal()));
-//COMMENTS??????
 
 
 
-//COMMENTS??????
 
-        /*
-        blank.printTile();
-        blank.printTile();
-
-        unique.printTile();
-        blank.printTile();
-        blank.printTile();
-        blank.printTile();blank.printTile();
-        blank.printTile();blank.printTile();blank.printTile();blank.printTile();*/
-
-        /*unique.printTilePerRow(0);
-        blank.printTile();blank.printTile();blank.printTile();blank.printTile();
-         */
-
-
-        //map.addTile(unique);
-        //map.fillMap(unique1, unique2, unique3);
-
-        //map.fillMapBlank(blank);
         map.fillMapBlank(blank);
-        //map.starterTiles(unique2, double1, double2);
         map.printMapTotal();
 
 
@@ -409,8 +352,6 @@ public class TileGenerator {
 
         mapencio.printMapTotal();
 
-        //map.fillMapBlankByParts(blank);
-        //map.starterTilesReducedMap(unique1, double1, double2);
-        //map.printMapTotalByParts();
+
     }
 }

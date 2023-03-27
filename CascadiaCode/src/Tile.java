@@ -34,10 +34,15 @@ public class Tile {
 
     private boolean notRand = false;
 
-    public Tile(int select) { // this is the constructor for the tile class that takes in a number between 1
-                              // and 3 to determine the type of tile
+    public Tile(int select) {
+        // this is the constructor for the tile class that takes in a number between 1
+
+        // and 3 to determine the type of tile
+        // 1 being a single habitat tile
+        //2 being a double habitat tile with 2 placeholders and 3 being a double habitat tile with three placeholders
         if (select > 3 || select < 1) {
-            select = randomNumberGenerator(3) + 1; // this generates a number between 0 and 2
+            select = randomNumberGenerator(3) + 1;
+            // this generates a number between 0 and 2
         }
         this.select = select;
         Played = false;
@@ -54,37 +59,29 @@ public class Tile {
             firstHabitat = true;
             habitats[1] = randomHabitat();
 
-            // System.out.println(habitats[0]);
-            // System.out.println(habitats[1]);
-            // System.out.println((habitats[0].getSymbol()));
-            // System.out.println(notRand+"before if");
+
             if ((habitats[0].getSymbol()) == (habitats[1].getSymbol())) {
                 notRand = true;
             }
-            // System.out.println(notRand+"after if");
             while (notRand) // makes sure the habitats are not the same on the two biomes tiles
             {
                 habitats[1] = randomHabitat();
-                // System.out.println(habitats[1]+"habitat in while");
-                // System.out.println(notRand+"while loop");
+
                 if ((habitats[0].getSymbol()) != (habitats[1].getSymbol())) {
                     notRand = false;
                 }
 
             }
 
-            // System.out.println(notRand+"after while loop");
-            // System.out.println(habitats[0]);
-            // System.out.println(habitats[1]);
-            // System.out.println(colour);
-            // System.out.println(colour2);
+
             firstPlaceHolder = false;
             slots = new Wildlife[2];
             slots[0] = randomSlot();
             firstPlaceHolder = true;
             slots[1] = randomSlot();
 
-            while (slots[0] == slots[1]) { // makes sure the placeholders are not the same on the two biomesS
+            while (slots[0] == slots[1]) {
+                // makes sure the placeholders are not the same on the two biomesS
                 slots[1] = randomSlot();
             }
         } else if (select == 3) {
@@ -93,8 +90,10 @@ public class Tile {
             habitats[0] = randomHabitat();
             firstHabitat = true;
             habitats[1] = randomHabitat();
-            while (habitats[0].equals(habitats[1])) { // makes sure the habitats are not the same on the two biomes
-                                                      // tiles
+            while (habitats[0].equals(habitats[1])) {
+                // makes sure the habitats are not the same on the two biomes
+
+                // tiles
                 habitats[1] = randomHabitat();
             }
             firstPlaceHolder = false;
@@ -104,7 +103,8 @@ public class Tile {
             firstPlaceHolder = true;
             slots[1] = randomSlot();
 
-            while (slots[0] == slots[1]) { // makes sure the habitats are not the MATCHING biomesS
+            while (slots[0] == slots[1]) {
+                // makes sure the habitats are not the MATCHING biomesS
                 slots[1] = randomSlot();
             }
             secondPlaceHolder = true;
@@ -129,11 +129,10 @@ public class Tile {
         this.tokenPlaced = tokenPlaced;
     }
 
-    public void flipTile(Tile t) { // flips tiles by swapping its orientation in array
+    public void flipTile(Tile t) {
+        // flips tiles by swapping its orientation in array
 
-        // System.out.println("Pre- flipped:");
-        // System.out.println(t.habitats[0]);
-        // System.out.println(t.habitats[1]);
+
         if (t.getSelect() == 1) {
             System.out.println("Unable to flip one habitat tile ");
         } else {
@@ -146,13 +145,12 @@ public class Tile {
             t.habitats[0] = t.habitats[1];
             t.habitats[1] = temp;
         }
-        // System.out.println("Post flipped");
-        // System.out.println(t.habitats[0]);
-        // System.out.println(t.habitats[1]);
+
 
     }
 
-    public Habitat randomHabitat() { // generates and returns 1 of 5 habitats
+    public Habitat randomHabitat() {
+        // generates and returns 1 of 5 habitats
 
         switch (randomNumberGenerator(5)) {
 
@@ -203,16 +201,20 @@ public class Tile {
 
     public Wildlife randomSlot() {
 
-        switch (randomNumberGenerator(5)) { // generates and returns 1 of 5 tokens
+
+        switch (randomNumberGenerator(5)) {
+            // generates and returns 1 of 5 tokens
             case 0:
+
                 if (!(firstPlaceHolder)) {
                     animal = 'H';
+                    //for tiles with multiple placeholders booleans are used to keep track of what placeholders have been set
                 }
                 if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'H';
                 }
-                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
-                                      // animal2
+                if (secondPlaceHolder)
+
                 {
                     animal3 = 'H';
                 }
@@ -225,8 +227,7 @@ public class Tile {
                 if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'S';
                 }
-                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
-                                      // animal2
+                if (secondPlaceHolder)
                 {
                     animal3 = 'S';
                 }
@@ -239,8 +240,7 @@ public class Tile {
                 if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'E';
                 }
-                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
-                                      // animal2
+                if (secondPlaceHolder)
                 {
                     animal3 = 'E';
                 }
@@ -253,8 +253,7 @@ public class Tile {
                 if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'B';
                 }
-                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
-                                      // animal2
+                if (secondPlaceHolder)
                 {
                     animal3 = 'B';
                 }
@@ -267,8 +266,7 @@ public class Tile {
                 if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'F';
                 }
-                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
-                                      // animal2
+                if (secondPlaceHolder)
                 {
                     animal3 = 'F';
                 }
@@ -362,32 +360,44 @@ public class Tile {
     public String colourConverter(char s) {
         switch (s) {
             case 'R':
-                return "\033[44m"; // Blue
+                return "\033[44m";
+                // Blue
             case 'F':
-                return "\033[42m"; // Green
+                return "\033[42m";
+                // Green
             case 'M':
-                return "\033[47m"; // White
+                return "\033[47m";
+                // White
             case 'W':
-                return "\033[46m";// Cyan
+                return "\033[46m";
+                // Cyan
             case 'P':
-                return "\033[43m";// Yellow
+                return "\033[43m";
+                // Yellow
             default:
                 throw new IllegalArgumentException("Error");
         }
     }
 
+    // function to colour placeholder/token
     public String colourAnimal(char s) {
         switch (s) {
+
             case 'H':
-                return "\033[0;34m" + "H" + DisplayColour.RESET; // Blue
+                return "\033[0;34m" + "H" + DisplayColour.RESET;
+                // Blue
             case 'F':
-                return "\033[0;33m" + "F" + DisplayColour.RESET;// Orange
+                return "\033[0;33m" + "F" + DisplayColour.RESET;
+                // Orange
             case 'E':
-                return "\033[0;30m" + "E" + DisplayColour.RESET; // BLACK
+                return "\033[0;30m" + "E" + DisplayColour.RESET;
+                // BLACK
             case 'S':
-                return "\033[0;31m" + "S" + DisplayColour.RESET;// RED
+                return "\033[0;31m" + "S" + DisplayColour.RESET;
+                // RED
             case 'B':
-                return "\033[0;35m" + "B" + DisplayColour.RESET;// PURPLE
+                return "\033[0;35m" + "B" + DisplayColour.RESET;
+                // PURPLE
             default:
                 throw new IllegalArgumentException("Error");
         }
