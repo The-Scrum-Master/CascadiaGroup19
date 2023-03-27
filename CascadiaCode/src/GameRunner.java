@@ -220,6 +220,10 @@ public class GameRunner {
 
             System.out.println("largest Habitats");
             System.out.println("Forest: " + players.get(playersTurn).getForestMax());
+            System.out.println("Wetland: " + players.get(playersTurn).getWetlandMax());
+            System.out.println("Prairie: " + players.get(playersTurn).getPrairieMax());
+            System.out.println("River: " + players.get(playersTurn).getRiverMax());
+            System.out.println("Mountain: " + players.get(playersTurn).getMountainMax());
 
             System.out.println();
             playersTurn++;
