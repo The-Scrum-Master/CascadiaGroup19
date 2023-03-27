@@ -10,6 +10,8 @@ public class Tile {
     public boolean Played;
     public boolean tokenPlayed;
     private boolean tokenPlaced = false;
+    public boolean habitatCounted0;
+    public boolean habitatCounted1;
 
     public Wildlife tokenPlayedType;
 
@@ -25,98 +27,98 @@ public class Tile {
 
     private boolean secondPlaceHolder = false;
 
-
-
     private char animal;
     private char animal2;
 
     private char animal3;
 
-    private boolean notRand= false;
+    private boolean notRand = false;
 
-
-    public Tile(int select){ //this is the constructor for the tile class that takes in a number between 1 and 3 to determine the type of tile
-        if(select > 3 || select < 1){
-            select = randomNumberGenerator(3)+1; //this generates a number between 0 and 2
+    public Tile(int select) { // this is the constructor for the tile class that takes in a number between 1
+                              // and 3 to determine the type of tile
+        if (select > 3 || select < 1) {
+            select = randomNumberGenerator(3) + 1; // this generates a number between 0 and 2
         }
         this.select = select;
         Played = false;
         tokenPlayed = false;
         tokenPlayedType = null;
-            if (select == 2){
-                Habitat h;
-                Habitat h2;
-                 habitats = new Habitat[2];
-                 firstHabitat = false;
-                 habitats[0] = randomHabitat();
-                 firstHabitat= true;
-                 habitats[1] = randomHabitat();
+        habitatCounted0 = false;
+        habitatCounted1 = false;
+        if (select == 2) {
+            Habitat h;
+            Habitat h2;
+            habitats = new Habitat[2];
+            firstHabitat = false;
+            habitats[0] = randomHabitat();
+            firstHabitat = true;
+            habitats[1] = randomHabitat();
 
-               // System.out.println(habitats[0]);
-                //System.out.println(habitats[1]);
-                //System.out.println((habitats[0].getSymbol()));
-                //System.out.println(notRand+"before if");
-                if((habitats[0].getSymbol())==(habitats[1].getSymbol()))
-                {
-                    notRand =true;
-                }
-                //System.out.println(notRand+"after if");
-                while(notRand)               //makes sure the habitats are not the same on the two biomes tiles
-                {
-                    habitats[1] = randomHabitat();
-                  //  System.out.println(habitats[1]+"habitat in while");
-                   // System.out.println(notRand+"while loop");
-                    if((habitats[0].getSymbol())!=(habitats[1].getSymbol()))
-                    {
-                        notRand = false;
-                    }
-
+            // System.out.println(habitats[0]);
+            // System.out.println(habitats[1]);
+            // System.out.println((habitats[0].getSymbol()));
+            // System.out.println(notRand+"before if");
+            if ((habitats[0].getSymbol()) == (habitats[1].getSymbol())) {
+                notRand = true;
+            }
+            // System.out.println(notRand+"after if");
+            while (notRand) // makes sure the habitats are not the same on the two biomes tiles
+            {
+                habitats[1] = randomHabitat();
+                // System.out.println(habitats[1]+"habitat in while");
+                // System.out.println(notRand+"while loop");
+                if ((habitats[0].getSymbol()) != (habitats[1].getSymbol())) {
+                    notRand = false;
                 }
 
-                //System.out.println(notRand+"after while loop");
-                //System.out.println(habitats[0]);
-                //System.out.println(habitats[1]);
-                //System.out.println(colour);
-                //System.out.println(colour2);
-                firstPlaceHolder = false;
-                slots = new Wildlife[2];
-                slots[0] = randomSlot();
-                firstPlaceHolder = true;
+            }
+
+            // System.out.println(notRand+"after while loop");
+            // System.out.println(habitats[0]);
+            // System.out.println(habitats[1]);
+            // System.out.println(colour);
+            // System.out.println(colour2);
+            firstPlaceHolder = false;
+            slots = new Wildlife[2];
+            slots[0] = randomSlot();
+            firstPlaceHolder = true;
+            slots[1] = randomSlot();
+
+            while (slots[0] == slots[1]) { // makes sure the placeholders are not the same on the two biomesS
                 slots[1] = randomSlot();
+            }
+        } else if (select == 3) {
+            habitats = new Habitat[2];
+            firstHabitat = false;
+            habitats[0] = randomHabitat();
+            firstHabitat = true;
+            habitats[1] = randomHabitat();
+            while (habitats[0].equals(habitats[1])) { // makes sure the habitats are not the same on the two biomes
+                                                      // tiles
+                habitats[1] = randomHabitat();
+            }
+            firstPlaceHolder = false;
 
-                while(slots[0] == slots[1]){ //makes sure the placeholders are not the same on the two biomesS
-                    slots[1] = randomSlot();}
-            } else if (select == 3) {
-                habitats = new Habitat[2];
-                firstHabitat = false;
-                habitats[0]= randomHabitat();
-                firstHabitat = true;
-                habitats[1]= randomHabitat();
-                while(habitats[0].equals(habitats[1])){ //makes sure the habitats are not the same on the two biomes tiles
-                    habitats[1] = randomHabitat();
-                }
-                firstPlaceHolder = false;
+            slots = new Wildlife[3];
+            slots[0] = randomSlot();
+            firstPlaceHolder = true;
+            slots[1] = randomSlot();
 
-                slots = new Wildlife[3];
-                slots[0] = randomSlot();
-                firstPlaceHolder = true;
+            while (slots[0] == slots[1]) { // makes sure the habitats are not the MATCHING biomesS
                 slots[1] = randomSlot();
+            }
+            secondPlaceHolder = true;
+            slots[2] = randomSlot();
 
-
-                while(slots[0] == slots[1]){ //makes sure the habitats are not the MATCHING biomesS
-                    slots[1] = randomSlot();}
-                secondPlaceHolder = true;
+            while (slots[0] == slots[2] || slots[1] == slots[2]) {
                 slots[2] = randomSlot();
 
-                while(slots[0] == slots[2] || slots[1] == slots[2]){
-                    slots[2] = randomSlot();
-
-                }
-
-            } else if (select == 1) {
-                habitats = new Habitat[]{randomHabitat()};
-                slots = new Wildlife[]{randomSlot()};
             }
+
+        } else if (select == 1) {
+            habitats = new Habitat[] { randomHabitat() };
+            slots = new Wildlife[] { randomSlot() };
+        }
     }
 
     public boolean isTokenPlaced() {
@@ -127,92 +129,70 @@ public class Tile {
         this.tokenPlaced = tokenPlaced;
     }
 
-    public void flipTile(Tile t){ //flips tiles by swapping its orientation in array
+    public void flipTile(Tile t) { // flips tiles by swapping its orientation in array
 
-        //System.out.println("Pre- flipped:");
-        //System.out.println(t.habitats[0]);
-        //System.out.println(t.habitats[1]);
-        if(t.getSelect()==1)
-        {
+        // System.out.println("Pre- flipped:");
+        // System.out.println(t.habitats[0]);
+        // System.out.println(t.habitats[1]);
+        if (t.getSelect() == 1) {
             System.out.println("Unable to flip one habitat tile ");
-        }
-        else {
+        } else {
 
-            char tempColor=colour;
+            char tempColor = colour;
             setColour(colour2);
             setColour2(tempColor);
 
             Habitat temp = t.getHabitat(0);
             t.habitats[0] = t.habitats[1];
             t.habitats[1] = temp;
-
-
         }
-        //System.out.println("Post flipped");
-        //System.out.println(t.habitats[0]);
-        //System.out.println(t.habitats[1]);
-
+        // System.out.println("Post flipped");
+        // System.out.println(t.habitats[0]);
+        // System.out.println(t.habitats[1]);
 
     }
 
-    public Habitat randomHabitat(){ // generates and returns 1 of 5 habitats
+    public Habitat randomHabitat() { // generates and returns 1 of 5 habitats
 
-        switch (randomNumberGenerator(5)){
+        switch (randomNumberGenerator(5)) {
 
             case 0:
-                if (firstHabitat)
-                {
+                if (firstHabitat) {
                     colour2 = 'R';
 
-                }
-                else
-                {
+                } else {
                     colour = 'R';
                 }
 
-
                 return Habitat.RIVER;
             case 1:
-                if (firstHabitat)
-                {
-                    colour2='F';
+                if (firstHabitat) {
+                    colour2 = 'F';
 
-                }
-                else
-                {
+                } else {
                     colour = 'F';
                 }
                 return Habitat.FOREST;
             case 2:
-                if (firstHabitat)
-                {
-                    colour2= 'M';
-                }
-                else
-                {
+                if (firstHabitat) {
+                    colour2 = 'M';
+                } else {
 
                     colour = 'M';
                 }
                 return Habitat.MOUNTAIN;
             case 3:
-                if (firstHabitat)
-                {
-                    colour2='W';
-                }
-                else
-                {
-
+                if (firstHabitat) {
+                    colour2 = 'W';
+                } else {
 
                     colour = 'W';
                 }
                 return Habitat.WETLANDS;
             case 4:
-                if (firstHabitat)
-                {
-                    colour2='P';
-                }
-                else
-                {
+                if (firstHabitat) {
+                    colour2 = 'P';
+                } else {
                     colour = 'P';
                 }
                 return Habitat.PRAIRIE;
@@ -220,80 +200,75 @@ public class Tile {
                 throw new IllegalArgumentException("random num generator limit error");
         }
     }
-    public Wildlife randomSlot(){
 
+    public Wildlife randomSlot() {
 
-        switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
+        switch (randomNumberGenerator(5)) { // generates and returns 1 of 5 tokens
             case 0:
-                if(!(firstPlaceHolder))
-                {
+                if (!(firstPlaceHolder)) {
                     animal = 'H';
                 }
-                if (firstPlaceHolder&&!secondPlaceHolder)
-                {
+                if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'H';
                 }
-                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
+                                      // animal2
                 {
                     animal3 = 'H';
                 }
 
                 return Wildlife.HAWK;
             case 1:
-                if(!(firstPlaceHolder))
-                {
+                if (!(firstPlaceHolder)) {
                     animal = 'S';
                 }
-                if (firstPlaceHolder&&!secondPlaceHolder)
-                {
+                if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'S';
                 }
-                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
+                                      // animal2
                 {
                     animal3 = 'S';
                 }
 
                 return Wildlife.SALMON;
             case 2:
-                if(!(firstPlaceHolder))
-                {
+                if (!(firstPlaceHolder)) {
                     animal = 'E';
                 }
-                if (firstPlaceHolder&&!secondPlaceHolder)
-                {
+                if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'E';
                 }
-                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
+                                      // animal2
                 {
                     animal3 = 'E';
-               }
+                }
 
                 return Wildlife.ELK;
             case 3:
-                if(!(firstPlaceHolder))
-                {
+                if (!(firstPlaceHolder)) {
                     animal = 'B';
                 }
-                if (firstPlaceHolder&&!secondPlaceHolder)
-                {
+                if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'B';
                 }
-                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
+                                      // animal2
                 {
                     animal3 = 'B';
                 }
 
                 return Wildlife.BEAR;
             case 4:
-                if(!(firstPlaceHolder))
-                {
+                if (!(firstPlaceHolder)) {
                     animal = 'F';
                 }
-                if (firstPlaceHolder&&!secondPlaceHolder)
-                {
+                if (firstPlaceHolder && !secondPlaceHolder) {
                     animal2 = 'F';
                 }
-                if (secondPlaceHolder)//if function called 3 times store first animal in animal3 and second animal in animal2
+                if (secondPlaceHolder)// if function called 3 times store first animal in animal3 and second animal in
+                                      // animal2
                 {
                     animal3 = 'F';
                 }
@@ -304,35 +279,40 @@ public class Tile {
         }
     }
 
-    public int getSelect(){
+    public int getSelect() {
         return this.select;
     }
+
     public boolean isPlayed() {
         return this.Played;
     }
 
-    public void playTile(){this.Played = true;}
+    public void playTile() {
+        this.Played = true;
+    }
 
-    public void playToken(){this.tokenPlayed = true;}
+    public void playToken() {
+        this.tokenPlayed = true;
+    }
 
-    public static int randomNumberGenerator(int upperBound){
-        Random rand = new Random ();
+    public static int randomNumberGenerator(int upperBound) {
+        Random rand = new Random();
         return rand.nextInt(upperBound);
     }
 
-
-    public Wildlife[] getSlots() { //gives array
+    public Wildlife[] getSlots() { // gives array
         return slots;
     }
-    
-    public Wildlife getSlot(int index){ //gives wildlife
+
+    public Wildlife getSlot(int index) { // gives wildlife
         return slots[index];
     }
-    public void setSlots(Wildlife wildlife, int index){ //sets wildlife in array
+
+    public void setSlots(Wildlife wildlife, int index) { // sets wildlife in array
         this.slots[index] = wildlife;
     }
 
-    public Habitat getHabitat(int index){
+    public Habitat getHabitat(int index) {
         return habitats[index];
     }
 
@@ -344,12 +324,11 @@ public class Tile {
         this.habitats[index] = habitat;
     }
 
-    public char getColour()
-    {
+    public char getColour() {
         return colour;
     }
-    public char getColour2()
-    {
+
+    public char getColour2() {
         return colour2;
     }
 
@@ -361,72 +340,69 @@ public class Tile {
         this.colour = colour;
     }
 
-    public char getAnimal(){
+    public char getAnimal() {
         return animal;
     }
-    public char getAnimal2(){
+
+    public char getAnimal2() {
         return animal2;
     }
-    public char getAnimal3(){
+
+    public char getAnimal3() {
         return animal3;
     }
+
     @Override
     public String toString() {
         return "Tile{" +
                 ", Played=" + Played +
                 '}';
     }
-    public String colourConverter(char s)
-    {
-        switch (s)
-        {
+
+    public String colourConverter(char s) {
+        switch (s) {
             case 'R':
-                return "\033[44m"; //Blue
+                return "\033[44m"; // Blue
             case 'F':
-                return "\033[42m"; //Green
+                return "\033[42m"; // Green
             case 'M':
-                return "\033[47m"; //White
+                return "\033[47m"; // White
             case 'W':
-                return "\033[46m";//Cyan
+                return "\033[46m";// Cyan
             case 'P':
-                return "\033[43m";//Yellow
-            default:
-                throw new IllegalArgumentException("Error");
-        }
-    }
-    public String colourAnimal(char s)
-    {
-        switch (s)
-        {
-            case 'H':
-                return "\033[0;34m" + "H"+ DisplayColour.RESET; //Blue
-            case 'F':
-                return "\033[0;33m" + "F"+ DisplayColour.RESET;//Orange
-            case 'E':
-                return "\033[0;30m" + "E"+ DisplayColour.RESET; //BLACK
-            case 'S':
-                return "\033[0;31m"+ "S"+ DisplayColour.RESET;//RED
-            case 'B':
-                return "\033[0;35m" + "B"+ DisplayColour.RESET;//PURPLE
+                return "\033[43m";// Yellow
             default:
                 throw new IllegalArgumentException("Error");
         }
     }
 
-    public static Tile generateRandomTile()
-    {
+    public String colourAnimal(char s) {
+        switch (s) {
+            case 'H':
+                return "\033[0;34m" + "H" + DisplayColour.RESET; // Blue
+            case 'F':
+                return "\033[0;33m" + "F" + DisplayColour.RESET;// Orange
+            case 'E':
+                return "\033[0;30m" + "E" + DisplayColour.RESET; // BLACK
+            case 'S':
+                return "\033[0;31m" + "S" + DisplayColour.RESET;// RED
+            case 'B':
+                return "\033[0;35m" + "B" + DisplayColour.RESET;// PURPLE
+            default:
+                throw new IllegalArgumentException("Error");
+        }
+    }
+
+    public static Tile generateRandomTile() {
         Tile t = new Tile(0);
         return t;
     }
 
-    public static Tile generateSpecificTile(int x)
-    {
+    public static Tile generateSpecificTile(int x) {
         Tile t = new Tile(x);
         return t;
     }
 
-
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
     }
 }

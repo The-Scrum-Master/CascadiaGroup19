@@ -89,6 +89,17 @@ class PlayerTests{
         player1.reduceNatureTokenNumberByOne();
         assertEquals(0, player1.getNatureTokenNumber());
     }
-
+    @Test
+    void TestHabitatScore(){
+        Player player1 = new Player("Player1",1);
+        player1.generateInitialMap();
+        player1.playerBoard[23][22] = new Tile(1);
+        player1.playerBoard[24][22] = new Tile(2);
+        player1.playerBoard[24][23] = new Tile(2);
+        player1.playerBoard[25][22] = new Tile(3);
+        player1.map.fillMapWithAllowedTilePlacements();
+        player1.printMap(-1);
+        player1.habitatScore(22, 23);
+    }
     
 }
