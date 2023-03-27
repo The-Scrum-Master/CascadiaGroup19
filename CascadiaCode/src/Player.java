@@ -1,5 +1,9 @@
-import java.sql.SQLOutput;
-
+/*Group: 19
+*Team Name: Front Row
+*Timi Salam- 2139203(Timisalam)
+*Patrick Kelly-21204063(Patkelly17)
+*Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+*/
 /**
  * This Class creates the object Player that hold the information relevant to
  * the individual Players in
