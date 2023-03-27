@@ -6,6 +6,7 @@ public class FoxScoreCard_A extends FoxScoreCard{
         super(player);
     }
     @Override
+    //function that loops through all fox tokens and counts all distinct tokens around the fox token
     public int countScore() {
         Tile[][] playerBoard = player.getPlayerBoard();
         for(int i=0;i <cordinateX.size();i++) {
@@ -123,6 +124,7 @@ public class FoxScoreCard_A extends FoxScoreCard{
         for(int i=0;i<types.size();i++){
             System.out.println(types.get(i));
         }
+        //if tokens are not distinct decrement foxscore for each one
         for(int i=0;i<types.size();i++){
             for(int j=i+1;j<types.size();j++){
                 if(types.get(i).equals(types.get(j))){

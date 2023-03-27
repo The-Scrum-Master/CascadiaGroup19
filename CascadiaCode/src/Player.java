@@ -160,7 +160,7 @@ public class Player {
                 if (playerBoard[x][y].getSlot(i) == heldToken) {
 
                     TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
-                    if (playerBoard[x][y].getSelect() == 1) 
+                    if (playerBoard[x][y].getSelect() == 1)
                     // checks to see if the tile is a single habitat tile
                     {
                         helpTileGenerator.tileUniqueColorPlacedToken(
@@ -173,7 +173,7 @@ public class Player {
                         natureTokenNumber++;
                         isFilled = true;
 
-                    } else if (playerBoard[x][y].getSelect() == 2) 
+                    } else if (playerBoard[x][y].getSelect() == 2)
                     // checks to see if the tile is a double wildlife
                     // tile
                     {
@@ -197,7 +197,7 @@ public class Player {
                         }
                         isFilled = true;
 
-                    } else if (playerBoard[x][y].getSelect() == 3) 
+                    } else if (playerBoard[x][y].getSelect() == 3)
                     // checks to see if the tile is a triple wildlife tile
                     {
                         if (i == 0) {
@@ -297,8 +297,8 @@ public class Player {
         }
     }// if tile already has a token not let place
 
-    public void splitPick() {  
-    // is called when the player chooses to pick a tile and a token from the river at different indexes
+    public void splitPick() {
+        // is called when the player chooses to pick a tile and a token from the river at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
                 "\nEnter the index of the tile you would like to chose:");
         int indexChoiceTile = IOcascadia.takeIntInput() - 1;
@@ -307,8 +307,11 @@ public class Player {
             indexChoiceTile = IOcascadia.takeIntInput();
         }
         this.heldTile = TileDeck.getRiverTilesIndex(indexChoiceTile);
+        //moves the tile from the river to the players hand
         TileDeck.ReplaceRiverTilesIndex(indexChoiceTile);
+        //replaces the tile in the river with a new tile
         TileDeck.emptyDeckCheck();
+
         System.out.println("Enter the index of the token you would like to chose:");
         int indexChoiceToken = IOcascadia.takeIntInput() - 1;
         while (indexChoiceToken < 0 || indexChoiceToken > 3) {
@@ -317,11 +320,12 @@ public class Player {
         }
         this.heldToken = TileDeck.getRiverTokensIndex(indexChoiceToken);
         TileDeck.ReplaceRiverTokensIndex(indexChoiceToken);
+        //replaces the token in the river with a new token
         natureTokenNumber--;
         System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
     }
 
-    public void pickPair(int indexOfSelected) { 
+    public void pickPair(int indexOfSelected) {
         // called when the player chooses to pick a tile and a token from the river at the same index
         this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
         this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
@@ -329,7 +333,7 @@ public class Player {
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
         TileDeck.emptyDeckCheck();
     }
-    
+
     public int riverCounter = 1, riverMax = 1;
     public int forestCounter = 1, forestMax = 1;
     public int prairieCounter = 1, prairieMax = 1;
@@ -398,7 +402,7 @@ public class Player {
             if ((playerBoard[rows - 1][columns].getHabitat(0) == habitat
                     && playerBoard[rows - 1][columns].getSelect() == 1)
                     || playerBoard[rows - 1][columns].getHabitat(1) == habitat) {
-                        // if the habitat is the same as the one being counted and the tile is selected
+                // if the habitat is the same as the one being counted and the tile is selected
                 habitatIncrementer(habitat);
                 // increment the counter for the habitat
                 playerBoard[rows - 1][columns].habitatCounted0 = true;
@@ -407,6 +411,7 @@ public class Player {
             }
         }// if the tile above is not null and has not already been counted
         if (playerBoard[rows + 1][columns] != null && playerBoard[rows + 1][columns].habitatCounted0 != true) {
+            //check if the tile below is not null and has not already been counted
             if ((playerBoard[rows + 1][columns].getHabitat(1) == habitat
                     && playerBoard[rows + 1][columns].getSelect() == 1)
                     || playerBoard[rows + 1][columns].getHabitat(0) == habitat) {
@@ -416,6 +421,7 @@ public class Player {
             }
         }// if the tile to the left is not null and has not already been counted
         if (playerBoard[rows][columns - 1] != null && playerBoard[rows][columns - 1].habitatCounted0 != true) {
+            //check if the tile to the left is not null and has not already been counted
             if ((playerBoard[rows][columns - 1].getHabitat(0) == habitat
                     && playerBoard[rows][columns - 1].getSelect() == 1)
                     || playerBoard[rows][columns - 1].getHabitat(1) == habitat) {
@@ -425,6 +431,7 @@ public class Player {
             }
         }// if the tile above is not null and has not already been counted
         if (playerBoard[rows][columns + 1] != null && playerBoard[rows][columns + 1].habitatCounted0 != true) {
+            //check if the tile to the right is not null and has not already been counted
             if ((playerBoard[rows][columns + 1].getHabitat(1) == habitat
                     && playerBoard[rows][columns + 1].getSelect() == 1)
                     || playerBoard[rows][columns + 1].getHabitat(0) == habitat) {
