@@ -14,14 +14,17 @@ public class HawkScoreCard_A extends HawkScoreCard{
                 if(arrayOfTokens.get(j).getValid()){
                     continue;
                 }
-                if(j!=i) { //making sure that the element we are looking at isn't the same one we are comparing it to
+                if(j!=i) { 
+                    //making sure that the element we are looking at isn't the same one we are comparing it to
                     if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  
+                            { //looking for adjacent X cord
 
                         if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
                                 arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
+                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { 
+                                    //looking for adjacent Y cord
                             foundAdjacentHawk=true;
                             break;
                         }

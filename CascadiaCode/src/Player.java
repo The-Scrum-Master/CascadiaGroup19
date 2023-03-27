@@ -125,7 +125,8 @@ public class Player {
                     " you must place it adjacent to another tile. Please try again,input x and y");
             int x_axis = IOcascadia.takeIntInput();
             int y_axis = IOcascadia.takeIntInput();
-            placeTile(x_axis, y_axis);// recursive call to allow player to place tile again
+            placeTile(x_axis, y_axis);
+            // recursive call to allow player to place tile again
         } else {
             heldTile.playTile();
 
@@ -133,6 +134,7 @@ public class Player {
             TileGenerator helpTileGenerator = new TileGenerator(heldTile);
             map.setTile(helpTileGenerator, x, y);
             habitatScore(x, y);
+            // calls habitat score to check if there is a group
             heldTile = null;
         }
     }
@@ -152,13 +154,14 @@ public class Player {
             int y_axis = IOcascadia.takeIntInput();
         } else {
             playerBoard[x][y].playToken();
-            for (int i = 0; i < playerBoard[x][y].getSlots().length; i++) // checks to see if the tiles has a slot for
-                                                                          // the token on the board
+            for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
+            //checks to see if the tiles has a slot for the token on the board
             {
                 if (playerBoard[x][y].getSlot(i) == heldToken) {
 
                     TileGenerator helpTileGenerator = new TileGenerator(playerBoard[x][y]);
-                    if (playerBoard[x][y].getSelect() == 1) // checks to see if the tile is a single habitat tile
+                    if (playerBoard[x][y].getSelect() == 1) 
+                    // checks to see if the tile is a single habitat tile
                     {
                         helpTileGenerator.tileUniqueColorPlacedToken(
                                 playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()),
@@ -170,11 +173,13 @@ public class Player {
                         natureTokenNumber++;
                         isFilled = true;
 
-                    } else if (playerBoard[x][y].getSelect() == 2) // checks to see if the tile is a double wildlife
-                                                                   // tile
+                    } else if (playerBoard[x][y].getSelect() == 2) 
+                    // checks to see if the tile is a double wildlife
+                    // tile
                     {
 
-                        if (i == 0)// checks to see if the token is the first token on the tile
+                        if (i == 0)
+                        // checks to see if the token is the first token on the tile
                         {
                             helpTileGenerator.tileTwoColorsPlacedToken(
                                     playerBoard[x][y].colourConverter(playerBoard[x][y].getColour()),
@@ -192,8 +197,8 @@ public class Player {
                         }
                         isFilled = true;
 
-                    } else if (playerBoard[x][y].getSelect() == 3) // checks to see if the tile is a triple wildlife
-                                                                   // tile
+                    } else if (playerBoard[x][y].getSelect() == 3) 
+                    // checks to see if the tile is a triple wildlife tile
                     {
                         if (i == 0) {
                             helpTileGenerator.tileTwoColorsPlacedToken(
@@ -292,8 +297,8 @@ public class Player {
         }
     }// if tile already has a token not let place
 
-    public void splitPick() { // this is the method that is called when the player chooses to pick a tile and
-                              // a token from the river at different indexes
+    public void splitPick() {  
+    // is called when the player chooses to pick a tile and a token from the river at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
                 "\nEnter the index of the tile you would like to chose:");
         int indexChoiceTile = IOcascadia.takeIntInput() - 1;
@@ -316,22 +321,23 @@ public class Player {
         System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
     }
 
-    public void pickPair(int indexOfSelected) { // this is the method that is called when the player chooses to pick a
-                                                // tile and a token from the river at the same index
+    public void pickPair(int indexOfSelected) { 
+        // called when the player chooses to pick a tile and a token from the river at the same index
         this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
         this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
         TileDeck.ReplaceRiverTilesIndex(indexOfSelected);
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
         TileDeck.emptyDeckCheck();
     }
-
-    public int riverCounter = 0, riverMax = 0;
-    public int forestCounter = 0, forestMax = 0;
-    public int prairieCounter = 0, prairieMax = 0;
-    public int mountainCounter = 0, mountainMax = 0;
-    public int wetlandCounter = 0, wetlandMax = 0;
+    
+    public int riverCounter = 1, riverMax = 1;
+    public int forestCounter = 1, forestMax = 1;
+    public int prairieCounter = 1, prairieMax = 1;
+    public int mountainCounter = 1, mountainMax = 1;
+    public int wetlandCounter = 1, wetlandMax = 1;
 
     public void habitatIncrementer(Habitat habitat) {
+        // increment the counter for the habitat
         switch (habitat) {
             case RIVER:
                 riverCounter++;
@@ -352,6 +358,7 @@ public class Player {
     }
 
     public void habitatMaxTracker(Habitat habitat) {
+        // if the counter is greater than the max, set the max to the counter
         switch (habitat) {
             case RIVER:
                 if (riverCounter > riverMax) {
@@ -385,13 +392,18 @@ public class Player {
     }
 
     public void recursiveHabibitCounter(int rows, int columns, Habitat habitat) {
+        // recursive function to count the number of habitats grouped together
         if (playerBoard[rows - 1][columns] != null && playerBoard[rows - 1][columns].habitatCounted0 != true) {
+            //check if the tile above is not null and has not already been counted
             if ((playerBoard[rows - 1][columns].getHabitat(0) == habitat
                     && playerBoard[rows - 1][columns].getSelect() == 1)
                     || playerBoard[rows - 1][columns].getHabitat(1) == habitat) {
+                        // if the habitat is the same as the one being counted and the tile is selected
                 habitatIncrementer(habitat);
+                // increment the counter for the habitat
                 playerBoard[rows - 1][columns].habitatCounted0 = true;
                 recursiveHabibitCounter(rows - 1, columns, habitat);
+                // call the function again with the new tile
             }
         }
         if (playerBoard[rows + 1][columns] != null && playerBoard[rows + 1][columns].habitatCounted0 != true) {
@@ -426,20 +438,25 @@ public class Player {
     public void habitatScore(int x, int y) {
         try {
             if (heldTile.getSelect() == 1) {
+                // if the tile is selected, only check one habitat
                 recursiveHabibitCounter(x, y, heldTile.getHabitat(0));
             } else {
+                // if the tile is not selected, check both habitats
                 recursiveHabibitCounter(x, y, heldTile.getHabitat(0));
                 recursiveHabibitCounter(x, y, heldTile.getHabitat(1));
             }
         } catch (Exception e) {
         }
         habitatMaxTracker(heldTile.getHabitat(0));
+        // check the max for the habitat
         if(heldTile.getSelect() != 1){
+            //if two habitats tile check the second habitat
             habitatMaxTracker(heldTile.getHabitat(1));
         }
         for (int i = 0; i < playerBoard.length; i++) {
             for (int j = 0; j < playerBoard.length; j++) {
                 if (playerBoard[i][j] != null) {
+                    // reset the boolean values for the tiles
                     playerBoard[i][j].habitatCounted0 = false;
                     playerBoard[i][j].habitatCounted1 = false;
                 }

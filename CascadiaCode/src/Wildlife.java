@@ -10,7 +10,8 @@ public enum Wildlife {
     FOX("F");
     private final String symbol;
     public static Wildlife randWildlife(){
-        switch (randomNumberGenerator(5)){ //generates and returns 1 of 5 tokens
+        switch (randomNumberGenerator(5)){ 
+            //generates and returns 1 of 5 tokens
             case 0:
                 return Wildlife.HAWK;
             case 1:
