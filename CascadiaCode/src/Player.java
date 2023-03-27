@@ -100,8 +100,17 @@ public class Player {
     }
 
     public void placeTile(int x, int y){
+
         if(heldTile == null){
             throw new IllegalArgumentException("held tile is null when calling place tile");
+        }
+        if(x<0||x>=46||y<0||y>=46)
+        {
+            System.out.println("Error placed tile out of bounds please try again");
+            int newX = IOcascadia.takeIntInput();
+            int newY= IOcascadia.takeIntInput();
+            placeTile(newX,newY);
+
         }
         this.heldTile.playTile();
         if(playerBoard[x][y] != null||(playerBoard[x - 1][y] == null && playerBoard[x][y-1] == null &&
@@ -122,8 +131,16 @@ public class Player {
 
         }
     }
-    public void placeToken(int y, int x) //places token on tile
+    public void placeToken(int x, int y) //places token on tile
     {
+        if(x<0||x>=46||y<0||y>=46)
+        {
+            System.out.println("Error placed tile out of bounds please try again");
+           int newX = IOcascadia.takeIntInput();
+            int newY= IOcascadia.takeIntInput();
+            placeToken(newX,newY);
+
+        }
         Wildlife WildlifeType = heldToken;
         if (this.playerBoard[x][y] ==null||this.playerBoard[x][y].isTokenPlaced())
         {

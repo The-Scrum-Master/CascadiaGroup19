@@ -116,6 +116,13 @@ public class GameRunner {
                     System.out.println("Where would you like to place a tile?");
                     int x = IOcascadia.takeIntInput();
                     int y = IOcascadia.takeIntInput();
+                    while (x<0||x>=46||y<0||y>=46)
+                    {
+                        System.out.println("Error placed tile out of bounds please try again");
+                         x = IOcascadia.takeIntInput();
+                         y = IOcascadia.takeIntInput();
+
+                    }
                     //System.out.println(players.get(playersTurn).heldTile.getColour());
                     //System.out.println(players.get(playersTurn).heldTile.getColour2());
                     players.get(playersTurn).placeTile(x, y);
@@ -136,6 +143,13 @@ public class GameRunner {
                                 System.out.println("Where would you like to place token " + token);
                                 int coordinate = IOcascadia.takeIntInput();
                                 int coordinate2 = IOcascadia.takeIntInput();
+                                while (coordinate<0||coordinate>=46||coordinate2<0||coordinate2>=46)
+                                {
+                                    System.out.println("Error placed tile out of bounds please try again");
+                                    coordinate = IOcascadia.takeIntInput();
+                                    coordinate2 = IOcascadia.takeIntInput();
+
+                                }
                                 players.get(playersTurn).placeToken(coordinate, coordinate2);
                                 players.get(playersTurn).printMap(helperIntToPrintMap);
                                 wrongInput = false;
@@ -188,6 +202,10 @@ public class GameRunner {
             SalmonScoreCard_A salmonScore=new SalmonScoreCard_A(players.get(playersTurn));
             salmonScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for salmon: " + salmonScore.countScore());
+            FoxScoreCard_A foxScore =new FoxScoreCard_A(players.get(playersTurn));
+            foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
+            System.out.println("Points awarded for fox: " + foxScore.countScore());
+         
 
             System.out.println();
             playersTurn++;
