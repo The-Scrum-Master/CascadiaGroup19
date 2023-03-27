@@ -3,19 +3,21 @@
  */
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameRunner {
-    private static final ArrayList<Player> players= new ArrayList<Player>(); //arrayList of Player class to store players
-    public static PairDisplay p =new PairDisplay(); // to use the functions in the PairDisplay class to display the river
-    public static boolean continueGame=true;
+    private static final ArrayList<Player> players = new ArrayList<Player>(); //arrayList of Player class to store players
+    public static PairDisplay p = new PairDisplay(); // to use the functions in the PairDisplay class to display the river
+    public static boolean continueGame = true;
+
     public static void main(String[] args) {
         IOcascadia.welcomeMessage(); //output welcome message
         System.out.println("\n");
-        int elkRand=IOcascadia.selectScoreCardElk();
-        int BearRand=IOcascadia.selectScoreCardBear();
-        int hawkRand=IOcascadia.selectScoreCardHawk();
-        int salmonRand=IOcascadia.selectScoreCardSalmon();
-        int foxRand=IOcascadia.selectScoreCardFox();
+        int elkRand = IOcascadia.selectScoreCardElk();
+        int BearRand = IOcascadia.selectScoreCardBear();
+        int hawkRand = IOcascadia.selectScoreCardHawk();
+        int salmonRand = IOcascadia.selectScoreCardSalmon();
+        int foxRand = IOcascadia.selectScoreCardFox();
         System.out.println("\n");
         IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
         IOcascadia.playerNames(); //output messages asking for player names
@@ -23,21 +25,20 @@ public class GameRunner {
         TileDeck.createDeck();//Creates the deck for this game (85 tiles shuffled in a stack)
         TileDeck.playRiver();
         int numberOfPlayers = IOcascadia.getParticipantsInt(); //stores number of players into the variable numberOfPlayers
-        for(int i = 0; i< numberOfPlayers; i++){ //using a loop to add the players in order into the players ArrayList and creating
+        for (int i = 0; i < numberOfPlayers; i++) { //using a loop to add the players in order into the players ArrayList and creating
             //an instance of Player for each
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
-        int playersTurn=0; //int to rotate around players in order
-        int helperIntToPrintMap=-1;
-        int turnTheGameIsAt=0;
+        int playersTurn = 0; //int to rotate around players in order
+        int helperIntToPrintMap = -1;
+        int turnTheGameIsAt = 0;
 
-        while(turnTheGameIsAt<=20 && continueGame){ //main loop that runs the game until 20 turns pass
-            if(playersTurn == numberOfPlayers){
-                playersTurn=0;
+        while (turnTheGameIsAt <= 20 && continueGame) { //main loop that runs the game until 20 turns pass
+            if (playersTurn == numberOfPlayers) {
+                playersTurn = 0;
                 turnTheGameIsAt++;
                 helperIntToPrintMap++;
-            }
-            else {
+            } else {
                 System.out.println(players.get(playersTurn).getName() + "'s turn:");
 
                 //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
@@ -123,11 +124,10 @@ public class GameRunner {
                     System.out.println("Where would you like to place a tile?");
                     int x = IOcascadia.takeIntInput();
                     int y = IOcascadia.takeIntInput();
-                    while (x<=0||x>=46||y<=0||y>=46)
-                    {
+                    while (x <= 0 || x >= 46 || y <= 0 || y >= 46) {
                         System.out.println("Error placed tile out of bounds please try again");
-                         x = IOcascadia.takeIntInput();
-                         y = IOcascadia.takeIntInput();
+                        x = IOcascadia.takeIntInput();
+                        y = IOcascadia.takeIntInput();
 
                     }
                     //System.out.println(players.get(playersTurn).heldTile.getColour());
@@ -150,8 +150,7 @@ public class GameRunner {
                                 System.out.println("Where would you like to place token " + token);
                                 int coordinate = IOcascadia.takeIntInput();
                                 int coordinate2 = IOcascadia.takeIntInput();
-                                while (coordinate<=0||coordinate>=46||coordinate2<=0||coordinate2>=46)
-                                {
+                                while (coordinate <= 0 || coordinate >= 46 || coordinate2 <= 0 || coordinate2 >= 46) {
                                     System.out.println("Error placed tile out of bounds please try again");
                                     coordinate = IOcascadia.takeIntInput();
                                     coordinate2 = IOcascadia.takeIntInput();
@@ -175,7 +174,7 @@ public class GameRunner {
                 while (wrongInputGameQuit) {
                     String quitGameDecision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
                     if (quitGameDecision.equals("yes")) {
-                        continueGame=false;
+                        continueGame = false;
                         wrongInputGameQuit = false;
                     } else if (quitGameDecision.equals("no")) {
                         wrongInputGameQuit = false;
@@ -189,64 +188,130 @@ public class GameRunner {
         }
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n" +
                 "The game has finished!\n");
-            playersTurn=0;
-            System.out.println("largest Habitats");
-            String winnerForest;
-            String winnerWetland;
-            String winnerPrairie;
-            String winnerMountain;
-            String winner;
-            int max=0;
-            while(playersTurn<numberOfPlayers){
-            players.get(playersTurn).getForestMax();
-            if(players.get(playersTurn).getForestMax() > max){
-            max = players.get(playersTurn).getForestMax();
-            winner = players.get(playersTurn).getName();
+
+
+        playersTurn = 0;
+        System.out.println("largest Habitats");
+        String winnerForest="none";
+        String winnerWetland="none";
+        String winnerPrairie="none";
+        String winnerMountain="none";
+        String winnerRiver="none";
+        int maxForest = -1;
+        int maxWetland = -1;
+        int maxPrairie = -1;
+        int maxMountain = -1;
+        int maxRiver = -1;
+
+        while (playersTurn < numberOfPlayers) {
+            if (players.get(playersTurn).getForestMax() > maxForest) {
+                maxForest = players.get(playersTurn).getForestMax();
+                winnerForest = players.get(playersTurn).getName();
             }
-            if(() > max){
-                max = players.get(playersTurn).getForestMax();
-                winner = players.get(playersTurn).getName();
+            else if(players.get(playersTurn).getForestMax() == maxForest){
+                winnerForest = "none";
             }
-                if(players.get(playersTurn).getForestMax() > max){
-                    max = players.get(playersTurn).getForestMax();
-                    winner = players.get(playersTurn).getName();
-                    }
-                
-                    
-            players.get(playersTurn).getPrairieMax();
-            players.get(playersTurn).getRiverMax();
-            players.get(playersTurn).getMountainMax();
+            if (players.get(playersTurn).getMountainMax() > maxMountain) {
+                maxMountain = players.get(playersTurn).getMountainMax();
+                winnerMountain = players.get(playersTurn).getName();
+            }
+            else if(players.get(playersTurn).getMountainMax() == maxMountain){
+                winnerMountain = "none";
+            }
+            if (players.get(playersTurn).getWetlandMax() > maxWetland) {
+                maxWetland = players.get(playersTurn).getWetlandMax();
+                winnerWetland = players.get(playersTurn).getName();
+            }
+            else if(players.get(playersTurn).getWetlandMax() == maxWetland){
+                winnerWetland = "none";
+            }
+            if (players.get(playersTurn).getPrairieMax() > maxPrairie) {
+                maxPrairie = players.get(playersTurn).getPrairieMax();
+                winnerPrairie = players.get(playersTurn).getName();
+            }
+            else if(players.get(playersTurn).getPrairieMax() == maxPrairie){
+                winnerPrairie = "none";
+            }
+            if (players.get(playersTurn).getRiverMax() > maxRiver) {
+                maxRiver = players.get(playersTurn).getRiverMax();
+                winnerRiver = players.get(playersTurn).getName();
+            }
+            else if(players.get(playersTurn).getRiverMax() == maxRiver){
+                winnerRiver = "none";
+            }
+
             playersTurn++;
-            }
-        playersTurn=0;
-        while(playersTurn<numberOfPlayers){
+        }
+
+
+        playersTurn = 0;
+        while (playersTurn < numberOfPlayers) {
             System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
 
             //the ints elkRand, bearRand, etc would be used here to utilise the scorecard that was randomly selected
             //at the beggining of the main if we had implemented more than one scorecard. Because we have not had time,
             //the following lines only use scorecards A, as they are the only implemented ones
 
-            HawkScoreCard_A hawkScore=new HawkScoreCard_A(players.get(playersTurn));
+            HawkScoreCard_A hawkScore = new HawkScoreCard_A(players.get(playersTurn));
             hawkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for hawks: " + hawkScore.countScore());
 
-            BearScoreCard_A bearScore=new BearScoreCard_A(players.get(playersTurn));
+            BearScoreCard_A bearScore = new BearScoreCard_A(players.get(playersTurn));
             bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for bears: " + bearScore.countScore());
 
-            ElkScoreCard_A elkScore=new ElkScoreCard_A(players.get(playersTurn));
+            ElkScoreCard_A elkScore = new ElkScoreCard_A(players.get(playersTurn));
             elkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for elks: " + elkScore.countScore());
 
-            SalmonScoreCard_A salmonScore=new SalmonScoreCard_A(players.get(playersTurn));
+            SalmonScoreCard_A salmonScore = new SalmonScoreCard_A(players.get(playersTurn));
             salmonScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for salmon: " + salmonScore.countScore());
 
-            FoxScoreCard_A foxScore =new FoxScoreCard_A(players.get(playersTurn));
+            FoxScoreCard_A foxScore = new FoxScoreCard_A(players.get(playersTurn));
             foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for fox: " + foxScore.countScore());
 
-        
+            int totalHabitatPoints=0;
+            int forestPoints=0;
+            if(Objects.equals(winnerForest, "none")){
+                forestPoints=0;
+            }
+            else if(Objects.equals(winnerForest, players.get(playersTurn).getName())){
+                forestPoints=2;
+            }
+            int prairiePoints=0;
+            if(Objects.equals(winnerPrairie, "none")){
+                prairiePoints=0;
+            }
+            else if(Objects.equals(winnerPrairie, players.get(playersTurn).getName())){
+                prairiePoints=2;
+            }
+            int wetlandPoints=0;
+            if(Objects.equals(winnerWetland, "none")){
+                wetlandPoints=0;
+            }
+            else if(Objects.equals(winnerWetland, players.get(playersTurn).getName())){
+                wetlandPoints=2;
+            }
+            int mountainPoints=0;
+            if(Objects.equals(winnerMountain, "none")){
+                mountainPoints=0;
+            }
+            else if(Objects.equals(winnerMountain, players.get(playersTurn).getName())){
+                mountainPoints=2;
+            }
+            int riverPoints=0;
+            if(Objects.equals(winnerRiver, "none")){
+                riverPoints=0;
+            }
+            else if(Objects.equals(winnerRiver, players.get(playersTurn).getName())){
+                riverPoints=2;
+            }
+
+            totalHabitatPoints=forestPoints+riverPoints+wetlandPoints+mountainPoints+prairiePoints;
+            System.out.println("Points awarded for habitats: " + totalHabitatPoints);
+
 
             System.out.println();
             playersTurn++;

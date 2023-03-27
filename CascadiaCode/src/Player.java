@@ -325,11 +325,11 @@ public class Player {
         TileDeck.emptyDeckCheck();
     }
 
-    public int riverCounter = 1, riverMax = 1;
-    public int forestCounter = 1, forestMax = 1;
-    public int prairieCounter = 1, prairieMax = 1;
-    public int mountainCounter = 1, mountainMax = 1;
-    public int wetlandCounter = 1, wetlandMax = 1;
+    public int riverCounter = 0, riverMax = 0;
+    public int forestCounter = 0, forestMax = 0;
+    public int prairieCounter = 0, prairieMax = 0;
+    public int mountainCounter = 0, mountainMax = 0;
+    public int wetlandCounter = 0, wetlandMax = 0;
 
     public void habitatIncrementer(Habitat habitat) {
         switch (habitat) {
