@@ -439,9 +439,11 @@ public class Player {
                 recursiveHabibitCounter(x, y, heldTile.getHabitat(1));
             }
         } catch (Exception e) {
-            System.out.println("Error in habitatScore");
         }
         habitatMaxTracker(heldTile.getHabitat(0));
+        if(heldTile.getSelect() != 1){
+            habitatMaxTracker(heldTile.getHabitat(1));
+        }
         for (int i = 0; i < playerBoard.length; i++) {
             for (int j = 0; j < playerBoard.length; j++) {
                 if (playerBoard[i][j] != null) {
