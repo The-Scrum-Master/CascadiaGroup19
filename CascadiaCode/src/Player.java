@@ -405,7 +405,7 @@ public class Player {
                 recursiveHabibitCounter(rows - 1, columns, habitat);
                 // call the function again with the new tile
             }
-        }
+        }// if the tile above is not null and has not already been counted
         if (playerBoard[rows + 1][columns] != null && playerBoard[rows + 1][columns].habitatCounted0 != true) {
             if ((playerBoard[rows + 1][columns].getHabitat(1) == habitat
                     && playerBoard[rows + 1][columns].getSelect() == 1)
@@ -414,7 +414,7 @@ public class Player {
                 playerBoard[rows + 1][columns].habitatCounted0 = true;
                 recursiveHabibitCounter(rows + 1, columns, habitat);
             }
-        }
+        }// if the tile to the left is not null and has not already been counted
         if (playerBoard[rows][columns - 1] != null && playerBoard[rows][columns - 1].habitatCounted0 != true) {
             if ((playerBoard[rows][columns - 1].getHabitat(0) == habitat
                     && playerBoard[rows][columns - 1].getSelect() == 1)
@@ -423,7 +423,7 @@ public class Player {
                 playerBoard[rows][columns - 1].habitatCounted0 = true;
                 recursiveHabibitCounter(rows, columns - 1, habitat);
             }
-        }
+        }// if the tile above is not null and has not already been counted
         if (playerBoard[rows][columns + 1] != null && playerBoard[rows][columns + 1].habitatCounted0 != true) {
             if ((playerBoard[rows][columns + 1].getHabitat(1) == habitat
                     && playerBoard[rows][columns + 1].getSelect() == 1)
