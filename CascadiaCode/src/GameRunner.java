@@ -274,46 +274,28 @@ public class GameRunner {
 
             int totalHabitatPoints=0;
             int forestPoints=0;
-            if(Objects.equals(winnerForest, "none")){
-                forestPoints=0;
-            }
-            else if(Objects.equals(winnerForest, players.get(playersTurn).getName())){
+            if(Objects.equals(winnerForest, players.get(playersTurn).getName())){
                 forestPoints=2;
             }
             int prairiePoints=0;
-            if(Objects.equals(winnerPrairie, "none")){
-                prairiePoints=0;
-            }
-            else if(Objects.equals(winnerPrairie, players.get(playersTurn).getName())){
+            if(Objects.equals(winnerPrairie, players.get(playersTurn).getName())){
                 prairiePoints=2;
             }
             int wetlandPoints=0;
-            if(Objects.equals(winnerWetland, "none")){
-                wetlandPoints=0;
-            }
-            else if(Objects.equals(winnerWetland, players.get(playersTurn).getName())){
+            if(Objects.equals(winnerWetland, players.get(playersTurn).getName())){
                 wetlandPoints=2;
             }
             int mountainPoints=0;
-            if(Objects.equals(winnerMountain, "none")){
-                mountainPoints=0;
-            }
-            else if(Objects.equals(winnerMountain, players.get(playersTurn).getName())){
+            if(Objects.equals(winnerMountain, players.get(playersTurn).getName())){
                 mountainPoints=2;
             }
             int riverPoints=0;
-            if(Objects.equals(winnerRiver, "none")){
-                riverPoints=0;
-            }
-            else if(Objects.equals(winnerRiver, players.get(playersTurn).getName())){
+            if(Objects.equals(winnerRiver, players.get(playersTurn).getName())){
                 riverPoints=2;
             }
-
             totalHabitatPoints=forestPoints+riverPoints+wetlandPoints+mountainPoints+prairiePoints;
-            System.out.println("Points awarded for habitats: " + totalHabitatPoints);
+            System.out.println("Points awarded for habitats: " + totalHabitatPoints + "\n");
 
-
-            System.out.println();
             playersTurn++;
         }
 
