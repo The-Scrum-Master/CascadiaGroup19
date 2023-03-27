@@ -117,14 +117,7 @@ public class Player {
         if (heldTile == null) {
             throw new IllegalArgumentException("held tile is null when calling place tile");
         }
-        if(x<0||x>=46||y<0||y>=46)
-        {
-            System.out.println("Error placed tile out of bounds please try again");
-            int newX = IOcascadia.takeIntInput();
-            int newY= IOcascadia.takeIntInput();
-            placeTile(newX,newY);
 
-        }
         this.heldTile.playTile();
         if (playerBoard[x][y] != null || (playerBoard[x - 1][y] == null && playerBoard[x][y - 1] == null &&
                 playerBoard[x + 1][y] == null && playerBoard[x][y + 1] == null)) {

@@ -123,7 +123,7 @@ public class GameRunner {
                     System.out.println("Where would you like to place a tile?");
                     int x = IOcascadia.takeIntInput();
                     int y = IOcascadia.takeIntInput();
-                    while (x<0||x>=46||y<0||y>=46)
+                    while (x<=0||x>=46||y<=0||y>=46)
                     {
                         System.out.println("Error placed tile out of bounds please try again");
                          x = IOcascadia.takeIntInput();
@@ -150,7 +150,7 @@ public class GameRunner {
                                 System.out.println("Where would you like to place token " + token);
                                 int coordinate = IOcascadia.takeIntInput();
                                 int coordinate2 = IOcascadia.takeIntInput();
-                                while (coordinate<0||coordinate>=46||coordinate2<0||coordinate2>=46)
+                                while (coordinate<=0||coordinate>=46||coordinate2<=0||coordinate2>=46)
                                 {
                                     System.out.println("Error placed tile out of bounds please try again");
                                     coordinate = IOcascadia.takeIntInput();
