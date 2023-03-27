@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameRunner {
-    private static final ArrayList<Player> players = new ArrayList<Player>(); //arrayList of Player class to store players
-    public static PairDisplay p = new PairDisplay(); // to use the functions in the PairDisplay class to display the river
+    private static final ArrayList<Player> players = new ArrayList<Player>();
+    //arrayList of Player class to store players
+    public static PairDisplay p = new PairDisplay();
+    // to use the functions in the PairDisplay class to display the river
     public static boolean continueGame = true;
 
     public static void main(String[] args) {
-        IOcascadia.welcomeMessage(); //output welcome message
+        IOcascadia.welcomeMessage();
+        //output welcome message
         System.out.println("\n");
         int elkRand = IOcascadia.selectScoreCardElk();
         int BearRand = IOcascadia.selectScoreCardBear();
@@ -19,21 +22,29 @@ public class GameRunner {
         int salmonRand = IOcascadia.selectScoreCardSalmon();
         int foxRand = IOcascadia.selectScoreCardFox();
         System.out.println("\n");
-        IOcascadia.numberOfPlayers(); //output message asking for number of players and storing that in a variable
-        IOcascadia.playerNames(); //output messages asking for player names
-        IOcascadia.playerOrder(); //output message informing of the order the players are going to follow
-        TileDeck.createDeck();//Creates the deck for this game (85 tiles shuffled in a stack)
+        IOcascadia.numberOfPlayers();
+        //output message asking for number of players and storing that in a variable
+        IOcascadia.playerNames();
+        //output messages asking for player names
+        IOcascadia.playerOrder();
+        //output message informing of the order the players are going to follow
+        TileDeck.createDeck();
+        //Creates the deck for this game (85 tiles shuffled in a stack)
         TileDeck.playRiver();
-        int numberOfPlayers = IOcascadia.getParticipantsInt(); //stores number of players into the variable numberOfPlayers
-        for (int i = 0; i < numberOfPlayers; i++) { //using a loop to add the players in order into the players ArrayList and creating
+        int numberOfPlayers = IOcascadia.getParticipantsInt();
+        //stores number of players into the variable numberOfPlayers
+        for (int i = 0; i < numberOfPlayers; i++) {
+            //using a loop to add the players in order into the players ArrayList and creating
             //an instance of Player for each
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
         }
-        int playersTurn = 0; //int to rotate around players in order
+        int playersTurn = 0;
+        //int to rotate around players in order
         int helperIntToPrintMap = -1;
         int turnTheGameIsAt = 0;
 
-        while (turnTheGameIsAt <= 20 && continueGame) { //main loop that runs the game until 20 turns pass
+        while (turnTheGameIsAt <= 20 && continueGame) {
+            //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
                 turnTheGameIsAt++;
@@ -90,7 +101,6 @@ public class GameRunner {
                     }
 
 
-                    // System.out.println("pre-flipped"+players.get(playersTurn).heldTile.getColour()+ players.get(playersTurn).heldTile.getColour2() );
                     TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                     System.out.println();
                     heldTileGenerator.printTile();
@@ -106,7 +116,6 @@ public class GameRunner {
                             TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
                             g.generateFlipTile();
                             g.printTile();
-                            //System.out.println("post-flipped"+players.get(playersTurn).heldTile.getColour()+ players.get(playersTurn).heldTile.getColour2() );
 
                             players.get(playersTurn).printMap(helperIntToPrintMap);
 
