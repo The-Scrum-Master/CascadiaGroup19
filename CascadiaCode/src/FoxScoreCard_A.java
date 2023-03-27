@@ -120,7 +120,6 @@ public class FoxScoreCard_A extends FoxScoreCard{
                 }
             }
         }
-        System.out.println("size of arraylist"+types.size());
         for(int i=0;i<types.size();i++){
             System.out.println(types.get(i));
         }
