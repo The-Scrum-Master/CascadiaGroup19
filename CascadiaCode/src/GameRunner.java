@@ -189,7 +189,35 @@ public class GameRunner {
         }
         System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n" +
                 "The game has finished!\n");
-
+            playersTurn=0;
+            System.out.println("largest Habitats");
+            String winnerForest;
+            String winnerWetland;
+            String winnerPrairie;
+            String winnerMountain;
+            String winner;
+            int max=0;
+            while(playersTurn<numberOfPlayers){
+            players.get(playersTurn).getForestMax();
+            if(players.get(playersTurn).getForestMax() > max){
+            max = players.get(playersTurn).getForestMax();
+            winner = players.get(playersTurn).getName();
+            }
+            if(() > max){
+                max = players.get(playersTurn).getForestMax();
+                winner = players.get(playersTurn).getName();
+            }
+                if(players.get(playersTurn).getForestMax() > max){
+                    max = players.get(playersTurn).getForestMax();
+                    winner = players.get(playersTurn).getName();
+                    }
+                
+                    
+            players.get(playersTurn).getPrairieMax();
+            players.get(playersTurn).getRiverMax();
+            players.get(playersTurn).getMountainMax();
+            playersTurn++;
+            }
         playersTurn=0;
         while(playersTurn<numberOfPlayers){
             System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
@@ -218,12 +246,7 @@ public class GameRunner {
             foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for fox: " + foxScore.countScore());
 
-            System.out.println("largest Habitats");
-            System.out.println("Forest: " + players.get(playersTurn).getForestMax());
-            System.out.println("Wetland: " + players.get(playersTurn).getWetlandMax());
-            System.out.println("Prairie: " + players.get(playersTurn).getPrairieMax());
-            System.out.println("River: " + players.get(playersTurn).getRiverMax());
-            System.out.println("Mountain: " + players.get(playersTurn).getMountainMax());
+        
 
             System.out.println();
             playersTurn++;
