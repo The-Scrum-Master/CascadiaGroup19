@@ -1,4 +1,9 @@
-import java.util.ArrayList;
+/* Group 19
+ * Group name: Front row
+ * Timi Salam- 2139203(Timisalam)
+ * Patrick Kelly-21204063(Patkelly17)
+ * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+ */
 
 public class BearScoreCard_A extends BearScoreCard{
     int numberOfPairs=0;
