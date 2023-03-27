@@ -112,14 +112,9 @@ public class Player {
         map.printMapTotalByCircle(helperInt);
     }
 
-<<<<<<< Updated upstream
-    public void placeTile(int x, int y){
 
-        if(heldTile == null){
-=======
     public void placeTile(int x, int y) {
         if (heldTile == null) {
->>>>>>> Stashed changes
             throw new IllegalArgumentException("held tile is null when calling place tile");
         }
         if(x<0||x>=46||y<0||y>=46)
@@ -148,19 +143,12 @@ public class Player {
             heldTile = null;
         }
     }
-<<<<<<< Updated upstream
-    public void placeToken(int x, int y) //places token on tile
-=======
-
-    public void placeToken(int x, int y) // places token on tile
->>>>>>> Stashed changes
-    {
+    public void  placeToken(int x, int y){
         if(x<0||x>=46||y<0||y>=46)
         {
             System.out.println("Error placed tile out of bounds please try again");
-           int newX = IOcascadia.takeIntInput();
+            int newX = IOcascadia.takeIntInput();
             int newY= IOcascadia.takeIntInput();
-            placeToken(newX,newY);
 
         }
         Wildlife WildlifeType = heldToken;
@@ -169,7 +157,6 @@ public class Player {
                     "you must place it on a previously played tile. Please try again");
             int x_axis = IOcascadia.takeIntInput();
             int y_axis = IOcascadia.takeIntInput();
-            placeToken(x_axis, y_axis); // if they pick a location when there is no tile recall function
         } else {
             playerBoard[x][y].playToken();
             for (int i = 0; i < playerBoard[x][y].getSlots().length; i++) // checks to see if the tiles has a slot for
