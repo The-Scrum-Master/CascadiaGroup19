@@ -63,6 +63,7 @@ public class GameRunner {
                 if (!players.get(playersTurn).isFirstTurnPlayed()) {
                     players.get(playersTurn).generateInitialMap();
                     System.out.println("These are your starter tiles!!!");
+                    Thread.sleep(1000);
                 } else {
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
@@ -179,7 +180,7 @@ public class GameRunner {
                         }
                     }
                 }
-                System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
+                /*System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
                 boolean wrongInputGameQuit = true;
                 while (wrongInputGameQuit) {
                     String quitGameDecision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
@@ -193,6 +194,7 @@ public class GameRunner {
                         System.out.println("Wrong input please try again");
                     }
                 }
+                 */
                 playersTurn++;
             }
         }
