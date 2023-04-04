@@ -51,7 +51,6 @@ public class GameRunner {
                 turnTheGameIsAt++;
                 helperIntToPrintMap++;
             } else {
-                System.out.println(players.get(playersTurn).getName() + "'s turn:");
 
                 //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
                 //here, the 4 pairs habitats-tokens have to be displayed for a player to choose
@@ -62,13 +61,22 @@ public class GameRunner {
 
                 if (!players.get(playersTurn).isFirstTurnPlayed()) {
                     players.get(playersTurn).generateInitialMap();
-                    System.out.println("These are your starter tiles!!!");
+                    System.out.println(players.get(playersTurn).getName() +" these are your starter tiles!!!");
+                    System.out.println();
                     Thread.sleep(1000);
                 } else {
-                    players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
+                    System.out.println(players.get(0).getName()+" map:");
+                    players.get(0).map.fillMapWithAllowedTilePlacements();
+                    players.get(0).printMap(helperIntToPrintMap);
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println(players.get(1).getName()+ " map:");
+                    players.get(1).map.fillMapWithAllowedTilePlacements();
+                    players.get(1).printMap(helperIntToPrintMap);
+                    System.out.println(players.get(playersTurn).getName() + "'s turn:\n");
                     players.get(playersTurn).printMap(helperIntToPrintMap);
 
                     PairDisplay.showPairs();
+                    players.get(playersTurn).setHeldTile(null);
                     boolean continueAskingForInput = true;
                     while (continueAskingForInput) {
                         IOcascadia.instructionsToChoosePair();
@@ -132,7 +140,7 @@ public class GameRunner {
                     }
 
 
-                    System.out.println("Where would you like to place a tile?");
+                    /*System.out.println("Where would you like to place a tile?");
                     int x = IOcascadia.takeIntInput();
                     int y = IOcascadia.takeIntInput();
                     while (x <= 0 || x >= 46 || y <= 0 || y >= 46) {
@@ -146,7 +154,11 @@ public class GameRunner {
                     players.get(playersTurn).placeTile(x, y);
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
 
-                    players.get(playersTurn).printMap(helperIntToPrintMap);
+                     */
+
+                    players.get(playersTurn).bestHabitat();
+
+                    //players.get(playersTurn).printMap(helperIntToPrintMap);
 
 
                     if (players.get(playersTurn).checkToken()) {
@@ -180,7 +192,7 @@ public class GameRunner {
                         }
                     }
                 }
-                /*System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
+                /*1System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
                 boolean wrongInputGameQuit = true;
                 while (wrongInputGameQuit) {
                     String quitGameDecision = IOcascadia.makeLowerCase(IOcascadia.takeInput());

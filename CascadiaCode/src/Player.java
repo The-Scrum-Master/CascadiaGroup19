@@ -139,7 +139,7 @@ public class Player {
             map.setTile(helpTileGenerator, x, y);
             habitatScore(x, y);
             // calls habitat score to check if there is a group
-            heldTile = null;
+
         }
     }
     public void  placeToken(int x, int y){
@@ -495,5 +495,96 @@ public class Player {
     public int getWetlandMax() {
         return wetlandMax;
     }
+
+    public void bestHabitat(){
+        boolean placed=false;
+        Habitat[] habitats;
+        Habitat[] habitats2;
+        for(int x=0;x<playerBoard.length;x++){
+            for(int y=0;y<playerBoard.length;y++){
+                if(playerBoard[x][y]!=null) {
+                    //searching through placed tiles
+                    if (playerBoard[x][y].getSelect() == 1) {
+                        //if its a single habitat tile
+                        habitats=playerBoard[x][y].getHabitats();
+                        habitats2 = heldTile.getHabitats();
+                        if (habitats[0] == habitats2[0]) {
+                            placed=searchRadius(x,y);
+                        }
+                    }
+                     if (playerBoard[x][y].getSelect() == 2 &&!placed) {
+
+                         //if its a double habitat tile
+                         habitats=playerBoard[x][y].getHabitats();
+                         habitats2 = heldTile.getHabitats();
+                         System.out.println("for loop length"+habitats2.length);
+                        for(int i=0;i<habitats2.length;i++)
+                        {
+                            for(int j=0;j<habitats2.length;j++)
+                            {
+                                if(habitats[i]==habitats2[j]){
+                                    searchRadius(x,y);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+    }
+    public boolean searchRadius(int x,int y) {
+
+        boolean found = false;
+        if(playerBoard[x][y+1]==null){
+            placeTile(x,y+1);
+            found=true;
+
+        }
+        else if(playerBoard[x][y-1]==null){
+            placeTile(x,y-1);
+            found=true;
+
+        }
+        else if(playerBoard[x-1][y]==null){
+            placeTile(x-1,y);
+            found=true;
+
+        }
+        else if(playerBoard[x+1][y]==null){
+            placeTile(x+1,y);
+            found=true;
+
+        }
+        else if(playerBoard[x+1][y+1]==null){
+            placeTile(x+1,y+1);
+            found=true;
+
+        }
+        else if(playerBoard[x+1][y-1]==null){
+            placeTile(x+1,y-1);
+            found=true;
+
+        }
+        else if(playerBoard[x-1][y-1]==null){
+            placeTile(x-1,y-1);
+            found=true;
+
+        }
+        else if(playerBoard[x-1][y+1]==null){
+            placeTile(x-1,y+1);
+            found=true;
+
+        }
+        else{
+            found=false;
+        }
+        //checks if Tiles around specific tile are empty if so place tile there
+        return found;
+    }
+
+
 
 }

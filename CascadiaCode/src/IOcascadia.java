@@ -249,7 +249,7 @@ public class IOcascadia {
 
     public static void botsIntro(){
         System.out.println("How many players are going to play? (between 2 and 4)\n"+numberOfBots);
-        System.out.println("Enter player 1 name: Bot1\nEnter next player's name: Bot2");
-        playerNames.add("Bot1"); playerNames.add("Bot2");
+        System.out.println("Enter player 1 name: Bot_1\nEnter next player's name: Bot_2");
+        playerNames.add("Bot_1"); playerNames.add("Bot_2");
     }
 }
