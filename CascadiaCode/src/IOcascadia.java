@@ -10,8 +10,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class IOcascadia {
-
-    static private int participantsInt;
+    static final int numberOfBots=2;
+    static private int participantsInt=numberOfBots;
     static public ArrayList<String> playerNames= new ArrayList<String>();
     static public ArrayList<Integer> order= new ArrayList<Integer>();
 
@@ -245,5 +245,11 @@ public class IOcascadia {
             System.out.println("You have chosen Not to cull the river.");
             return false;
         }
+    }
+
+    public static void botsIntro(){
+        System.out.println("How many players are going to play? (between 2 and 4)\n"+numberOfBots);
+        System.out.println("Enter player 1 name: Bot1\nEnter next player's name: Bot2");
+        playerNames.add("Bot1"); playerNames.add("Bot2");
     }
 }

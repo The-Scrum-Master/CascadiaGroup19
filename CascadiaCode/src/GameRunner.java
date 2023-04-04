@@ -7,7 +7,6 @@
 
 import java.util.ArrayList;
 import java.util.Objects;
-
 public class GameRunner {
     private static final ArrayList<Player> players = new ArrayList<Player>();
     //arrayList of Player class to store players
@@ -15,20 +14,17 @@ public class GameRunner {
     // to use the functions in the PairDisplay class to display the river
     public static boolean continueGame = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         IOcascadia.welcomeMessage();
         //output welcome message
         System.out.println("\n");
-        int elkRand = IOcascadia.selectScoreCardElk();
-        int BearRand = IOcascadia.selectScoreCardBear();
-        int hawkRand = IOcascadia.selectScoreCardHawk();
-        int salmonRand = IOcascadia.selectScoreCardSalmon();
-        int foxRand = IOcascadia.selectScoreCardFox();
+        IOcascadia.selectScoreCardElk();
+        IOcascadia.selectScoreCardBear();
+        IOcascadia.selectScoreCardHawk();
+        IOcascadia.selectScoreCardSalmon();
+        IOcascadia.selectScoreCardFox();
         System.out.println("\n");
-        IOcascadia.numberOfPlayers();
-        //output message asking for number of players and storing that in a variable
-        IOcascadia.playerNames();
-        //output messages asking for player names
+        IOcascadia.botsIntro();
         IOcascadia.playerOrder();
         //output message informing of the order the players are going to follow
         TileDeck.createDeck();
@@ -45,6 +41,8 @@ public class GameRunner {
         //int to rotate around players in order
         int helperIntToPrintMap = -1;
         int turnTheGameIsAt = 0;
+
+        Thread.sleep(2000);
 
         while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
