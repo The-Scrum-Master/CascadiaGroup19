@@ -5,7 +5,7 @@
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 
 public abstract class HawkScoreCard implements ScoreCard{
     protected ArrayList<TokenForPoints> arrayOfTokens;
@@ -36,4 +36,4 @@ public abstract class HawkScoreCard implements ScoreCard{
             }
         }
     }
-}
+}*/

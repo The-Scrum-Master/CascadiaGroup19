@@ -196,7 +196,7 @@ public class IOcascadia {
         return rand;
     }
 
-    public static int selectScoreCardHawk(){
+    /*public static int selectScoreCardHawk(){
         int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
         if(rand==0){
             HawkScoreCard_A.explainCard();
@@ -208,9 +208,9 @@ public class IOcascadia {
         else{
             HawkScoreCard_C.explainCard();
         }
-         */
+         *//*
         return rand;
-    }
+    }*/
 
     public static ArrayList<String> getPlayerNames() {
         return playerNames;

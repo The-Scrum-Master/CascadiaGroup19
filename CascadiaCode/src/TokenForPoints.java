@@ -10,6 +10,7 @@ public class TokenForPoints {
     private boolean valid=false;
     private boolean alreadyAccountedFor=false;
     private int numberOfAdjacent=0;
+    //private int pointsForPlaceholder;
 
     public TokenForPoints(int cordX, int cordY){
         this.cordX = cordX;
@@ -55,4 +56,14 @@ public class TokenForPoints {
     public void setNumberOfAdjacent(int numberOfAdjacent) {
         this.numberOfAdjacent = numberOfAdjacent;
     }
+
+    /*public int getPointsForPlaceholder() {
+        return pointsForPlaceholder;
+    }
+
+    public void setPointsForPlaceholder(int pointsForPlaceholder) {
+        this.pointsForPlaceholder = pointsForPlaceholder;
+    }
+
+     */
 }

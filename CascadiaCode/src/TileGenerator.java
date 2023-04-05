@@ -7,7 +7,7 @@
 public class TileGenerator {
 
     public String [][] tile= new String[4][4];
-    public static String [][] blankTile= new String[4][4];
+    //public static String [][] blankTile= new String[4][4];
 
     Tile constructorTile;
     boolean emptyTile=false;

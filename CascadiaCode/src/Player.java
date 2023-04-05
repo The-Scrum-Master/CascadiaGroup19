@@ -26,6 +26,7 @@ import java.util.Random;
 
 public class Player {
     private final int order;
+    private int numberOfHawks;
     private final String name;
     private boolean firstTurnPlayed = false;
 
@@ -44,6 +45,14 @@ public class Player {
         natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
 
+    }
+
+    public int getNumberOfHawks() {
+        return numberOfHawks;
+    }
+
+    public void setNumberOfHawks(int numberOfHawks) {
+        this.numberOfHawks = numberOfHawks;
     }
 
     public Tile[][] getPlayerBoard() {
@@ -112,7 +121,7 @@ public class Player {
         // map.fillMapBlank(blank);
         map.fillMapBlank(blank);
         map.starterTiles(InitialTileSingleColoured, InitialTileDoubleColoured1, InitialTileDoubleColoured2);
-        map.printMapTotalByParts();
+        map.printMapTotalByCircle(0);
 
         firstTurnPlayed = true;
     }
@@ -156,7 +165,7 @@ public class Player {
 
         }
         Wildlife WildlifeType = heldToken;
-        if (this.playerBoard[x][y] == null || this.playerBoard[x][y].isTokenPlaced()) {
+        if (this.playerBoard[x][y] == null || this.playerBoard[x][y].getTokenPlaced()) {
             System.out.println("The board location for the Token placement is not a valid location,\n" +
                     "you must place it on a previously played tile. Please try again");
             int x_axis = IOcascadia.takeIntInput();
@@ -262,7 +271,7 @@ public class Player {
                 if (playerBoard[i][j] != null) {
 
                     if (playerBoard[i][j].getSelect() == 1) {
-                        if (playerBoard[i][j].getSlot(0) == heldToken && !playerBoard[i][j].isTokenPlaced()) {
+                        if (playerBoard[i][j].getSlot(0) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                             hasToken = true;
                         }
 
@@ -270,14 +279,14 @@ public class Player {
 
                     else if (playerBoard[i][j].getSelect() == 2) {
                         for (int k = 0; k < 2; k++) {
-                            if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].isTokenPlaced()) {
+                            if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                                 hasToken = true;
                             }
 
                         }
                     } else if (playerBoard[i][j].getSelect() == 3) {
                         for (int k = 0; k < 3; k++) {
-                            if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].isTokenPlaced()) {
+                            if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                                 hasToken = true;
                             }
 
@@ -645,4 +654,7 @@ public class Player {
   }
 
 
+    public MapGenerator getMap() {
+        return map;
+    }
 }

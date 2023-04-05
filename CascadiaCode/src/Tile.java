@@ -125,7 +125,7 @@ public class Tile {
         }
     }
 
-    public boolean isTokenPlaced() {
+    public boolean getTokenPlaced() {
         return tokenPlaced;
     }
 
@@ -354,6 +354,7 @@ public class Tile {
         return animal3;
     }
 
+
     @Override
     public String toString() {
         return "Tile{" +
@@ -418,5 +419,9 @@ public class Tile {
     }
 
     public static void main(String[] args) {
+        Tile t = new Tile(2);
+        for (Wildlife i : t.getSlots()) {
+            System.out.println(i);
+        }
     }
 }

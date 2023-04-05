@@ -17,13 +17,9 @@ public class GameRunner {
     public static void main(String[] args) throws InterruptedException {
         IOcascadia.welcomeMessage();
         //output welcome message
+
         System.out.println("\n");
-        IOcascadia.selectScoreCardElk();
-        IOcascadia.selectScoreCardBear();
-        IOcascadia.selectScoreCardHawk();
-        IOcascadia.selectScoreCardSalmon();
-        IOcascadia.selectScoreCardFox();
-        System.out.println("\n");
+
         IOcascadia.botsIntro();
         IOcascadia.playerOrder();
         //output message informing of the order the players are going to follow
@@ -42,7 +38,19 @@ public class GameRunner {
         int helperIntToPrintMap = -1;
         int turnTheGameIsAt = 0;
 
+        System.out.println("\n");
+
+        IOcascadia.selectScoreCardElk();
+        IOcascadia.selectScoreCardBear();
+        A_Hawk.explainCard();
+        //IOcascadia.selectScoreCardHawk();
+        IOcascadia.selectScoreCardSalmon();
+        IOcascadia.selectScoreCardFox();
+
         Thread.sleep(2000);
+
+        A_Hawk hawkPlayer1 = new A_Hawk(players.get(0));
+        A_Hawk hawkPlayer2 = new A_Hawk(players.get(1));
 
         while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
@@ -168,6 +176,9 @@ public class GameRunner {
                             String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
 
                             if (decision.equals("yes")) {
+                                hawkPlayer1.getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                hawkPlayer1.getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                hawkPlayer1.placeholdersScore();
 
                                 System.out.println("Where would you like to place token " + token);
                                 int coordinate = IOcascadia.takeIntInput();
@@ -275,6 +286,7 @@ public class GameRunner {
             //at the beggining of the main if we had implemented more than one scorecard. Because we have not had time,
             //the following lines only use scorecards A, as they are the only implemented ones
 
+            /*
             HawkScoreCard_A hawkScore = new HawkScoreCard_A(players.get(playersTurn));
             hawkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for hawks: " + hawkScore.countScore());
@@ -294,6 +306,8 @@ public class GameRunner {
             FoxScoreCard_A foxScore = new FoxScoreCard_A(players.get(playersTurn));
             foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for fox: " + foxScore.countScore());
+
+             */
 
             int totalHabitatPoints=0;
             int forestPoints=0;

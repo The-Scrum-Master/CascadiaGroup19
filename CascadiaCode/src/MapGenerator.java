@@ -16,17 +16,6 @@ public class MapGenerator {
         }
     }
 
-
-
-    public void fillMapBlankByParts(TileGenerator blank){ //NEED TO WORK ON THIS FUNCTION AND CREATE A PRINTMAPBYPARTS ONE, MAKING THEM FILL THE CENTER OF
-        // THE ARRAY AND WHEN THE MAP HAS TO GET BIGGER FILL IN ADJACENT CIRCLES
-        for(int i=0+21;i< map.length-21;i++) {
-            for (int j = 0+21; j < map.length-21; j++) {
-                map[i][j]=blank;
-            }
-        }
-    }
-
     public void printMapTotalByCircle(int helperInt){ //handle whenever helperInt gets too big, need to see what value is "too big"
         for(int i=0+21-helperInt;i< map.length-21+helperInt;i++) {
             for(int k=0; k<4; k++){
@@ -90,7 +79,6 @@ public class MapGenerator {
             }
         }
     }
-
 
     public void fillMapWithAllowedTilePlacements(){
         for(int i=0;i< map.length;i++) {

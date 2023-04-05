@@ -1,15 +1,10 @@
-/* Group 19
- * Group name: Front row
- * Timi Salam- 2139203(Timisalam)
- * Patrick Kelly-21204063(Patkelly17)
- * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
- */
-
-public class HawkScoreCard_A extends HawkScoreCard{
+/*public class HawkScoreCard_A extends HawkScoreCard{
     int numberOfHawks=0;
+    Player player;
 
     public HawkScoreCard_A (Player player) {
         super(player);
+        this.player=player;
     }
     @Override
     public int countScore() {
@@ -19,17 +14,17 @@ public class HawkScoreCard_A extends HawkScoreCard{
                 if(arrayOfTokens.get(j).getValid()){
                     continue;
                 }
-                if(j!=i) { 
+                if(j!=i) {
                     //making sure that the element we are looking at isn't the same one we are comparing it to
                     if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  
-                            { //looking for adjacent X cord
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)
+                    { //looking for adjacent X cord
 
                         if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
                                 arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { 
-                                    //looking for adjacent Y cord
+                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
+                            //looking for adjacent Y cord
                             foundAdjacentHawk=true;
                             break;
                         }
@@ -64,4 +59,4 @@ public class HawkScoreCard_A extends HawkScoreCard{
     public static void explainCard() {
         System.out.println("This is Hawk Scorecard A. Points are given for total number of hawks that are not adjacent to any other hawk.\n");
     }
-}
+}*/
