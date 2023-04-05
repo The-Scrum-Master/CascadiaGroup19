@@ -13,6 +13,7 @@ public class GameRunner {
     public static PairDisplay p = new PairDisplay();
     // to use the functions in the PairDisplay class to display the river
     public static boolean continueGame = true;
+    private static int helperIntToPrintMap = -1;
 
     public static void main(String[] args) throws InterruptedException {
         IOcascadia.welcomeMessage();
@@ -35,7 +36,6 @@ public class GameRunner {
         }
         int playersTurn = 0;
         //int to rotate around players in order
-        int helperIntToPrintMap = -1;
         int turnTheGameIsAt = 0;
 
         System.out.println("\n");
@@ -215,6 +215,7 @@ public class GameRunner {
                     }
                 }
                  */
+                players.get(playersTurn).habitatScore();
                 playersTurn++;
             }
         }
@@ -339,5 +340,8 @@ public class GameRunner {
 
     public static void setContinueGame(boolean cont) {
         continueGame = cont;
+    }
+    public static int getHelperIntToPrintMap(){
+        return helperIntToPrintMap;
     }
 }

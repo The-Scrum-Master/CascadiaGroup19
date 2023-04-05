@@ -130,7 +130,6 @@ public class Player {
         map.printMapTotalByCircle(helperInt);
     }
 
-
     public void placeTile(int x, int y) {
         if (heldTile == null) {
             throw new IllegalArgumentException("held tile is null when calling place tile");
@@ -151,17 +150,16 @@ public class Player {
             playerBoard[x][y] = heldTile;
             TileGenerator helpTileGenerator = new TileGenerator(heldTile);
             map.setTile(helpTileGenerator, x, y);
-            habitatScore(x, y);
             // calls habitat score to check if there is a group
 
         }
     }
-    public void  placeToken(int x, int y){
-        if(x<0||x>=46||y<0||y>=46)
-        {
+
+    public void placeToken(int x, int y) {
+        if (x < 0 || x >= 46 || y < 0 || y >= 46) {
             System.out.println("Error placed tile out of bounds please try again");
             int newX = IOcascadia.takeIntInput();
-            int newY= IOcascadia.takeIntInput();
+            int newY = IOcascadia.takeIntInput();
 
         }
         Wildlife WildlifeType = heldToken;
@@ -173,7 +171,7 @@ public class Player {
         } else {
             playerBoard[x][y].playToken();
             for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
-            //checks to see if the tiles has a slot for the token on the board
+            // checks to see if the tiles has a slot for the token on the board
             {
                 if (playerBoard[x][y].getSlot(i) == heldToken) {
 
@@ -316,7 +314,8 @@ public class Player {
     }// if tile already has a token not let place
 
     public void splitPick() {
-        // is called when the player chooses to pick a tile and a token from the river at different indexes
+        // is called when the player chooses to pick a tile and a token from the river
+        // at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
                 "\nEnter the index of the tile you would like to chose:");
         int indexChoiceTile = IOcascadia.takeIntInput() - 1;
@@ -325,9 +324,9 @@ public class Player {
             indexChoiceTile = IOcascadia.takeIntInput();
         }
         this.heldTile = TileDeck.getRiverTilesIndex(indexChoiceTile);
-        //moves the tile from the river to the players hand
+        // moves the tile from the river to the players hand
         TileDeck.ReplaceRiverTilesIndex(indexChoiceTile);
-        //replaces the tile in the river with a new tile
+        // replaces the tile in the river with a new tile
         TileDeck.emptyDeckCheck();
 
         System.out.println("Enter the index of the token you would like to chose:");
@@ -338,156 +337,209 @@ public class Player {
         }
         this.heldToken = TileDeck.getRiverTokensIndex(indexChoiceToken);
         TileDeck.ReplaceRiverTokensIndex(indexChoiceToken);
-        //replaces the token in the river with a new token
+        // replaces the token in the river with a new token
         natureTokenNumber--;
         System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
     }
 
     public void pickPair(int indexOfSelected) {
-        // called when the player chooses to pick a tile and a token from the river at the same index
+        // called when the player chooses to pick a tile and a token from the river at
+        // the same index
         this.heldTile = TileDeck.getRiverTilesIndex(indexOfSelected);
         this.heldToken = TileDeck.getRiverTokensIndex(indexOfSelected);
         TileDeck.ReplaceRiverTilesIndex(indexOfSelected);
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
         TileDeck.emptyDeckCheck();
     }
-
-    public int riverCounter = 1, riverMax = 1;
-    public int forestCounter = 1, forestMax = 1;
-    public int prairieCounter = 1, prairieMax = 1;
-    public int mountainCounter = 1, mountainMax = 1;
-    public int wetlandCounter = 1, wetlandMax = 1;
-
-    public void habitatIncrementer(Habitat habitat) {
-        // increment the counter for the habitat
-        switch (habitat) {
-            case RIVER:
-                riverCounter++;
-                break;
-            case FOREST:
-                forestCounter++;
-                break;
-            case PRAIRIE:
-                prairieCounter++;
-                break;
-            case MOUNTAIN:
-                mountainCounter++;
-                break;
-            case WETLANDS:
-                wetlandCounter++;
-                break;
-        }
-    }
+    public int riverMax = 1;
+    public int forestMax = 1;
+    public int prairieMax = 1;
+    public int mountainMax = 1;
+    public int wetlandMax = 1;
 
     public void habitatMaxTracker(Habitat habitat) {
         // if the counter is greater than the max, set the max to the counter
         switch (habitat) {
             case RIVER:
-                if (riverCounter > riverMax) {
-                    riverMax = riverCounter;
+                if (counted.size() > riverMax) {
+                    riverMax = counted.size();
                 }
+                break;
             case FOREST:
-                if (forestCounter > forestMax) {
-                    forestMax = forestCounter;
+                if (counted.size() > forestMax) {
+                    forestMax = counted.size();
                 }
+                break;
             case PRAIRIE:
-                if (prairieCounter > prairieMax) {
-                    prairieMax = prairieCounter;
+                if (counted.size() > prairieMax) {
+                    prairieMax = counted.size();
                 }
+                break;
             case MOUNTAIN:
-                if (mountainCounter > mountainMax) {
-                    mountainMax = mountainCounter;
+                if (counted.size() > mountainMax) {
+                    mountainMax = counted.size();
                 }
+                break;
             case WETLANDS:
-                if (wetlandCounter > wetlandMax) {
-                    wetlandMax = wetlandCounter;
+                if (counted.size() > wetlandMax) {
+                    wetlandMax = counted.size();
                 }
+                break;
         }
     }
 
-    public void habitatCounterReset() {
-        riverCounter = 0;
-        forestCounter = 0;
-        prairieCounter = 0;
-        mountainCounter = 0;
-        wetlandCounter = 0;
+    ArrayList<Tile> counted = new ArrayList<Tile>();
+
+    public boolean countedHelp(Tile tile) {
+        for (int i = 0; i < counted.size(); i++) {
+            if (tile.equals(counted.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void recursiveHabibitCounter(int rows, int columns, Habitat habitat) {
-        // recursive function to count the number of habitats grouped together
-        if (playerBoard[rows - 1][columns] != null && playerBoard[rows - 1][columns].habitatCounted0 != true) {
-            //check if the tile above is not null and has not already been counted
-            if ((playerBoard[rows - 1][columns].getHabitat(0) == habitat
-                    && playerBoard[rows - 1][columns].getSelect() == 1)
-                    || playerBoard[rows - 1][columns].getHabitat(1) == habitat) {
-                // if the habitat is the same as the one being counted and the tile is selected
-                habitatIncrementer(habitat);
-                // increment the counter for the habitat
-                playerBoard[rows - 1][columns].habitatCounted0 = true;
-                recursiveHabibitCounter(rows - 1, columns, habitat);
-                // call the function again with the new tile
-            }
-        }// if the tile above is not null and has not already been counted
-        if (playerBoard[rows + 1][columns] != null && playerBoard[rows + 1][columns].habitatCounted0 != true) {
-            //check if the tile below is not null and has not already been counted
-            if ((playerBoard[rows + 1][columns].getHabitat(1) == habitat
-                    && playerBoard[rows + 1][columns].getSelect() == 1)
-                    || playerBoard[rows + 1][columns].getHabitat(0) == habitat) {
-                habitatIncrementer(habitat);
-                playerBoard[rows + 1][columns].habitatCounted0 = true;
-                recursiveHabibitCounter(rows + 1, columns, habitat);
-            }
-        }// if the tile to the left is not null and has not already been counted
-        if (playerBoard[rows][columns - 1] != null && playerBoard[rows][columns - 1].habitatCounted0 != true) {
-            //check if the tile to the left is not null and has not already been counted
-            if ((playerBoard[rows][columns - 1].getHabitat(0) == habitat
-                    && playerBoard[rows][columns - 1].getSelect() == 1)
-                    || playerBoard[rows][columns - 1].getHabitat(1) == habitat) {
-                habitatIncrementer(habitat);
-                playerBoard[rows][columns - 1].habitatCounted0 = true;
+        // recusively moves though tiles checking for habitat matches
+        if (adjCheck(columns - 1, rows, 0, habitat)) {
+            // checks left
+            if (countedHelp(playerBoard[rows][columns - 1]) != true) {
+                // makes sure hasnt already been counted
+                // adds the tiles to a array of counted tiles
+                counted.add(playerBoard[rows][columns - 1]);
                 recursiveHabibitCounter(rows, columns - 1, habitat);
+                // recusive call
             }
-        }// if the tile above is not null and has not already been counted
-        if (playerBoard[rows][columns + 1] != null && playerBoard[rows][columns + 1].habitatCounted0 != true) {
-            //check if the tile to the right is not null and has not already been counted
-            if ((playerBoard[rows][columns + 1].getHabitat(1) == habitat
-                    && playerBoard[rows][columns + 1].getSelect() == 1)
-                    || playerBoard[rows][columns + 1].getHabitat(0) == habitat) {
-                habitatIncrementer(habitat);
-                playerBoard[rows][columns + 1].habitatCounted0 = true;
+            habitatMaxTracker(habitat);
+        }
+        if (adjCheck(columns, rows - 1, 0, habitat)) {
+            // checks above
+            if (countedHelp(playerBoard[rows - 1][columns]) != true) {
+                // makes sure hasnt already been counted
+                counted.add(playerBoard[rows - 1][columns]);
+                recursiveHabibitCounter(rows - 1, columns, habitat);
+                // recusive call
+            }
+            habitatMaxTracker(habitat);
+        }
+        if (adjCheck(columns + 1, rows, 1, habitat)) {
+            // checks right
+            if (countedHelp(playerBoard[rows][columns + 1]) != true) {
+                // makes sure hasnt already been counted
+                counted.add(playerBoard[rows][columns + 1]);
                 recursiveHabibitCounter(rows, columns + 1, habitat);
+                // recusive call
+            }
+            habitatMaxTracker(habitat);
+        }
+        if (adjCheck(columns, rows + 1, 1, habitat)) {
+            // checks below
+            if (countedHelp(playerBoard[rows + 1][columns]) != true) {
+                // makes sure hasnt already been counted
+                counted.add(playerBoard[rows + 1][columns]);
+                recursiveHabibitCounter(rows + 1, columns, habitat);
+                // recusive call
+            }
+            habitatMaxTracker(habitat);
+        }
+    }
+
+
+
+    public boolean adjCheck(int x, int y, int direction, Habitat habitat) {
+
+        if (playerBoard[y][x] != null) {
+            Tile adjTile = playerBoard[y][x];
+
+            if (adjTile.getSelect() == 1) {
+                // If the tile is a solo then no need to check which direction habitat is on
+                if (adjTile.getHabitat(0) == habitat) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                // Need to check which direction to check;
+                if (direction == 0) {
+                    // only checks the bottom and right side of the tile (aka habitat index 1)
+                    if (adjTile.getHabitat(1) == habitat) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    // otherwise check this tiles top and left side of this tile (aka habitat index
+                    // 0)
+                    if (adjTile.getHabitat(0) == habitat) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public void checkHabitats() {
+        for (int i = 0 + 21 - GameRunner.getHelperIntToPrintMap(); i < 46 - 21
+                + GameRunner.getHelperIntToPrintMap(); i++) {
+            for (int j = 0 + 21 - GameRunner.getHelperIntToPrintMap(); j < 46 - 21
+                    + GameRunner.getHelperIntToPrintMap(); j++) {
+                Tile curr = playerBoard[i][j];
+                if (curr != null) {
+                    if (curr.getSelect() == 1) {
+                        if (adjCheck(j - 1, i, 0, curr.getHabitat(0))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(0));
+                            counted.removeAll(counted);
+                        }
+                        if (adjCheck(j, i - 1, 0, curr.getHabitat(0))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(0));
+                            counted.removeAll(counted);
+                        }
+                        if (adjCheck(j, i + 1, 1, curr.getHabitat(0))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(0));
+                            counted.removeAll(counted);
+                        }
+                        if (adjCheck(j + 1, i, 1, curr.getHabitat(0))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(0));
+                            counted.removeAll(counted);
+                        }
+                    } else {
+                        if (adjCheck(j - 1, i, 0, curr.getHabitat(0))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(0));
+                            counted.removeAll(counted);
+                        }
+                        if (adjCheck(j, i - 1, 0, curr.getHabitat(0))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(0));
+                            counted.removeAll(counted);
+                        }
+                        if (adjCheck(j, i + 1, 1, curr.getHabitat(1))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(1));
+                            counted.removeAll(counted);
+                        }
+                        if (adjCheck(j + 1, i, 1, curr.getHabitat(1))) {
+                            recursiveHabibitCounter(i, j, curr.getHabitat(1));
+                            habitatMaxTracker(curr.getHabitat(1));
+                            counted.removeAll(counted);
+                        }
+                    }
+                    counted.removeAll(counted);
+                }
             }
         }
     }
 
-    public void habitatScore(int x, int y) {
-        try {
-            if (heldTile.getSelect() == 1) {
-                // if the tile is selected, only check one habitat
-                recursiveHabibitCounter(x, y, heldTile.getHabitat(0));
-            } else {
-                // if the tile is not selected, check both habitats
-                recursiveHabibitCounter(x, y, heldTile.getHabitat(0));
-                recursiveHabibitCounter(x, y, heldTile.getHabitat(1));
-            }
-        } catch (Exception e) {
-        }
-        habitatMaxTracker(heldTile.getHabitat(0));
-        // check the max for the habitat
-        if(heldTile.getSelect() != 1){
-            //if two habitats tile check the second habitat
-            habitatMaxTracker(heldTile.getHabitat(1));
-        }
-        for (int i = 0; i < playerBoard.length; i++) {
-            for (int j = 0; j < playerBoard.length; j++) {
-                if (playerBoard[i][j] != null) {
-                    // reset the boolean values for the tiles
-                    playerBoard[i][j].habitatCounted0 = false;
-                    playerBoard[i][j].habitatCounted1 = false;
-                }
-            }
-        }
-        habitatCounterReset();
+    public void habitatScore() {
+
+        checkHabitats();
+        System.out.println("the max forest gorup is " + forestMax);
+        System.out.println("the max prairie gorup is " + prairieMax);
+        System.out.println("the max mountian gorup is " + mountainMax);
+        System.out.println("the max river gorup is " + riverMax);
+        System.out.println("the max wetland gorup is " + wetlandMax);
+
     }
 
     public int getForestMax() {
@@ -510,46 +562,39 @@ public class Player {
         return wetlandMax;
     }
 
-    public void findBestHabitat(){
+    public void findBestHabitat() {
 
-        ArrayList<Habitat>  heldTileHabitats = new ArrayList<Habitat>();
+        ArrayList<Habitat> heldTileHabitats = new ArrayList<Habitat>();
         boolean found = false;
         boolean placed = false;
-        for(int k=0;k<heldTile.getHabitats().length;k++){
+        for (int k = 0; k < heldTile.getHabitats().length; k++) {
             heldTileHabitats.add(heldTile.getHabitat(k));
         }
 
-
-        for(int x=0;x<playerBoard.length;x++){
-            for(int y=0;y<playerBoard.length;y++){
-                if(!map.getMap()[x][y].getEmptyTile()) {
+        for (int x = 0; x < playerBoard.length; x++) {
+            for (int y = 0; y < playerBoard.length; y++) {
+                if (!map.getMap()[x][y].getEmptyTile()) {
                     ArrayList<Habitat> playerTileHabitats = new ArrayList<Habitat>();
-                    //searching through placed tiles
-                    //if tile is not null
-                          for(int k=0;k<playerBoard[x][y].getHabitats().length;k++) {
-                              playerTileHabitats.add(playerBoard[x][y].getHabitat(k));
-                          }
+                    // searching through placed tiles
+                    // if tile is not null
+                    for (int k = 0; k < playerBoard[x][y].getHabitats().length; k++) {
+                        playerTileHabitats.add(playerBoard[x][y].getHabitat(k));
+                    }
 
+                    // filling arrays with held tile habitats and selected tile habitats
+                    for (int i = 0; i < playerTileHabitats.size(); i++) {
+                        for (int j = 0; j < heldTileHabitats.size(); j++) {
 
-
-                          //filling arrays with held tile habitats and selected tile habitats
-                        for(int i=0;i<playerTileHabitats.size();i++)
-                        {
-                            for(int j=0;j<heldTileHabitats.size();j++)
-                            {
-
-                                if(playerTileHabitats.get(i).equals(heldTileHabitats.get(j))){
-                                    found =true;
-                                }
+                            if (playerTileHabitats.get(i).equals(heldTileHabitats.get(j))) {
+                                found = true;
                             }
                         }
-                        //checking if they have matching habitats
-
+                    }
+                    // checking if they have matching habitats
 
                 }
-                if(found)
-                {
-                    searchRadius(x,y);
+                if (found) {
+                    searchRadius(x, y);
                     return;
 
                 }
@@ -557,97 +602,89 @@ public class Player {
             }
         }
 
+    }
+
+    public void searchRadius(int x, int y) {
+
+        if (map.getMap()[x][y + 1].getEmptyTile()) {
+            placeTile(x, y + 1);
+
+        } else if (map.getMap()[x][y - 1].getEmptyTile()) {
+            placeTile(x, y - 1);
+
+        } else if (map.getMap()[x - 1][y].getEmptyTile()) {
+            placeTile(x - 1, y);
+
+        } else if (map.getMap()[x + 1][y].getEmptyTile()) {
+            placeTile(x + 1, y);
+
+        }
 
     }
-    public void searchRadius(int x,int y) {
 
-        if(map.getMap()[x][y+1].getEmptyTile()){
-            placeTile(x,y+1);
+    public int chooseFromRiver() {
+        Habitat[] playerTileHabitats;
+        ArrayList<Integer> potentialSuitors = new ArrayList<Integer>();
+
+        for (int x = 0; x < playerBoard.length; x++) {
+            for (int y = 0; y < playerBoard.length; y++) {
+                // search through entire map
+                if (!map.getMap()[x][y].getEmptyTile()) {
+                    // find where tiles have been placed
+                    playerTileHabitats = playerBoard[x][y].getHabitats();
+
+                    if (playerBoard[x][y].getSelect() == 1) {
+                        // if habitats match select that tile from river
+                        for (int k = 0; k < 4; k++) {
+                            for (int w = 0; w < TileDeck.getRiverTilesIndex(k).getHabitats().length; w++) {
+                                if (playerTileHabitats[0].equals(TileDeck.getRiverTilesIndex(k).getHabitat(w))) {
+                                    potentialSuitors.add(k);
+                                }
+
+                            }
+                        }
+
+                    } else {
+                        int k = 0;
+                        while (k < 4) {
+                            for (int i = 0; i < playerTileHabitats.length; i++) {
+                                for (int j = 0; j < TileDeck.getRiverTilesIndex(k).getHabitats().length; j++) {
+                                    if (playerTileHabitats[i].equals(TileDeck.getRiverTilesIndex(k).getHabitat(j))) {
+                                        // if habitats match put indexes of those tiles into an arraylist
+                                        potentialSuitors.add(k);
+                                    }
+                                }
+                            }
+                            k++;
+                        }
+
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < potentialSuitors.size(); i++) {
+            for (int j = i + 1; j < potentialSuitors.size(); j++) {
+                if (Objects.equals(potentialSuitors.get(i), potentialSuitors.get(j))) {
+                    potentialSuitors.remove(j);
+                    j--;
+                }
+            }
+        }
+        Random rand = new Random();
+        int randomNum;
+
+        if (potentialSuitors.size() == 0) {
+            randomNum = rand.nextInt(4);
+
+        } else {
+            randomNum = rand.nextInt(potentialSuitors.size());
 
         }
-        else if(map.getMap()[x][y-1].getEmptyTile()){
-            placeTile(x,y-1);
+        return potentialSuitors.get(randomNum);
 
-        }
-        else if(map.getMap()[x-1][y].getEmptyTile()){
-            placeTile(x-1,y);
-
-        }
-        else if(map.getMap()[x+1][y].getEmptyTile()){
-            placeTile(x+1,y);
-
-        }
-
+        // randomly select one of the potential suitors
 
     }
-  public int chooseFromRiver(){
-      Habitat[]  playerTileHabitats;
-      ArrayList<Integer> potentialSuitors = new ArrayList<Integer>();
-
-      for(int x=0;x<playerBoard.length;x++) {
-          for (int y = 0; y < playerBoard.length; y++) {
-                //search through entire map
-              if (!map.getMap()[x][y].getEmptyTile()) {
-                  //find where tiles have been placed
-                  playerTileHabitats=playerBoard[x][y].getHabitats();
-
-                  if(playerBoard[x][y].getSelect()==1) {
-                      //if habitats match select that tile from river
-                      for(int k=0;k<4;k++) {
-                          for (int w = 0; w < TileDeck.getRiverTilesIndex(k).getHabitats().length; w++) {
-                              if (playerTileHabitats[0].equals(TileDeck.getRiverTilesIndex(k).getHabitat(w))) {
-                                  potentialSuitors.add(k);
-                              }
-
-                          }
-                      }
-
-                  }
-                  else {
-                      int k=0;
-                      while (k<4) {
-                          for (int i = 0; i < playerTileHabitats.length; i++) {
-                              for (int j = 0; j < TileDeck.getRiverTilesIndex(k).getHabitats().length; j++) {
-                                  if (playerTileHabitats[i].equals(TileDeck.getRiverTilesIndex(k).getHabitat(j))) {
-                                      //if habitats match put indexes of those tiles into an arraylist
-                                      potentialSuitors.add(k);
-                                  }
-                              }
-                          }
-                          k++;
-                      }
-
-                  }
-              }
-          }
-      }
-      for(int i=0;i<potentialSuitors.size();i++){
-          for (int j=i+1;j<potentialSuitors.size();j++){
-           if(Objects.equals(potentialSuitors.get(i), potentialSuitors.get(j))){
-               potentialSuitors.remove(j);
-               j--;
-           }
-          }
-      }
-      Random rand = new Random();
-      int randomNum;
-
-      if(potentialSuitors.size()==0){
-           randomNum = rand.nextInt(4);
-
-
-      }
-      else {
-          randomNum = rand.nextInt(potentialSuitors.size());
-
-
-      }
-      return potentialSuitors.get(randomNum);
-
-      //randomly select one of the potential suitors
-
-  }
-
 
     public MapGenerator getMap() {
         return map;

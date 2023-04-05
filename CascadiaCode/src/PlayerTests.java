@@ -108,7 +108,7 @@ class PlayerTests{
         player1.playerBoard[25][22] = new Tile(3);
         player1.map.fillMapWithAllowedTilePlacements();
         player1.printMap(-1);
-        player1.habitatScore(22, 23);
+        player1.habitatScore();
     }
     
 }
