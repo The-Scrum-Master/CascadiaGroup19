@@ -4,6 +4,11 @@
 *Patrick Kelly-21204063(Patkelly17)
 *Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
 */
+
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
+
 /**
  * This Class creates the object Player that hold the information relevant to
  * the individual Players in
@@ -496,95 +501,148 @@ public class Player {
         return wetlandMax;
     }
 
-    public void bestHabitat(){
-        boolean placed=false;
-        Habitat[] habitats;
-        Habitat[] habitats2;
+    public void findBestHabitat(){
+
+        ArrayList<Habitat>  heldTileHabitats = new ArrayList<Habitat>();
+        boolean found = false;
+        boolean placed = false;
+        for(int k=0;k<heldTile.getHabitats().length;k++){
+            heldTileHabitats.add(heldTile.getHabitat(k));
+        }
+
+
         for(int x=0;x<playerBoard.length;x++){
             for(int y=0;y<playerBoard.length;y++){
-                if(playerBoard[x][y]!=null) {
+                if(!map.getMap()[x][y].getEmptyTile()) {
+                    ArrayList<Habitat> playerTileHabitats = new ArrayList<Habitat>();
                     //searching through placed tiles
-                    if (playerBoard[x][y].getSelect() == 1) {
-                        //if its a single habitat tile
-                        habitats=playerBoard[x][y].getHabitats();
-                        habitats2 = heldTile.getHabitats();
-                        if (habitats[0] == habitats2[0]) {
-                            placed=searchRadius(x,y);
-                        }
-                    }
-                     if (playerBoard[x][y].getSelect() == 2 &&!placed) {
+                    //if tile is not null
+                          for(int k=0;k<playerBoard[x][y].getHabitats().length;k++) {
+                              playerTileHabitats.add(playerBoard[x][y].getHabitat(k));
+                          }
 
-                         //if its a double habitat tile
-                         habitats=playerBoard[x][y].getHabitats();
-                         habitats2 = heldTile.getHabitats();
-                         System.out.println("for loop length"+habitats2.length);
-                        for(int i=0;i<habitats2.length;i++)
+
+
+                          //filling arrays with held tile habitats and selected tile habitats
+                        for(int i=0;i<playerTileHabitats.size();i++)
                         {
-                            for(int j=0;j<habitats2.length;j++)
+                            for(int j=0;j<heldTileHabitats.size();j++)
                             {
-                                if(habitats[i]==habitats2[j]){
-                                    searchRadius(x,y);
+
+                                if(playerTileHabitats.get(i).equals(heldTileHabitats.get(j))){
+                                    found =true;
                                 }
                             }
                         }
+                        //checking if they have matching habitats
 
-                    }
+
                 }
+                if(found)
+                {
+                    searchRadius(x,y);
+                    return;
+
+                }
+
             }
         }
 
 
     }
-    public boolean searchRadius(int x,int y) {
+    public void searchRadius(int x,int y) {
 
-        boolean found = false;
-        if(playerBoard[x][y+1]==null){
+        if(map.getMap()[x][y+1].getEmptyTile()){
             placeTile(x,y+1);
-            found=true;
 
         }
-        else if(playerBoard[x][y-1]==null){
+        else if(map.getMap()[x][y-1].getEmptyTile()){
             placeTile(x,y-1);
-            found=true;
 
         }
-        else if(playerBoard[x-1][y]==null){
+        else if(map.getMap()[x-1][y].getEmptyTile()){
             placeTile(x-1,y);
-            found=true;
 
         }
-        else if(playerBoard[x+1][y]==null){
+        else if(map.getMap()[x+1][y].getEmptyTile()){
             placeTile(x+1,y);
-            found=true;
 
         }
-        else if(playerBoard[x+1][y+1]==null){
-            placeTile(x+1,y+1);
-            found=true;
 
-        }
-        else if(playerBoard[x+1][y-1]==null){
-            placeTile(x+1,y-1);
-            found=true;
 
-        }
-        else if(playerBoard[x-1][y-1]==null){
-            placeTile(x-1,y-1);
-            found=true;
-
-        }
-        else if(playerBoard[x-1][y+1]==null){
-            placeTile(x-1,y+1);
-            found=true;
-
-        }
-        else{
-            found=false;
-        }
-        //checks if Tiles around specific tile are empty if so place tile there
-        return found;
     }
+  public int chooseFromRiver(){
+      Habitat[]  playerTileHabitats;
+      ArrayList<Integer> potentialSuitors = new ArrayList<Integer>();
 
+      for(int x=0;x<playerBoard.length;x++) {
+          for (int y = 0; y < playerBoard.length; y++) {
+                //search through entire map
+              if (!map.getMap()[x][y].getEmptyTile()) {
+                  //find where tiles have been placed
+                  playerTileHabitats=playerBoard[x][y].getHabitats();
+                  for(int i=0;i<playerTileHabitats.length;i++){
+                      System.out.println("tile " + i);
+                      System.out.println("playerTileH"+playerTileHabitats[i]);
+                  }
+                  if(playerBoard[x][y].getSelect()==1) {
+                      //if habitats match select that tile from river
+                      for(int k=0;k<4;k++) {
+                          for (int w = 0; w < TileDeck.getRiverTilesIndex(k).getHabitats().length; w++) {
+                              if (playerTileHabitats[0].equals(TileDeck.getRiverTilesIndex(k).getHabitat(w))) {
+                                  potentialSuitors.add(k);
+                              }
+
+                          }
+                      }
+
+                  }
+                  else {
+                      int k=0;
+                      while (k<4) {
+                          for (int i = 0; i < playerTileHabitats.length; i++) {
+                              for (int j = 0; j < TileDeck.getRiverTilesIndex(k).getHabitats().length; j++) {
+                                  if (playerTileHabitats[i].equals(TileDeck.getRiverTilesIndex(k).getHabitat(j))) {
+                                      //if habitats match put indexes of those tiles into an arraylist
+                                      potentialSuitors.add(k);
+                                  }
+                              }
+                          }
+                          k++;
+                      }
+
+                  }
+              }
+          }
+      }
+      for(int i=0;i<potentialSuitors.size();i++){
+          for (int j=i+1;j<potentialSuitors.size();j++){
+           if(Objects.equals(potentialSuitors.get(i), potentialSuitors.get(j))){
+               potentialSuitors.remove(j);
+               j--;
+           }
+          }
+      }
+      Random rand = new Random();
+      int randomNum;
+      for(int i=0;i<potentialSuitors.size();i++){
+          System.out.println("These are the potential suitor"+ potentialSuitors.get(i));
+      }
+      if(potentialSuitors.size()==0){
+           randomNum = rand.nextInt(4);
+
+
+      }
+      else {
+          randomNum = rand.nextInt(potentialSuitors.size());
+
+
+      }
+      return potentialSuitors.get(randomNum);
+
+      //randomly select one of the potential suitors
+
+  }
 
 
 }

@@ -177,6 +177,10 @@ public class MapGenerator {
         }
     }
 
+    public TileGenerator[][] getMap() {
+        return map;
+    }
+
     public static void main(String[] args) {
         MapGenerator map=new MapGenerator();
 

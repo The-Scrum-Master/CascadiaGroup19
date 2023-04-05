@@ -76,40 +76,37 @@ public class GameRunner {
                     players.get(playersTurn).printMap(helperIntToPrintMap);
 
                     PairDisplay.showPairs();
-                    players.get(playersTurn).setHeldTile(null);
-                    boolean continueAskingForInput = true;
-                    while (continueAskingForInput) {
-                        IOcascadia.instructionsToChoosePair();
-                        int instructionsToChoosePairInput = IOcascadia.takeIntInput() - 1;
-                        if (instructionsToChoosePairInput <= 5 && instructionsToChoosePairInput >= 0) {
-                            if (instructionsToChoosePairInput <= 3) {
-                                players.get(playersTurn).pickPair(instructionsToChoosePairInput);
-                                continueAskingForInput = false;
-                            } else if (instructionsToChoosePairInput == 4) {
-                                if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
-                                    System.out.println("You don't have nature tokens to use, try again");
-                                } else {
-                                    //cull again
-                                    System.out.println("The river has been culled");
-                                    TileDeck.cullRiver(4);
-                                    players.get(playersTurn).reduceNatureTokenNumberByOne();
-                                    PairDisplay.showPairs();
-                                }
 
+                    IOcascadia.instructionsToChoosePair();
+                    int instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver() ;
+                    System.out.println(instructionsToChoosePairInput);
+
+
+                    if (instructionsToChoosePairInput <= 5 && instructionsToChoosePairInput >= 0) {
+                        if (instructionsToChoosePairInput <= 3) {
+                            players.get(playersTurn).pickPair(instructionsToChoosePairInput);
+                        } else if (instructionsToChoosePairInput == 4) {
+                            if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
+                                System.out.println("You don't have nature tokens to use, try again");
                             } else {
-                                if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
-                                    System.out.println("You don't have nature tokens to use, try again");
-                                } else {
-                                    //pick one and one
-                                    players.get(playersTurn).splitPick();
-                                    continueAskingForInput = false;
-                                }
+                                //cull again
+                                System.out.println("The river has been culled");
+                                TileDeck.cullRiver(4);
+                                players.get(playersTurn).reduceNatureTokenNumberByOne();
+                                PairDisplay.showPairs();
                             }
+
                         } else {
-                            System.out.println("Sorry, the input should be between 1 and 6, try again");
+                            if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
+                                System.out.println("You don't have nature tokens to use, try again");
+                            } else {
+                                //pick one and one
+                                players.get(playersTurn).splitPick();
+                            }
                         }
                     }
 
+                    System.out.println(players.get(playersTurn).heldTile);
 
                     TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                     System.out.println();
@@ -156,9 +153,11 @@ public class GameRunner {
 
                      */
 
-                    players.get(playersTurn).bestHabitat();
+                    players.get(playersTurn).findBestHabitat();
 
                     //players.get(playersTurn).printMap(helperIntToPrintMap);
+
+                    players.get(playersTurn).setHeldTile(null);
 
 
                     if (players.get(playersTurn).checkToken()) {
