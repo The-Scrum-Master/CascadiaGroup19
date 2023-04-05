@@ -87,7 +87,6 @@ public class GameRunner {
 
                     IOcascadia.instructionsToChoosePair();
                     int instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver() ;
-                    System.out.println(instructionsToChoosePairInput);
 
 
                     if (instructionsToChoosePairInput <= 5 && instructionsToChoosePairInput >= 0) {
@@ -114,7 +113,6 @@ public class GameRunner {
                         }
                     }
 
-                    System.out.println(players.get(playersTurn).heldTile);
 
                     TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                     System.out.println();

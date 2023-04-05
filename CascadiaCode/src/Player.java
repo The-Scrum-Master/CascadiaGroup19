@@ -590,10 +590,7 @@ public class Player {
               if (!map.getMap()[x][y].getEmptyTile()) {
                   //find where tiles have been placed
                   playerTileHabitats=playerBoard[x][y].getHabitats();
-                  for(int i=0;i<playerTileHabitats.length;i++){
-                      System.out.println("tile " + i);
-                      System.out.println("playerTileH"+playerTileHabitats[i]);
-                  }
+
                   if(playerBoard[x][y].getSelect()==1) {
                       //if habitats match select that tile from river
                       for(int k=0;k<4;k++) {
@@ -634,9 +631,7 @@ public class Player {
       }
       Random rand = new Random();
       int randomNum;
-      for(int i=0;i<potentialSuitors.size();i++){
-          System.out.println("These are the potential suitor"+ potentialSuitors.get(i));
-      }
+
       if(potentialSuitors.size()==0){
            randomNum = rand.nextInt(4);
 
