@@ -164,40 +164,42 @@ public class GameRunner {
 
                     players.get(playersTurn).setHeldTile(null);
 
-
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        System.out.println("Do you want to place the token? (yes or no)");
-                        wrongInput = true;
-                        while (wrongInput) {
-                            String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
+                        if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
+                            playersHawkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersHawkScores.get(playersTurn).placeholdersScore();
+                            //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
+                        }
+                        //FOR NOW, IF TOKEN==HAWK, DO AUTOMATICALLY, ELSE, DO MANUALLY. IN THE FUTURE, ALL AUTOMATIC
+                        else{
+                            System.out.println("Do you want to place the token? (yes or no)");
+                            wrongInput = true;
+                            while (wrongInput) {
+                                String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
 
-                            if (decision.equals("yes")) {
-                                if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
-                                    playersHawkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                                    playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                                    playersHawkScores.get(playersTurn).placeholdersScore();
-                                    playersHawkScores.get(playersTurn).increaseNumberOfHawks();
+                                if (decision.equals("yes")) {
+
+                                    System.out.println("Where would you like to place token " + token);
+                                    int coordinate = IOcascadia.takeIntInput();
+                                    int coordinate2 = IOcascadia.takeIntInput();
+                                    while (coordinate <= 0 || coordinate >= 46 || coordinate2 <= 0 || coordinate2 >= 46) {
+                                        System.out.println("Error placed tile out of bounds please try again");
+                                        coordinate = IOcascadia.takeIntInput();
+                                        coordinate2 = IOcascadia.takeIntInput();
+
+                                    }
+                                    players.get(playersTurn).placeToken(coordinate, coordinate2);
+                                    players.get(playersTurn).printMap(helperIntToPrintMap);
+                                    wrongInput = false;
+
+
+                                } else if (decision.equals("no")) {
+                                    wrongInput = false;
+                                } else {
+                                    System.out.println("expected a yes or no answer, please try again");
                                 }
-
-                                System.out.println("Where would you like to place token " + token);
-                                int coordinate = IOcascadia.takeIntInput();
-                                int coordinate2 = IOcascadia.takeIntInput();
-                                while (coordinate <= 0 || coordinate >= 46 || coordinate2 <= 0 || coordinate2 >= 46) {
-                                    System.out.println("Error placed tile out of bounds please try again");
-                                    coordinate = IOcascadia.takeIntInput();
-                                    coordinate2 = IOcascadia.takeIntInput();
-
-                                }
-                                players.get(playersTurn).placeToken(coordinate, coordinate2);
-                                players.get(playersTurn).printMap(helperIntToPrintMap);
-                                wrongInput = false;
-
-
-                            } else if (decision.equals("no")) {
-                                wrongInput = false;
-                            } else {
-                                System.out.println("expected a yes or no answer, please try again");
                             }
                         }
                     }
@@ -219,6 +221,8 @@ public class GameRunner {
                 }
                  */
                 System.out.println("number of hawks: " + players.get(playersTurn).getNumberOfHawks());
+                playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
                 System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
                 System.out.println();

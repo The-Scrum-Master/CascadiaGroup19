@@ -19,6 +19,7 @@ public class A_Hawk{
     }
 
     public int countScore() {
+        numberOfHawks=0;
         for(int i=0; i<arrayOfTokens.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){
@@ -109,6 +110,7 @@ public class A_Hawk{
         }
         System.out.println("The best position/s which award the greatest amount of points ("+ turnNumberOfHawksIntoPoints(player.getNumberOfHawks()+1)+") are:");
         boolean atLeastOneSingleColorTile=false;
+        ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
         if(arrayOfPlaceholders.size()==0){
             System.out.println("Don't want to place token");
         }
@@ -123,6 +125,7 @@ public class A_Hawk{
                 System.out.println("At least one good single color tile");
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getValid() && i.getSingleColorTile()){
+                        finalDraft.add(i);
                         System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                     }
                 }
@@ -131,10 +134,25 @@ public class A_Hawk{
                 System.out.println("Not even one good single color tile");
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getValid()){
+                        finalDraft.add(i);
                         System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                     }
                 }
             }
+        }
+        if(finalDraft.size() == 0){
+            System.out.println("I have decided not to place the token");
+            //dont place
+        } else if(finalDraft.size() == 1){
+            player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
+            increaseNumberOfHawks();
+            //place in the one position
+        }
+        else{
+            int randomPosition=Tile.randomNumberGenerator(finalDraft.size());
+            player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
+            increaseNumberOfHawks();
+            //randomise position and place
         }
     }
 
