@@ -11,6 +11,7 @@ public class TokenForPoints {
     private boolean alreadyAccountedFor=false;
     private int numberOfAdjacent=0;
     //private int pointsForPlaceholder;
+    private boolean singleColorTile=false;
 
     public TokenForPoints(int cordX, int cordY){
         this.cordX = cordX;
@@ -55,6 +56,14 @@ public class TokenForPoints {
 
     public void setNumberOfAdjacent(int numberOfAdjacent) {
         this.numberOfAdjacent = numberOfAdjacent;
+    }
+
+    public boolean getSingleColorTile() {
+        return singleColorTile;
+    }
+
+    public void setSingleColorTile(boolean singleColorTile) {
+        this.singleColorTile = singleColorTile;
     }
 
     /*public int getPointsForPlaceholder() {

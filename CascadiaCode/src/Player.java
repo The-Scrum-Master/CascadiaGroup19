@@ -32,7 +32,6 @@ public class Player {
 
     public Tile[][] playerBoard;
     public MapGenerator map = new MapGenerator();
-
     public Tile heldTile;
     public Wildlife heldToken;
     public int natureTokenNumber;
@@ -158,16 +157,16 @@ public class Player {
     public void placeToken(int x, int y) {
         if (x < 0 || x >= 46 || y < 0 || y >= 46) {
             System.out.println("Error placed tile out of bounds please try again");
-            int newX = IOcascadia.takeIntInput();
-            int newY = IOcascadia.takeIntInput();
-
+            int x_axis = IOcascadia.takeIntInput();
+            int y_axis = IOcascadia.takeIntInput();
+            placeToken(x_axis, y_axis);
         }
-        Wildlife WildlifeType = heldToken;
-        if (this.playerBoard[x][y] == null || this.playerBoard[x][y].getTokenPlaced()) {
+        if (playerBoard[x][y] == null || map.getMap()[x][y].getEmptyTile() || playerBoard[x][y].getTokenPlaced()) {
             System.out.println("The board location for the Token placement is not a valid location,\n" +
                     "you must place it on a previously played tile. Please try again");
             int x_axis = IOcascadia.takeIntInput();
             int y_axis = IOcascadia.takeIntInput();
+            placeToken(x_axis, y_axis);
         } else {
             playerBoard[x][y].playToken();
             for (int i = 0; i < playerBoard[x][y].getSlots().length; i++)
@@ -243,11 +242,9 @@ public class Player {
                     map.setTile(helpTileGenerator, x, y);
                     playerBoard[x][y].tokenPlayedType = heldToken;
                     heldToken = null;
-
                 }
-
             }
-            if (isFilled == false) {
+            if (!isFilled) {
                 System.out.println("No placeholder matches your held token");
                 System.out.println("Please pick a different tile input x and y below");
                 int x_axis = IOcascadia.takeIntInput();
@@ -257,22 +254,26 @@ public class Player {
                 // retry
             }
         }
-
     }
     // need to go through every tile on the board and be able to check if
     // placeholder matches held token
+
+    public void setIsFilledToFalse(){
+        isFilled=false;
+    }
 
     public boolean checkToken() {
         for (int i = 0; i < playerBoard.length; i++) {
             for (int j = 0; j < playerBoard.length; j++) {
 
+                if(map.getMap()[i][j].getEmptyTile()){
+                    continue;
+                }
                 if (playerBoard[i][j] != null) {
-
                     if (playerBoard[i][j].getSelect() == 1) {
                         if (playerBoard[i][j].getSlot(0) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                             hasToken = true;
                         }
-
                     }
 
                     else if (playerBoard[i][j].getSelect() == 2) {
@@ -280,7 +281,6 @@ public class Player {
                             if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                                 hasToken = true;
                             }
-
                         }
                     } else if (playerBoard[i][j].getSelect() == 3) {
                         for (int k = 0; k < 3; k++) {
@@ -288,9 +288,9 @@ public class Player {
                                 hasToken = true;
                             }
 
-                            // idk where to put the istoken playe thng in this function
-                            // its gonna check and be like oh space available then itll see if there is
-                            // atoken there alresaad
+                            // idk where to put the istoken played thing in this function
+                            // its gonna check and be like oh space available then it'll see if there is
+                            // a token there already
                         }
                     }
 
@@ -298,7 +298,7 @@ public class Player {
             }
 
         }
-        if (hasToken == false) {
+        if (!hasToken) {
             System.out.println("No placeholders match your held token");
             return true;
 

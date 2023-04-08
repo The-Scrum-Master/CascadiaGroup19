@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 public class GameRunner {
     private static final ArrayList<Player> players = new ArrayList<Player>();
+    private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<A_Hawk>();
     //arrayList of Player class to store players
     public static PairDisplay p = new PairDisplay();
     // to use the functions in the PairDisplay class to display the river
@@ -33,6 +34,7 @@ public class GameRunner {
             //using a loop to add the players in order into the players ArrayList and creating
             //an instance of Player for each
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
+            playersHawkScores.add(new A_Hawk(players.get(i)));
         }
         int playersTurn = 0;
         //int to rotate around players in order
@@ -48,9 +50,6 @@ public class GameRunner {
         IOcascadia.selectScoreCardFox();
 
         Thread.sleep(2000);
-
-        A_Hawk hawkPlayer1 = new A_Hawk(players.get(0));
-        A_Hawk hawkPlayer2 = new A_Hawk(players.get(1));
 
         while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
@@ -174,9 +173,12 @@ public class GameRunner {
                             String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
 
                             if (decision.equals("yes")) {
-                                hawkPlayer1.getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                                hawkPlayer1.getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                                hawkPlayer1.placeholdersScore();
+                                if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
+                                    playersHawkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                    playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                    playersHawkScores.get(playersTurn).placeholdersScore();
+                                    playersHawkScores.get(playersTurn).increaseNumberOfHawks();
+                                }
 
                                 System.out.println("Where would you like to place token " + token);
                                 int coordinate = IOcascadia.takeIntInput();
@@ -199,6 +201,7 @@ public class GameRunner {
                             }
                         }
                     }
+                    players.get(playersTurn).setIsFilledToFalse();
                 }
                 /*1System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
                 boolean wrongInputGameQuit = true;
@@ -215,7 +218,11 @@ public class GameRunner {
                     }
                 }
                  */
+                System.out.println("number of hawks: " + players.get(playersTurn).getNumberOfHawks());
+                System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
+                System.out.println();
+
                 playersTurn++;
             }
         }

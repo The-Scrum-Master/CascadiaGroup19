@@ -107,13 +107,38 @@ public class A_Hawk{
                 arrayOfPlaceholders.get(i).setValid(true);
             }
         }
-        System.out.println("The following positions award the max amount of points ("+ turnNumberOfHawksIntoPoints(player.getNumberOfHawks()+1)+")");
-        for(TokenForPoints i : arrayOfPlaceholders){
-            if(i.getValid()){
-                System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+        System.out.println("The best position/s which award the greatest amount of points ("+ turnNumberOfHawksIntoPoints(player.getNumberOfHawks()+1)+") are:");
+        boolean atLeastOneSingleColorTile=false;
+        if(arrayOfPlaceholders.size()==0){
+            System.out.println("Don't want to place token");
+        }
+        else{
+            for(TokenForPoints i : arrayOfPlaceholders){
+                if(checkForSingleTile(i.getCordX(), i.getCordY())){
+                    i.setSingleColorTile(true);
+                    atLeastOneSingleColorTile=true;
+                }
+            }
+            if(atLeastOneSingleColorTile){
+                System.out.println("At least one good single color tile");
+                for(TokenForPoints i : arrayOfPlaceholders){
+                    if(i.getValid() && i.getSingleColorTile()){
+                        System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                    }
+                }
+            }
+            else{
+                System.out.println("Not even one good single color tile");
+                for(TokenForPoints i : arrayOfPlaceholders){
+                    if(i.getValid()){
+                        System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                    }
+                }
             }
         }
     }
+
+    //NEED TO CHANGE placeholdersScore FUNCTION TO ACCOUNT FOR EVERY PLACED TOKEN, NOT ONLY HAWK PLACED TOKENS
 
     public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
         //get indexes of all places there are hawk placeholders
@@ -140,12 +165,25 @@ public class A_Hawk{
     public static void explainCard() {
         System.out.println("This is Hawk Scorecard A. Points are given for total number of hawks that are not adjacent to any other hawk.\n");
     }
+
+    public void increaseNumberOfHawks(){
+        player.setNumberOfHawks(player.getNumberOfHawks()+1);
+    }
+
+    public boolean checkForSingleTile(int x, int y){
+        if (player.getPlayerBoard()[y][x].getSelect()==1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 
 
 /*
-* NEED TO ADD THAT WHENEVER A HAWK IS PLACED, NUMBEROFHAWKS IN PLAYER GOES UP
-* ALSO NEED TO ADD THAT THESE HAWK FUNCTIONS ARE ONLY CALLED WHEN A HAWK TOKEN IS HELD
-* NEED TO ADD FUNCTION THAT CHECKS IF ONE OF THE ELITE POSITION IS A SINGLE PLACEHOLDER, PLACE THERE
+* NEED TO ADD THAT WHENEVER A HAWK IS PLACED, NUMBEROFHAWKS IN PLAYER GOES UP---DONE
+* ALSO NEED TO ADD THAT THESE HAWK FUNCTIONS ARE ONLY CALLED WHEN A HAWK TOKEN IS HELD---DONE
+* NEED TO ADD FUNCTION THAT CHECKS IF ONE OF THE ELITE POSITIONs IS A SINGLE PLACEHOLDER, PLACE THERE
 * NEED TO ADD FUNCTION THAT, IF NOT 1-PLACEHOLDER TILE, IF RANDOMLY SELECTS WHERE TO PLACE IT
 * */
