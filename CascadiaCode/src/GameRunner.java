@@ -188,7 +188,6 @@ public class GameRunner {
                                         System.out.println("Error placed tile out of bounds please try again");
                                         coordinate = IOcascadia.takeIntInput();
                                         coordinate2 = IOcascadia.takeIntInput();
-
                                     }
                                     players.get(playersTurn).placeToken(coordinate, coordinate2);
                                     players.get(playersTurn).printMap(helperIntToPrintMap);

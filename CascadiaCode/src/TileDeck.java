@@ -86,18 +86,11 @@ public class TileDeck extends Stack<Tile> {
                 salmonNum++;
             }
         }
-        if (hawkNum == 4 || elkNum == 4 || bearNum == 4 || foxNum == 4 || salmonNum ==4){
+        if (hawkNum >= 3 || elkNum >= 3 || bearNum >= 3 || foxNum >= 3 || salmonNum >= 3){
             System.out.println("The river has been automatically culled\n\n");
             cullRiver(4);
             PairDisplay.showPairs();
             cullCheck();
-        }
-        else if (hawkNum == 3 || elkNum == 3 || bearNum == 3 || foxNum == 3 || salmonNum ==3){
-            if (IOcascadia.cullOption()){
-                cullRiver(4);
-                PairDisplay.showPairs();
-                cullCheck();
-            }
         }
     }
 }
