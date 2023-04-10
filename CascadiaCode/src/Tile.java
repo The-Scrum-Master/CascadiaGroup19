@@ -14,8 +14,9 @@ public class Tile {
     public boolean Played;
     public boolean tokenPlayed;
     private boolean tokenPlaced = false;
-    public boolean habitatCounted0;
-    public boolean habitatCounted1;
+
+    public int boardXIndex;
+    public int boardYIndex;
 
     public Wildlife tokenPlayedType;
 
@@ -52,8 +53,6 @@ public class Tile {
         Played = false;
         tokenPlayed = false;
         tokenPlayedType = null;
-        habitatCounted0 = false;
-        habitatCounted1 = false;
         if (select == 2) {
             Habitat h;
             Habitat h2;
@@ -76,7 +75,6 @@ public class Tile {
                 }
 
             }
-
 
             firstPlaceHolder = false;
             slots = new Wildlife[2];
@@ -283,6 +281,11 @@ public class Tile {
 
     public int getSelect() {
         return this.select;
+    }
+
+    public void setBoardIndex(int x, int y){
+        boardXIndex = x;
+        boardYIndex = y;
     }
 
     public boolean isPlayed() {

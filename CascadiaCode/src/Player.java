@@ -26,8 +26,8 @@ import java.util.Random;
 
 public class Player {
     private final int order;
-    private int numberOfBearPairs=0;
-    private int numberOfHawks=0;
+    private int numberOfBearPairs = 0;
+    private int numberOfHawks = 0;
     private final String name;
     private boolean firstTurnPlayed = false;
 
@@ -117,10 +117,13 @@ public class Player {
         blank.blankTile();
         playerBoard[22][22] = new Tile(1); // generates the three starting tiles
         playerBoard[22][22].playTile(); // changes boolean on tile to played.
+        playerBoard[22][22].setBoardIndex(22, 22);
         playerBoard[23][22] = new Tile(2);
         playerBoard[23][22].playTile();
+        playerBoard[23][22].setBoardIndex(22, 23);
         playerBoard[23][23] = new Tile(3);
         playerBoard[23][23].playTile();
+        playerBoard[23][23].setBoardIndex(23, 23);
 
         TileGenerator InitialTileSingleColoured = new TileGenerator(playerBoard[22][22]);
         TileGenerator InitialTileDoubleColoured1 = new TileGenerator(playerBoard[23][22]);
@@ -154,8 +157,8 @@ public class Player {
             // recursive call to allow player to place tile again
         } else {
             heldTile.playTile();
-
             playerBoard[x][y] = heldTile;
+            playerBoard[x][y].setBoardIndex(x, y);
             TileGenerator helpTileGenerator = new TileGenerator(heldTile);
             map.setTile(helpTileGenerator, x, y);
             // calls habitat score to check if there is a group
@@ -267,15 +270,15 @@ public class Player {
     // need to go through every tile on the board and be able to check if
     // placeholder matches held token
 
-    public void setIsFilledToFalse(){
-        isFilled=false;
+    public void setIsFilledToFalse() {
+        isFilled = false;
     }
 
     public boolean checkToken() {
         for (int i = 0; i < playerBoard.length; i++) {
             for (int j = 0; j < playerBoard.length; j++) {
 
-                if(map.getMap()[i][j].getEmptyTile()){
+                if (map.getMap()[i][j].getEmptyTile()) {
                     continue;
                 }
                 if (playerBoard[i][j] != null) {
@@ -360,11 +363,54 @@ public class Player {
         TileDeck.ReplaceRiverTokensIndex(indexOfSelected);
         TileDeck.emptyDeckCheck();
     }
-    public int riverMax = 1;
-    public int forestMax = 1;
-    public int prairieMax = 1;
-    public int mountainMax = 1;
-    public int wetlandMax = 1;
+
+    // TODO
+    // - function returns arraylist of largest corridores
+    // - Arraylist of the cords of all the tiles in that habitat
+    // - the type of the habitat that that corridore is
+
+    public int riverMax = 0;
+    public int forestMax = 0;
+    public int prairieMax = 0;
+    public int mountainMax = 0;
+    public int wetlandMax = 0;
+
+    public MaxCorridor[] corridors = {
+            // array holds all the diffent corridors for each habitat
+            new MaxCorridor(Habitat.RIVER),
+            new MaxCorridor(Habitat.FOREST),
+            new MaxCorridor(Habitat.PRAIRIE),
+            new MaxCorridor(Habitat.MOUNTAIN),
+            new MaxCorridor(Habitat.WETLANDS) };
+
+    public void IntializeCorridors() {
+        for (int i = 0; i < corridors.length; i++) {
+            if (corridors[i].getHabitatType().equals(playerBoard[22][22].getHabitat(0))) {
+                corridors[i].getXcordArrayList().add(22);
+                corridors[i].getYcordArrayList().add(22);
+            } else if (corridors[i].getHabitatType().equals(playerBoard[23][22].getHabitat(0))) {
+                corridors[i].getXcordArrayList().add(22);
+                corridors[i].getYcordArrayList().add(23);
+            } else if (corridors[i].getHabitatType().equals(playerBoard[23][22].getHabitat(1))) {
+                corridors[i].getXcordArrayList().add(22);
+                corridors[i].getYcordArrayList().add(23);
+            } else if (corridors[i].getHabitatType().equals(playerBoard[23][23].getHabitat(0))) {
+                corridors[i].getXcordArrayList().add(23);
+                corridors[i].getYcordArrayList().add(23);
+            } else if (corridors[i].getHabitatType().equals(playerBoard[23][23].getHabitat(1))) {
+                corridors[i].getXcordArrayList().add(23);
+                corridors[i].getYcordArrayList().add(23);
+            } else {
+                System.out.println("The corridor max of " + corridors[i].getHabitatType() + " is 0 to start");
+            }
+        }
+        riverMax = corridors[0].getXcordArrayList().size();
+        forestMax = corridors[1].getXcordArrayList().size();
+        prairieMax = corridors[2].getXcordArrayList().size();
+        mountainMax = corridors[3].getXcordArrayList().size();
+        wetlandMax = corridors[4].getXcordArrayList().size();
+    }
+
 
     public void habitatMaxTracker(Habitat habitat) {
         // if the counter is greater than the max, set the max to the counter
@@ -372,26 +418,61 @@ public class Player {
             case RIVER:
                 if (counted.size() > riverMax) {
                     riverMax = counted.size();
+                    for (int i = 0; i < counted.size(); i++) {
+                        // corridors[0] contains max corridor info for river
+                        corridors[0].getXcordArrayList().add(counted.get(i).boardXIndex);
+                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                        corridors[0].getYcordArrayList().add(counted.get(i).boardYIndex);
+                        System.out.println(counted.get(i).boardYIndex);
+                    }
                 }
                 break;
             case FOREST:
                 if (counted.size() > forestMax) {
                     forestMax = counted.size();
+                    for (int i = 0; i < counted.size(); i++) {
+                        // corridors[1] contains max corridor info for forrest
+                        corridors[1].getXcordArrayList().add(counted.get(i).boardXIndex);
+                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                        corridors[1].getYcordArrayList().add(counted.get(i).boardYIndex);
+                        System.out.println(counted.get(i).boardYIndex);
+                    }
                 }
                 break;
             case PRAIRIE:
                 if (counted.size() > prairieMax) {
                     prairieMax = counted.size();
+                    for (int i = 0; i < counted.size(); i++) {
+                        // corridors[2] contains max corridor info for prairies
+                        corridors[2].getXcordArrayList().add(counted.get(i).boardXIndex);
+                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                        corridors[2].getYcordArrayList().add(counted.get(i).boardYIndex);
+                        System.out.println(counted.get(i).boardYIndex);
+                    }
                 }
                 break;
             case MOUNTAIN:
                 if (counted.size() > mountainMax) {
                     mountainMax = counted.size();
+                    for (int i = 0; i < counted.size(); i++) {
+                        // corridors[3] contains max corridor info for mountains
+                        corridors[3].getXcordArrayList().add(counted.get(i).boardXIndex);
+                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                        corridors[3].getYcordArrayList().add(counted.get(i).boardYIndex);
+                        System.out.println(counted.get(i).boardYIndex);
+                    }
                 }
                 break;
             case WETLANDS:
                 if (counted.size() > wetlandMax) {
                     wetlandMax = counted.size();
+                    for (int i = 0; i < counted.size(); i++) {
+                        // corridors[4] contains max corridor info for wetlands
+                        corridors[4].getXcordArrayList().add(counted.get(i).boardXIndex);
+                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                        corridors[4].getYcordArrayList().add(counted.get(i).boardYIndex);
+                        System.out.println(counted.get(i).boardYIndex);
+                    }
                 }
                 break;
         }
@@ -452,8 +533,6 @@ public class Player {
             habitatMaxTracker(habitat);
         }
     }
-
-
 
     public boolean adjCheck(int x, int y, int direction, Habitat habitat) {
 
@@ -541,14 +620,13 @@ public class Player {
     }
 
     public void habitatScore() {
-
+        IntializeCorridors();
         checkHabitats();
-        System.out.println("the max forest gorup is " + forestMax);
-        System.out.println("the max prairie gorup is " + prairieMax);
-        System.out.println("the max mountian gorup is " + mountainMax);
-        System.out.println("the max river gorup is " + riverMax);
-        System.out.println("the max wetland gorup is " + wetlandMax);
-
+        System.out.println("the max river group is " + riverMax);
+        System.out.println("the max forest group is " + forestMax);
+        System.out.println("the max prairie group is " + prairieMax);
+        System.out.println("the max mountian group is " + mountainMax);
+        System.out.println("the max wetland group is " + wetlandMax);
     }
 
     public int getForestMax() {
