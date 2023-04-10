@@ -59,7 +59,14 @@ public class GameRunner {
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
                 turnTheGameIsAt++;
-                helperIntToPrintMap++;
+                if(turnTheGameIsAt>4){
+                    if(turnTheGameIsAt%3==0){
+                        helperIntToPrintMap++;
+                    }
+                }
+                else{
+                    helperIntToPrintMap++;
+                }
             } else {
 
                 //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
