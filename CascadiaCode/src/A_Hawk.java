@@ -53,6 +53,8 @@ public class A_Hawk{
     }
 
     public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        arrayOfTokens = new ArrayList<>();
+        //maybe the line above is not necessary
         for(int rows = 0; rows < 46; rows++ ){
             for(int columns =0; columns < 46; columns++){
                 if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
@@ -60,8 +62,6 @@ public class A_Hawk{
                     if(playerBoard[rows][columns].getTokenPlaced()){
                         if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.HAWK)){
                             arrayOfTokens.add(new TokenForPoints(columns, rows));
-                            //cordinateX.add(columns);
-                            //cordinateY.add(rows);
                         }
                     }
                 }
@@ -116,7 +116,7 @@ public class A_Hawk{
         }
         else{
             for(TokenForPoints i : arrayOfPlaceholders){
-                if(checkForSingleTile(i.getCordX(), i.getCordY())){
+                if(checkForSingleTile(i.getCordX(), i.getCordY()) && i.getValid()){
                     i.setSingleColorTile(true);
                     atLeastOneSingleColorTile=true;
                 }
@@ -170,8 +170,6 @@ public class A_Hawk{
                             //loop through placeholders of the tile
                             if(i.equals(Wildlife.HAWK)){
                                 arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                                //cordinateX.add(columns);
-                                //cordinateY.add(rows);
                             }
                         }
                     }
@@ -180,7 +178,7 @@ public class A_Hawk{
         }
     }
 
-    public static void explainCard() {
+    public static void explainHawkCard() {
         System.out.println("This is Hawk Scorecard A. Points are given for total number of hawks that are not adjacent to any other hawk.\n");
     }
 
@@ -205,3 +203,6 @@ public class A_Hawk{
 * NEED TO ADD FUNCTION THAT CHECKS IF ONE OF THE ELITE POSITIONs IS A SINGLE PLACEHOLDER, PLACE THERE
 * NEED TO ADD FUNCTION THAT, IF NOT 1-PLACEHOLDER TILE, IF RANDOMLY SELECTS WHERE TO PLACE IT
 * */
+
+
+//NEED TO CHANGE placeholdersScore FUNCTION TO ACCOUNT FOR EVERY PLACED TOKEN, NOT ONLY HAWK PLACED TOKENS

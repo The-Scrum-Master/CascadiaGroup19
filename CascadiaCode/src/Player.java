@@ -26,7 +26,8 @@ import java.util.Random;
 
 public class Player {
     private final int order;
-    private int numberOfHawks;
+    private int numberOfBearPairs=0;
+    private int numberOfHawks=0;
     private final String name;
     private boolean firstTurnPlayed = false;
 
@@ -52,6 +53,14 @@ public class Player {
 
     public void setNumberOfHawks(int numberOfHawks) {
         this.numberOfHawks = numberOfHawks;
+    }
+
+    public int getNumberOfBearPairs() {
+        return numberOfBearPairs;
+    }
+
+    public void setNumberOfBearPairs(int numberOfBearPairs) {
+        this.numberOfBearPairs = numberOfBearPairs;
     }
 
     public Tile[][] getPlayerBoard() {

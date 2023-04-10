@@ -132,83 +132,83 @@ public class IOcascadia {
         return rand.nextInt(upperBound);
     }
 
-    public static int selectScoreCardSalmon(){
+    /*public static int selectScoreCardSalmon(){
         int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
         if(rand==0){
             SalmonScoreCard_A.explainCard();
         }
-        /*                           THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
+                                   THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
         else if(rand==1){
             SalmonScoreCard_B.explainCard();
         }
         else{
             SalmonScoreCard_C.explainCard();
         }
-         */
-        return rand;
-    }
 
-    public static int selectScoreCardFox(){
+        return rand;
+    }*/
+
+    /*public static int selectScoreCardFox(){
         int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
         if(rand==0){
             FoxScoreCard_A.explainCard();
         }
-        /*                           THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
+                                   THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
         else if(rand==1){
             FoxScoreCard_B.explainCard();
         }
         else{
             FoxScoreCard_C.explainCard();
         }
-         */
-        return rand;
-    }
 
-    public static int selectScoreCardBear(){
+        return rand;
+    }*/
+
+    /*public static int selectScoreCardBear(){
         int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
         if(rand==0){
             BearScoreCard_A.explainCard();
         }
-        /*                           THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
+                                   THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
         else if(rand==1){
             BearScoreCard_B.explainCard();
         }
         else{
             BearScoreCard_C.explainCard();
         }
-         */
-        return rand;
-    }
 
-    public static int selectScoreCardElk(){
+        return rand;
+    }*/
+
+    /*public static int selectScoreCardElk(){
         int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
         if(rand==0){
             ElkScoreCard_A.explainCard();
         }
-        /*                           THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
+                                 THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
         else if(rand==1){
             ElkScoreCard_B.explainCard();
         }
         else{
             ElkScoreCard_C.explainCard();
         }
-         */
+
         return rand;
-    }
+    }/*
 
     /*public static int selectScoreCardHawk(){
         int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
         if(rand==0){
             HawkScoreCard_A.explainCard();
         }
-        /*                           THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
+                                 THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
         else if(rand==1){
             HawkScoreCard_B.explainCard();
         }
         else{
             HawkScoreCard_C.explainCard();
         }
-         *//*
+
         return rand;
     }*/
 

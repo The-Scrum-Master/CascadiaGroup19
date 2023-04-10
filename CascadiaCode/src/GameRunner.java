@@ -10,6 +10,7 @@ import java.util.Objects;
 public class GameRunner {
     private static final ArrayList<Player> players = new ArrayList<Player>();
     private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<A_Hawk>();
+    private static final ArrayList<A_Bear> playersBearScores = new ArrayList<A_Bear>();
     //arrayList of Player class to store players
     public static PairDisplay p = new PairDisplay();
     // to use the functions in the PairDisplay class to display the river
@@ -35,6 +36,7 @@ public class GameRunner {
             //an instance of Player for each
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
             playersHawkScores.add(new A_Hawk(players.get(i)));
+            playersBearScores.add(new A_Bear(players.get(i)));
         }
         int playersTurn = 0;
         //int to rotate around players in order
@@ -42,14 +44,15 @@ public class GameRunner {
 
         System.out.println("\n");
 
-        IOcascadia.selectScoreCardElk();
-        IOcascadia.selectScoreCardBear();
-        A_Hawk.explainCard();
+        A_Hawk.explainHawkCard();
+        A_Bear.explainBearCard();
+        //IOcascadia.selectScoreCardElk();
+        //IOcascadia.selectScoreCardBear();
         //IOcascadia.selectScoreCardHawk();
-        IOcascadia.selectScoreCardSalmon();
-        IOcascadia.selectScoreCardFox();
+        //IOcascadia.selectScoreCardSalmon();
+        //IOcascadia.selectScoreCardFox();
 
-        Thread.sleep(2000);
+        Thread.sleep(1500);
 
         while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
@@ -166,13 +169,20 @@ public class GameRunner {
 
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
+                        /*if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
                             playersHawkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersHawkScores.get(playersTurn).placeholdersScore();
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
-                        }
+                        }*/
                         //FOR NOW, IF TOKEN==HAWK, DO AUTOMATICALLY, ELSE, DO MANUALLY. IN THE FUTURE, ALL AUTOMATIC
+                        /*else*/ if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
+                            playersBearScores.get(playersTurn).checkForPairs();
+                            playersBearScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersBearScores.get(playersTurn).placeholdersScore();
+                            //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersBearScores.get(playersTurn).countScore());
+                        }
                         else{
                             System.out.println("Do you want to place the token? (yes or no)");
                             wrongInput = true;
@@ -222,6 +232,12 @@ public class GameRunner {
                 System.out.println("number of hawks: " + players.get(playersTurn).getNumberOfHawks());
                 playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
+
+                System.out.println(); System.out.println();
+
+                System.out.println("number of bear pairs: " + players.get(playersTurn).getNumberOfBearPairs());
+                playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                System.out.println(players.get(playersTurn).getName() +"'s points for bear pairs so far are: " + playersBearScores.get(playersTurn).countScore());
                 System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
                 System.out.println();
@@ -229,8 +245,10 @@ public class GameRunner {
                 playersTurn++;
             }
         }
-        System.out.println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n" +
-                "The game has finished!\n");
+        System.out.println("""
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+                The game has finished!
+                """);
 
 
         playersTurn = 0;
@@ -318,7 +336,7 @@ public class GameRunner {
 
              */
 
-            int totalHabitatPoints=0;
+            int totalHabitatPoints;
             int forestPoints=0;
             if(Objects.equals(winnerForest, players.get(playersTurn).getName())){
                 forestPoints=2;
