@@ -8,13 +8,12 @@
 import java.util.ArrayList;
 
 public class A_Hawk{
-    protected ArrayList<TokenForPoints> arrayOfTokens;
-    protected ArrayList<TokenForPoints> arrayOfPlaceholders;
+    private ArrayList<TokenForPoints> arrayOfTokens;
+    private ArrayList<TokenForPoints> arrayOfPlaceholders;
     int numberOfHawks=0;
     Player player;
 
     public A_Hawk(Player player){
-        arrayOfTokens = new ArrayList<>();
         this.player=player;
     }
 
