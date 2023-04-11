@@ -139,12 +139,10 @@ public class GameRunner {
                             g.generateFlipTile();
                             g.printTile();
 
-                            players.get(playersTurn).printMap(helperIntToPrintMap);
 
                             wrongInput = false;
                         } else if (rotate.equals("no")) {
                             wrongInput = false;
-                            players.get(playersTurn).printMap(helperIntToPrintMap);
 
                         } else {
                             System.out.println("Wrong input please try again");
@@ -170,7 +168,7 @@ public class GameRunner {
 
                     players.get(playersTurn).findBestHabitat();
 
-                    //players.get(playersTurn).printMap(helperIntToPrintMap);
+                    players.get(playersTurn).printMap(helperIntToPrintMap);
 
                     players.get(playersTurn).setHeldTile(null);
 

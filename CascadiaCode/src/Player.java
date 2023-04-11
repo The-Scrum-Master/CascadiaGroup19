@@ -275,16 +275,16 @@ public class Player {
     }
 
     public boolean checkToken() {
+        hasToken=false;
         for (int i = 0; i < playerBoard.length; i++) {
             for (int j = 0; j < playerBoard.length; j++) {
 
-                if (map.getMap()[i][j].getEmptyTile()) {
-                    continue;
-                }
-                if (playerBoard[i][j] != null) {
+                if (playerBoard[i][j] != null &&!playerBoard[i][j].tokenPlayed) {
+
                     if (playerBoard[i][j].getSelect() == 1) {
                         if (playerBoard[i][j].getSlot(0) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                             hasToken = true;
+                            System.out.println(hasToken);
                         }
                     }
 
@@ -292,12 +292,14 @@ public class Player {
                         for (int k = 0; k < 2; k++) {
                             if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                                 hasToken = true;
+                                System.out.println(hasToken);
                             }
                         }
                     } else if (playerBoard[i][j].getSelect() == 3) {
                         for (int k = 0; k < 3; k++) {
                             if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                                 hasToken = true;
+                                System.out.println(hasToken);
                             }
 
                             // idk where to put the istoken played thing in this function
@@ -306,10 +308,17 @@ public class Player {
                         }
                     }
 
+                    else{
+                        hasToken = false;
+                        System.out.println("entered else"+hasToken);
+
+                    }
+
                 }
             }
 
         }
+        System.out.println("before if"+hasToken);
         if (!hasToken) {
             System.out.println("No placeholders match your held token");
             return true;
