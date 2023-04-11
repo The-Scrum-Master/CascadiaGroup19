@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+import org.junit.platform.reporting.shadow.org.opentest4j.reporting.events.core.CoreFactory;
+
 /**
  * This Class creates the object Player that hold the information relevant to
  * the individual Players in
@@ -384,6 +386,25 @@ public class Player {
     public int mountainMax = 0;
     public int wetlandMax = 0;
 
+    public MaxCorridor[] getMax3Corridors() {
+        MaxCorridor[] ordered = corridors;
+        for (int i = 0; i < 5; i++) {
+            for (int j = i; j < 5; j++) {
+                int CorJ = ordered[j].getXcordArrayList().size();
+                int CorI = ordered[i].getXcordArrayList().size();
+                if (CorJ > CorI) {
+                    MaxCorridor temp = ordered[i];
+                    ordered[i] = ordered[j];
+                    ordered[j] = temp;
+                }
+            }
+        }
+        for (int k = 0; k < 5; k++) {
+            System.out.println(ordered[k].getXcordArrayList().size());
+        }
+        return ordered;
+    }
+
     public MaxCorridor[] corridors = {
             // array holds all the diffent corridors for each habitat
             new MaxCorridor(Habitat.RIVER),
@@ -420,7 +441,6 @@ public class Player {
         wetlandMax = corridors[4].getXcordArrayList().size();
     }
 
-
     public void habitatMaxTracker(Habitat habitat) {
         // if the counter is greater than the max, set the max to the counter
         switch (habitat) {
@@ -429,10 +449,12 @@ public class Player {
                     riverMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[0] contains max corridor info for river
-                        corridors[0].getXcordArrayList().add(counted.get(i).boardXIndex);
-                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
-                        corridors[0].getYcordArrayList().add(counted.get(i).boardYIndex);
-                        System.out.println(counted.get(i).boardYIndex);
+                        if (trackerHelp(0, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                            corridors[0].getXcordArrayList().add(counted.get(i).boardXIndex);
+                            System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                            corridors[0].getYcordArrayList().add(counted.get(i).boardYIndex);
+                            System.out.println(counted.get(i).boardYIndex);
+                        }
                     }
                 }
                 break;
@@ -441,10 +463,12 @@ public class Player {
                     forestMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[1] contains max corridor info for forrest
-                        corridors[1].getXcordArrayList().add(counted.get(i).boardXIndex);
-                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
-                        corridors[1].getYcordArrayList().add(counted.get(i).boardYIndex);
-                        System.out.println(counted.get(i).boardYIndex);
+                        if (trackerHelp(1, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                            corridors[1].getXcordArrayList().add(counted.get(i).boardXIndex);
+                            System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                            corridors[1].getYcordArrayList().add(counted.get(i).boardYIndex);
+                            System.out.println(counted.get(i).boardYIndex);
+                        }
                     }
                 }
                 break;
@@ -453,10 +477,12 @@ public class Player {
                     prairieMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[2] contains max corridor info for prairies
-                        corridors[2].getXcordArrayList().add(counted.get(i).boardXIndex);
-                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
-                        corridors[2].getYcordArrayList().add(counted.get(i).boardYIndex);
-                        System.out.println(counted.get(i).boardYIndex);
+                        if (trackerHelp(2, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                            corridors[2].getXcordArrayList().add(counted.get(i).boardXIndex);
+                            System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                            corridors[2].getYcordArrayList().add(counted.get(i).boardYIndex);
+                            System.out.println(counted.get(i).boardYIndex);
+                        }
                     }
                 }
                 break;
@@ -465,10 +491,12 @@ public class Player {
                     mountainMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[3] contains max corridor info for mountains
-                        corridors[3].getXcordArrayList().add(counted.get(i).boardXIndex);
-                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
-                        corridors[3].getYcordArrayList().add(counted.get(i).boardYIndex);
-                        System.out.println(counted.get(i).boardYIndex);
+                        if (trackerHelp(3, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                            corridors[3].getXcordArrayList().add(counted.get(i).boardXIndex);
+                            System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                            corridors[3].getYcordArrayList().add(counted.get(i).boardYIndex);
+                            System.out.println(counted.get(i).boardYIndex);
+                        }
                     }
                 }
                 break;
@@ -477,10 +505,12 @@ public class Player {
                     wetlandMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[4] contains max corridor info for wetlands
-                        corridors[4].getXcordArrayList().add(counted.get(i).boardXIndex);
-                        System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
-                        corridors[4].getYcordArrayList().add(counted.get(i).boardYIndex);
-                        System.out.println(counted.get(i).boardYIndex);
+                        if (trackerHelp(4, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                            corridors[4].getXcordArrayList().add(counted.get(i).boardXIndex);
+                            System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
+                            corridors[4].getYcordArrayList().add(counted.get(i).boardYIndex);
+                            System.out.println(counted.get(i).boardYIndex);
+                        }
                     }
                 }
                 break;
@@ -492,6 +522,16 @@ public class Player {
     public boolean countedHelp(Tile tile) {
         for (int i = 0; i < counted.size(); i++) {
             if (tile.equals(counted.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean trackerHelp(int index, int x, int y) {
+        for (int i = 0; i < corridors[index].getXcordArrayList().size(); i++) {
+            if (corridors[index].getXcordArrayList().get(i).equals(x) &&
+                    corridors[index].getYcordArrayList().get(i).equals(y)) {
                 return true;
             }
         }
@@ -636,6 +676,7 @@ public class Player {
         System.out.println("the max prairie group is " + prairieMax);
         System.out.println("the max mountian group is " + mountainMax);
         System.out.println("the max wetland group is " + wetlandMax);
+        MaxCorridor[] top = getMax3Corridors();
     }
 
     public int getForestMax() {
