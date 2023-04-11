@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-import org.junit.platform.reporting.shadow.org.opentest4j.reporting.events.core.CoreFactory;
-
 /**
  * This Class creates the object Player that hold the information relevant to
  * the individual Players in

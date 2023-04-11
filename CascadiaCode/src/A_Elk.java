@@ -206,6 +206,7 @@ public class A_Elk{
             }
             if(finalDraft.size() == 0){
                 if(!arrayOfPlaceholders.isEmpty()){
+                    System.out.println("X: "+ arrayOfPlaceholders.get(0).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(0).getCordX() + " V2");
                     player.placeToken(arrayOfPlaceholders.get(0).getCordY(), arrayOfPlaceholders.get(0).getCordX());
                 }
                 else{
