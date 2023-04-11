@@ -11,6 +11,7 @@ public class GameRunner {
     private static final ArrayList<Player> players = new ArrayList<Player>();
     private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<A_Hawk>();
     private static final ArrayList<A_Bear> playersBearScores = new ArrayList<A_Bear>();
+    private static final ArrayList<A_Elk> playersElkScores = new ArrayList<A_Elk>();
     //arrayList of Player class to store players
     public static PairDisplay p = new PairDisplay();
     // to use the functions in the PairDisplay class to display the river
@@ -37,6 +38,7 @@ public class GameRunner {
             players.add(new Player(IOcascadia.playerNames.get(IOcascadia.order.get(i)), i));
             playersHawkScores.add(new A_Hawk(players.get(i)));
             playersBearScores.add(new A_Bear(players.get(i)));
+            playersElkScores.add(new A_Elk(players.get(i)));
         }
         int playersTurn = 0;
         //int to rotate around players in order
@@ -189,6 +191,12 @@ public class GameRunner {
                             playersBearScores.get(playersTurn).placeholdersScore();
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersBearScores.get(playersTurn).countScore());
                         }
+                        else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
+                            playersElkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersElkScores.get(playersTurn).placeholdersScore();
+                            //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersElkScores.get(playersTurn).countScore());
+                        }
                         else{
                             System.out.println("Do you want to place the token? (yes or no)");
                             wrongInput = true;
@@ -244,6 +252,15 @@ public class GameRunner {
                 System.out.println("number of bear pairs: " + players.get(playersTurn).getNumberOfBearPairs());
                 playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for bear pairs so far are: " + playersBearScores.get(playersTurn).countScore());
+
+                System.out.println(); System.out.println();
+
+                playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                System.out.println(players.get(playersTurn).getName() +"'s points for elk lines so far are: " + playersElkScores.get(playersTurn).countScore());
+
+
+                System.out.println(); System.out.println();
+
                 System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
                 System.out.println();
@@ -327,11 +344,11 @@ public class GameRunner {
             BearScoreCard_A bearScore = new BearScoreCard_A(players.get(playersTurn));
             bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for bears: " + bearScore.countScore());
-*/
+
             ElkScoreCard_A elkScore = new ElkScoreCard_A(players.get(playersTurn));
             elkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for elks: " + elkScore.countScore());
-/*
+
             SalmonScoreCard_A salmonScore = new SalmonScoreCard_A(players.get(playersTurn));
             salmonScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for salmon: " + salmonScore.countScore());
