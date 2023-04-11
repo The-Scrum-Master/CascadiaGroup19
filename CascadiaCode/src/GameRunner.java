@@ -54,7 +54,7 @@ public class GameRunner {
 
         Thread.sleep(1500);
 
-        while (turnTheGameIsAt <= 20 && continueGame) {
+        while (turnTheGameIsAt <= 10 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
@@ -168,6 +168,7 @@ public class GameRunner {
 
                     players.get(playersTurn).findBestHabitat();
 
+                    players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
 
                     players.get(playersTurn).setHeldTile(null);
@@ -326,11 +327,11 @@ public class GameRunner {
             BearScoreCard_A bearScore = new BearScoreCard_A(players.get(playersTurn));
             bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for bears: " + bearScore.countScore());
-
+*/
             ElkScoreCard_A elkScore = new ElkScoreCard_A(players.get(playersTurn));
             elkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for elks: " + elkScore.countScore());
-
+/*
             SalmonScoreCard_A salmonScore = new SalmonScoreCard_A(players.get(playersTurn));
             salmonScore.getIndexes(players.get(playersTurn).getPlayerBoard());
             System.out.println("Points awarded for salmon: " + salmonScore.countScore());

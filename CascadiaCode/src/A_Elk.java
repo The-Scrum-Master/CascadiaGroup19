@@ -7,12 +7,13 @@
 
 import java.util.ArrayList;
 
-public class A_Bear{
+public class A_Elk{
     private ArrayList<TokenForPoints> arrayOfTokens;
     private ArrayList<TokenForPoints> arrayOfPlaceholders;
+    int numberOfPairs=0;
     Player player;
 
-    public A_Bear(Player player){
+    public A_Elk(Player player){
         this.player=player;
     }
 
@@ -48,7 +49,7 @@ public class A_Bear{
     }
 
     public int countScore() {
-        int numberOfPairs=0;
+        numberOfPairs=0;
         for(int i=0; i<arrayOfTokens.size(); i++){
             if(arrayOfTokens.get(i).getValid()){
                 continue;
@@ -86,7 +87,7 @@ public class A_Bear{
                 }
             }
         }
-        return turnNumberOfPairsIntoPoints(numberOfPairs);
+        return turnLengthOfElksIntoPoints(numberOfPairs);
     }
 
     public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
@@ -96,7 +97,7 @@ public class A_Bear{
                 if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
                     //if emptyTile is false=if the tile is occupied
                     if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.BEAR)){
+                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.ELK)){
                             arrayOfTokens.add(new TokenForPoints(columns, rows));
                         }
                     }
@@ -105,12 +106,12 @@ public class A_Bear{
         }
     }
 
-    public int turnNumberOfPairsIntoPoints(int pairs){
-        if(pairs==0) return 0;
-        else if(pairs==1) return 4;
-        else if(pairs==2) return 11;
-        else if(pairs==3) return 19;
-        else if(pairs>=4) return 27;
+    public int turnLengthOfElksIntoPoints(int elks){
+        if(elks==0) return 0;
+        else if(elks==1) return 2;
+        else if(elks==2) return 5;
+        else if(elks==3) return 9;
+        else if(elks>=4) return 13;
         else{
             throw new IllegalArgumentException("number of pairs can't be negative");
         }
@@ -165,7 +166,7 @@ public class A_Bear{
                 }
             }
 
-            System.out.println("The best position/s to obtain the greatest amount of points ("+ turnNumberOfPairsIntoPoints(player.getNumberOfBearPairs()+1)+") are:");
+            System.out.println("The best position/s to obtain the greatest amount of points ("+ turnLengthOfElksIntoPoints(player.getNumberOfBearPairs()+1)+") are:");
             boolean atLeastOneSingleColorTile=false;
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
             if(arrayOfPlaceholders.size()==0){
@@ -318,7 +319,7 @@ public class A_Bear{
                     if(!playerBoard[rows][columns].getTokenPlaced()){
                         for(Wildlife i : playerBoard[rows][columns].getSlots()){
                             //loop through placeholders of the tile
-                            if(i.equals(Wildlife.BEAR)){
+                            if(i.equals(Wildlife.ELK)){
                                 arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
                             }
                         }
@@ -328,8 +329,8 @@ public class A_Bear{
         }
     }
 
-    public static void explainBearCard() {
-        System.out.println("This is Bear Scorecard A. Points are given for total number of pairs of bears.\nA pair of bears is exactly two bears adjacent to each other.\n");
+    public static void explainCard() {
+        System.out.println("This is Elk Scorecard A. Score points are given for each straight line of adjacent elk, depending on length of the line. \nLines don't necessarily have to be horizontal.\n");
     }
 
     public void increaseNumberOfBearsPairs(){

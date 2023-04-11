@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class A_Hawk{
     private ArrayList<TokenForPoints> arrayOfTokens;
     private ArrayList<TokenForPoints> arrayOfPlaceholders;
-    int numberOfHawks=0;
     Player player;
 
     public A_Hawk(Player player){
@@ -18,7 +17,7 @@ public class A_Hawk{
     }
 
     public int countScore() {
-        numberOfHawks=0;
+        int numberOfHawks=0;
         for(int i=0; i<arrayOfTokens.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){
@@ -155,8 +154,6 @@ public class A_Hawk{
         }
     }
 
-    //NEED TO CHANGE placeholdersScore FUNCTION TO ACCOUNT FOR EVERY PLACED TOKEN, NOT ONLY HAWK PLACED TOKENS
-
     public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
         //get indexes of all places there are hawk placeholders
         arrayOfPlaceholders = new ArrayList<>();
@@ -194,14 +191,3 @@ public class A_Hawk{
         }
     }
 }
-
-
-/*
-* NEED TO ADD THAT WHENEVER A HAWK IS PLACED, NUMBEROFHAWKS IN PLAYER GOES UP---DONE
-* ALSO NEED TO ADD THAT THESE HAWK FUNCTIONS ARE ONLY CALLED WHEN A HAWK TOKEN IS HELD---DONE
-* NEED TO ADD FUNCTION THAT CHECKS IF ONE OF THE ELITE POSITIONs IS A SINGLE PLACEHOLDER, PLACE THERE
-* NEED TO ADD FUNCTION THAT, IF NOT 1-PLACEHOLDER TILE, IF RANDOMLY SELECTS WHERE TO PLACE IT
-* */
-
-
-//NEED TO CHANGE placeholdersScore FUNCTION TO ACCOUNT FOR EVERY PLACED TOKEN, NOT ONLY HAWK PLACED TOKENS

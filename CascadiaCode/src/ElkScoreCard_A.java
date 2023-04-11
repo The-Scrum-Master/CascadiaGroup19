@@ -52,6 +52,9 @@ public class ElkScoreCard_A extends ElkScoreCard{
         //System.out.println("size=" + arrayOfTokens.size());
         for(int i=0; i<arrayOfTokens.size(); i++){
             int length=0;
+            boolean lookingAtHorizontal=false;
+            boolean lookingAtVertical=false;
+            System.out.println("Start of outer loop");
             if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
                 continue;
             }
@@ -62,21 +65,25 @@ public class ElkScoreCard_A extends ElkScoreCard{
                     continue;
                 }
                 if(j!=i) { //making sure that the element we are looking at isn't the same one we are comparing it to
-                    if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY() &&
+                    if(!lookingAtVertical && arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY() &&
                             (arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
 
+                        System.out.println("Horizontal if");
+                        lookingAtHorizontal=true;
                         arrayOfTokens.get(j).setValid(true);
                         recursiveHorizontalLineCheck(arrayOfTokens.get(i));
                         recursiveHorizontalLineCheck(arrayOfTokens.get(j));
                         break;
                     }
-                    else if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX() &&
+                    else if(!lookingAtHorizontal && arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX() &&
                             (arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
                                     arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
                                     arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
 
+                        System.out.println("Vertical if");
+                        lookingAtVertical=true;
                         arrayOfTokens.get(j).setValid(true);
                         recursiveVerticalLineCheck(arrayOfTokens.get(i));
                         recursiveVerticalLineCheck(arrayOfTokens.get(j));
