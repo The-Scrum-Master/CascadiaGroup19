@@ -13,7 +13,7 @@ public class ElkScoreCard_A extends ElkScoreCard{
     public void recursiveHorizontalLineCheck(TokenForPoints validElk){
         for(int j=0; j<arrayOfTokens.size(); j++){
             //making sure that the element we are looking at isn't the same one we are comparing it to
-            if((validElk.getCordY()==arrayOfTokens.get(j).getCordY() && validElk.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+            if((validElk.getCordY()==arrayOfTokens.get(j).getCordY() && validElk.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid() || arrayOfTokens.get(j).getAlreadyAccountedFor())
                 continue;
             else{
                 if(validElk.getCordY()==arrayOfTokens.get(j).getCordY() &&
@@ -31,7 +31,7 @@ public class ElkScoreCard_A extends ElkScoreCard{
     public void recursiveVerticalLineCheck(TokenForPoints validElk){
         for(int j=0; j<arrayOfTokens.size(); j++){
             //making sure that the element we are looking at isn't the same one we are comparing it to
-            if((validElk.getCordY()==arrayOfTokens.get(j).getCordY() && validElk.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+            if((validElk.getCordY()==arrayOfTokens.get(j).getCordY() && validElk.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid() || arrayOfTokens.get(j).getAlreadyAccountedFor())
                 continue;
             else{
                 if(validElk.getCordX()==arrayOfTokens.get(j).getCordX() &&
