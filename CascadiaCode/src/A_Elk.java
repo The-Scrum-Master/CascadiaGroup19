@@ -136,7 +136,7 @@ public class A_Elk{
         }
     }
 
-    public void placeholdersScore() {
+    public void placeholdersScore(int turnTheGameIsAt) {
         //System.out.println(arrayOfPlaceholders.size());
         //System.out.println(arrayOfTokens.size());
         System.out.println("Array of tokens size: "+arrayOfTokens.size());
@@ -144,7 +144,7 @@ public class A_Elk{
 
         if(arrayOfTokens.isEmpty()){
             System.out.println("Place anywhere function");
-            placeAnywhere();
+            placeAnywhereLateGame(turnTheGameIsAt);
         }
         else{
             for(int i=0; i<arrayOfPlaceholders.size(); i++){
@@ -168,14 +168,14 @@ public class A_Elk{
                 }
             }
 
-            System.out.println("The best position/s to obtain the greatest amount of points ("+ turnLengthOfElksIntoPoints(player.getNumberOfBearPairs()+1)+") in order are:");
+            System.out.println("The best position/s to obtain the greatest amount of points are:");
             insertionSort(arrayOfPlaceholders);
 
             boolean atLeastOneSingleColorTile=false;
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
             if(arrayOfPlaceholders.size()==0){
                 System.out.println("Place anywhere function V2");
-                placeAnywhere();
+                placeAnywhereLateGame(turnTheGameIsAt);
             }
             else{
                 int max=arrayOfPlaceholders.get(0).getNumberOfAdjacent();
@@ -206,8 +206,18 @@ public class A_Elk{
             }
             if(finalDraft.size() == 0){
                 if(!arrayOfPlaceholders.isEmpty()){
-                    System.out.println("X: "+ arrayOfPlaceholders.get(0).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(0).getCordX() + " V2");
-                    player.placeToken(arrayOfPlaceholders.get(0).getCordY(), arrayOfPlaceholders.get(0).getCordX());
+                    boolean havePlacedToken=false;
+                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
+                            System.out.println("X: "+ arrayOfPlaceholders.get(i).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(i).getCordX() + " V2");
+                            player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
+                            havePlacedToken=true;
+                            break;
+                        }
+                    }
+                    if(!havePlacedToken){
+                        System.out.println("Don't want to place token");
+                    }
                 }
                 else{
                     System.out.println("Don't want to place token");
@@ -225,7 +235,66 @@ public class A_Elk{
         }
     }
 
-    public void placeAnywhere(){
+    public void placeAnywhereLateGame(int turnTheGameIsAt){
+        if(arrayOfPlaceholders.size()==0){
+            System.out.println("Don't want to place token");
+        }
+        else{
+            boolean atLeastOneSingleColorTile=false;
+            for(TokenForPoints i : arrayOfPlaceholders){
+                if(checkForSingleTile(i.getCordX(), i.getCordY()) && atLeastAPartner(i)){
+                    i.setSingleColorTile(true);
+                    atLeastOneSingleColorTile=true;
+                }
+            }
+            if(atLeastOneSingleColorTile){
+                for(TokenForPoints i : arrayOfPlaceholders){
+                    if(i.getSingleColorTile()){
+                        player.placeToken(i.getCordY(), i.getCordX());
+                        System.out.println("Token placed at X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                        break;
+                    }
+                }
+            }
+            else{
+                boolean havePlacedToken=false;
+                ArrayList<TokenForPoints> arrayListToSelectRandomlyFrom = new ArrayList<TokenForPoints>();
+
+                for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                    if(atLeastAPartner(arrayOfPlaceholders.get(i))){
+                        arrayListToSelectRandomlyFrom.add(arrayOfPlaceholders.get(i));
+                        havePlacedToken=true;
+                    }
+                }
+                if(!havePlacedToken){
+                    boolean finalChanceForPlacing=false;
+                    for(TokenForPoints i : arrayOfPlaceholders){
+                        if(checkForSingleTile(i.getCordX(), i.getCordY())){
+                            player.placeToken(i.getCordY(), i.getCordX());
+                            System.out.println("Token placed at X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                            finalChanceForPlacing=true;
+                            break;
+                        }
+                    }
+                    if(!finalChanceForPlacing){
+                        if(turnTheGameIsAt<7){
+                            placeAnywhereEarlyGame();
+                        }
+                        else{
+                            System.out.println("Don't want to place token");
+                        }
+                    }
+                }
+                else{
+                    int randomPosition=Tile.randomNumberGenerator(arrayListToSelectRandomlyFrom.size());
+                    player.placeToken(arrayListToSelectRandomlyFrom.get(randomPosition).getCordY(), arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
+                    System.out.println("Token placed at X: "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ " and Y: "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
+                }
+            }
+        }
+    }
+
+    public void placeAnywhereEarlyGame(){
         if(arrayOfPlaceholders.size()==0){
             System.out.println("Don't want to place token");
         }
@@ -274,6 +343,25 @@ public class A_Elk{
         }
     }
 
+    public boolean atLeastAPartner(TokenForPoints placeholder) {
+        boolean result=false;
+        for(int i=0; i<arrayOfPlaceholders.size(); i++){
+            if(arrayOfPlaceholders.get(i).equals(placeholder)){
+                continue;
+            }
+            if( ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() + 1 )) ||
+                ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() - 1 )) ||
+                ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() + 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() )) ||
+                ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() - 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() )) ){
+                //looking for adjacent in cross
+
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
     public static void explainCard() {
         System.out.println("This is Elk Scorecard A. Score points are given for each straight line of adjacent elk, depending on length of the line. \nLines don't necessarily have to be horizontal.\n");
     }
@@ -291,7 +379,7 @@ public class A_Elk{
         }
     }
 
-    public static void insertionSort(ArrayList<TokenForPoints> arrayList) {
+    public void insertionSort(ArrayList<TokenForPoints> arrayList) {
         //we use insertion sort because the arraylist size is not going to be bigger than 10 most probably, and a max size of 20
         int n = arrayList.size();
         for (int i = 1; i < n; i++) {

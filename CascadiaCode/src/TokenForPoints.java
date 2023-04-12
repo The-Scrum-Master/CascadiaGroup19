@@ -11,6 +11,7 @@ public class TokenForPoints {
     private boolean alreadyAccountedFor=false;
     private boolean alreadyPairedUp=false;
     private int numberOfAdjacent=0;
+    //this is number of adjacent tokens
     private boolean singleColorTile=false;
 
     public TokenForPoints(int cordX, int cordY){
@@ -67,14 +68,4 @@ public class TokenForPoints {
     public boolean getAlreadyPairedUp() {return alreadyPairedUp;}
 
     public void setAlreadyPairedUp(boolean alreadyPairedUp) {this.alreadyPairedUp = alreadyPairedUp;}
-
-    /*public int getPointsForPlaceholder() {
-        return pointsForPlaceholder;
-    }
-
-    public void setPointsForPlaceholder(int pointsForPlaceholder) {
-        this.pointsForPlaceholder = pointsForPlaceholder;
-    }
-
-     */
 }

@@ -106,7 +106,7 @@ public class A_Hawk{
                 arrayOfPlaceholders.get(i).setValid(true);
             }
         }
-        System.out.println("The best position/s which award the greatest amount of points ("+ turnNumberOfHawksIntoPoints(player.getNumberOfHawks()+1)+") are:");
+        System.out.println("The best position/s which award the greatest amount of points are:");
         boolean atLeastOneSingleColorTile=false;
         ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
         if(arrayOfPlaceholders.size()==0){

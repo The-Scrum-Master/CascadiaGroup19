@@ -185,16 +185,16 @@ public class GameRunner {
                         }
                         //FOR NOW, IF TOKEN==HAWK, DO AUTOMATICALLY, ELSE, DO MANUALLY. IN THE FUTURE, ALL AUTOMATIC
                         else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
-                            playersBearScores.get(playersTurn).checkForPairs();
                             playersBearScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersBearScores.get(playersTurn).placeholdersScore();
+                            playersBearScores.get(playersTurn).checkForPairs();
+                            playersBearScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersBearScores.get(playersTurn).countScore());
                         }
                         else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
                             playersElkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersElkScores.get(playersTurn).placeholdersScore();
+                            playersElkScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersElkScores.get(playersTurn).countScore());
                         }
                         else{
