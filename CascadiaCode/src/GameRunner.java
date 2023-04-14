@@ -13,6 +13,7 @@ public class GameRunner {
     private static final ArrayList<A_Bear> playersBearScores = new ArrayList<A_Bear>();
     private static final ArrayList<A_Elk> playersElkScores = new ArrayList<A_Elk>();
     //arrayList of Player class to store players
+
     public static PairDisplay p = new PairDisplay();
     // to use the functions in the PairDisplay class to display the river
     public static boolean continueGame = true;
@@ -48,6 +49,8 @@ public class GameRunner {
 
         A_Hawk.explainHawkCard();
         A_Bear.explainBearCard();
+        A_Fox fox = new A_Fox(players.get(playersTurn));
+
         //IOcascadia.selectScoreCardElk();
         //IOcascadia.selectScoreCardBear();
         //IOcascadia.selectScoreCardHawk();
@@ -197,6 +200,7 @@ public class GameRunner {
                             playersElkScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersElkScores.get(playersTurn).countScore());
                         }
+
                         else{
                             System.out.println("Do you want to place the token? (yes or no)");
                             wrongInput = true;
@@ -264,6 +268,13 @@ public class GameRunner {
                 System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
                 System.out.println();
+                    fox.countFoxes(players.get(playersTurn));
+                    System.out.println(players.get(playersTurn).getName() + " number of fox points " + fox.countScore(players.get(playersTurn)));
+
+
+
+
+
 
                 playersTurn++;
             }

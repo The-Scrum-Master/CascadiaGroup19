@@ -1,6 +1,6 @@
 /* Group 19
  * Group name: Front row
- * Timi Salam- 2139203(Timisalam)
+ * Timi Salam- 21392803(Timisalam)
  * Patrick Kelly-21204063(Patkelly17)
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
@@ -91,7 +91,8 @@ public class A_Hawk{
             for(int j=0; j<arrayOfTokens.size(); j++){
                 if(arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
                         arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                        arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1) { //looking for adjacent X cord
+                        arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1) {
+                    //looking for adjacent X cord
 
                     if (arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() ||
                             arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 ||

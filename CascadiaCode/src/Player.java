@@ -1,6 +1,6 @@
 /*Group: 19
 *Team Name: Front Row
-*Timi Salam- 2139203(Timisalam)
+*Timi Salam- 21392803(Timisalam)
 *Patrick Kelly-21204063(Patkelly17)
 *Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
 */
@@ -8,6 +8,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+
 
 /**
  * This Class creates the object Player that hold the information relevant to
@@ -28,6 +29,7 @@ public class Player {
     private final int order;
     private int numberOfBearPairs = 0;
     private int numberOfHawks = 0;
+    private int numberOfFoxes = 0;
     private final String name;
     private boolean firstTurnPlayed = false;
 
@@ -62,6 +64,14 @@ public class Player {
     public void setNumberOfBearPairs(int numberOfBearPairs) {
         this.numberOfBearPairs = numberOfBearPairs;
     }
+    public int getNumberOfFoxes() {
+        return numberOfFoxes;
+    }
+    public void setNumberOfFoxes(int numberOfFoxes) {
+        this.numberOfFoxes = numberOfFoxes;
+    }
+
+
 
     public Tile[][] getPlayerBoard() {
         return playerBoard;
