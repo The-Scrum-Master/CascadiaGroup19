@@ -1,46 +1,67 @@
 /* Group 19
  * Group name: Front row
- * Timi Salam- 21392803(Timisalam)
+ * Timi Salam- 2139203(Timisalam)
  * Patrick Kelly-21204063(Patkelly17)
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 
 import java.util.ArrayList;
 
-public class A_Bear{
+public class A_Salmon{
     private ArrayList<TokenForPoints> arrayOfTokens;
     private ArrayList<TokenForPoints> arrayOfPlaceholders;
     Player player;
 
-    public A_Bear(Player player){
+    public A_Salmon(Player player){
         this.player=player;
     }
 
-    public void checkForPairs(){
-        for(int i=0; i<arrayOfTokens.size(); i++){
-            if(arrayOfTokens.get(i).getAlreadyPairedUp()){
+    public void recursiveRunCheck(TokenForPoints validSalmon){
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //making sure that the element we are looking at isn't the same one we are comparing it to
+            if((validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
+                continue;
+            else{
+                if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() &&
+                        (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1))  {
+                    //looking for vertical line
+
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveRunCheck(arrayOfTokens.get(j));
+                }
+                else if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() &&
+                        (validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1))  {
+                    //looking for vertical line
+
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveRunCheck(arrayOfTokens.get(j));
+                }
+            }
+        }
+
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //System.out.println("iteration= i=" + i + "     j= "+j);
+            if(arrayOfTokens.get(j).getAlreadyAccountedFor() || (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || validSalmon.getNumberOfAdjacent()>2){
                 continue;
             }
-            for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getAlreadyPairedUp()){
-                    continue;
-                }
-                if(j!=i) {
-                    //making sure that the element we are looking at isn't the same one we are comparing it to
-                    if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  {
-                        //looking for adjacent X cord
+            else{
+                if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                        validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                        validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
 
-                        if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
-                            //looking for adjacent Y cord
+                    if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                            validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                            validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
 
-                            arrayOfTokens.get(j).setAlreadyPairedUp(true);
-                            arrayOfTokens.get(i).setAlreadyPairedUp(true);
-                            break;
-                        }
+                        validSalmon.setNumberOfAdjacent(validSalmon.getNumberOfAdjacent()+1);
+                        validSalmon.setValid(true);
+                        recursiveRunCheck(validSalmon);
+                        recursiveRunCheck(arrayOfTokens.get(j));
+                        break;
                     }
                 }
             }
@@ -48,45 +69,49 @@ public class A_Bear{
     }
 
     public int countScore() {
-        int numberOfPairs=0;
+        int totalPoints=0;
+        //System.out.println("size=" + arrayOfTokens.size());
         for(int i=0; i<arrayOfTokens.size(); i++){
-            if(arrayOfTokens.get(i).getValid()){
+            int length=0;
+            if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
                 continue;
             }
-
-            /*for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getValid()){
-                    arrayOfTokens.remove(j);
-                    j--;
-                }
-            }
-             */
+            arrayOfTokens.get(i).setValid(true);
             for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getValid()){
+                //System.out.println("iteration= i=" + i + "     j= "+j);
+                if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
                     continue;
                 }
-                if(j!=i) {
+                if(j!=i && arrayOfTokens.get(i).getNumberOfAdjacent()<3) {
                     //making sure that the element we are looking at isn't the same one we are comparing it to
                     if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  {
-                        //looking for adjacent X cord
+                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
 
                         if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
                                 arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
-                            //looking for adjacent Y cord
+                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
 
-                            arrayOfTokens.get(j).setValid(true);
-                            arrayOfTokens.get(i).setValid(true);
-                            numberOfPairs++;
+                            arrayOfTokens.get(i).setNumberOfAdjacent(arrayOfTokens.get(i).getNumberOfAdjacent()+1);
+                            arrayOfTokens.get(i).setValid(true); //maybe problem here
+                            recursiveRunCheck(arrayOfTokens.get(i));
+                            recursiveRunCheck(arrayOfTokens.get(j));
                             break;
                         }
                     }
                 }
             }
+            //System.out.println("length="+length);
+            for(int k=0; k<arrayOfTokens.size(); k++){
+                if(arrayOfTokens.get(k).getValid()){
+                    length++;
+                    arrayOfTokens.get(k).setAlreadyAccountedFor(true);
+                    arrayOfTokens.get(k).setValid(false);
+                }
+            }
+            totalPoints+=turnLengthOfSalmonsIntoPoints(length);
         }
-        return turnNumberOfPairsIntoPoints(numberOfPairs);
+        return totalPoints;
     }
 
     public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
@@ -96,7 +121,7 @@ public class A_Bear{
                 if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
                     //if emptyTile is false=if the tile is occupied
                     if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.BEAR)){
+                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.SALMON)){
                             arrayOfTokens.add(new TokenForPoints(columns, rows));
                         }
                     }
@@ -105,12 +130,15 @@ public class A_Bear{
         }
     }
 
-    public int turnNumberOfPairsIntoPoints(int pairs){
-        if(pairs==0) return 0;
-        else if(pairs==1) return 4;
-        else if(pairs==2) return 11;
-        else if(pairs==3) return 19;
-        else if(pairs>=4) return 27;
+    public int turnLengthOfSalmonsIntoPoints(int Salmons){
+        if(Salmons==0) return 0;
+        else if(Salmons==1) return 2;
+        else if(Salmons==2) return 4;
+        else if(Salmons==3) return 7;
+        else if(Salmons==4) return 11;
+        else if(Salmons==5) return 15;
+        else if(Salmons==6) return 20;
+        else if(Salmons>=7) return 26;
         else{
             throw new IllegalArgumentException("number of pairs can't be negative");
         }
@@ -128,37 +156,20 @@ public class A_Bear{
         }
         else{
             for(int i=0; i<arrayOfPlaceholders.size(); i++){
-                boolean foundAdjacentBear=false;
-                int numberOfAdjacentBears=0;
                 for(int j=0; j<arrayOfTokens.size(); j++){
-                    if(arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
-                            arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                            arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1) {
-                        //looking for adjacent X cord
+                    if(     ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 )) ||
+                            ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() - 1 )) ||
+                            ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() + 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() )) ||
+                            ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() - 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() )) ){
+                        //looking for adjacent in cross
 
-                        if (arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() ||
-                                arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 ||
-                                arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() - 1) {
-                            //looking for adjacent Y cord
-
-                            numberOfAdjacentBears++;
-                            if(!arrayOfTokens.get(j).getAlreadyPairedUp()){
-                                foundAdjacentBear = true;
-                            }
-                        }
+                        arrayOfPlaceholders.get(i).setValid(true);
+                        arrayOfPlaceholders.get(i).setNumberOfAdjacent(arrayOfPlaceholders.get(i).getNumberOfAdjacent()+1);
                     }
-                }
-                System.out.println("\n");
-                System.out.println("number of adjacent bears: "+numberOfAdjacentBears);
-                System.out.println("Found adjacent bear: "+foundAdjacentBear);
-                System.out.println("\n");
-                if(foundAdjacentBear && numberOfAdjacentBears<2){
-                    arrayOfPlaceholders.get(i).setValid(true);
-                    System.out.println("Inside the if to add the bear to the arraylist");
                 }
             }
 
-            System.out.println("all the valid bears: ");
+            System.out.println("all the valid elks: ");
             for( TokenForPoints i : arrayOfPlaceholders){
                 if(i.getValid()){
                     System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
@@ -166,6 +177,8 @@ public class A_Bear{
             }
 
             System.out.println("The best position/s to obtain the greatest amount of points are:");
+            insertionSort(arrayOfPlaceholders);
+
             boolean atLeastOneSingleColorTile=false;
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
             if(arrayOfPlaceholders.size()==0){
@@ -173,8 +186,9 @@ public class A_Bear{
                 placeAnywhereLateGame(turnTheGameIsAt);
             }
             else{
+                int max=arrayOfPlaceholders.get(0).getNumberOfAdjacent();
                 for(TokenForPoints i : arrayOfPlaceholders){
-                    if(checkForSingleTile(i.getCordX(), i.getCordY()) && i.getValid()){
+                    if(checkForSingleTile(i.getCordX(), i.getCordY()) && i.getValid() && i.getNumberOfAdjacent()==max){
                         i.setSingleColorTile(true);
                         atLeastOneSingleColorTile=true;
                     }
@@ -191,7 +205,7 @@ public class A_Bear{
                 else{
                     System.out.println("Not even one good single color tile");
                     for(TokenForPoints i : arrayOfPlaceholders){
-                        if(i.getValid()){
+                        if(i.getValid() && i.getNumberOfAdjacent()==max){
                             finalDraft.add(i);
                             System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                         }
@@ -199,87 +213,31 @@ public class A_Bear{
                 }
             }
             if(finalDraft.size() == 0){
-                ArrayList<TokenForPoints> notAllowed = new ArrayList<>();
-                for(int i=0; i<arrayOfPlaceholders.size(); i++){
-                    for(int j=0; j<arrayOfTokens.size(); j++){
-                        if(arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
-                                arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                                arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1) {
-                            //looking for adjacent X cord
-
-                            if (arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() ||
-                                    arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 ||
-                                    arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() - 1) {
-                                //looking for adjacent Y cord
-
-                                if(arrayOfTokens.get(j).getAlreadyPairedUp()){
-                                    notAllowed.add(arrayOfPlaceholders.get(i));
-                                }
-                            }
+                if(!arrayOfPlaceholders.isEmpty()){
+                    boolean havePlacedToken=false;
+                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
+                            System.out.println("X: "+ arrayOfPlaceholders.get(i).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(i).getCordX() + " V2");
+                            player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
+                            havePlacedToken=true;
+                            break;
                         }
                     }
-                }
-
-                System.out.println("the not allowed arraylist: ");
-                for( TokenForPoints i : notAllowed){
-                    System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
-                }
-
-                ArrayList<TokenForPoints> nonPairedButAllowed=new ArrayList<>();
-                if(notAllowed.isEmpty()){
-                    nonPairedButAllowed=arrayOfPlaceholders;
-                }
-                else{
-                    for (int i=0; i<arrayOfPlaceholders.size(); i++){
-                        boolean goodToAdd=true;
-                        for (int j=0; j<notAllowed.size(); j++){
-                            if(arrayOfPlaceholders.get(i).getCordX()==notAllowed.get(j).getCordX() && arrayOfPlaceholders.get(i).getCordY()==notAllowed.get(j).getCordY()){
-                                goodToAdd=false;
-                                break;
-                            }
-                        }
-                        if(goodToAdd){
-                            nonPairedButAllowed.add(arrayOfPlaceholders.get(i));
-                        }
+                    if(!havePlacedToken){
+                        System.out.println("Don't want to place token");
                     }
                 }
-
-                System.out.println("the nonPairedButAllowed arraylist: ");
-                for( TokenForPoints i : nonPairedButAllowed){
-                    System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
-                }
-
-                if(nonPairedButAllowed.size() == 0){
-                    System.out.println("I have decided not to place the token V2");
-                }
-                else if(nonPairedButAllowed.size() == 1){
-                    player.placeToken(nonPairedButAllowed.get(0).getCordY(), nonPairedButAllowed.get(0).getCordX());
-                    //place in the one position
-                }
                 else{
-                    int randomPosition=Tile.randomNumberGenerator(nonPairedButAllowed.size());
-                    player.placeToken(nonPairedButAllowed.get(randomPosition).getCordY(), nonPairedButAllowed.get(randomPosition).getCordX());
-                    //randomise position and place
+                    System.out.println("Don't want to place token");
                 }
-                /*
-                int decision=Tile.randomNumberGenerator(2);
-                if(decision==0){
-                    System.out.println("I have decided not to place the token");
-                }
-                else{
-                    //podria ir aqui el codigo este
-                }
-
-                 */
+                //dont place
             } else if(finalDraft.size() == 1){
                 player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
-                increaseNumberOfBearsPairs();
                 //place in the one position
             }
             else{
                 int randomPosition=Tile.randomNumberGenerator(finalDraft.size());
                 player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
-                increaseNumberOfBearsPairs();
                 //randomise position and place
             }
         }
@@ -373,6 +331,26 @@ public class A_Bear{
         }
     }
 
+    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        //get indexes of all places there are bear placeholders
+        arrayOfPlaceholders = new ArrayList<>();
+        for(int rows = 0; rows < 46; rows++ ){
+            for(int columns =0; columns < 46; columns++){
+                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
+                    //if emptyTile is false=if the tile is occupied
+                    if(!playerBoard[rows][columns].getTokenPlaced()){
+                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
+                            //loop through placeholders of the tile
+                            if(i.equals(Wildlife.SALMON)){
+                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public boolean atLeastAPartner(TokenForPoints placeholder) {
         boolean result=false;
         for(int i=0; i<arrayOfPlaceholders.size(); i++){
@@ -392,32 +370,9 @@ public class A_Bear{
         return result;
     }
 
-    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        //get indexes of all places there are bear placeholders
-        arrayOfPlaceholders = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(!playerBoard[rows][columns].getTokenPlaced()){
-                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
-                            //loop through placeholders of the tile
-                            if(i.equals(Wildlife.BEAR)){
-                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public static void explainBearCard() {
-        System.out.println("This is Bear Scorecard A. Points are given for total number of pairs of bears.\nA pair of bears is exactly two bears adjacent to each other.\n");
-    }
-
-    public void increaseNumberOfBearsPairs(){
-        player.setNumberOfBearPairs(player.getNumberOfBearPairs()+1);
+    public static void explainCard() {
+        System.out.println("This is Salmon Scorecard A. Points are given for each run of salmon, depending on its length. \nA run is defined " +
+                "as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.\n");
     }
 
     public boolean checkForSingleTile(int x, int y){
@@ -426,6 +381,20 @@ public class A_Bear{
         }
         else{
             return false;
+        }
+    }
+
+    public void insertionSort(ArrayList<TokenForPoints> arrayList) {
+        //we use insertion sort because the arraylist size is not going to be bigger than 10 most probably, and a max size of 20
+        int n = arrayList.size();
+        for (int i = 1; i < n; i++) {
+            TokenForPoints temp=arrayList.get(i);
+            int j = i - 1;
+            while (j >= 0 && arrayList.get(j).getNumberOfAdjacent() < temp.getNumberOfAdjacent()) {
+                arrayList.set(j+1, arrayList.get(j));
+                j = j - 1;
+            }
+            arrayList.set(j+1, temp);
         }
     }
 }

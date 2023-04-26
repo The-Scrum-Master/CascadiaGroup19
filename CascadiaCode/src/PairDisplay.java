@@ -97,9 +97,4 @@ public class PairDisplay {
         tokensDisplay();
         TileDeck.cullCheck();
     }
-
-    public static void main(String[] args) {
-        showPairs();
-
-    }
 }

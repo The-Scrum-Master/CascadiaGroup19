@@ -33,8 +33,18 @@ public class SalmonScoreCard_A extends SalmonScoreCard{
             else{
                 if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() &&
                         (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
-                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
+                         validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                         validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1))  {
+                    //looking for vertical line
+
+                    arrayOfTokens.get(j).setValid(true);
+                    recursiveRunCheck(arrayOfTokens.get(j));
+                }
+                else if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() &&
+                        (validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1))  {
+                    //looking for vertical line
 
                     arrayOfTokens.get(j).setValid(true);
                     recursiveRunCheck(arrayOfTokens.get(j));
@@ -81,7 +91,8 @@ public class SalmonScoreCard_A extends SalmonScoreCard{
                 if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
                     continue;
                 }
-                if(j!=i && arrayOfTokens.get(i).getNumberOfAdjacent()<3) { //making sure that the element we are looking at isn't the same one we are comparing it to
+                if(j!=i && arrayOfTokens.get(i).getNumberOfAdjacent()<3) {
+                    //making sure that the element we are looking at isn't the same one we are comparing it to
                     if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
                             arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
@@ -91,7 +102,7 @@ public class SalmonScoreCard_A extends SalmonScoreCard{
                                 arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
 
                             arrayOfTokens.get(i).setNumberOfAdjacent(arrayOfTokens.get(i).getNumberOfAdjacent()+1);
-                            arrayOfTokens.get(i).setValid(true);
+                            arrayOfTokens.get(i).setValid(true); //maybe problem here
                             recursiveRunCheck(arrayOfTokens.get(i));
                             recursiveRunCheck(arrayOfTokens.get(j));
                             break;

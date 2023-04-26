@@ -366,10 +366,6 @@ public class A_Elk{
         System.out.println("This is Elk Scorecard A. Score points are given for each straight line of adjacent elk, depending on length of the line. \nLines don't necessarily have to be horizontal.\n");
     }
 
-    public void increaseNumberOfBearsPairs(){
-        player.setNumberOfBearPairs(player.getNumberOfBearPairs()+1);
-    }
-
     public boolean checkForSingleTile(int x, int y){
         if (player.getPlayerBoard()[y][x].getSelect()==1){
             return true;

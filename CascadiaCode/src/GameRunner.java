@@ -12,6 +12,8 @@ public class GameRunner {
     private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<A_Hawk>();
     private static final ArrayList<A_Bear> playersBearScores = new ArrayList<A_Bear>();
     private static final ArrayList<A_Elk> playersElkScores = new ArrayList<A_Elk>();
+    private static final ArrayList<A_Salmon> playersSalmonScores = new ArrayList<A_Salmon>();
+
     //arrayList of Player class to store players
 
     public static PairDisplay p = new PairDisplay();
@@ -40,6 +42,7 @@ public class GameRunner {
             playersHawkScores.add(new A_Hawk(players.get(i)));
             playersBearScores.add(new A_Bear(players.get(i)));
             playersElkScores.add(new A_Elk(players.get(i)));
+            playersSalmonScores.add(new A_Salmon(players.get(i)));
         }
         int playersTurn = 0;
         //int to rotate around players in order
@@ -262,6 +265,8 @@ public class GameRunner {
                 playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for elk lines so far are: " + playersElkScores.get(playersTurn).countScore());
 
+                playersSalmonScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                System.out.println(players.get(playersTurn).getName() +"'s points for salmon runs so far are: " + playersSalmonScores.get(playersTurn).countScore());
 
                 System.out.println(); System.out.println();
 
