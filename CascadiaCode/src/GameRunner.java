@@ -53,6 +53,7 @@ public class GameRunner {
         A_Hawk.explainHawkCard();
         A_Bear.explainBearCard();
         A_Fox fox = new A_Fox(players.get(playersTurn));
+        A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
         //IOcascadia.selectScoreCardElk();
         //IOcascadia.selectScoreCardBear();
@@ -202,9 +203,11 @@ public class GameRunner {
                             playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersElkScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersElkScores.get(playersTurn).countScore());
-                        }
+                        } else if (players.get(playersTurn).heldToken.equals(Wildlife.FOX)) {
+                            foxPlacement.countFoxesPlaceHolders(players.get(playersTurn));
+                            foxPlacement.countPotentialScore(players.get(playersTurn));
 
-                        else{
+                        } else{
                             System.out.println("Do you want to place the token? (yes or no)");
                             wrongInput = true;
                             while (wrongInput) {
@@ -267,14 +270,15 @@ public class GameRunner {
 
                 playersSalmonScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for salmon runs so far are: " + playersSalmonScores.get(playersTurn).countScore());
+                fox.countFoxes(players.get(playersTurn));
+                System.out.println(players.get(playersTurn).getName() + "'s number of fox points so far are: " + fox.countScore(players.get(playersTurn)));
 
                 System.out.println(); System.out.println();
 
                 System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
                 System.out.println();
-                    fox.countFoxes(players.get(playersTurn));
-                    System.out.println(players.get(playersTurn).getName() + " number of fox points " + fox.countScore(players.get(playersTurn)));
+
 
 
 
@@ -288,6 +292,18 @@ public class GameRunner {
                 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
                 The game has finished!
                 """);
+        for(int i=0;i<players.size();i++)
+        {
+            System.out.println(players.get(i).getName() +"'s points for hawks are: " + playersHawkScores.get(i).countScore());
+            System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + playersBearScores.get(i).countScore());
+            System.out.println(players.get(i).getName() +"'s points for elk lines are: " + playersElkScores.get(i).countScore());
+            System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + playersSalmonScores.get(i).countScore());
+            System.out.println(players.get(i).getName() + "'s number of fox points are: " + fox.countScore(players.get(i)));
+
+
+
+
+        }
 
 
         playersTurn = 0;
@@ -398,6 +414,7 @@ public class GameRunner {
             }
             totalHabitatPoints=forestPoints+riverPoints+wetlandPoints+mountainPoints+prairiePoints;
             System.out.println("Points awarded for habitats: " + totalHabitatPoints + "\n");
+
 
             playersTurn++;
         }
