@@ -394,7 +394,8 @@ public class Player {
     public int mountainMax = 0;
     public int wetlandMax = 0;
 
-    public MaxCorridor[] getMax3Corridors() {
+    //makes an array the maxcorder objects 
+    public MaxCorridor[] createMaxCorridorsArray() {
         MaxCorridor[] ordered = corridors;
         for (int i = 0; i < 5; i++) {
             for (int j = i; j < 5; j++) {
@@ -421,6 +422,7 @@ public class Player {
             new MaxCorridor(Habitat.MOUNTAIN),
             new MaxCorridor(Habitat.WETLANDS) };
 
+    //sets the max corridors initially 
     public void IntializeCorridors() {
         for (int i = 0; i < corridors.length; i++) {
             if (corridors[i].getHabitatType().equals(playerBoard[22][22].getHabitat(0))) {
@@ -527,6 +529,7 @@ public class Player {
 
     ArrayList<Tile> counted = new ArrayList<Tile>();
 
+    //if the tile is already counted in the array retrun true
     public boolean countedHelp(Tile tile) {
         for (int i = 0; i < counted.size(); i++) {
             if (tile.equals(counted.get(i))) {
@@ -679,12 +682,7 @@ public class Player {
     public void habitatScore() {
         IntializeCorridors();
         checkHabitats();
-        System.out.println("the max river group is " + riverMax);
-        System.out.println("the max forest group is " + forestMax);
-        System.out.println("the max prairie group is " + prairieMax);
-        System.out.println("the max mountian group is " + mountainMax);
-        System.out.println("the max wetland group is " + wetlandMax);
-        MaxCorridor[] top = getMax3Corridors();
+        MaxCorridor[] top = createMaxCorridorsArray();
     }
 
     public int getForestMax() {
