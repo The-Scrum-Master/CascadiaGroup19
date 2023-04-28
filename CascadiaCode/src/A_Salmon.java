@@ -16,99 +16,96 @@ public class A_Salmon{
         this.player=player;
     }
 
-    public void recursiveRunCheck(TokenForPoints validSalmon){
-        for(int j=0; j<arrayOfTokens.size(); j++){
-            //making sure that the element we are looking at isn't the same one we are comparing it to
-            if((validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || arrayOfTokens.get(j).getValid())
-                continue;
-            else{
-                if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() &&
-                        (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
-                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1))  {
-                    //looking for vertical line
-
-                    arrayOfTokens.get(j).setValid(true);
-                    recursiveRunCheck(arrayOfTokens.get(j));
-                }
-                else if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() &&
-                        (validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
-                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                                validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1))  {
-                    //looking for vertical line
-
-                    arrayOfTokens.get(j).setValid(true);
-                    recursiveRunCheck(arrayOfTokens.get(j));
-                }
-            }
-        }
-
+    public int recursiveRunCheck(TokenForPoints validSalmon, int length, boolean valid){
+        ArrayList<TokenForPoints> adjacent = new ArrayList<>();
         for(int j=0; j<arrayOfTokens.size(); j++){
             //System.out.println("iteration= i=" + i + "     j= "+j);
-            if(arrayOfTokens.get(j).getAlreadyAccountedFor() || (validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) || validSalmon.getNumberOfAdjacent()>2){
+            if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) {
+                //making sure that the element we are looking at isn't the same one we are comparing it to
                 continue;
             }
-            else{
-                if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()   ||
-                        validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                        validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
+            if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  {
 
-                    if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
-                            validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                            validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
+                if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
 
-                        validSalmon.setNumberOfAdjacent(validSalmon.getNumberOfAdjacent()+1);
-                        validSalmon.setValid(true);
-                        recursiveRunCheck(validSalmon);
-                        recursiveRunCheck(arrayOfTokens.get(j));
-                        break;
-                    }
+                    adjacent.add(arrayOfTokens.get(j));
                 }
             }
         }
+
+        if(adjacent.size()>2  || !valid){
+            validSalmon.setAlreadyAccountedFor(true);
+            for(int j=0; j< adjacent.size();j++){
+                if(!adjacent.get(j).getAlreadyAccountedFor()){
+                    adjacent.get(j).setAlreadyAccountedFor(true);
+                    recursiveRunCheck(adjacent.get(j), length, false);
+                }
+            }
+            return 0;
+        }
+        //this part of the code above checks if there are more than 2 salmons around the one we are looking at, if so, returns 0 because it is not allowed
+        //else, it will restart the process knowing that this specific salmon is not illegal and taking into account the alreadyAccountedSalmon for counting
+        //the points, something that it did not do in the above algorithm
+
+        if(validSalmon.getAlreadyAccountedFor()){
+            return length;
+        }
+        validSalmon.setAlreadyAccountedFor(true);
+        adjacent = new ArrayList<>();
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //System.out.println("iteration= i=" + i + "     j= "+j);
+            if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
+                continue;
+            }
+            if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) {
+                //making sure that the element we are looking at isn't the same one we are comparing it to
+                continue;
+            }
+            if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  {
+
+                if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
+
+                    adjacent.add(arrayOfTokens.get(j));
+                }
+            }
+        }
+        if(adjacent.isEmpty()){
+            length++;
+        }
+        else{
+            length++;
+            if(!valid){
+                length=0;
+            }
+            else{
+                for(int j=0; j< adjacent.size();j++){
+                    length=recursiveRunCheck(adjacent.get(j), length, valid);
+                }
+            }
+        }
+        if(!valid){
+            length=0;
+        }
+        return length;
     }
 
     public int countScore() {
         int totalPoints=0;
+        int length;
+        boolean valid;
         //System.out.println("size=" + arrayOfTokens.size());
         for(int i=0; i<arrayOfTokens.size(); i++){
-            int length=0;
-            if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
-                continue;
-            }
-            arrayOfTokens.get(i).setValid(true);
-            for(int j=0; j<arrayOfTokens.size(); j++){
-                //System.out.println("iteration= i=" + i + "     j= "+j);
-                if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
-                    continue;
-                }
-                if(j!=i && arrayOfTokens.get(i).getNumberOfAdjacent()<3) {
-                    //making sure that the element we are looking at isn't the same one we are comparing it to
-                    if(arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
-                            arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1)  { //looking for adjacent X cord
-
-                        if(arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
-                                arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1)  { //looking for adjacent Y cord
-
-                            arrayOfTokens.get(i).setNumberOfAdjacent(arrayOfTokens.get(i).getNumberOfAdjacent()+1);
-                            arrayOfTokens.get(i).setValid(true); //maybe problem here
-                            recursiveRunCheck(arrayOfTokens.get(i));
-                            recursiveRunCheck(arrayOfTokens.get(j));
-                            break;
-                        }
-                    }
-                }
-            }
-            //System.out.println("length="+length);
-            for(int k=0; k<arrayOfTokens.size(); k++){
-                if(arrayOfTokens.get(k).getValid()){
-                    length++;
-                    arrayOfTokens.get(k).setAlreadyAccountedFor(true);
-                    arrayOfTokens.get(k).setValid(false);
-                }
-            }
+            length=0;
+            valid=true;
+            length=recursiveRunCheck(arrayOfTokens.get(i), length, valid);
             totalPoints+=turnLengthOfSalmonsIntoPoints(length);
         }
         return totalPoints;

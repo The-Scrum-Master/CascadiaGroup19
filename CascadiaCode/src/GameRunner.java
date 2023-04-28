@@ -63,7 +63,7 @@ public class GameRunner {
 
         Thread.sleep(1500);
 
-        while (turnTheGameIsAt <= 20 && continueGame) {
+        while (turnTheGameIsAt <= 40 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
@@ -188,9 +188,10 @@ public class GameRunner {
 
                     players.get(playersTurn).setHeldTile(null);
 
+
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
+                        /*if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
                             playersHawkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersHawkScores.get(playersTurn).placeholdersScore();
@@ -214,6 +215,8 @@ public class GameRunner {
                             foxPlacement.countPotentialScore(players.get(playersTurn));
 
                         } else{
+
+                         */
                             System.out.println("Do you want to place the token? (yes or no)");
                             wrongInput = true;
                             while (wrongInput) {
@@ -240,7 +243,7 @@ public class GameRunner {
                                     System.out.println("expected a yes or no answer, please try again");
                                 }
                             }
-                        }
+                        //}
                     }
                     players.get(playersTurn).setIsFilledToFalse();
                 }
