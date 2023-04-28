@@ -63,7 +63,7 @@ public class GameRunner {
 
         Thread.sleep(1500);
 
-        while (turnTheGameIsAt <= 40 && continueGame) {
+        while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
@@ -197,7 +197,6 @@ public class GameRunner {
                             playersHawkScores.get(playersTurn).placeholdersScore();
                             //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
                         }
-                        //FOR NOW, IF TOKEN==HAWK, DO AUTOMATICALLY, ELSE, DO MANUALLY. IN THE FUTURE, ALL AUTOMATIC
                         else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
                             playersBearScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
