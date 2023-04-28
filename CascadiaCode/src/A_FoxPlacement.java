@@ -9,7 +9,12 @@ import java.util.ArrayList;
         ArrayList<Wildlife> animals = new ArrayList<Wildlife>();
         ArrayList<Integer> score = new ArrayList<Integer>();
 
-
+        public int getXcoord(int x){
+            return coordX.get(x);
+        }
+        public int getYcoord(int y){
+            return coordY.get(y);
+        }
 
 
 
@@ -88,9 +93,7 @@ import java.util.ArrayList;
 
 
                     }
-                    for (int j = 0; j < animals.size(); j++) {
-                        System.out.println("animals before duplicates CALL " + animals.get(j));
-                    }
+
                     removeDuplicates();
 
                 }
@@ -129,21 +132,14 @@ import java.util.ArrayList;
             }
             return j;
         }
-        public int getXcoord(int x){
-            return coordX.get(x);
-        }
-        public int getYcoord(int y){
-            return coordY.get(y);
-        }
+
         public void placeToken(Player player,int coords){
-            System.out.println("Placed token at "+ getXcoord(coords) +","+getYcoord(coords) );
+            System.out.println("I have placed fox token at "+ getXcoord(coords) +","+getYcoord(coords) );
             player.placeToken(getXcoord(coords),getYcoord(coords));
         }
 
 
-        //for automatic placing need to add a function that counts the fox placeholders
-        //then another one that goes through the tiles with a fox placeholder and checks how many distinct tiles are around that
-        //compare score then place token where score is the highest
+
     }
 
 

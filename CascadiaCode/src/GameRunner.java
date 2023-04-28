@@ -91,15 +91,21 @@ public class GameRunner {
                     System.out.println();
                     Thread.sleep(1000);
                 } else {
-                    System.out.println(players.get(0).getName()+" map:");
-                    players.get(0).map.fillMapWithAllowedTilePlacements();
-                    players.get(0).printMap(helperIntToPrintMap);
+                    if(playersTurn==1) {
+                        System.out.println(players.get(0).getName() + " map:");
+                        players.get(0).map.fillMapWithAllowedTilePlacements();
+                        players.get(0).printMap(helperIntToPrintMap);
+                    }
+                    else if(playersTurn==0){
+                        System.out.println(players.get(1).getName() + " map:");
+                        players.get(1).map.fillMapWithAllowedTilePlacements();
+                        players.get(1).printMap(helperIntToPrintMap);
+                    }
                     System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-                    System.out.println(players.get(1).getName()+ " map:");
-                    players.get(1).map.fillMapWithAllowedTilePlacements();
-                    players.get(1).printMap(helperIntToPrintMap);
-                    System.out.println(players.get(playersTurn).getName() + "'s turn:\n");
+                    System.out.println(players.get(playersTurn).getName()+ " map:");
+                    players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
+                    System.out.println(players.get(playersTurn).getName() + "'s turn:\n");
 
                     PairDisplay.showPairs();
 

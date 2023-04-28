@@ -130,6 +130,9 @@ public class A_Fox {
         return finalScore;
 
     }
+    public static void explainFoxCard() {
+        System.out.println("This is Fox Scorecard A. Points are given for total number of fox that are not adjacent to any other fox.\n");
+    }
 
 
 

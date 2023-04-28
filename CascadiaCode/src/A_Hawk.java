@@ -144,12 +144,14 @@ public class A_Hawk{
             //dont place
         } else if(finalDraft.size() == 1){
             player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
+            System.out.println("Placed hawk token at "+ finalDraft.get(0).getCordY() +","+ finalDraft.get(0).getCordX());
             increaseNumberOfHawks();
             //place in the one position
         }
         else{
             int randomPosition=Tile.randomNumberGenerator(finalDraft.size());
             player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
+            System.out.println("Placed hawk token at "+ finalDraft.get(randomPosition).getCordY() +","+ finalDraft.get(randomPosition).getCordX());
             increaseNumberOfHawks();
             //randomise position and place
         }

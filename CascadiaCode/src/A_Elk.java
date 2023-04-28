@@ -209,8 +209,8 @@ public class A_Elk{
                     boolean havePlacedToken=false;
                     for(int i=0; i<arrayOfPlaceholders.size(); i++){
                         if(atLeastAPartner(arrayOfPlaceholders.get(i))){
-                            System.out.println("X: "+ arrayOfPlaceholders.get(i).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(i).getCordX() + " V2");
                             player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
+                            System.out.println("I have placed Elk token at "+arrayOfPlaceholders.get(i).getCordY()+","+arrayOfPlaceholders.get(i).getCordX());
                             havePlacedToken=true;
                             break;
                         }
@@ -225,11 +225,14 @@ public class A_Elk{
                 //dont place
             } else if(finalDraft.size() == 1){
                 player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
+                System.out.println("I have placed Elk token at "+finalDraft.get(0).getCordY()+","+finalDraft.get(0).getCordX());
+
                 //place in the one position
             }
             else{
                 int randomPosition=Tile.randomNumberGenerator(finalDraft.size());
                 player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
+                System.out.println("I have placed Elk token at "+finalDraft.get(randomPosition).getCordY()+","+finalDraft.get(randomPosition).getCordX());
                 //randomise position and place
             }
         }
@@ -251,7 +254,7 @@ public class A_Elk{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("Token placed at X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                        System.out.println("I have placed Elk token placed at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }
@@ -271,7 +274,7 @@ public class A_Elk{
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(checkForSingleTile(i.getCordX(), i.getCordY())){
                             player.placeToken(i.getCordY(), i.getCordX());
-                            System.out.println("Token placed at X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                            System.out.println("I have placed Elk token at" + i.getCordY()+ ","+ i.getCordX());
                             finalChanceForPlacing=true;
                             break;
                         }
@@ -288,7 +291,7 @@ public class A_Elk{
                 else{
                     int randomPosition=Tile.randomNumberGenerator(arrayListToSelectRandomlyFrom.size());
                     player.placeToken(arrayListToSelectRandomlyFrom.get(randomPosition).getCordY(), arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
-                    System.out.println("Token placed at X: "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ " and Y: "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
+                    System.out.println("I have placed Elk token at "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ " ,"+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
                 }
             }
         }
@@ -310,7 +313,7 @@ public class A_Elk{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("Token placed at X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                        System.out.println("I have placed Elk token at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }
@@ -318,7 +321,7 @@ public class A_Elk{
             else{
                 int randomPosition=Tile.randomNumberGenerator(arrayOfPlaceholders.size());
                 player.placeToken(arrayOfPlaceholders.get(randomPosition).getCordY(), arrayOfPlaceholders.get(randomPosition).getCordX());
-                System.out.println("Token placed at X: "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(randomPosition).getCordX());
+                System.out.println("I have placed Elk token at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
             }
         }
     }
