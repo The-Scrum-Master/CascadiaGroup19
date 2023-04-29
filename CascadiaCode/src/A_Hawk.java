@@ -111,7 +111,7 @@ public class A_Hawk{
         boolean atLeastOneSingleColorTile=false;
         ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
         if(arrayOfPlaceholders.size()==0){
-            System.out.println("Don't want to place token");
+            System.out.println("Can't place token");
         }
         else{
             for(TokenForPoints i : arrayOfPlaceholders){

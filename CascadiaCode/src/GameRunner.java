@@ -63,7 +63,7 @@ public class GameRunner {
 
         Thread.sleep(1500);
 
-        while (turnTheGameIsAt <= 20 && continueGame) {
+        while (turnTheGameIsAt <= 40 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
@@ -216,6 +216,13 @@ public class GameRunner {
                         } else{
 
                          */
+
+                        if(players.get(playersTurn).heldToken.equals(Wildlife.SALMON)) {
+                            playersSalmonScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersSalmonScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersSalmonScores.get(playersTurn).placeholdersScore();
+                        }
+                        else {
                             System.out.println("Do you want to place the token? (yes or no)");
                             wrongInput = true;
                             while (wrongInput) {
@@ -242,6 +249,7 @@ public class GameRunner {
                                     System.out.println("expected a yes or no answer, please try again");
                                 }
                             }
+                        }
                         //}
                     }
                     players.get(playersTurn).setIsFilledToFalse();
@@ -306,7 +314,7 @@ public class GameRunner {
             System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + playersBearScores.get(i).countScore());
             System.out.println(players.get(i).getName() +"'s points for elk lines are: " + playersElkScores.get(i).countScore());
             System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + playersSalmonScores.get(i).countScore());
-            System.out.println(players.get(i).getName() + "'s number of fox points are: " + fox.countScore(players.get(i)));
+            System.out.println(players.get(i).getName() +"'s points for fox are: " + fox.countScore(players.get(i)));
 
 
 

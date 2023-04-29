@@ -13,6 +13,7 @@ public class TokenForPoints {
     private int numberOfAdjacent=0;
     //this is number of adjacent tokens
     private boolean singleColorTile=false;
+    private int length=0;
 
     public TokenForPoints(int cordX, int cordY){
         this.cordX = cordX;
@@ -68,4 +69,12 @@ public class TokenForPoints {
     public boolean getAlreadyPairedUp() {return alreadyPairedUp;}
 
     public void setAlreadyPairedUp(boolean alreadyPairedUp) {this.alreadyPairedUp = alreadyPairedUp;}
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 }

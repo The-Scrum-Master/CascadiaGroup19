@@ -82,17 +82,9 @@ public class A_Salmon{
         }
         else{
             length++;
-            if(!valid){
-                length=0;
+            for(int j=0; j< adjacent.size();j++){
+                length=recursiveRunCheck(adjacent.get(j), length, valid);
             }
-            else{
-                for(int j=0; j< adjacent.size();j++){
-                    length=recursiveRunCheck(adjacent.get(j), length, valid);
-                }
-            }
-        }
-        if(!valid){
-            length=0;
         }
         return length;
     }
@@ -161,13 +153,143 @@ public class A_Salmon{
         }
     }
 
-    public void placeholdersScore(int turnTheGameIsAt) {
+    public void placeholdersScore() {
+        if(arrayOfTokens.isEmpty()){
+            System.out.println("Place anywhere function");
+            placeAnywhere();
+        }
+        else{
+            ArrayList<TokenForPoints> possiblePlacements = new ArrayList<>();
+            //LOOK AT POST-IT
+            int length;
+            boolean valid;
+            //System.out.println("size=" + arrayOfTokens.size());
+            for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                length=0;
+                valid=true;
+                length=recursiveRunCheckForPlaceholders(arrayOfPlaceholders.get(i), length, valid, arrayOfPlaceholders.get(i).getCordX(), arrayOfPlaceholders.get(i).getCordY(), true);
+                if(length!=0){
+                    arrayOfPlaceholders.get(i).setLength(length);
+                    possiblePlacements.add(arrayOfPlaceholders.get(i));
+                }
+            }
+            if(possiblePlacements.isEmpty()){
+                System.out.println("I have decided not to place token");
+            }
+            insertionSort(possiblePlacements);
+            for (TokenForPoints x : possiblePlacements){
+            }
+            player.placeToken(possiblePlacements.get(0).getCordY(), possiblePlacements.get(0).getCordX());
+            System.out.println("I have placed Salmon at "+possiblePlacements.get(0).getCordY()+","+possiblePlacements.get(0).getCordX());
+        }
+    }
 
+    public int recursiveRunCheckForPlaceholders(TokenForPoints validSalmon, int length, boolean valid, int cordX, int cordY, boolean firstCall){
+        ArrayList<TokenForPoints> adjacent = new ArrayList<>();
+        boolean addOneExtraForAdjacentWithPlaceholder=false;
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //System.out.println("iteration= i=" + i + "     j= "+j);
+            if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) {
+                //making sure that the element we are looking at isn't the same one we are comparing it to
+                continue;
+            }
+            if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  {
+
+                if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
+
+                    adjacent.add(arrayOfTokens.get(j));
+                }
+            }
+        }
+
+        if(!firstCall){
+            if(validSalmon.getCordX()==cordX ||
+                    validSalmon.getCordX()==cordX+1 ||
+                    validSalmon.getCordX()==cordX-1)  {
+
+                if(validSalmon.getCordY()==cordY   ||
+                        validSalmon.getCordY()==cordY+1 ||
+                        validSalmon.getCordY()==cordY-1)  {
+
+                    addOneExtraForAdjacentWithPlaceholder=true;
+                }
+            }
+        }
+
+        if(addOneExtraForAdjacentWithPlaceholder){
+            if(adjacent.size()+1>2  || !valid){
+                validSalmon.setAlreadyAccountedFor(true);
+                for(int j=0; j< adjacent.size();j++){
+                    if(!adjacent.get(j).getAlreadyAccountedFor()){
+                        adjacent.get(j).setAlreadyAccountedFor(true);
+                        recursiveRunCheckForPlaceholders(adjacent.get(j), length, false, cordX, cordY, false);
+                    }
+                }
+                return 0;
+            }
+        }
+        else{
+            if(adjacent.size()>2  || !valid){
+                validSalmon.setAlreadyAccountedFor(true);
+                for(int j=0; j< adjacent.size();j++){
+                    if(!adjacent.get(j).getAlreadyAccountedFor()){
+                        adjacent.get(j).setAlreadyAccountedFor(true);
+                        recursiveRunCheckForPlaceholders(adjacent.get(j), length, false, cordX, cordY, false);
+                    }
+                }
+                return 0;
+            }
+        }
+
+        //this part of the code above checks if there are more than 2 salmons around the one we are looking at, if so, returns 0 because it is not allowed
+        //else, it will restart the process knowing that this specific salmon is not illegal and taking into account the alreadyAccountedSalmon for counting
+        //the points, something that it did not do in the above algorithm
+
+        if(validSalmon.getAlreadyAccountedFor()){
+            return length;
+        }
+        validSalmon.setAlreadyAccountedFor(true);
+        adjacent = new ArrayList<>();
+        for(int j=0; j<arrayOfTokens.size(); j++){
+            //System.out.println("iteration= i=" + i + "     j= "+j);
+            if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
+                continue;
+            }
+            if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) {
+                //making sure that the element we are looking at isn't the same one we are comparing it to
+                continue;
+            }
+            if(validSalmon.getCordX()==arrayOfTokens.get(j).getCordX() ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                    validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()-1)  {
+
+                if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                        validSalmon.getCordY()==arrayOfTokens.get(j).getCordY()-1)  {
+
+                    adjacent.add(arrayOfTokens.get(j));
+                }
+            }
+        }
+        if(adjacent.isEmpty()){
+            length++;
+        }
+        else{
+            length++;
+            for(int j=0; j< adjacent.size();j++){
+                length=recursiveRunCheckForPlaceholders(adjacent.get(j), length, true, cordX, cordY, false);
+            }
+        }
+        return length;
     }
 
     public void placeAnywhere(){
         if(arrayOfPlaceholders.size()==0){
-            System.out.println("Don't want to place token");
+            System.out.println("Can't place token");
         }
         else{
             boolean atLeastOneSingleColorTile=false;
@@ -233,7 +355,7 @@ public class A_Salmon{
         for (int i = 1; i < n; i++) {
             TokenForPoints temp=arrayList.get(i);
             int j = i - 1;
-            while (j >= 0 && arrayList.get(j).getNumberOfAdjacent() < temp.getNumberOfAdjacent()) {
+            while (j >= 0 && arrayList.get(j).getLength() < temp.getLength()) {
                 arrayList.set(j+1, arrayList.get(j));
                 j = j - 1;
             }
