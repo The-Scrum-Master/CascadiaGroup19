@@ -185,10 +185,10 @@ public class GameRunner {
                             playersHawkScores.get(playersTurn).placeholdersScore();
                         } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
                             playersBearScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersBearScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
+                            playersBearScores.get(playersTurn).placeholdersScore();
                         } else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
                             playersElkScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersElkScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
+                            playersElkScores.get(playersTurn).placeholdersScore();
                         } else if (players.get(playersTurn).heldToken.equals(Wildlife.FOX)) {
                             foxPlacement.countFoxesPlaceHolders(players.get(playersTurn));
                             foxPlacement.countPotentialScore(players.get(playersTurn));

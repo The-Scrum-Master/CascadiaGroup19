@@ -122,9 +122,9 @@ public class A_Bear{
         }
     }
 
-    public void placeholdersScore(int turnTheGameIsAt) {
+    public void placeholdersScore() {
         if(arrayOfTokens.isEmpty()){
-            placeAnywhereLateGame(turnTheGameIsAt);
+            placeAnywhere();
         }
         else{
             for(int i=0; i<arrayOfPlaceholders.size(); i++){
@@ -156,7 +156,7 @@ public class A_Bear{
             boolean atLeastOneSingleColorTile=false;
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
             if(arrayOfPlaceholders.size()==0){
-                placeAnywhereLateGame(turnTheGameIsAt);
+                placeAnywhere();
             }
             else{
                 for(TokenForPoints i : arrayOfPlaceholders){
@@ -249,68 +249,9 @@ public class A_Bear{
         }
     }
 
-    public void placeAnywhereLateGame(int turnTheGameIsAt){
+    public void placeAnywhere(){
         if(arrayOfPlaceholders.size()==0){
             System.out.println("Can't place token");
-        }
-        else{
-            boolean atLeastOneSingleColorTile=false;
-            for(TokenForPoints i : arrayOfPlaceholders){
-                if(checkForSingleTile(i.getCordX(), i.getCordY()) && atLeastAPartner(i)){
-                    i.setSingleColorTile(true);
-                    atLeastOneSingleColorTile=true;
-                }
-            }
-            if(atLeastOneSingleColorTile){
-                for(TokenForPoints i : arrayOfPlaceholders){
-                    if(i.getSingleColorTile()){
-                        player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
-                        break;
-                    }
-                }
-            }
-            else{
-                boolean havePlacedToken=false;
-                ArrayList<TokenForPoints> arrayListToSelectRandomlyFrom = new ArrayList<TokenForPoints>();
-
-                for(int i=0; i<arrayOfPlaceholders.size(); i++){
-                    if(atLeastAPartner(arrayOfPlaceholders.get(i))){
-                        arrayListToSelectRandomlyFrom.add(arrayOfPlaceholders.get(i));
-                        havePlacedToken=true;
-                    }
-                }
-                if(!havePlacedToken){
-                    boolean finalChanceForPlacing=false;
-                    for(TokenForPoints i : arrayOfPlaceholders){
-                        if(checkForSingleTile(i.getCordX(), i.getCordY())){
-                            player.placeToken(i.getCordY(), i.getCordX());
-                            System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
-                            finalChanceForPlacing=true;
-                            break;
-                        }
-                    }
-                    if(!finalChanceForPlacing){
-                        if(turnTheGameIsAt<7){
-                            placeAnywhereEarlyGame();
-                        }
-                        else{
-                            System.out.println("Don't want to place token");
-                        }
-                    }
-                }
-                else{
-                    int randomPosition=Tile.randomNumberGenerator(arrayListToSelectRandomlyFrom.size());
-                    player.placeToken(arrayListToSelectRandomlyFrom.get(randomPosition).getCordY(), arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
-                    System.out.println("Token placed at "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ ","+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
-                }
-            }
-        }
-    }
-
-    public void placeAnywhereEarlyGame(){
-        if(arrayOfPlaceholders.size()==0){
-            System.out.println("Don't want to place token");
         }
         else{
             boolean atLeastOneSingleColorTile=false;
@@ -324,7 +265,7 @@ public class A_Bear{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("Token placed at "+ i.getCordY()+","+ i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }

@@ -313,25 +313,6 @@ public class A_Salmon{
         }
     }
 
-    public boolean atLeastAPartner(TokenForPoints placeholder) {
-        boolean result=false;
-        for(int i=0; i<arrayOfPlaceholders.size(); i++){
-            if(arrayOfPlaceholders.get(i).equals(placeholder)){
-                continue;
-            }
-            if( ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() + 1 )) ||
-                    ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() - 1 )) ||
-                    ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() + 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() )) ||
-                    ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() - 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() )) ){
-                //looking for adjacent in cross
-
-                result=true;
-                break;
-            }
-        }
-        return result;
-    }
-
     public static void explainCard() {
         System.out.println("This is Salmon Scorecard A. Points are given for each run of salmon, depending on its length. \nA run is defined " +
                 "as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.\n");
