@@ -23,10 +23,6 @@ public class GameRunner {
 
     public static void main(String[] args) throws InterruptedException {
         IOcascadia.welcomeMessage();
-        //output welcome message
-
-        System.out.println("\n");
-
         IOcascadia.botsIntro();
         IOcascadia.playerOrder();
         //output message informing of the order the players are going to follow
@@ -48,19 +44,12 @@ public class GameRunner {
         //int to rotate around players in order
         int turnTheGameIsAt = 0;
 
-        System.out.println("\n");
-
         A_Hawk.explainHawkCard();
         A_Bear.explainBearCard();
+        A_Elk.explainCard();
+        A_Salmon.explainCard();
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
-
-        //IOcascadia.selectScoreCardElk();
-        //IOcascadia.selectScoreCardBear();
-        //IOcascadia.selectScoreCardHawk();
-        //IOcascadia.selectScoreCardSalmon();
-        //IOcascadia.selectScoreCardFox();
-
         Thread.sleep(1500);
 
         while (turnTheGameIsAt <= 20 && continueGame) {
@@ -192,30 +181,19 @@ public class GameRunner {
                     if (players.get(playersTurn).checkToken()) {
                     } else {
                         if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
-                            playersHawkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersHawkScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersHawkScores.get(playersTurn).placeholdersScore();
-                            //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
-                        }
-                        else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
-                            playersBearScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersBearScores.get(playersTurn).checkForPairs();
+                        } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
+                            playersBearScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersBearScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
-                            //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersBearScores.get(playersTurn).countScore());
-                        }
-                        else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
-                            playersElkScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                        } else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
+                            playersElkScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersElkScores.get(playersTurn).placeholdersScore(turnTheGameIsAt);
-                            //System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersElkScores.get(playersTurn).countScore());
                         } else if (players.get(playersTurn).heldToken.equals(Wildlife.FOX)) {
                             foxPlacement.countFoxesPlaceHolders(players.get(playersTurn));
                             foxPlacement.countPotentialScore(players.get(playersTurn));
-
                         } else if(players.get(playersTurn).heldToken.equals(Wildlife.SALMON)) {
-                            playersSalmonScores.get(playersTurn).getIndexesOfPlaceholders(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersSalmonScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            playersSalmonScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             playersSalmonScores.get(playersTurn).placeholdersScore();
                         } else{
                             System.out.println("Do you want to place the token? (yes or no)");
@@ -263,39 +241,29 @@ public class GameRunner {
                     }
                 }
                  */
-                System.out.println("number of hawks: " + players.get(playersTurn).getNumberOfHawks());
                 playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
 
-                System.out.println(); System.out.println();
-
-                System.out.println("number of bear pairs: " + players.get(playersTurn).getNumberOfBearPairs());
                 playersBearScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for bear pairs so far are: " + playersBearScores.get(playersTurn).countScore());
-
-                System.out.println(); System.out.println();
 
                 playersElkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for elk lines so far are: " + playersElkScores.get(playersTurn).countScore());
 
                 playersSalmonScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for salmon runs so far are: " + playersSalmonScores.get(playersTurn).countScore());
+
                 fox.countFoxes(players.get(playersTurn));
                 System.out.println(players.get(playersTurn).getName() + "'s number of fox points so far are: " + fox.countScore(players.get(playersTurn)));
 
-                System.out.println(); System.out.println();
-
                 System.out.println("\nSo far, the habitat score is the following:");
                 players.get(playersTurn).habitatScore();
-                System.out.println();
-
-
-
-
-
-
 
                 playersTurn++;
+
+                if(turnTheGameIsAt==20){
+
+                }
             }
         }
         System.out.println("""
@@ -304,15 +272,19 @@ public class GameRunner {
                 """);
         for(int i=0;i<players.size();i++)
         {
+            playersHawkScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
             System.out.println(players.get(i).getName() +"'s points for hawks are: " + playersHawkScores.get(i).countScore());
+
+            playersBearScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
             System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + playersBearScores.get(i).countScore());
+
+            playersElkScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
             System.out.println(players.get(i).getName() +"'s points for elk lines are: " + playersElkScores.get(i).countScore());
+
+            playersSalmonScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
             System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + playersSalmonScores.get(i).countScore());
-            System.out.println(players.get(i).getName() +"'s points for fox are: " + fox.countScore(players.get(i)));
 
-
-
-
+            System.out.println(players.get(i).getName() +"'s points for fox are: " + fox.countScore(players.get(i)) + "\n");
         }
 
 

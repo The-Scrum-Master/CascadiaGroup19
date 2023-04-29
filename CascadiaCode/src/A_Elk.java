@@ -16,6 +16,47 @@ public class A_Elk{
         this.player=player;
     }
 
+    public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
+        getIndexesForTokens(playerBoard, playerMapGenerator);
+    }
+
+    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        //get indexes of all places there are bear placeholders
+        arrayOfPlaceholders = new ArrayList<>();
+        for(int rows = 0; rows < 46; rows++ ){
+            for(int columns =0; columns < 46; columns++){
+                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
+                    //if emptyTile is false=if the tile is occupied
+                    if(!playerBoard[rows][columns].getTokenPlaced()){
+                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
+                            //loop through placeholders of the tile
+                            if(i.equals(Wildlife.ELK)){
+                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        arrayOfTokens = new ArrayList<>();
+        for(int rows = 0; rows < 46; rows++ ){
+            for(int columns =0; columns < 46; columns++){
+                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
+                    //if emptyTile is false=if the tile is occupied
+                    if(playerBoard[rows][columns].getTokenPlaced()){
+                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.ELK)){
+                            arrayOfTokens.add(new TokenForPoints(columns, rows));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void recursiveHorizontalLineCheck(TokenForPoints validElk){
         for(int j=0; j<arrayOfTokens.size(); j++){
             //making sure that the element we are looking at isn't the same one we are comparing it to
@@ -54,18 +95,15 @@ public class A_Elk{
 
     public int countScore() {
         int totalPoints=0;
-        //System.out.println("size=" + arrayOfTokens.size());
         for(int i=0; i<arrayOfTokens.size(); i++){
             int length=0;
             boolean lookingAtHorizontal=false;
             boolean lookingAtVertical=false;
-            System.out.println("Start of outer loop");
             if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
                 continue;
             }
             arrayOfTokens.get(i).setValid(true);
             for(int j=0; j<arrayOfTokens.size(); j++){
-                //System.out.println("iteration= i=" + i + "     j= "+j);
                 if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
                     continue;
                 }
@@ -75,7 +113,6 @@ public class A_Elk{
                                     arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
                                     arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
 
-                        System.out.println("Horizontal if");
                         lookingAtHorizontal=true;
                         arrayOfTokens.get(j).setValid(true);
                         recursiveHorizontalLineCheck(arrayOfTokens.get(i));
@@ -87,7 +124,6 @@ public class A_Elk{
                                     arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
                                     arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
 
-                        System.out.println("Vertical if");
                         lookingAtVertical=true;
                         arrayOfTokens.get(j).setValid(true);
                         recursiveVerticalLineCheck(arrayOfTokens.get(i));
@@ -96,7 +132,6 @@ public class A_Elk{
                     }
                 }
             }
-            //System.out.println("length="+length);
             for(int k=0; k<arrayOfTokens.size(); k++){
                 if(arrayOfTokens.get(k).getValid()){
                     length++;
@@ -107,22 +142,6 @@ public class A_Elk{
             totalPoints+=turnLengthOfElksIntoPoints(length);
         }
         return totalPoints;
-    }
-
-    public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        arrayOfTokens = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.ELK)){
-                            arrayOfTokens.add(new TokenForPoints(columns, rows));
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public int turnLengthOfElksIntoPoints(int elks){
@@ -137,13 +156,7 @@ public class A_Elk{
     }
 
     public void placeholdersScore(int turnTheGameIsAt) {
-        //System.out.println(arrayOfPlaceholders.size());
-        //System.out.println(arrayOfTokens.size());
-        System.out.println("Array of tokens size: "+arrayOfTokens.size());
-        System.out.println("Array of placeholders size: "+arrayOfPlaceholders.size());
-
         if(arrayOfTokens.isEmpty()){
-            System.out.println("Place anywhere function");
             placeAnywhereLateGame(turnTheGameIsAt);
         }
         else{
@@ -161,20 +174,10 @@ public class A_Elk{
                 }
             }
 
-            System.out.println("all the valid elks: ");
-            for( TokenForPoints i : arrayOfPlaceholders){
-                if(i.getValid()){
-                    System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
-                }
-            }
-
-            System.out.println("The best position/s to obtain the greatest amount of points are:");
             insertionSort(arrayOfPlaceholders);
-
             boolean atLeastOneSingleColorTile=false;
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
             if(arrayOfPlaceholders.size()==0){
-                System.out.println("Place anywhere function V2");
                 placeAnywhereLateGame(turnTheGameIsAt);
             }
             else{
@@ -186,20 +189,16 @@ public class A_Elk{
                     }
                 }
                 if(atLeastOneSingleColorTile){
-                    System.out.println("At least one good single color tile");
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(i.getValid() && i.getSingleColorTile()){
                             finalDraft.add(i);
-                            System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                         }
                     }
                 }
                 else{
-                    System.out.println("Not even one good single color tile");
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(i.getValid() && i.getNumberOfAdjacent()==max){
                             finalDraft.add(i);
-                            System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                         }
                     }
                 }
@@ -210,7 +209,7 @@ public class A_Elk{
                     for(int i=0; i<arrayOfPlaceholders.size(); i++){
                         if(atLeastAPartner(arrayOfPlaceholders.get(i))){
                             player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
-                            System.out.println("I have placed Elk token at "+arrayOfPlaceholders.get(i).getCordY()+","+arrayOfPlaceholders.get(i).getCordX());
+                            System.out.println("Token placed at "+arrayOfPlaceholders.get(i).getCordY()+","+arrayOfPlaceholders.get(i).getCordX());
                             havePlacedToken=true;
                             break;
                         }
@@ -225,14 +224,14 @@ public class A_Elk{
                 //dont place
             } else if(finalDraft.size() == 1){
                 player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
-                System.out.println("I have placed Elk token at "+finalDraft.get(0).getCordY()+","+finalDraft.get(0).getCordX());
+                System.out.println("Token placed at "+finalDraft.get(0).getCordY()+","+finalDraft.get(0).getCordX());
 
                 //place in the one position
             }
             else{
                 int randomPosition=Tile.randomNumberGenerator(finalDraft.size());
                 player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
-                System.out.println("I have placed Elk token at "+finalDraft.get(randomPosition).getCordY()+","+finalDraft.get(randomPosition).getCordX());
+                System.out.println("Token placed at "+finalDraft.get(randomPosition).getCordY()+","+finalDraft.get(randomPosition).getCordX());
                 //randomise position and place
             }
         }
@@ -254,7 +253,7 @@ public class A_Elk{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("I have placed Elk token placed at "+ i.getCordY()+ ","+ i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }
@@ -274,7 +273,7 @@ public class A_Elk{
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(checkForSingleTile(i.getCordX(), i.getCordY())){
                             player.placeToken(i.getCordY(), i.getCordX());
-                            System.out.println("I have placed Elk token at" + i.getCordY()+ ","+ i.getCordX());
+                            System.out.println("Token placed at" + i.getCordY()+ ","+ i.getCordX());
                             finalChanceForPlacing=true;
                             break;
                         }
@@ -291,7 +290,7 @@ public class A_Elk{
                 else{
                     int randomPosition=Tile.randomNumberGenerator(arrayListToSelectRandomlyFrom.size());
                     player.placeToken(arrayListToSelectRandomlyFrom.get(randomPosition).getCordY(), arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
-                    System.out.println("I have placed Elk token at "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ " ,"+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
+                    System.out.println("Token placed at "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ ","+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
                 }
             }
         }
@@ -313,7 +312,7 @@ public class A_Elk{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("I have placed Elk token at "+ i.getCordY()+ ","+ i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }
@@ -321,27 +320,7 @@ public class A_Elk{
             else{
                 int randomPosition=Tile.randomNumberGenerator(arrayOfPlaceholders.size());
                 player.placeToken(arrayOfPlaceholders.get(randomPosition).getCordY(), arrayOfPlaceholders.get(randomPosition).getCordX());
-                System.out.println("I have placed Elk token at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
-            }
-        }
-    }
-
-    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        //get indexes of all places there are bear placeholders
-        arrayOfPlaceholders = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(!playerBoard[rows][columns].getTokenPlaced()){
-                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
-                            //loop through placeholders of the tile
-                            if(i.equals(Wildlife.ELK)){
-                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                            }
-                        }
-                    }
-                }
+                System.out.println("Token placed at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
             }
         }
     }

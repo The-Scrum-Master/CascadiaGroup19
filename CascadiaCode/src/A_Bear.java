@@ -16,6 +16,12 @@ public class A_Bear{
         this.player=player;
     }
 
+    public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
+        getIndexesForTokens(playerBoard, playerMapGenerator);
+        checkForPairs();
+    }
+
     public void checkForPairs(){
         for(int i=0; i<arrayOfTokens.size(); i++){
             if(arrayOfTokens.get(i).getAlreadyPairedUp()){
@@ -117,13 +123,7 @@ public class A_Bear{
     }
 
     public void placeholdersScore(int turnTheGameIsAt) {
-        //System.out.println(arrayOfPlaceholders.size());
-        //System.out.println(arrayOfTokens.size());
-        System.out.println("Array of tokens size: "+arrayOfTokens.size());
-        System.out.println("Array of placeholders size: "+arrayOfPlaceholders.size());
-
         if(arrayOfTokens.isEmpty()){
-            System.out.println("Place anywhere function");
             placeAnywhereLateGame(turnTheGameIsAt);
         }
         else{
@@ -148,28 +148,14 @@ public class A_Bear{
                         }
                     }
                 }
-                System.out.println("\n");
-                System.out.println("number of adjacent bears: "+numberOfAdjacentBears);
-                System.out.println("Found adjacent bear: "+foundAdjacentBear);
-                System.out.println("\n");
                 if(foundAdjacentBear && numberOfAdjacentBears<2){
                     arrayOfPlaceholders.get(i).setValid(true);
-                    System.out.println("Inside the if to add the bear to the arraylist");
                 }
             }
 
-            System.out.println("all the valid bears: ");
-            for( TokenForPoints i : arrayOfPlaceholders){
-                if(i.getValid()){
-                    System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
-                }
-            }
-
-            System.out.println("The best position/s to obtain the greatest amount of points are:");
             boolean atLeastOneSingleColorTile=false;
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
             if(arrayOfPlaceholders.size()==0){
-                System.out.println("Place anywhere function V2");
                 placeAnywhereLateGame(turnTheGameIsAt);
             }
             else{
@@ -180,20 +166,16 @@ public class A_Bear{
                     }
                 }
                 if(atLeastOneSingleColorTile){
-                    System.out.println("At least one good single color tile");
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(i.getValid() && i.getSingleColorTile()){
                             finalDraft.add(i);
-                            System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                         }
                     }
                 }
                 else{
-                    System.out.println("Not even one good single color tile");
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(i.getValid()){
                             finalDraft.add(i);
-                            System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                         }
                     }
                 }
@@ -220,11 +202,6 @@ public class A_Bear{
                     }
                 }
 
-                System.out.println("the not allowed arraylist: ");
-                for( TokenForPoints i : notAllowed){
-                    System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
-                }
-
                 ArrayList<TokenForPoints> nonPairedButAllowed=new ArrayList<>();
                 if(notAllowed.isEmpty()){
                     nonPairedButAllowed=arrayOfPlaceholders;
@@ -244,36 +221,20 @@ public class A_Bear{
                     }
                 }
 
-                System.out.println("the nonPairedButAllowed arraylist: ");
-                for( TokenForPoints i : nonPairedButAllowed){
-                    System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
-                }
-
                 if(nonPairedButAllowed.size() == 0){
                     System.out.println("I have decided not to place the token ");
                 }
                 else if(nonPairedButAllowed.size() == 1){
                     player.placeToken(nonPairedButAllowed.get(0).getCordY(), nonPairedButAllowed.get(0).getCordX());
-                    System.out.println("I have placed bear token at "+nonPairedButAllowed.get(0).getCordY()+","+nonPairedButAllowed.get(0).getCordX());
+                    System.out.println("Token placed at "+nonPairedButAllowed.get(0).getCordY()+","+nonPairedButAllowed.get(0).getCordX());
                     //place in the one position
                 }
                 else{
                     int randomPosition=Tile.randomNumberGenerator(nonPairedButAllowed.size());
                     player.placeToken(nonPairedButAllowed.get(randomPosition).getCordY(), nonPairedButAllowed.get(randomPosition).getCordX());
-                    System.out.println("I have placed bear token at "+nonPairedButAllowed.get(randomPosition).getCordY()+","+nonPairedButAllowed.get(randomPosition).getCordX());
-
+                    System.out.println("Token placed at "+nonPairedButAllowed.get(randomPosition).getCordY()+","+nonPairedButAllowed.get(randomPosition).getCordX());
                     //randomise position and place
                 }
-                /*
-                int decision=Tile.randomNumberGenerator(2);
-                if(decision==0){
-                    System.out.println("I have decided not to place the token");
-                }
-                else{
-                    //podria ir aqui el codigo este
-                }
-
-                 */
             } else if(finalDraft.size() == 1){
                 player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
                 increaseNumberOfBearsPairs();
@@ -290,7 +251,7 @@ public class A_Bear{
 
     public void placeAnywhereLateGame(int turnTheGameIsAt){
         if(arrayOfPlaceholders.size()==0){
-            System.out.println("Don't want to place token");
+            System.out.println("Can't place token");
         }
         else{
             boolean atLeastOneSingleColorTile=false;
@@ -304,7 +265,7 @@ public class A_Bear{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("I have placed bear token at "+ i.getCordY()+ ","+ i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }
@@ -324,7 +285,7 @@ public class A_Bear{
                     for(TokenForPoints i : arrayOfPlaceholders){
                         if(checkForSingleTile(i.getCordX(), i.getCordY())){
                             player.placeToken(i.getCordY(), i.getCordX());
-                            System.out.println("I have placed bear token at "+ i.getCordY()+ ","+ i.getCordX());
+                            System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
                             finalChanceForPlacing=true;
                             break;
                         }
@@ -341,7 +302,7 @@ public class A_Bear{
                 else{
                     int randomPosition=Tile.randomNumberGenerator(arrayListToSelectRandomlyFrom.size());
                     player.placeToken(arrayListToSelectRandomlyFrom.get(randomPosition).getCordY(), arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
-                    System.out.println("I have placed bear token at "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ ","+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
+                    System.out.println("Token placed at "+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordY()+ ","+ arrayListToSelectRandomlyFrom.get(randomPosition).getCordX());
                 }
             }
         }
@@ -363,7 +324,7 @@ public class A_Bear{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("I have placed bear token at "+ i.getCordY()+","+ i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+","+ i.getCordX());
                         break;
                     }
                 }
@@ -371,7 +332,7 @@ public class A_Bear{
             else{
                 int randomPosition=Tile.randomNumberGenerator(arrayOfPlaceholders.size());
                 player.placeToken(arrayOfPlaceholders.get(randomPosition).getCordY(), arrayOfPlaceholders.get(randomPosition).getCordX());
-                System.out.println("I have placed bear token at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
+                System.out.println("Token placed at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
             }
         }
     }

@@ -16,6 +16,11 @@ public class A_Hawk{
         this.player=player;
     }
 
+    public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
+        getIndexesForTokens(playerBoard, playerMapGenerator);
+    }
+
     public int countScore() {
         int numberOfHawks=0;
         for(int i=0; i<arrayOfTokens.size(); i++){
@@ -45,7 +50,6 @@ public class A_Hawk{
                 arrayOfTokens.get(i).setValid(true);
                 numberOfHawks++;
             }
-            //System.out.println(numberOfHawks);
         }
         return turnNumberOfHawksIntoPoints(numberOfHawks);
     }
@@ -83,9 +87,6 @@ public class A_Hawk{
     }
 
     public void placeholdersScore() {
-        //System.out.println(arrayOfPlaceholders.size());
-        //System.out.println(arrayOfTokens.size());
-
         for(int i=0; i<arrayOfPlaceholders.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){
@@ -107,7 +108,6 @@ public class A_Hawk{
                 arrayOfPlaceholders.get(i).setValid(true);
             }
         }
-        System.out.println("The best position/s which award the greatest amount of points are:");
         boolean atLeastOneSingleColorTile=false;
         ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
         if(arrayOfPlaceholders.size()==0){
@@ -121,37 +121,32 @@ public class A_Hawk{
                 }
             }
             if(atLeastOneSingleColorTile){
-                System.out.println("At least one good single color tile");
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getValid() && i.getSingleColorTile()){
                         finalDraft.add(i);
-                        System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                     }
                 }
             }
             else{
-                System.out.println("Not even one good single color tile");
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getValid()){
                         finalDraft.add(i);
-                        System.out.println("X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
                     }
                 }
             }
         }
         if(finalDraft.size() == 0){
             System.out.println("I have decided not to place the token");
-            //dont place
         } else if(finalDraft.size() == 1){
             player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
-            System.out.println("Placed hawk token at "+ finalDraft.get(0).getCordY() +","+ finalDraft.get(0).getCordX());
+            System.out.println("Token placed at "+ finalDraft.get(0).getCordY() +","+ finalDraft.get(0).getCordX());
             increaseNumberOfHawks();
             //place in the one position
         }
         else{
             int randomPosition=Tile.randomNumberGenerator(finalDraft.size());
             player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
-            System.out.println("Placed hawk token at "+ finalDraft.get(randomPosition).getCordY() +","+ finalDraft.get(randomPosition).getCordX());
+            System.out.println("Token placed at "+ finalDraft.get(randomPosition).getCordY() +","+ finalDraft.get(randomPosition).getCordX());
             increaseNumberOfHawks();
             //randomise position and place
         }

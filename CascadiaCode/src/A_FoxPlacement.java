@@ -134,7 +134,7 @@ import java.util.ArrayList;
         }
 
         public void placeToken(Player player,int coords){
-            System.out.println("I have placed fox token at "+ getXcoord(coords) +","+getYcoord(coords) );
+            System.out.println("Token placed at "+ getXcoord(coords) +","+getYcoord(coords) );
             player.placeToken(getXcoord(coords),getYcoord(coords));
         }
 

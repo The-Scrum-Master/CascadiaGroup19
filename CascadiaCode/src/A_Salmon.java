@@ -16,10 +16,14 @@ public class A_Salmon{
         this.player=player;
     }
 
+    public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
+        getIndexesForTokens(playerBoard, playerMapGenerator);
+    }
+
     public int recursiveRunCheck(TokenForPoints validSalmon, int length, boolean valid){
         ArrayList<TokenForPoints> adjacent = new ArrayList<>();
         for(int j=0; j<arrayOfTokens.size(); j++){
-            //System.out.println("iteration= i=" + i + "     j= "+j);
             if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) {
                 //making sure that the element we are looking at isn't the same one we are comparing it to
                 continue;
@@ -57,7 +61,6 @@ public class A_Salmon{
         validSalmon.setAlreadyAccountedFor(true);
         adjacent = new ArrayList<>();
         for(int j=0; j<arrayOfTokens.size(); j++){
-            //System.out.println("iteration= i=" + i + "     j= "+j);
             if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
                 continue;
             }
@@ -93,7 +96,6 @@ public class A_Salmon{
         int totalPoints=0;
         int length;
         boolean valid;
-        //System.out.println("size=" + arrayOfTokens.size());
         for(int i=0; i<arrayOfTokens.size(); i++){
             length=0;
             valid=true;
@@ -155,15 +157,12 @@ public class A_Salmon{
 
     public void placeholdersScore() {
         if(arrayOfTokens.isEmpty()){
-            System.out.println("Place anywhere function");
             placeAnywhere();
         }
         else{
             ArrayList<TokenForPoints> possiblePlacements = new ArrayList<>();
-            //LOOK AT POST-IT
             int length;
             boolean valid;
-            //System.out.println("size=" + arrayOfTokens.size());
             for(int i=0; i<arrayOfPlaceholders.size(); i++){
                 length=0;
                 valid=true;
@@ -180,7 +179,7 @@ public class A_Salmon{
             for (TokenForPoints x : possiblePlacements){
             }
             player.placeToken(possiblePlacements.get(0).getCordY(), possiblePlacements.get(0).getCordX());
-            System.out.println("I have placed Salmon at "+possiblePlacements.get(0).getCordY()+","+possiblePlacements.get(0).getCordX());
+            System.out.println("Token placed at "+possiblePlacements.get(0).getCordY()+","+possiblePlacements.get(0).getCordX());
         }
     }
 
@@ -188,7 +187,6 @@ public class A_Salmon{
         ArrayList<TokenForPoints> adjacent = new ArrayList<>();
         boolean addOneExtraForAdjacentWithPlaceholder=false;
         for(int j=0; j<arrayOfTokens.size(); j++){
-            //System.out.println("iteration= i=" + i + "     j= "+j);
             if(validSalmon.getCordY()==arrayOfTokens.get(j).getCordY() && validSalmon.getCordX()==arrayOfTokens.get(j).getCordX()) {
                 //making sure that the element we are looking at isn't the same one we are comparing it to
                 continue;
@@ -255,7 +253,6 @@ public class A_Salmon{
         validSalmon.setAlreadyAccountedFor(true);
         adjacent = new ArrayList<>();
         for(int j=0; j<arrayOfTokens.size(); j++){
-            //System.out.println("iteration= i=" + i + "     j= "+j);
             if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
                 continue;
             }
@@ -303,7 +300,7 @@ public class A_Salmon{
                 for(TokenForPoints i : arrayOfPlaceholders){
                     if(i.getSingleColorTile()){
                         player.placeToken(i.getCordY(), i.getCordX());
-                        System.out.println("Token placed at X: "+ i.getCordY()+ " and Y: "+ i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
                         break;
                     }
                 }
@@ -311,7 +308,7 @@ public class A_Salmon{
             else{
                 int randomPosition=Tile.randomNumberGenerator(arrayOfPlaceholders.size());
                 player.placeToken(arrayOfPlaceholders.get(randomPosition).getCordY(), arrayOfPlaceholders.get(randomPosition).getCordX());
-                System.out.println("Token placed at X: "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ " and Y: "+ arrayOfPlaceholders.get(randomPosition).getCordX());
+                System.out.println("Token placed at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
             }
         }
     }
