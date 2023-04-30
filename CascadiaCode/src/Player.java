@@ -689,10 +689,10 @@ public class Player {
         return wetlandMax;
     }
 
-    public void findBestHabitat(int x) {
+    public void findBestPosition(int x) {
         System.out.println("Itss me find best habitat");
 //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
-
+//need to know what direction tiles are pointing in
 
         for (int i = 0; i < potentialSuitors.size(); i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {
@@ -708,41 +708,143 @@ public class Player {
         }
     }
 
-    public void searchRadius(int x, int y) {
+    public boolean searchRadius(int x, int y) {
+        //0 is top 1 is bottom
         System.out.println("its me search radius");
         System.out.println("the coordinnates I have been given are "+x+","+y);
         if (map.getMap()[x][y + 1].getEmptyTile()) {
-            placeTile(x, y + 1);
+            if(heldTile.getSelect()==1){
+                placeTile(x, y + 1);
+                return true;
+            }else {
+                if(playerBoard[x][y].getSelect()==1){
+                    placeTile(x, y + 1);
+                    return true;
+
+                }
+                else if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
+                    placeTile(x, y + 1);
+                    return true;
+
+                } else {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                    placeTile(x, y + 1);
+                    return true;
+
+                }
+            }
 
 
         } else if (map.getMap()[x][y - 1].getEmptyTile()) {
-            placeTile(x, y - 1);
+            if(heldTile.getSelect()==1){
+                placeTile(x, y - 1);
+                return true;
 
+            }else {
+                if(playerBoard[x][y].getSelect()==1){
+                    placeTile(x, y - 1);
+                    return true;
 
+                }
+                else if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                    placeTile(x, y - 1);
+                    return true;
+
+                } else {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                    placeTile(x, y - 1);
+                    return true;
+
+                }
+            }
         } else if (map.getMap()[x - 1][y].getEmptyTile()) {
-            placeTile(x - 1, y);
+            if(heldTile.getSelect()==1){
+                placeTile(x-1, y);
+                return true;
+
+            }else {
+                if(playerBoard[x][y].getSelect()==1){
+                    placeTile(x - 1, y);
+                    return true;
+                }
+                else if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                    placeTile(x - 1, y);
+                    return true;
+
+                } else {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                    placeTile(x - 1, y);
+                    return true;
+                }
+            }
+
 
         } else if (map.getMap()[x + 1][y].getEmptyTile()) {
-            placeTile(x + 1, y);
+            if(heldTile.getSelect()==1){
+                placeTile(x+1, y );
+                return true;
+
+            }else {
+                if(playerBoard[x][y].getSelect()==1){
+                    placeTile(x + 1, y);
+                    return true;
+                }
+                else if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
+                    placeTile(x + 1, y);
+                    return true;
+
+                } else {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                    placeTile(x + 1, y);
+                    return true;
+
+                }
+            }
 
         }
         else{
             System.out.println("FAILED");
-            findSecondBestHabitat();
+            findSecondBestPosition();
 
             //sometimes the coords of the top dog is surrounded need to pick the next best one
         }
+        return false;
 
     }
-    public void findSecondBestHabitat() {
+    public void findSecondBestPosition() {
 
-
+  int poo =0;
         for (int x = 0; x < playerBoard.length; x++) {
             for (int y = 0; y < playerBoard.length; y++) {
                 if (!map.getMap()[x][y].getEmptyTile()) {
+                    innerloop:
                     for(int k=0;k<playerBoard[x][y].getHabitats().length;k++) {
                         for(int l=0;l<heldTile.getHabitats().length;l++) {
                             if (heldTile.getHabitat(l).equals(playerBoard[x][y].getHabitat(k))) {
+                                if(x==potentialSuitors.get(0).getYcordArrayList().get(0)){
+                                    System.out.println("Entered if statement");
+                                    y++;
+                                    break innerloop;
+
+
+                                }
+
                                 searchRadius(x, y);
                                 return;
                             }

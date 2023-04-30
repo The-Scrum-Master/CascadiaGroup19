@@ -134,25 +134,6 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
-                    System.out.println("Would you like to rotate tiles(yes or no)");
-                    boolean wrongInput = true;
-                    while (wrongInput) {
-                        String rotate = IOcascadia.makeLowerCase(IOcascadia.takeInput());
-                        if (rotate.equals("yes")) {
-                            players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
-                            TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
-                            g.generateFlipTile();
-                            g.printTile();
-
-
-                            wrongInput = false;
-                        } else if (rotate.equals("no")) {
-                            wrongInput = false;
-
-                        } else {
-                            System.out.println("Wrong input please try again");
-                        }
-                    }
 
 
                     /*System.out.println("Where would you like to place a tile?");
@@ -171,7 +152,7 @@ public class GameRunner {
 
                      */
 
-                    players.get(playersTurn).findBestHabitat(0);
+                    players.get(playersTurn).findBestPosition(0);
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
@@ -198,7 +179,7 @@ public class GameRunner {
                             playersSalmonScores.get(playersTurn).placeholdersScore();
                         } else{
                             System.out.println("Do you want to place the token? (yes or no)");
-                            wrongInput = true;
+                            boolean wrongInput = true;
                             while (wrongInput) {
                                 String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
 
@@ -261,6 +242,8 @@ public class GameRunner {
                 players.get(playersTurn).habitatScore();
 
                 playersTurn++;
+                Thread.sleep(2000);
+
 
                 if(turnTheGameIsAt==20){
 
