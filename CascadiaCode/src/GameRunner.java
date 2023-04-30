@@ -51,7 +51,17 @@ public class GameRunner {
         A_Fox.explainFoxCard();
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
-        Thread.sleep(1500);
+
+        int strategyChosen=Tile.randomNumberGenerator(2);
+        System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
+        if(strategyChosen==0){
+            System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
+        }
+        if(strategyChosen==1){
+            System.out.println("This strategy is the random strat. It will pick the tile randomly and then place the token randomly.");
+        }
+
+        Thread.sleep(2000);
 
         while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
@@ -62,8 +72,7 @@ public class GameRunner {
                     if(turnTheGameIsAt%3==0){
                         helperIntToPrintMap++;
                     }
-                }
-                else{
+                } else{
                     helperIntToPrintMap++;
                 }
             } else {
@@ -100,7 +109,13 @@ public class GameRunner {
                     PairDisplay.showPairs();
 
                     IOcascadia.instructionsToChoosePair();
-                    int instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver() ;
+
+                    int instructionsToChoosePairInput;
+                    if (strategyChosen == 0) {
+                        instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
+                    } else /*if(strategyChosen == 1)*/{
+                        instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
+                    }
 
 
                     if (instructionsToChoosePairInput <= 5 && instructionsToChoosePairInput >= 0) {
@@ -134,24 +149,24 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
+                    System.out.println("Would you like to rotate tiles(yes or no)");
+                    boolean wrongInput = true;
+                    while (wrongInput) {
+                        String rotate = IOcascadia.makeLowerCase(IOcascadia.takeInput());
+                        if (rotate.equals("yes")) {
+                            players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
+                            TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
+                            g.generateFlipTile();
+                            g.printTile();
 
 
-                    /*System.out.println("Where would you like to place a tile?");
-                    int x = IOcascadia.takeIntInput();
-                    int y = IOcascadia.takeIntInput();
-                    while (x <= 0 || x >= 46 || y <= 0 || y >= 46) {
-                        System.out.println("Error placed tile out of bounds please try again");
-                        x = IOcascadia.takeIntInput();
-                        y = IOcascadia.takeIntInput();
-
+                            wrongInput = false;
+                        } else if (rotate.equals("no")) {
+                            wrongInput = false;
+                        } else {
+                            System.out.println("Wrong input please try again");
+                        }
                     }
-                    //System.out.println(players.get(playersTurn).heldTile.getColour());
-                    //System.out.println(players.get(playersTurn).heldTile.getColour2());
-                    players.get(playersTurn).placeTile(x, y);
-                    players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
-
-                     */
-
                     players.get(playersTurn).findBestPosition(0);
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
@@ -162,47 +177,58 @@ public class GameRunner {
 
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
-                            playersHawkScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersHawkScores.get(playersTurn).placeholdersScore();
-                        } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
-                            playersBearScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersBearScores.get(playersTurn).placeholdersScore();
-                        } else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
-                            playersElkScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersElkScores.get(playersTurn).placeholdersScore();
-                        } else if (players.get(playersTurn).heldToken.equals(Wildlife.FOX)) {
-                            foxPlacement.countFoxesPlaceHolders(players.get(playersTurn));
-                            foxPlacement.countPotentialScore(players.get(playersTurn));
-                        } else if(players.get(playersTurn).heldToken.equals(Wildlife.SALMON)) {
-                            playersSalmonScores.get(playersTurn).getIndexes(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            playersSalmonScores.get(playersTurn).placeholdersScore();
-                        } else{
-                            System.out.println("Do you want to place the token? (yes or no)");
-                            boolean wrongInput = true;
-                            while (wrongInput) {
-                                String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
+                        if(strategyChosen==0){
+                            if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
+                                playersHawkScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
+                                playersBearScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
+                                playersElkScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if (players.get(playersTurn).heldToken.equals(Wildlife.FOX)){
+                                foxPlacement.strategy1(players.get(playersTurn));
+                            } else if(players.get(playersTurn).heldToken.equals(Wildlife.SALMON)){
+                                playersSalmonScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            }/* else{
+                                System.out.println("Do you want to place the token? (yes or no)");
+                                wrongInput = true;
+                                while (wrongInput) {
+                                    String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
 
-                                if (decision.equals("yes")) {
+                                    if (decision.equals("yes")) {
 
-                                    System.out.println("Where would you like to place token " + token);
-                                    int coordinate = IOcascadia.takeIntInput();
-                                    int coordinate2 = IOcascadia.takeIntInput();
-                                    while (coordinate <= 0 || coordinate >= 46 || coordinate2 <= 0 || coordinate2 >= 46) {
-                                        System.out.println("Error placed tile out of bounds please try again");
-                                        coordinate = IOcascadia.takeIntInput();
-                                        coordinate2 = IOcascadia.takeIntInput();
+                                        System.out.println("Where would you like to place token " + token);
+                                        int coordinate = IOcascadia.takeIntInput();
+                                        int coordinate2 = IOcascadia.takeIntInput();
+                                        while (coordinate <= 0 || coordinate >= 46 || coordinate2 <= 0 || coordinate2 >= 46) {
+                                            System.out.println("Error placed tile out of bounds please try again");
+                                            coordinate = IOcascadia.takeIntInput();
+                                            coordinate2 = IOcascadia.takeIntInput();
+                                        }
+                                        players.get(playersTurn).placeToken(coordinate, coordinate2);
+                                        players.get(playersTurn).printMap(helperIntToPrintMap);
+                                        wrongInput = false;
+
+
+                                    } else if (decision.equals("no")) {
+                                        wrongInput = false;
+                                    } else {
+                                        System.out.println("expected a yes or no answer, please try again");
                                     }
-                                    players.get(playersTurn).placeToken(coordinate, coordinate2);
-                                    players.get(playersTurn).printMap(helperIntToPrintMap);
-                                    wrongInput = false;
-
-
-                                } else if (decision.equals("no")) {
-                                    wrongInput = false;
-                                } else {
-                                    System.out.println("expected a yes or no answer, please try again");
                                 }
+                            }
+                            */
+                        }
+                        else{
+                            if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
+                                playersHawkScores.get(playersTurn).strategy2(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
+                                playersBearScores.get(playersTurn).strategy2(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if(players.get(playersTurn).heldToken.equals(Wildlife.ELK)){
+                                playersElkScores.get(playersTurn).strategy2(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if (players.get(playersTurn).heldToken.equals(Wildlife.FOX)){
+                                foxPlacement.strategy2(players.get(playersTurn));
+                            } else if(players.get(playersTurn).heldToken.equals(Wildlife.SALMON)){
+                                playersSalmonScores.get(playersTurn).strategy2(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             }
                         }
                     }
@@ -243,11 +269,6 @@ public class GameRunner {
 
                 playersTurn++;
                 Thread.sleep(2000);
-
-
-                if(turnTheGameIsAt==20){
-
-                }
             }
         }
         System.out.println("""

@@ -20,7 +20,16 @@ import java.util.ArrayList;
 
         public A_FoxPlacement(Player player) {
             this.player = player;
+        }
 
+        public void strategy1(Player player){
+            countFoxesPlaceHolders(player);
+            countPotentialScore(player);
+        }
+
+        public void strategy2(Player player){
+            countFoxesPlaceHolders(player);
+            placeAnywhere(player);
         }
 
         public void countFoxesPlaceHolders(Player player) {
@@ -138,7 +147,49 @@ import java.util.ArrayList;
             player.placeToken(getXcoord(coords),getYcoord(coords));
         }
 
+        public void placeAnywhere(Player player){
+            if(coordX.size()==0){
+                System.out.println("Can't place token");
+            }
+            else{
+                ArrayList<Integer> singleColorTile = new ArrayList<Integer>();
+                boolean atLeastOneSingleColorTile=false;
+                System.out.println(coordX.size());
+                for(int i=0; i<coordX.size();i++){
+                    System.out.println("x- "+ coordX.get(i) + " Y-"+coordY.get(i));
+                    if(checkForSingleTile(player, coordX.get(i), coordY.get(i))){
+                        singleColorTile.add(1);
+                        atLeastOneSingleColorTile=true;
+                    }
+                    else{
+                        singleColorTile.add(0);
+                    }
+                }
+                if(atLeastOneSingleColorTile){
+                    for(int i=0; i<coordX.size();i++){
+                        if(singleColorTile.get(i)==1){
+                            player.placeToken(coordX.get(i),coordY.get(i));
+                            System.out.println("Token placed at "+ coordX.get(i) +","+coordY.get(i));
+                            break;
+                        }
+                    }
+                }
+                else{
+                    int randomPosition=Tile.randomNumberGenerator(coordX.size());
+                    player.placeToken(coordX.get(randomPosition), coordY.get(randomPosition));
+                    System.out.println("Token placed at "+ coordX.get(randomPosition) +","+coordY.get(randomPosition));
+                }
+            }
+        }
 
+        public boolean checkForSingleTile(Player player, int x, int y){
+            if (player.playerBoard[x][y].getSelect()==1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     }
 

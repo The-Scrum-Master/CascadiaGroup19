@@ -49,7 +49,7 @@ public class Tile {
         //2 being a double habitat tile with 2 placeholders and 3 being a double habitat tile with three placeholders
         if (select > 3 || select < 1) {
             select = randomNumberGenerator(3) + 1;
-            // this generates a number between 0 and 2
+            // this generates a number between 0 and 2 plus 1, between 1 and 3
         }
         this.select = select;
         Played = false;

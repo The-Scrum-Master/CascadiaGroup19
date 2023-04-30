@@ -16,6 +16,16 @@ public class A_Hawk{
         this.player=player;
     }
 
+    public void strategy1(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        placeholdersScore();
+    }
+
+    public void strategy2(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        placeAnywhere();
+    }
+
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
         getIndexesForTokens(playerBoard, playerMapGenerator);
@@ -168,6 +178,35 @@ public class A_Hawk{
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public void placeAnywhere(){
+        if(arrayOfPlaceholders.size()==0){
+            System.out.println("Can't place token");
+        }
+        else{
+            boolean atLeastOneSingleColorTile=false;
+            for(TokenForPoints i : arrayOfPlaceholders){
+                if(checkForSingleTile(i.getCordX(), i.getCordY())){
+                    i.setSingleColorTile(true);
+                    atLeastOneSingleColorTile=true;
+                }
+            }
+            if(atLeastOneSingleColorTile){
+                for(TokenForPoints i : arrayOfPlaceholders){
+                    if(i.getSingleColorTile()){
+                        player.placeToken(i.getCordY(), i.getCordX());
+                        System.out.println("Token placed at "+ i.getCordY()+ ","+ i.getCordX());
+                        break;
+                    }
+                }
+            }
+            else{
+                int randomPosition=Tile.randomNumberGenerator(arrayOfPlaceholders.size());
+                player.placeToken(arrayOfPlaceholders.get(randomPosition).getCordY(), arrayOfPlaceholders.get(randomPosition).getCordX());
+                System.out.println("Token placed at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
             }
         }
     }

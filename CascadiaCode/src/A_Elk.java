@@ -16,6 +16,16 @@ public class A_Elk{
         this.player=player;
     }
 
+    public void strategy1(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        placeholdersScore();
+    }
+
+    public void strategy2(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        placeAnywhere();
+    }
+
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
         getIndexesForTokens(playerBoard, playerMapGenerator);
