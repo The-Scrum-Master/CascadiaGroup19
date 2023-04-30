@@ -6,6 +6,7 @@
 */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
@@ -38,6 +39,8 @@ public class Player {
     public Tile heldTile;
     public Wildlife heldToken;
     public int natureTokenNumber;
+    ArrayList<MaxCorridor> potentialSuitors = new ArrayList<>();
+
 
     public Player(String name, int order) {
         this.name = name;
@@ -120,7 +123,7 @@ public class Player {
 
     private boolean isFilled = false;
     private boolean hasToken = false;
-    private boolean tokenPlaced = false;
+    private final boolean tokenPlaced = false;
 
     public void generateInitialMap() {
         TileGenerator blank = new TileGenerator();
@@ -451,7 +454,7 @@ public class Player {
                     riverMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[0] contains max corridor info for river
-                        if (trackerHelp(0, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                        if (!trackerHelp(0, counted.get(i).boardXIndex, counted.get(i).boardYIndex)) {
                             corridors[0].getXcordArrayList().add(counted.get(i).boardXIndex);
                             System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
                             corridors[0].getYcordArrayList().add(counted.get(i).boardYIndex);
@@ -465,7 +468,7 @@ public class Player {
                     forestMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[1] contains max corridor info for forrest
-                        if (trackerHelp(1, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                        if (!trackerHelp(1, counted.get(i).boardXIndex, counted.get(i).boardYIndex)) {
                             corridors[1].getXcordArrayList().add(counted.get(i).boardXIndex);
                             System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
                             corridors[1].getYcordArrayList().add(counted.get(i).boardYIndex);
@@ -479,7 +482,7 @@ public class Player {
                     prairieMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[2] contains max corridor info for prairies
-                        if (trackerHelp(2, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                        if (!trackerHelp(2, counted.get(i).boardXIndex, counted.get(i).boardYIndex)) {
                             corridors[2].getXcordArrayList().add(counted.get(i).boardXIndex);
                             System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
                             corridors[2].getYcordArrayList().add(counted.get(i).boardYIndex);
@@ -493,7 +496,7 @@ public class Player {
                     mountainMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[3] contains max corridor info for mountains
-                        if (trackerHelp(3, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                        if (!trackerHelp(3, counted.get(i).boardXIndex, counted.get(i).boardYIndex)) {
                             corridors[3].getXcordArrayList().add(counted.get(i).boardXIndex);
                             System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
                             corridors[3].getYcordArrayList().add(counted.get(i).boardYIndex);
@@ -507,7 +510,7 @@ public class Player {
                     wetlandMax = counted.size();
                     for (int i = 0; i < counted.size(); i++) {
                         // corridors[4] contains max corridor info for wetlands
-                        if (trackerHelp(4, counted.get(i).boardXIndex, counted.get(i).boardYIndex) != true) {
+                        if (!trackerHelp(4, counted.get(i).boardXIndex, counted.get(i).boardYIndex)) {
                             corridors[4].getXcordArrayList().add(counted.get(i).boardXIndex);
                             System.out.print("The cords are: " + counted.get(i).boardXIndex + "\t");
                             corridors[4].getYcordArrayList().add(counted.get(i).boardYIndex);
@@ -545,7 +548,7 @@ public class Player {
         // recusively moves though tiles checking for habitat matches
         if (adjCheck(columns - 1, rows, 0, habitat)) {
             // checks left
-            if (countedHelp(playerBoard[rows][columns - 1]) != true) {
+            if (!countedHelp(playerBoard[rows][columns - 1])) {
                 // makes sure hasnt already been counted
                 // adds the tiles to a array of counted tiles
                 counted.add(playerBoard[rows][columns - 1]);
@@ -556,7 +559,7 @@ public class Player {
         }
         if (adjCheck(columns, rows - 1, 0, habitat)) {
             // checks above
-            if (countedHelp(playerBoard[rows - 1][columns]) != true) {
+            if (!countedHelp(playerBoard[rows - 1][columns])) {
                 // makes sure hasnt already been counted
                 counted.add(playerBoard[rows - 1][columns]);
                 recursiveHabibitCounter(rows - 1, columns, habitat);
@@ -566,7 +569,7 @@ public class Player {
         }
         if (adjCheck(columns + 1, rows, 1, habitat)) {
             // checks right
-            if (countedHelp(playerBoard[rows][columns + 1]) != true) {
+            if (!countedHelp(playerBoard[rows][columns + 1])) {
                 // makes sure hasnt already been counted
                 counted.add(playerBoard[rows][columns + 1]);
                 recursiveHabibitCounter(rows, columns + 1, habitat);
@@ -576,7 +579,7 @@ public class Player {
         }
         if (adjCheck(columns, rows + 1, 1, habitat)) {
             // checks below
-            if (countedHelp(playerBoard[rows + 1][columns]) != true) {
+            if (!countedHelp(playerBoard[rows + 1][columns])) {
                 // makes sure hasnt already been counted
                 counted.add(playerBoard[rows + 1][columns]);
                 recursiveHabibitCounter(rows + 1, columns, habitat);
@@ -593,28 +596,16 @@ public class Player {
 
             if (adjTile.getSelect() == 1) {
                 // If the tile is a solo then no need to check which direction habitat is on
-                if (adjTile.getHabitat(0) == habitat) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return adjTile.getHabitat(0) == habitat;
             } else {
                 // Need to check which direction to check;
                 if (direction == 0) {
                     // only checks the bottom and right side of the tile (aka habitat index 1)
-                    if (adjTile.getHabitat(1) == habitat) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return adjTile.getHabitat(1) == habitat;
                 } else {
                     // otherwise check this tiles top and left side of this tile (aka habitat index
                     // 0)
-                    if (adjTile.getHabitat(0) == habitat) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return adjTile.getHabitat(0) == habitat;
                 }
             }
         } else {
@@ -623,9 +614,9 @@ public class Player {
     }
 
     public void checkHabitats() {
-        for (int i = 0 + 21 - GameRunner.getHelperIntToPrintMap(); i < 46 - 21
+        for (int i = 21 - GameRunner.getHelperIntToPrintMap(); i < 46 - 21
                 + GameRunner.getHelperIntToPrintMap(); i++) {
-            for (int j = 0 + 21 - GameRunner.getHelperIntToPrintMap(); j < 46 - 21
+            for (int j = 21 - GameRunner.getHelperIntToPrintMap(); j < 46 - 21
                     + GameRunner.getHelperIntToPrintMap(); j++) {
                 Tile curr = playerBoard[i][j];
                 if (curr != null) {
@@ -671,10 +662,11 @@ public class Player {
         }
     }
 
-    public void habitatScore() {
+    public MaxCorridor[] habitatScore() {
         IntializeCorridors();
         checkHabitats();
         MaxCorridor[] top = createMaxCorridorsArray();
+        return top;
     }
 
     public int getForestMax() {
@@ -697,55 +689,35 @@ public class Player {
         return wetlandMax;
     }
 
-    public void findBestHabitat() {
+    public void findBestHabitat(int x) {
+        System.out.println("Itss me find best habitat");
+//potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
 
-        ArrayList<Habitat> heldTileHabitats = new ArrayList<Habitat>();
-        boolean found = false;
-        boolean placed = false;
-        for (int k = 0; k < heldTile.getHabitats().length; k++) {
-            heldTileHabitats.add(heldTile.getHabitat(k));
-        }
 
-        for (int x = 0; x < playerBoard.length; x++) {
-            for (int y = 0; y < playerBoard.length; y++) {
-                if (!map.getMap()[x][y].getEmptyTile()) {
-                    ArrayList<Habitat> playerTileHabitats = new ArrayList<Habitat>();
-                    // searching through placed tiles
-                    // if tile is not null
-                    for (int k = 0; k < playerBoard[x][y].getHabitats().length; k++) {
-                        playerTileHabitats.add(playerBoard[x][y].getHabitat(k));
-                    }
-
-                    // filling arrays with held tile habitats and selected tile habitats
-                    for (int i = 0; i < playerTileHabitats.size(); i++) {
-                        for (int j = 0; j < heldTileHabitats.size(); j++) {
-
-                            if (playerTileHabitats.get(i).equals(heldTileHabitats.get(j))) {
-                                found = true;
-                            }
-                        }
-                    }
-                    // checking if they have matching habitats
-
-                }
-                if (found) {
-                    searchRadius(x, y);
+        for (int i = 0; i < potentialSuitors.size(); i++) {
+            for (int j = 0; j < heldTile.getHabitats().length; j++) {
+                if (potentialSuitors.get(i).getHabitatType().equals(heldTile.getHabitat(j))) {
+                    ArrayList<Integer> X = potentialSuitors.get(i).getXcordArrayList();
+                    ArrayList<Integer> Y = potentialSuitors.get(i).getYcordArrayList();
+                    System.out.println("THis is the length of the coords array "+potentialSuitors.get(i).getXcordArrayList().size());
+                    searchRadius(Y.get(x),X.get(x));
                     return;
 
                 }
-
             }
         }
-
     }
 
     public void searchRadius(int x, int y) {
-
+        System.out.println("its me search radius");
+        System.out.println("the coordinnates I have been given are "+x+","+y);
         if (map.getMap()[x][y + 1].getEmptyTile()) {
             placeTile(x, y + 1);
 
+
         } else if (map.getMap()[x][y - 1].getEmptyTile()) {
             placeTile(x, y - 1);
+
 
         } else if (map.getMap()[x - 1][y].getEmptyTile()) {
             placeTile(x - 1, y);
@@ -754,70 +726,134 @@ public class Player {
             placeTile(x + 1, y);
 
         }
+        else{
+            System.out.println("FAILED");
+            findSecondBestHabitat();
+
+            //sometimes the coords of the top dog is surrounded need to pick the next best one
+        }
 
     }
+    public void findSecondBestHabitat() {
 
-    public int chooseFromRiver() {
-        Habitat[] playerTileHabitats;
-        ArrayList<Integer> potentialSuitors = new ArrayList<Integer>();
 
         for (int x = 0; x < playerBoard.length; x++) {
             for (int y = 0; y < playerBoard.length; y++) {
-                // search through entire map
                 if (!map.getMap()[x][y].getEmptyTile()) {
-                    // find where tiles have been placed
-                    playerTileHabitats = playerBoard[x][y].getHabitats();
-
-                    if (playerBoard[x][y].getSelect() == 1) {
-                        // if habitats match select that tile from river
-                        for (int k = 0; k < 4; k++) {
-                            for (int w = 0; w < TileDeck.getRiverTilesIndex(k).getHabitats().length; w++) {
-                                if (playerTileHabitats[0].equals(TileDeck.getRiverTilesIndex(k).getHabitat(w))) {
-                                    potentialSuitors.add(k);
-                                }
-
+                    for(int k=0;k<playerBoard[x][y].getHabitats().length;k++) {
+                        for(int l=0;l<heldTile.getHabitats().length;l++) {
+                            if (heldTile.getHabitat(l).equals(playerBoard[x][y].getHabitat(k))) {
+                                searchRadius(x, y);
+                                return;
                             }
                         }
+                    }
 
-                    } else {
-                        int k = 0;
-                        while (k < 4) {
-                            for (int i = 0; i < playerTileHabitats.length; i++) {
-                                for (int j = 0; j < TileDeck.getRiverTilesIndex(k).getHabitats().length; j++) {
-                                    if (playerTileHabitats[i].equals(TileDeck.getRiverTilesIndex(k).getHabitat(j))) {
-                                        // if habitats match put indexes of those tiles into an arraylist
-                                        potentialSuitors.add(k);
-                                    }
-                                }
-                            }
-                            k++;
-                        }
+                }
 
+            }
+        }
+    }
+    public boolean checkTilePlacement(int x,int y) {
+        if (map.getMap()[x][y + 1].getEmptyTile()) {
+            return true;
+
+        } else if (map.getMap()[x][y - 1].getEmptyTile()) {
+            return true;
+
+
+        } else if (map.getMap()[x - 1][y].getEmptyTile()) {
+            return true;
+
+        } else return map.getMap()[x + 1][y].getEmptyTile();
+    }
+
+    public int chooseFromRiver() {
+        System.out.println("its me choose from river");
+        potentialSuitors = new ArrayList<>();
+        MaxCorridor[] maxQuarters = habitatScore();
+        potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, habitatScore().length));
+        boolean hasBestHabitat = false;
+
+        int position = 0;
+       /* int maxQuarterRanking = 0;
+        boolean isInvalidSuitor = true;
+        if(isAvailable(maxQuarterRanking)){
+           isInvalidSuitor =false;
+        }
+        while (isInvalidSuitor){
+            maxQuarterRanking++;
+            if(isAvailable(maxQuarterRanking)){
+                isInvalidSuitor = false;
+            }
+        }*/
+        //checking if positions for MaxCorridor are available
+       if(checkSingleTileInRiver(0)>0){
+           return checkSingleTileInRiver(0);
+       }
+       int k = 0;
+        while (!hasBestHabitat) {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < TileDeck.getRiverTilesIndex(i).getHabitats().length; j++) {
+                    if (potentialSuitors.get(k).getHabitatType().equals(TileDeck.getRiverTilesIndex(i).getHabitat(j))) {
+                        hasBestHabitat = true;
+                        position = i;
+                        System.out.println("this is the max quarter habitat " + potentialSuitors.get(k).getHabitatType());
                     }
                 }
+                if(hasBestHabitat){
+                    return position;
+                }
+
+            }
+            k++;
+            if(checkSingleTileInRiver(k)>0){
+                return checkSingleTileInRiver(k);
             }
         }
-        for (int i = 0; i < potentialSuitors.size(); i++) {
-            for (int j = i + 1; j < potentialSuitors.size(); j++) {
-                if (Objects.equals(potentialSuitors.get(i), potentialSuitors.get(j))) {
-                    potentialSuitors.remove(j);
-                    j--;
+        //loops through the tiles in the river and checks if their habitat types match the habitat type of max quarter
+
+
+
+
+
+        return -1;
+    }
+    public int checkSingleTileInRiver(int habitatToCheck){
+        //checks if single habitat tile in river matches max quarter habitat if so return index of tile in river
+
+        ArrayList<Integer> singleTileIndexes = new ArrayList<Integer>();
+        for(int i=0;i<TileDeck.getRiverTiles().length;i++){
+            if(TileDeck.getRiverTilesIndex(i).getSelect()==1){
+               singleTileIndexes.add(i);
+            }
+        }
+        //add single habitat tiles in river to array
+        for(int i=0;i<potentialSuitors.size();i++){
+            for(int j=0;j<singleTileIndexes.size();j++){
+                if(TileDeck.getRiverTilesIndex(singleTileIndexes.get(j)).getHabitat(0).equals(potentialSuitors.get(habitatToCheck).getHabitatType())){
+                    return singleTileIndexes.get(j);
                 }
             }
         }
-        Random rand = new Random();
-        int randomNum;
+        //checks if they match the habitat type of max quarter
+        return  -1;
+    }
 
-        if (potentialSuitors.size() == 0) {
-            randomNum = rand.nextInt(4);
+    public boolean isAvailable(int x){
+        int coordX=0;
+        int coordY=0;
 
-        } else {
-            randomNum = rand.nextInt(potentialSuitors.size());
+        System.out.println("this is the size of the coords array "+potentialSuitors.get(x).getXcordArrayList().size());
+        for(int i=0;i<potentialSuitors.get(x).getXcordArrayList().size();i++) {
+             coordX = potentialSuitors.get(x).getYcordArrayList().get(i);
+             coordY = potentialSuitors.get(x).getXcordArrayList().get(i);
+             if(checkTilePlacement(coordX,coordY)){
+                 return true;
+             }
 
         }
-        return potentialSuitors.get(randomNum);
-
-        // randomly select one of the potential suitors
+        return false;
 
     }
 

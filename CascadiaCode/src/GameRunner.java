@@ -48,6 +48,7 @@ public class GameRunner {
         A_Bear.explainBearCard();
         A_Elk.explainCard();
         A_Salmon.explainCard();
+        A_Fox.explainFoxCard();
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
         Thread.sleep(1500);
@@ -170,7 +171,7 @@ public class GameRunner {
 
                      */
 
-                    players.get(playersTurn).findBestHabitat();
+                    players.get(playersTurn).findBestHabitat(0);
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
@@ -283,7 +284,7 @@ public class GameRunner {
 
             playersSalmonScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
             System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + playersSalmonScores.get(i).countScore());
-
+            fox.countFoxes(players.get(i));
             System.out.println(players.get(i).getName() +"'s points for fox are: " + fox.countScore(players.get(i)) + "\n");
         }
 
