@@ -340,6 +340,12 @@ public class Tile {
         boardXIndex = x;
         boardYIndex = y;
     }
+    public int getBoardXIndex() {
+        return boardXIndex;
+    }
+    public int getBoardYIndex() {
+        return boardYIndex;
+    }
     
     public boolean isPlayed() {
         return this.Played;
