@@ -52,7 +52,7 @@ public class GameRunner {
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
-        int strategyChosen=Tile.randomNumberGenerator(2);
+        int strategyChosen=Tile.randomNumberGenerator(3);
         System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
         if(strategyChosen==0){
             System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
@@ -60,10 +60,12 @@ public class GameRunner {
         if(strategyChosen==1){
             System.out.println("This strategy is the random strat. It will pick the tile randomly and then place the token randomly.");
         }
+        if(strategyChosen==2){
+            System.out.println("This strategy picks the pair tile-token based on the token scoring. Then both the tile and token are placed to maximise points.");        }
 
         Thread.sleep(2000);
 
-        while (turnTheGameIsAt <= 10 && continueGame) {
+        while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
@@ -110,11 +112,40 @@ public class GameRunner {
 
                     IOcascadia.instructionsToChoosePair();
 
-                    int instructionsToChoosePairInput;
+                    int instructionsToChoosePairInput = Tile.randomNumberGenerator(4);
                     if (strategyChosen == 0) {
                         instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
-                    } else /*if(strategyChosen == 1)*/{
-                        instructionsToChoosePairInput = Tile.randomNumberGenerator(4);;
+                    }
+                    if (strategyChosen == 2) {
+                        int pointsPerRiverToken=0;
+                        int maxPoints = -1;
+                        int maxPointsIndex=0;
+                        for(int i=0;i<TileDeck.getRiverTokens().length;i++){
+                            if(TileDeck.getRiverTokensIndex(i) == Wildlife.HAWK){
+                                pointsPerRiverToken=playersHawkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.BEAR){
+                                pointsPerRiverToken=playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if(TileDeck.getRiverTokensIndex(i) == Wildlife.FOX){
+                                pointsPerRiverToken=0;
+                            } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.ELK) {
+                                pointsPerRiverToken=playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.SALMON) {
+                                pointsPerRiverToken=playersSalmonScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            }
+
+                            if(pointsPerRiverToken>=maxPoints){
+                                maxPoints=pointsPerRiverToken;
+                                maxPointsIndex=i;
+                            }
+                        }
+                        /*for(int i:riverTokenPoints){
+                            System.out.println("riverForPoints point = " + i);
+                        }
+                        System.out.println("Max points= " + maxPoints);
+                        System.out.println("Max points index= " + maxPointsIndex);
+                         */
+
+                        instructionsToChoosePairInput=maxPointsIndex;
                     }
 
 
@@ -159,7 +190,7 @@ public class GameRunner {
 
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        if(strategyChosen==0){
+                        if(strategyChosen==0 || strategyChosen==2){
                             if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
                                 playersHawkScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
@@ -250,7 +281,7 @@ public class GameRunner {
                 players.get(playersTurn).habitatScore();
 
                 playersTurn++;
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             }
         }
         System.out.println("""

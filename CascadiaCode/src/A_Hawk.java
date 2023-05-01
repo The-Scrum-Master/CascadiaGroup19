@@ -11,6 +11,7 @@ public class A_Hawk{
     private ArrayList<TokenForPoints> arrayOfTokens;
     private ArrayList<TokenForPoints> arrayOfPlaceholders;
     Player player;
+    int numberOfHawks;
 
     public A_Hawk(Player player){
         this.player=player;
@@ -26,13 +27,18 @@ public class A_Hawk{
         placeAnywhere();
     }
 
+    public int strategy3(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        return checkPointsFromRiver();
+    }
+
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
         getIndexesForTokens(playerBoard, playerMapGenerator);
     }
 
     public int countScore() {
-        int numberOfHawks=0;
+        numberOfHawks=0;
         for(int i=0; i<arrayOfTokens.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){
@@ -179,6 +185,46 @@ public class A_Hawk{
                     }
                 }
             }
+        }
+    }
+
+    public int checkPointsFromRiver() {
+        for(int i=0; i<arrayOfPlaceholders.size(); i++){
+            boolean foundAdjacentHawk=false;
+            for(int j=0; j<arrayOfTokens.size(); j++){
+                if(arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                        arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                        arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1) {
+                    //looking for adjacent X cord
+
+                    if (arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() ||
+                            arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 ||
+                            arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() - 1) {
+                        //looking for adjacent Y cord
+                        foundAdjacentHawk = true;
+                        break;
+                    }
+                }
+            }
+            if(!foundAdjacentHawk){
+                arrayOfPlaceholders.get(i).setValid(true);
+            }
+        }
+        ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
+        if(arrayOfPlaceholders.size()==0){
+            return 0;
+        }
+        else{
+            for(TokenForPoints i : arrayOfPlaceholders){
+                if(i.getValid()){
+                    finalDraft.add(i);
+                }
+            }
+        }
+        if(finalDraft.size() == 0){
+            return 0;
+        } else{
+            return turnNumberOfHawksIntoPoints(player.getNumberOfHawks()+1) - turnNumberOfHawksIntoPoints(player.getNumberOfHawks());
         }
     }
 
