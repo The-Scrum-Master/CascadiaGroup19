@@ -264,18 +264,10 @@ public class A_Hawk{
     }
 
     public boolean checkForSingleTile(int x, int y){
-        if (player.getPlayerBoard()[y][x].getSelect()==1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return player.getPlayerBoard()[y][x].getSelect() == 1;
     }
 
     public boolean areThereAnyPlaceholders(){
-        if(arrayOfPlaceholders.isEmpty()){
-            return false;
-        }
-        return true;
+        return !arrayOfPlaceholders.isEmpty();
     }
 }

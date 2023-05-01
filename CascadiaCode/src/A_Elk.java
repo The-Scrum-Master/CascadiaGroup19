@@ -409,12 +409,7 @@ public class A_Elk{
     }
 
     public boolean checkForSingleTile(int x, int y){
-        if (player.getPlayerBoard()[y][x].getSelect()==1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return player.getPlayerBoard()[y][x].getSelect() == 1;
     }
 
     public static void insertionSort(ArrayList<TokenForPoints> arrayList) {
@@ -432,9 +427,6 @@ public class A_Elk{
     }
 
     public boolean areThereAnyPlaceholders(){
-        if(arrayOfPlaceholders.isEmpty()){
-            return false;
-        }
-        return true;
+        return !arrayOfPlaceholders.isEmpty();
     }
 }

@@ -1,13 +1,19 @@
+/* Group 19
+ * Group name: Front row
+ * Timi Salam- 2139203(Timisalam)
+ * Patrick Kelly-21204063(Patkelly17)
+ * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+ */
+
 import java.util.ArrayList;
-import java.util.Map;
 
 public class A_Fox {
     Player player;
-    private ArrayList<Integer> coordX = new ArrayList<Integer>();
-    private ArrayList<Integer> coordY = new ArrayList<Integer>();
+    private ArrayList<Integer> coordX = new ArrayList<>();
+    private ArrayList<Integer> coordY = new ArrayList<>();
 
-    ArrayList<Wildlife> animals = new ArrayList<Wildlife>();
-    ArrayList<Integer> score = new ArrayList<Integer>();
+    ArrayList<Wildlife> animals = new ArrayList<>();
+    ArrayList<Integer> score = new ArrayList<>();
 
     public A_Fox(Player player) {
         this.player = player;
@@ -29,7 +35,6 @@ public class A_Fox {
                 }
             }
         }
-
     }
 
     public int countScore(Player player) {
@@ -42,58 +47,36 @@ public class A_Fox {
                 animals = new ArrayList<>();
                 if (player.playerBoard[coordX.get(x)][coordY.get(x) + 1] != null && player.playerBoard[coordX.get(x)][coordY.get(x) + 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x)][coordY.get(x) + 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x)][coordY.get(x) - 1] != null && player.playerBoard[coordX.get(x)][coordY.get(x) - 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x)][coordY.get(x) - 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) - 1][coordY.get(x)] != null && player.playerBoard[coordX.get(x) - 1][coordY.get(x)].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) - 1][coordY.get(x)].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) + 1][coordY.get(x)] != null && player.playerBoard[coordX.get(x) + 1][coordY.get(x)].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) + 1][coordY.get(x)].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) + 1][coordY.get(x) + 1] != null && player.playerBoard[coordX.get(x) + 1][coordY.get(x) + 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) + 1][coordY.get(x) + 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) + 1][coordY.get(x) - 1] != null && player.playerBoard[coordX.get(x) + 1][coordY.get(x) - 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) + 1][coordY.get(x) - 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) - 1][coordY.get(x) + 1] != null && player.playerBoard[coordX.get(x) - 1][coordY.get(x) + 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) - 1][coordY.get(x) + 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) - 1][coordY.get(x) - 1] != null && player.playerBoard[coordX.get(x) - 1][coordY.get(x) - 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) - 1][coordY.get(x) - 1].tokenPlayedType);
-
-
                 }
-
                 removeDuplicates();
-
             }
-
             return getScore();
         }
-
-
     }
 
     public void removeDuplicates() {
         //for each tile with a fox token placed, checks and counts the unique tokens that surround it and adds them up to calculate points
-
         for (int i = 0; i < animals.size(); i++) {
             for (int j = i + 1; j < animals.size(); j++) {
                 if (animals.get(i).equals(animals.get(j))) {
@@ -106,29 +89,18 @@ public class A_Fox {
         // if  none unique token found  remove one of them from arrayList
         int points = animals.size();
 
-
-
-             score.add(points);
+        score.add(points);
         //add number of unique tokens found to score arraylist
-
-
-
-
     }
     public int getScore(){
-
         int finalScore = 0;
         for(int i=0;i<score.size();i++){
             finalScore+=score.get(i);
         }
         //add up all the points and return
         return finalScore;
-
     }
     public static void explainFoxCard() {
         System.out.println("This is Fox Scorecard A. Points are given for total number of fox that are not adjacent to any other fox.\n");
     }
-
-
-
 }

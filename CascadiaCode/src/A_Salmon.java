@@ -370,17 +370,14 @@ public class A_Salmon{
     }
 
     public static void explainCard() {
-        System.out.println("This is Salmon Scorecard A. Points are given for each run of salmon, depending on its length. \nA run is defined " +
-                "as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.\n");
+        System.out.println("""
+                This is Salmon Scorecard A. Points are given for each run of salmon, depending on its length.\s
+                A run is defined as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.
+                """);
     }
 
     public boolean checkForSingleTile(int x, int y){
-        if (player.getPlayerBoard()[y][x].getSelect()==1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return player.getPlayerBoard()[y][x].getSelect() == 1;
     }
 
     public void insertionSort(ArrayList<TokenForPoints> arrayList) {
@@ -398,9 +395,6 @@ public class A_Salmon{
     }
 
     public boolean areThereAnyPlaceholders(){
-        if(arrayOfPlaceholders.isEmpty()){
-            return false;
-        }
-        return true;
+        return !arrayOfPlaceholders.isEmpty();
     }
 }

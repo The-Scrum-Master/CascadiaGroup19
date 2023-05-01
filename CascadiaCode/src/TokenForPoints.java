@@ -11,7 +11,7 @@ public class TokenForPoints {
     private boolean alreadyAccountedFor=false;
     private boolean alreadyPairedUp=false;
     private int numberOfAdjacent=0;
-    //this is number of adjacent tokens
+    // number of adjacent tokens
     private boolean singleColorTile=false;
     private int length=0;
     private int riverPoints;
@@ -30,69 +30,50 @@ public class TokenForPoints {
     public int getCordX() {
         return cordX;
     }
-
     public void setCordX(int cordX) {
         this.cordX = cordX;
     }
-
     public int getCordY() {
         return cordY;
     }
-
     public void setCordY(int cordY) {
         this.cordY = cordY;
     }
-
     public boolean getValid() {
         return valid;
     }
-
     public void setValid(boolean valid) {
         this.valid = valid;
     }
-
     public boolean getAlreadyAccountedFor() {
         return alreadyAccountedFor;
     }
-
     public void setAlreadyAccountedFor(boolean alreadyAccountedFor) {
         this.alreadyAccountedFor = alreadyAccountedFor;
     }
-
     public int getNumberOfAdjacent() {
         return numberOfAdjacent;
     }
-
     public void setNumberOfAdjacent(int numberOfAdjacent) {
         this.numberOfAdjacent = numberOfAdjacent;
     }
-
     public boolean getSingleColorTile() {return singleColorTile; }
-
     public void setSingleColorTile(boolean singleColorTile) {
         this.singleColorTile = singleColorTile;
     }
-
     public boolean getAlreadyPairedUp() {return alreadyPairedUp;}
-
     public void setAlreadyPairedUp(boolean alreadyPairedUp) {this.alreadyPairedUp = alreadyPairedUp;}
-
     public int getLength() { return length; }
-
     public void setLength(int length) { this.length = length; }
-
     public int getRiverPoints() {
         return riverPoints;
     }
-
     public void setRiverPoints(int riverPoints) {
         this.riverPoints = riverPoints;
     }
-
     public Wildlife getTypeOfAnimal() {
         return typeOfAnimal;
     }
-
     public void setTypeOfAnimal(Wildlife typeOfAnimal) {
         this.typeOfAnimal = typeOfAnimal;
     }

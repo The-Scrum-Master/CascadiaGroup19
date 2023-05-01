@@ -1,4 +1,3 @@
-
 /*Group: 19
 *Team Name: Front Row
 *Timi Salam- 21392803(Timisalam)
@@ -12,29 +11,22 @@ import java.util.Scanner;
 public class IOcascadia {
     static final int numberOfBots=2;
     static private int participantsInt=numberOfBots;
-    static public ArrayList<String> playerNames= new ArrayList<String>();
-    static public ArrayList<Integer> order= new ArrayList<Integer>();
-
+    static public ArrayList<String> playerNames= new ArrayList<>();
+    static public ArrayList<Integer> order= new ArrayList<>();
 
     public static String takeInput(){
         Scanner in =new Scanner(System.in);
         return in.nextLine().trim();
     }
-    public static boolean onlyDigits(String str, int n)
-    {
-        // Traverse the string from
-        // start to end
+    public static boolean onlyDigits(String str, int n) {
+        // Traverse the string from start to end
         for (int i = 0; i < n; i++) {
-
-            // Check if character is
-            // not a digit between 0-9
-            // then return false
+            // Check if character is not a digit between 0-9 then return false
             if (str.charAt(i) < '0'|| str.charAt(i) > '9') {
                 return false;
             }
         }
-        // If we reach here, that means
-        // all characters were digits.
+        // If we reach here, that means all characters were digits.
         return true;
     }
     public static int takeIntInput(){
@@ -42,11 +34,10 @@ public class IOcascadia {
         String input=in.next();
         if(onlyDigits(input, input.length())){
             return Integer.parseInt(input);
-        }
-        else{
+        } else{
             System.out.println("Wrong input (expected digits), try again :)");
             return takeIntInput();
-            }
+        }
     }
 
     public static String makeLowerCase(String str){
@@ -104,8 +95,7 @@ public class IOcascadia {
                 }
                 if(reGenerate){
                     i--;
-                }
-                else{
+                } else{
                     order.add(j);
                 }
             }
@@ -131,86 +121,6 @@ public class IOcascadia {
         Random rand = new Random ();
         return rand.nextInt(upperBound);
     }
-
-    /*public static int selectScoreCardSalmon(){
-        int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
-        if(rand==0){
-            SalmonScoreCard_A.explainCard();
-        }
-                                   THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
-        else if(rand==1){
-            SalmonScoreCard_B.explainCard();
-        }
-        else{
-            SalmonScoreCard_C.explainCard();
-        }
-
-        return rand;
-    }*/
-
-    /*public static int selectScoreCardFox(){
-        int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
-        if(rand==0){
-            FoxScoreCard_A.explainCard();
-        }
-                                   THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
-        else if(rand==1){
-            FoxScoreCard_B.explainCard();
-        }
-        else{
-            FoxScoreCard_C.explainCard();
-        }
-
-        return rand;
-    }*/
-
-    /*public static int selectScoreCardBear(){
-        int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
-        if(rand==0){
-            BearScoreCard_A.explainCard();
-        }
-                                   THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
-        else if(rand==1){
-            BearScoreCard_B.explainCard();
-        }
-        else{
-            BearScoreCard_C.explainCard();
-        }
-
-        return rand;
-    }*/
-
-    /*public static int selectScoreCardElk(){
-        int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
-        if(rand==0){
-            ElkScoreCard_A.explainCard();
-        }
-                                 THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
-        else if(rand==1){
-            ElkScoreCard_B.explainCard();
-        }
-        else{
-            ElkScoreCard_C.explainCard();
-        }
-
-        return rand;
-    }/*
-
-    /*public static int selectScoreCardHawk(){
-        int rand = randomNumberGenerator(1);    //the upper bound should be 3 if we had had time to implement scorecards B and C
-        if(rand==0){
-            HawkScoreCard_A.explainCard();
-        }
-                                 THIS TWO OTHER OPTIONS WOULD BE UNCOMMENTED IF WE HAD HAD TIME TO IMPLEMENT SCORECARDS B AND C
-        else if(rand==1){
-            HawkScoreCard_B.explainCard();
-        }
-        else{
-            HawkScoreCard_C.explainCard();
-        }
-
-        return rand;
-    }*/
 
     public static ArrayList<String> getPlayerNames() {
         return playerNames;

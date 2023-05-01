@@ -1,4 +1,3 @@
-import java.lang.ref.Cleaner.Cleanable;
 import java.util.ArrayList;
 /* Group 19
  * Group name: Front row
@@ -27,7 +26,6 @@ public class MaxCorridor {
         return Xcordinates;
     }
 
-
     public void clearCords(){
         Xcordinates.clear();
         Ycordinates.clear();
@@ -36,7 +34,7 @@ public class MaxCorridor {
     public int getSize() {
         if(Xcordinates.size() == Ycordinates.size()){
             return Xcordinates.size();
-        }else{
+        } else{
             throw new IllegalStateException("Error: X and Y cordinates are not the same size");
         }
     }

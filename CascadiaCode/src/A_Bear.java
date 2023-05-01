@@ -341,25 +341,6 @@ public class A_Bear{
         }
     }
 
-    public boolean atLeastAPartner(TokenForPoints placeholder) {
-        boolean result=false;
-        for(int i=0; i<arrayOfPlaceholders.size(); i++){
-            if(arrayOfPlaceholders.get(i).equals(placeholder)){
-                continue;
-            }
-            if( ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() + 1 )) ||
-                    ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() - 1 )) ||
-                    ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() + 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() )) ||
-                    ((arrayOfPlaceholders.get(i).getCordX()==placeholder.getCordX() - 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == placeholder.getCordY() )) ){
-                //looking for adjacent in cross
-
-                result=true;
-                break;
-            }
-        }
-        return result;
-    }
-
     public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
         //get indexes of all places there are bear placeholders
         arrayOfPlaceholders = new ArrayList<>();
@@ -389,18 +370,10 @@ public class A_Bear{
     }
 
     public boolean checkForSingleTile(int x, int y){
-        if (player.getPlayerBoard()[y][x].getSelect()==1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return player.getPlayerBoard()[y][x].getSelect() == 1;
     }
 
     public boolean areThereAnyPlaceholders(){
-        if(arrayOfPlaceholders.isEmpty()){
-            return false;
-        }
-        return true;
+        return !arrayOfPlaceholders.isEmpty();
     }
 }

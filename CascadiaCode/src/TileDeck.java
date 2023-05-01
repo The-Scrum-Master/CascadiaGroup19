@@ -15,7 +15,6 @@ import java.util.*;
  * @author Patrick Kelly
  */
 public class TileDeck extends Stack<Tile> {
-
     public static Tile[] riverTiles = new Tile[4];
     public static Wildlife[] riverTokens = new Wildlife[4];
     static TileDeck deck;
@@ -26,7 +25,7 @@ public class TileDeck extends Stack<Tile> {
                 super.add(new Tile(1));
             } else if (i < 55) {
                 super.add(new Tile(2));
-            }else{
+            } else{
                 super.add(new Tile(3));
             }
         }
@@ -34,10 +33,8 @@ public class TileDeck extends Stack<Tile> {
     public void shuffle () {
         Collections.shuffle(this);
     }
-
     public static TileDeck getDeck(){return deck;}
     public static Tile[] getRiverTiles(){ return riverTiles;}
-
     public static Wildlife[] getRiverTokens(){return riverTokens;}
     public static Tile getRiverTilesIndex(int index){ return riverTiles[index];}
     public static Wildlife getRiverTokensIndex(int index){return riverTokens[index];}

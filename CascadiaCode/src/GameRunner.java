@@ -209,7 +209,6 @@ public class GameRunner {
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
-
                     players.get(playersTurn).setHeldTile(null);
 
                     if (players.get(playersTurn).checkToken()) {
@@ -225,35 +224,7 @@ public class GameRunner {
                                 foxPlacement.strategy1(players.get(playersTurn));
                             } else if(players.get(playersTurn).heldToken.equals(Wildlife.SALMON)){
                                 playersSalmonScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
-                            }/* else{
-                                System.out.println("Do you want to place the token? (yes or no)");
-                                wrongInput = true;
-                                while (wrongInput) {
-                                    String decision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
-
-                                    if (decision.equals("yes")) {
-
-                                        System.out.println("Where would you like to place token " + token);
-                                        int coordinate = IOcascadia.takeIntInput();
-                                        int coordinate2 = IOcascadia.takeIntInput();
-                                        while (coordinate <= 0 || coordinate >= 46 || coordinate2 <= 0 || coordinate2 >= 46) {
-                                            System.out.println("Error placed tile out of bounds please try again");
-                                            coordinate = IOcascadia.takeIntInput();
-                                            coordinate2 = IOcascadia.takeIntInput();
-                                        }
-                                        players.get(playersTurn).placeToken(coordinate, coordinate2);
-                                        players.get(playersTurn).printMap(helperIntToPrintMap);
-                                        wrongInput = false;
-
-
-                                    } else if (decision.equals("no")) {
-                                        wrongInput = false;
-                                    } else {
-                                        System.out.println("expected a yes or no answer, please try again");
-                                    }
-                                }
                             }
-                            */
                         }
                         else{
                             if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
@@ -271,21 +242,7 @@ public class GameRunner {
                     }
                     players.get(playersTurn).setIsFilledToFalse();
                 }
-                /*1System.out.println("Your turn has ended.\nDo you want to quit and end the game? (Yes/No)");
-                boolean wrongInputGameQuit = true;
-                while (wrongInputGameQuit) {
-                    String quitGameDecision = IOcascadia.makeLowerCase(IOcascadia.takeInput());
-                    if (quitGameDecision.equals("yes")) {
-                        continueGame = false;
-                        wrongInputGameQuit = false;
-                    } else if (quitGameDecision.equals("no")) {
-                        wrongInputGameQuit = false;
 
-                    } else {
-                        System.out.println("Wrong input please try again");
-                    }
-                }
-                 */
                 playersHawkScores.get(playersTurn).getIndexesForTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                 System.out.println(players.get(playersTurn).getName() +"'s points for hawks so far are: " + playersHawkScores.get(playersTurn).countScore());
 
@@ -344,10 +301,7 @@ public class GameRunner {
             scores[count] = fox.countScore(players.get(i));
             System.out.println(players.get(i).getName() +"'s points for fox are: " +scores[count]  + "\n");
             players.get(i).totalScore.add(scores[count]);
-
-
         }
-
 
 
         playersTurn = 0;
@@ -407,33 +361,6 @@ public class GameRunner {
         playersTurn = 0;
         while (playersTurn < numberOfPlayers) {
             System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
-
-            //the ints elkRand, bearRand, etc would be used here to utilise the scorecard that was randomly selected
-            //at the beggining of the main if we had implemented more than one scorecard. Because we have not had time,
-            //the following lines only use scorecards A, as they are the only implemented ones
-
-            /*
-            HawkScoreCard_A hawkScore = new HawkScoreCard_A(players.get(playersTurn));
-            hawkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
-            System.out.println("Points awarded for hawks: " + hawkScore.countScore());
-
-            BearScoreCard_A bearScore = new BearScoreCard_A(players.get(playersTurn));
-            bearScore.getIndexes(players.get(playersTurn).getPlayerBoard());
-            System.out.println("Points awarded for bears: " + bearScore.countScore());
-
-            ElkScoreCard_A elkScore = new ElkScoreCard_A(players.get(playersTurn));
-            elkScore.getIndexes(players.get(playersTurn).getPlayerBoard());
-            System.out.println("Points awarded for elks: " + elkScore.countScore());
-
-            SalmonScoreCard_A salmonScore = new SalmonScoreCard_A(players.get(playersTurn));
-            salmonScore.getIndexes(players.get(playersTurn).getPlayerBoard());
-            System.out.println("Points awarded for salmon: " + salmonScore.countScore());
-
-            FoxScoreCard_A foxScore = new FoxScoreCard_A(players.get(playersTurn));
-            foxScore.getIndexes(players.get(playersTurn).getPlayerBoard());
-            System.out.println("Points awarded for fox: " + foxScore.countScore());
-
-             */
 
             int totalHabitatPoints;
             int forestPoints=0;

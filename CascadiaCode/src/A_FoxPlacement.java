@@ -1,14 +1,19 @@
+/* Group 19
+ * Group name: Front row
+ * Timi Salam- 2139203(Timisalam)
+ * Patrick Kelly-21204063(Patkelly17)
+ * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+ */
 import java.util.ArrayList;
-
 
 public class A_FoxPlacement {
     Player player;
     private int maximumScore = 0;
-    private ArrayList<Integer> coordX = new ArrayList<Integer>();
-    private ArrayList<Integer> coordY = new ArrayList<Integer>();
+    private ArrayList<Integer> coordX = new ArrayList<>();
+    private ArrayList<Integer> coordY = new ArrayList<>();
 
-    ArrayList<Wildlife> animals = new ArrayList<Wildlife>();
-    ArrayList<Integer> score = new ArrayList<Integer>();
+    ArrayList<Wildlife> animals = new ArrayList<>();
+    ArrayList<Integer> score = new ArrayList<>();
 
     public int getXcoord(int x){
         return coordX.get(x);
@@ -16,7 +21,6 @@ public class A_FoxPlacement {
     public int getYcoord(int y){
         return coordY.get(y);
     }
-
 
     public int getMaximumScore() {
         return maximumScore;
@@ -52,7 +56,6 @@ public class A_FoxPlacement {
                             }
                         }
                     }
-
                 }
             }
         }
@@ -68,74 +71,49 @@ public class A_FoxPlacement {
     public void countPotentialScore(Player player) {
         score = new ArrayList<>();
         if (coordX == null || coordX.size() < 1) {
-
         } else {
             //goes through all tiles with a fox placeholder and searches around them for tiles with tokens placed and adds them to an arraylist
             for (int x = 0; x < coordX.size(); x++) {
                 animals = new ArrayList<>();
                 if (player.playerBoard[coordX.get(x)][coordY.get(x) + 1] != null && player.playerBoard[coordX.get(x)][coordY.get(x) + 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x)][coordY.get(x) + 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x)][coordY.get(x) - 1] != null && player.playerBoard[coordX.get(x)][coordY.get(x) - 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x)][coordY.get(x) - 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) - 1][coordY.get(x)] != null && player.playerBoard[coordX.get(x) - 1][coordY.get(x)].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) - 1][coordY.get(x)].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) + 1][coordY.get(x)] != null && player.playerBoard[coordX.get(x) + 1][coordY.get(x)].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) + 1][coordY.get(x)].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) + 1][coordY.get(x) + 1] != null && player.playerBoard[coordX.get(x) + 1][coordY.get(x) + 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) + 1][coordY.get(x) + 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) + 1][coordY.get(x) - 1] != null && player.playerBoard[coordX.get(x) + 1][coordY.get(x) - 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) + 1][coordY.get(x) - 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) - 1][coordY.get(x) + 1] != null && player.playerBoard[coordX.get(x) - 1][coordY.get(x) + 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) - 1][coordY.get(x) + 1].tokenPlayedType);
-
-
                 }
                 if (player.playerBoard[coordX.get(x) - 1][coordY.get(x) - 1] != null && player.playerBoard[coordX.get(x) - 1][coordY.get(x) - 1].getTokenPlaced()) {
                     animals.add(player.playerBoard[coordX.get(x) - 1][coordY.get(x) - 1].tokenPlayedType);
-
-
                 }
-
                 removeDuplicates();
-
             }
-
         }
-
-
     }
 
     public void removeDuplicates() {
         //for each tile with a fox token placed, checks and counts the unique tokens that surround it and adds them up to calculate points
-
         for (int i = 0; i < animals.size(); i++) {
             for (int j = i + 1; j < animals.size(); j++) {
                 if (animals.get(i).equals(animals.get(j))) {
                     animals.remove(j);
                     j--;
-
                 }
             }
         }
-
         score.add(animals.size());
     }
 
@@ -194,12 +172,7 @@ public class A_FoxPlacement {
     }
 
     public boolean checkForSingleTile(Player player, int x, int y){
-        if (player.playerBoard[x][y].getSelect()==1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return player.playerBoard[x][y].getSelect() == 1;
     }
     public int getPotentialScore(Player player){
         countFoxesPlaceHolders(player);
@@ -207,8 +180,6 @@ public class A_FoxPlacement {
         getScore();
         return getMaximumScore();
     }
-
-
 }
 
 

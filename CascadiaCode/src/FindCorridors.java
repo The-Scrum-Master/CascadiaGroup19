@@ -1,4 +1,9 @@
-
+/* Group 19
+ * Group name: Front row
+ * Timi Salam- 2139203(Timisalam)
+ * Patrick Kelly-21204063(Patkelly17)
+ * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+ */
 import java.util.ArrayList;
 
 public class FindCorridors {
@@ -68,25 +73,21 @@ public class FindCorridors {
             }
         }
         reorderMaxCorridors(maxCorridors);
+        printMaxCorridors();
         return maxCorridors;
     }
 
     private void recursiveCheck(Tile curTile, Direction direction, Habitat corridorHabitat) {
         if (curTile != null && !countedTiles.contains(curTile)) {
-            // System.out.println("recursiveCheck added tile " + curTile.getBoardXIndex() + " " + curTile.getBoardYIndex() + "to corridor type " + corridorHabitat);
             countedTiles.add(curTile);
             if (corridorCheck(Direction.RIGHT, curTile, corridorHabitat)) {
-                // System.out.println("recursive check moves Right");
                 recursiveCheck(getAdjTile(Direction.RIGHT, curTile), Direction.RIGHT, corridorHabitat);
             }else if (corridorCheck(Direction.DOWN, curTile, corridorHabitat)) {
-                // System.out.println("recursive check moves Down");
                 recursiveCheck(getAdjTile(Direction.DOWN, curTile), Direction.DOWN, corridorHabitat);
 
             }else if (corridorCheck(Direction.LEFT, curTile, corridorHabitat)) {
-                // System.out.println("recursive check moves left");
                 recursiveCheck(getAdjTile(Direction.LEFT, curTile), Direction.LEFT, corridorHabitat);
             }else if (corridorCheck(Direction.UP, curTile, corridorHabitat)) {
-                // System.out.println("recursive check moves up");
                 recursiveCheck(getAdjTile(Direction.UP, curTile), Direction.UP, corridorHabitat);
             }else{}
             largestCorridorTracker(corridorHabitat);
@@ -94,11 +95,7 @@ public class FindCorridors {
     }
 
     private boolean corridorCheck(Direction direction, Tile current, Habitat corridorHabitat) {
-        if(corridorFound(direction, current) && corridorFoundType(direction, current) == corridorHabitat){
-            return true;
-        }else{
-            return false;
-        }
+        return corridorFound(direction, current) && corridorFoundType(direction, current) == corridorHabitat;
     }
 
 
@@ -258,28 +255,6 @@ public class FindCorridors {
         }
     }
 
-    // public void initializeCorridors() {
-    //     Tile startTileSolo = playerBoard[22][22];
-    //     Tile startTile1 = playerBoard[23][22];
-    //     Tile startTile2 = playerBoard[23][23];
-    //     if (startTileSolo == null || startTile1 == null || startTile2 == null) {
-    //         throw new IllegalStateException("starting tiles are null");
-    //     }
-    //     for (int i = 0; i < maxCorridors.length; i++) {
-    //         if (maxCorridors[i].getHabitatType() == startTileSolo.getHabitat(0)) {
-    //             maxCorridors[i].addCords(startTileSolo.getBoardXIndex(), startTileSolo.getBoardYIndex());
-    //         } else if (maxCorridors[i].getHabitatType() == startTile1.getHabitat(0)) {
-    //             maxCorridors[i].addCords(startTile1.getBoardXIndex(), startTile1.getBoardYIndex());
-    //         } else if (maxCorridors[i].getHabitatType() == startTile1.getHabitat(1)) {
-    //             maxCorridors[i].addCords(startTile1.getBoardXIndex(), startTile1.getBoardYIndex());
-    //         } else if (maxCorridors[i].getHabitatType() == startTile2.getHabitat(0)) {
-    //             maxCorridors[i].addCords(startTile2.getBoardXIndex(), startTile2.getBoardYIndex());
-    //         } else if (maxCorridors[i].getHabitatType() == startTile2.getHabitat(1)) {
-    //             maxCorridors[i].addCords(startTile2.getBoardXIndex(), startTile2.getBoardYIndex());
-    //         }
-    //     }
-    // }
-
     private void firstHabitatCheck(Tile curTile) {
         Habitat habitat_index0 = curTile.getHabitat(0);
         for (int i = 0; i < maxCorridors.length; i++) {
@@ -289,7 +264,7 @@ public class FindCorridors {
                 countedTiles.clear();
             }
             if(curTile.getSelect() != 1){
-                Habitat habitat_index1 = curTile.getHabitat(1); 
+                Habitat habitat_index1 = curTile.getHabitat(1);
                 if (maxCorridors[i].getHabitatType() == habitat_index1) {
                     countedTiles.add(curTile);
                     largestCorridorTracker(maxCorridors[i].getHabitatType());
@@ -297,7 +272,7 @@ public class FindCorridors {
                 }
             }
         }
-    } 
+    }
 
     private void reorderMaxCorridors(MaxCorridor[] maxCorridors){
         for(int i = 0; i < maxCorridors.length; i++){
@@ -312,7 +287,7 @@ public class FindCorridors {
             }
         }
     }
-    
+
     private void switchIndex(int origianl, int newIndex){
         maxCorridors[origianl].getHabitatType();
         switch(maxCorridors[origianl].getHabitatType()){
@@ -331,13 +306,13 @@ public class FindCorridors {
             case WETLANDS:
                 WetlandCorridor_index = newIndex;
                 break;
-            default:    
+            default:
                 throw new IllegalStateException("The Habitat is not a valid state in switchIndex");
         };
     }
 
-    
-    public void printMaxCorridors(){ 
+
+    private  void printMaxCorridors(){
         System.out.println("Finished iterating through the playerboard for, the longest corridors are: ");
         for(int i = 0; i < maxCorridors.length; i++){
             System.out.println("Corridor " + i + " is of type: " + maxCorridors[i].getHabitatType() + " and has a size of: " + maxCorridors[i].getSize());

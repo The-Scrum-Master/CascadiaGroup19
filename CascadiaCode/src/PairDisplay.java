@@ -15,7 +15,7 @@ public class PairDisplay {
         displayTilesToChooseFrom[3]=tile4;
     }
 
-    public static void tileDisplay(){ //there has to be an array of
+    public static void tileDisplay(){
         for(int k=0; k<4; k++){
             for (int j = 0; j < displayTilesToChooseFrom.length; j++) {
                 displayTilesToChooseFrom[j].printTilePerRow(k);
@@ -24,7 +24,7 @@ public class PairDisplay {
         }
     }
 
-    public static void tokensDisplay(){ //there has to be an array of
+    public static void tokensDisplay(){
         for(int k=0; k<4; k++){
             for (int j = 0; j < displayTokensToChooseFrom.length; j++) {
                 displayTokensToChooseFrom[j].printTilePerRow(k);

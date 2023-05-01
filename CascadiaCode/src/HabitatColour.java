@@ -5,9 +5,5 @@
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 public enum HabitatColour {
-    BLUE,
-    GREY,
-    YELLOW,
-    GREEN,
-    CYAN
+    BLUE, GREY, YELLOW, GREEN, CYAN
 }
