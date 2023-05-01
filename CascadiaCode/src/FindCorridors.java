@@ -68,7 +68,6 @@ public class FindCorridors {
             }
         }
         reorderMaxCorridors(maxCorridors);
-        printMaxCorridors();
         return maxCorridors;
     }
 
@@ -338,7 +337,7 @@ public class FindCorridors {
     }
 
     
-    private  void printMaxCorridors(){ 
+    public void printMaxCorridors(){ 
         System.out.println("Finished iterating through the playerboard for, the longest corridors are: ");
         for(int i = 0; i < maxCorridors.length; i++){
             System.out.println("Corridor " + i + " is of type: " + maxCorridors[i].getHabitatType() + " and has a size of: " + maxCorridors[i].getSize());
