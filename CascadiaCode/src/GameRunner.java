@@ -66,7 +66,7 @@ public class GameRunner {
 
         Thread.sleep(2000);
 
-        while (turnTheGameIsAt <= 20 && continueGame) {
+        while (turnTheGameIsAt <= 10 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
