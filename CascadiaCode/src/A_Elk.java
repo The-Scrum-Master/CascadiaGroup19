@@ -419,7 +419,7 @@ public class A_Elk{
         }
     }
 
-    public void insertionSort(ArrayList<TokenForPoints> arrayList) {
+    public static void insertionSort(ArrayList<TokenForPoints> arrayList) {
         //we use insertion sort because the arraylist size is not going to be bigger than 10 most probably, and a max size of 20
         int n = arrayList.size();
         for (int i = 1; i < n; i++) {

@@ -112,6 +112,12 @@ public class GameRunner {
 
                     IOcascadia.instructionsToChoosePair();
 
+                    boolean shouldBotCull=true;
+                    while(players.get(playersTurn).getNatureTokenNumber()>0 && shouldBotCull){
+                        shouldBotCull=shouldBotCull(playersTurn);
+                    }
+                    //check what the best token to place would be based on points, search through the offered tokens in the river, and if it is not there, cull the river
+
                     int instructionsToChoosePairInput = Tile.randomNumberGenerator(4);
                     if (strategyChosen == 0) {
                         instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
@@ -127,6 +133,7 @@ public class GameRunner {
                                 pointsPerRiverToken=playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if(TileDeck.getRiverTokensIndex(i) == Wildlife.FOX){
                                 pointsPerRiverToken=0;
+                                //IN HERE NEED TO ADD FUNCTION THAT RETURNS POINTS FOR FOX
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.ELK) {
                                 pointsPerRiverToken=playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.SALMON) {
@@ -460,6 +467,51 @@ public class GameRunner {
             System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber()+"\n");
             System.out.println("Total score for "+players.get(j).getName()+" is "+ sum+"\n");
         }
+    }
 
+    public static boolean shouldBotCull(int playersTurn){
+        ArrayList<TokenForPoints> pointsForEveryTypeOfToken = createArrayOfBestTokensToPlace(playersTurn);
+
+        boolean shouldBotCull=true;
+        for(int i=0 ; i<pointsForEveryTypeOfToken.size() ; i++){
+            if(shouldBotCull){
+                for(int j=0 ; j<TileDeck.getRiverTokens().length ; j++){
+                    if(pointsForEveryTypeOfToken.get(i).getTypeOfAnimal()==TileDeck.getRiverTokensIndex(j)){
+                        shouldBotCull=false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if(shouldBotCull){
+            System.out.println("The river has been culled");
+            TileDeck.cullRiver(4);
+            players.get(playersTurn).reduceNatureTokenNumberByOne();
+            PairDisplay.showPairs();
+        }
+
+        return shouldBotCull;
+    }
+
+    public static ArrayList<TokenForPoints> createArrayOfBestTokensToPlace(int playersTurn){
+        ArrayList<TokenForPoints> pointsForEveryTypeOfToken = new ArrayList<>();
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersHawkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.HAWK));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.BEAR));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.ELK));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersSalmonScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.SALMON));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(0, Wildlife.FOX));
+        //IN HERE NEED TO ADD FUNCTION THAT RETURNS POINTS FOR FOX
+
+        A_Elk.insertionSort(pointsForEveryTypeOfToken);
+
+        for(int i=1; i<pointsForEveryTypeOfToken.size();i++){
+            if(pointsForEveryTypeOfToken.get(i).getRiverPoints()!=pointsForEveryTypeOfToken.get(0).getRiverPoints()){
+                pointsForEveryTypeOfToken.remove(i);
+                i--;
+            }
+        }
+
+        return pointsForEveryTypeOfToken;
     }
 }
