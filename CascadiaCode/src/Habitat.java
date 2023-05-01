@@ -8,7 +8,7 @@ public enum Habitat{
         RIVER('R', HabitatColour.BLUE),
         FOREST('F',HabitatColour.GREEN),
         MOUNTAIN('M',HabitatColour.GREY),
-        WETLANDS('W',HabitatColour.BROWN),
+        WETLANDS('W',HabitatColour.CYAN),
         PRAIRIE('P',HabitatColour.YELLOW);
 
         private HabitatColour colour;

@@ -9,5 +9,5 @@ public enum HabitatColour {
     GREY,
     YELLOW,
     GREEN,
-    BROWN
+    CYAN
 }

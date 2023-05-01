@@ -1,9 +1,9 @@
 /*Group: 19
-*Team Name: Front Row
-*Timi Salam- 21392803(Timisalam)
-*Patrick Kelly-21204063(Patkelly17)
-*Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
-*/
+ *Team Name: Front Row
+ *Timi Salam- 21392803(Timisalam)
+ *Patrick Kelly-21204063(Patkelly17)
+ *Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+ */
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,8 +40,7 @@ public class Player {
     public Wildlife heldToken;
     public int natureTokenNumber;
     ArrayList<MaxCorridor> potentialSuitors = new ArrayList<>();
-    public  ArrayList<Integer> totalScore = new ArrayList<Integer>();
-
+    public ArrayList<Integer> totalScore = new ArrayList<Integer>();
 
 
     public Player(String name, int order) {
@@ -69,13 +68,14 @@ public class Player {
     public void setNumberOfBearPairs(int numberOfBearPairs) {
         this.numberOfBearPairs = numberOfBearPairs;
     }
+
     public int getNumberOfFoxes() {
         return numberOfFoxes;
     }
+
     public void setNumberOfFoxes(int numberOfFoxes) {
         this.numberOfFoxes = numberOfFoxes;
     }
-
 
 
     public Tile[][] getPlayerBoard() {
@@ -288,19 +288,17 @@ public class Player {
     }
 
     public boolean checkToken() {
-        hasToken=false;
+        hasToken = false;
         for (int i = 0; i < playerBoard.length; i++) {
             for (int j = 0; j < playerBoard.length; j++) {
 
-                if (playerBoard[i][j] != null &&!playerBoard[i][j].tokenPlayed) {
+                if (playerBoard[i][j] != null && !playerBoard[i][j].tokenPlayed) {
 
                     if (playerBoard[i][j].getSelect() == 1) {
                         if (playerBoard[i][j].getSlot(0) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                             hasToken = true;
                         }
-                    }
-
-                    else if (playerBoard[i][j].getSelect() == 2) {
+                    } else if (playerBoard[i][j].getSelect() == 2) {
                         for (int k = 0; k < 2; k++) {
                             if (playerBoard[i][j].getSlot(k) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                                 hasToken = true;
@@ -316,9 +314,7 @@ public class Player {
                             // its gonna check and be like oh space available then it'll see if there is
                             // a token there already
                         }
-                    }
-
-                    else{
+                    } else {
                         hasToken = false;
                     }
 
@@ -334,9 +330,7 @@ public class Player {
         if (tokenPlaced) {
             System.out.println("Tile already has a token");// do later need to check for all scenerios
             return true;
-        }
-
-        else {
+        } else {
             return false;
         }
     }// if tile already has a token not let place
@@ -409,7 +403,7 @@ public class Player {
             new MaxCorridor(Habitat.FOREST),
             new MaxCorridor(Habitat.PRAIRIE),
             new MaxCorridor(Habitat.MOUNTAIN),
-            new MaxCorridor(Habitat.WETLANDS) };
+            new MaxCorridor(Habitat.WETLANDS)};
 
     //sets the max corridors initially 
     public void IntializeCorridors() {
@@ -683,17 +677,23 @@ public class Player {
         return wetlandMax;
     }
 
-    public void findBestPosition(int x) {
+    public void findBestPosition(int x,int strategy) {
         System.out.println("Itss me find best habitat");
         //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
 
+//potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
+      if(strategy!=0){
+          potentialSuitors = new ArrayList<>();
+          MaxCorridor[] maxQuarters = habitatScore();
+          potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, maxQuarters.length));
+      }
         for (int i = 0; i < potentialSuitors.size(); i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {
                 if (potentialSuitors.get(i).getHabitatType().equals(heldTile.getHabitat(j))) {
                     ArrayList<Integer> X = potentialSuitors.get(i).getXcordArrayList();
                     ArrayList<Integer> Y = potentialSuitors.get(i).getYcordArrayList();
-                    System.out.println("THis is the length of the coords array "+potentialSuitors.get(i).getXcordArrayList().size());
-                    searchRadius(Y.get(x),X.get(x));
+                    System.out.println("THis is the length of the coords array " + potentialSuitors.get(i).getXcordArrayList().size());
+                    searchRadius(Y.get(x), X.get(x));
                     return;
                 }
             }
@@ -703,114 +703,113 @@ public class Player {
     public boolean searchRadius(int x, int y) {
         //0 is top 1 is bottom
         System.out.println("its me search radius");
-        System.out.println("the coordinnates I have been given are "+x+","+y);
+        System.out.println("the coordinnates I have been given are " + x + "," + y);
+        if(heldTile.getSelect()==1){
+            System.out.println("entered if statment");
+            searchSingleTileRadius(x,y);
+            return true;
+        }
         if (map.getMap()[x][y + 1].getEmptyTile()) {
-            if(heldTile.getSelect()==1){
-                placeTile(x, y + 1);
-                return true;
-            }else {
-                if(playerBoard[x][y].getSelect()==1){
-                    placeTile(x, y + 1);
-                    return true;
-
-                }
-                else if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
-                    placeTile(x, y + 1);
-                    return true;
-
-                } else {
+            if(playerBoard[x][y].getSelect()==1){
+                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                     heldTile.flipTile(heldTile);
                     TileGenerator g = new TileGenerator(heldTile);
                     g.generateFlipTile();
                     System.out.println("I have decided to flip the tile");
                     g.printTile();
-                    placeTile(x, y + 1);
-                    return true;
-
                 }
             }
+            else {
+                if (!playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                }
+
+
+            }
+            placeTile(x, y + 1);
+            return true;
 
 
         } else if (map.getMap()[x][y - 1].getEmptyTile()) {
-            if(heldTile.getSelect()==1){
-                placeTile(x, y - 1);
-                return true;
-
-            }else {
-                if(playerBoard[x][y].getSelect()==1){
-                    placeTile(x, y - 1);
-                    return true;
-
-                }
-                else if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                    placeTile(x, y - 1);
-                    return true;
-
-                } else {
+            if(playerBoard[x][y].getSelect()==1){
+                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
                     heldTile.flipTile(heldTile);
                     TileGenerator g = new TileGenerator(heldTile);
                     g.generateFlipTile();
                     System.out.println("I have decided to flip the tile");
                     g.printTile();
-                    placeTile(x, y - 1);
-                    return true;
-
                 }
             }
-        } else if (map.getMap()[x - 1][y].getEmptyTile()) {
-            if(heldTile.getSelect()==1){
-                placeTile(x-1, y);
-                return true;
-
-            }else {
-                if(playerBoard[x][y].getSelect()==1){
-                    placeTile(x - 1, y);
-                    return true;
-                }
-                else if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                    placeTile(x - 1, y);
-                    return true;
-
-                } else {
+            else {
+                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
                     heldTile.flipTile(heldTile);
                     TileGenerator g = new TileGenerator(heldTile);
                     g.generateFlipTile();
                     System.out.println("I have decided to flip the tile");
                     g.printTile();
-                    placeTile(x - 1, y);
-                    return true;
                 }
+
+
             }
+            placeTile(x, y - 1);
+            return true;
 
 
-        } else if (map.getMap()[x + 1][y].getEmptyTile()) {
-            if(heldTile.getSelect()==1){
-                placeTile(x+1, y );
-                return true;
-
-            }else {
-                if(playerBoard[x][y].getSelect()==1){
-                    placeTile(x + 1, y);
-                    return true;
-                }
-                else if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
-                    placeTile(x + 1, y);
-                    return true;
-
-                } else {
+        }  else if (map.getMap()[x - 1][y].getEmptyTile()) {
+            if(playerBoard[x][y].getSelect()==1){
+                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
                     heldTile.flipTile(heldTile);
                     TileGenerator g = new TileGenerator(heldTile);
                     g.generateFlipTile();
                     System.out.println("I have decided to flip the tile");
                     g.printTile();
-                    placeTile(x + 1, y);
-                    return true;
-
                 }
             }
+            else {
+                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                }
 
-        }
-        else{
+
+            }
+            placeTile(x-1, y);
+            return true;
+
+
+        }else if (map.getMap()[x + 1][y].getEmptyTile()) {
+            if(playerBoard[x][y].getSelect()==1){
+                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                }
+            }
+            else {
+                if (!playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
+                    heldTile.flipTile(heldTile);
+                    TileGenerator g = new TileGenerator(heldTile);
+                    g.generateFlipTile();
+                    System.out.println("I have decided to flip the tile");
+                    g.printTile();
+                }
+
+
+            }
+            placeTile(x+1,y);
+            return true;
+
+
+        }else {
             System.out.println("FAILED");
             findSecondBestPosition();
 
@@ -819,20 +818,68 @@ public class Player {
         return false;
 
     }
+    public boolean searchSingleTileRadius(int x,int y) {
+        if (map.getMap()[x][y + 1].getEmptyTile()) {
+           if(playerBoard[x][y].getSelect()==1){
+               if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
+                   placeTile(x,y+1);
+                   return true;
+               }
+           }else{
+               if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))){
+                   placeTile(x,y+1);
+                   return true;
+               }
+           }
+        }
+       else if (map.getMap()[x][y - 1].getEmptyTile()) {
+            if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
+                placeTile(x,y-1);
+                return true;
+            }
+        }
+        if (map.getMap()[x-1][y ].getEmptyTile()) {
+            if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
+                placeTile(x-1,y);
+                return true;
+            }
+        }
+        if (map.getMap()[x+1][y].getEmptyTile()) {
+            if(playerBoard[x][y].getSelect()==1){
+                if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
+                    placeTile(x+1,y);
+                    return true;
+                }
+            }else{
+                if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))){
+                    placeTile(x+1,y);
+                    return true;
+                }
+            }
+        }
+        else{
+            System.out.println("Failed");
+            findSecondBestPosition();
+
+        }
+        return false;
+
+    }
+
     public void findSecondBestPosition() {
 
-  int poo =0;
+
         for (int x = 0; x < playerBoard.length; x++) {
+            innerloop:
             for (int y = 0; y < playerBoard.length; y++) {
                 if (!map.getMap()[x][y].getEmptyTile()) {
-                    innerloop:
-                    for(int k=0;k<playerBoard[x][y].getHabitats().length;k++) {
-                        for(int l=0;l<heldTile.getHabitats().length;l++) {
+                    for (int k = 0; k < playerBoard[x][y].getHabitats().length; k++) {
+                        for (int l = 0; l < heldTile.getHabitats().length; l++) {
                             if (heldTile.getHabitat(l).equals(playerBoard[x][y].getHabitat(k))) {
-                                if(x==potentialSuitors.get(0).getYcordArrayList().get(0)){
+                                if (x == potentialSuitors.get(0).getYcordArrayList().get(0)) {
                                     System.out.println("Entered if statement");
-                                    y++;
-                                    break innerloop;
+                                    x++;
+                                    continue innerloop;
 
 
                                 }
@@ -848,7 +895,8 @@ public class Player {
             }
         }
     }
-    public boolean checkTilePlacement(int x,int y) {
+
+    public boolean checkTilePlacement(int x, int y) {
         if (map.getMap()[x][y + 1].getEmptyTile()) {
             return true;
 
@@ -866,7 +914,7 @@ public class Player {
         System.out.println("its me choose from river");
         potentialSuitors = new ArrayList<>();
         MaxCorridor[] maxQuarters = habitatScore();
-        potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, habitatScore().length));
+        potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, maxQuarters.length));
         boolean hasBestHabitat = false;
 
         int position = 0;
@@ -882,11 +930,11 @@ public class Player {
             }
         }*/
         //checking if positions for MaxCorridor are available
-       if(checkSingleTileInRiver(0)>0){
+       /*if(checkSingleTileInRiver(0)>0){
            return checkSingleTileInRiver(0);
-       }
-       int k = 0;
-        while (!hasBestHabitat) {
+       }*/
+        int k = 0;
+        while (k < 5) {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < TileDeck.getRiverTilesIndex(i).getHabitats().length; j++) {
                     if (potentialSuitors.get(k).getHabitatType().equals(TileDeck.getRiverTilesIndex(i).getHabitat(j))) {
@@ -895,56 +943,54 @@ public class Player {
                         System.out.println("this is the max quarter habitat " + potentialSuitors.get(k).getHabitatType());
                     }
                 }
-                if(hasBestHabitat){
+                if (hasBestHabitat) {
                     return position;
                 }
 
             }
             k++;
-            if(checkSingleTileInRiver(k)>0){
+            /*if(checkSingleTileInRiver(k)>0){
                 return checkSingleTileInRiver(k);
-            }
+            }*/
         }
         //loops through the tiles in the river and checks if their habitat types match the habitat type of max quarter
 
 
-
-
-
         return -1;
     }
-    public int checkSingleTileInRiver(int habitatToCheck){
+
+    public int checkSingleTileInRiver(int habitatToCheck) {
         //checks if single habitat tile in river matches max quarter habitat if so return index of tile in river
 
         ArrayList<Integer> singleTileIndexes = new ArrayList<Integer>();
-        for(int i=0;i<TileDeck.getRiverTiles().length;i++){
-            if(TileDeck.getRiverTilesIndex(i).getSelect()==1){
-               singleTileIndexes.add(i);
+        for (int i = 0; i < TileDeck.getRiverTiles().length; i++) {
+            if (TileDeck.getRiverTilesIndex(i).getSelect() == 1) {
+                singleTileIndexes.add(i);
             }
         }
         //add single habitat tiles in river to array
-        for(int i=0;i<potentialSuitors.size();i++){
-            for(int j=0;j<singleTileIndexes.size();j++){
-                if(TileDeck.getRiverTilesIndex(singleTileIndexes.get(j)).getHabitat(0).equals(potentialSuitors.get(habitatToCheck).getHabitatType())){
+        for (int i = 0; i < potentialSuitors.size(); i++) {
+            for (int j = 0; j < singleTileIndexes.size(); j++) {
+                if (TileDeck.getRiverTilesIndex(singleTileIndexes.get(j)).getHabitat(0).equals(potentialSuitors.get(habitatToCheck).getHabitatType())) {
                     return singleTileIndexes.get(j);
                 }
             }
         }
         //checks if they match the habitat type of max quarter
-        return  -1;
+        return -1;
     }
 
-    public boolean isAvailable(int x){
-        int coordX=0;
-        int coordY=0;
+    public boolean isAvailable(int x) {
+        int coordX = 0;
+        int coordY = 0;
 
-        System.out.println("this is the size of the coords array "+potentialSuitors.get(x).getXcordArrayList().size());
-        for(int i=0;i<potentialSuitors.get(x).getXcordArrayList().size();i++) {
-             coordX = potentialSuitors.get(x).getYcordArrayList().get(i);
-             coordY = potentialSuitors.get(x).getXcordArrayList().get(i);
-             if(checkTilePlacement(coordX,coordY)){
-                 return true;
-             }
+        System.out.println("this is the size of the coords array " + potentialSuitors.get(x).getXcordArrayList().size());
+        for (int i = 0; i < potentialSuitors.get(x).getXcordArrayList().size(); i++) {
+            coordX = potentialSuitors.get(x).getYcordArrayList().get(i);
+            coordY = potentialSuitors.get(x).getXcordArrayList().get(i);
+            if (checkTilePlacement(coordX, coordY)) {
+                return true;
+            }
 
         }
         return false;

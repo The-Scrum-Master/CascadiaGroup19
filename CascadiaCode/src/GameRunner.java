@@ -53,7 +53,7 @@ public class GameRunner {
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
-        int strategyChosen=Tile.randomNumberGenerator(3);
+        int strategyChosen= 2 ;//Tile.randomNumberGenerator(3);
         System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
         if(strategyChosen==0){
             System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
@@ -159,8 +159,10 @@ public class GameRunner {
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.BEAR){
                                 pointsPerRiverToken=playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if(TileDeck.getRiverTokensIndex(i) == Wildlife.FOX){
-                                pointsPerRiverToken=0;
-                                //IN HERE NEED TO ADD FUNCTION THAT RETURNS POINTS FOR FOX
+                                foxPlacement.countFoxesPlaceHolders(players.get(playersTurn));
+                                foxPlacement.countPotentialScore(players.get(playersTurn));
+                                foxPlacement.getScore();
+                                pointsPerRiverToken= foxPlacement.getMaximumScore();
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.ELK) {
                                 pointsPerRiverToken=playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.SALMON) {
@@ -188,7 +190,12 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
-                    players.get(playersTurn).findBestPosition(0);
+                    if(strategyChosen!=0)
+                    {
+                        players.get(playersTurn).findBestPosition(0,1);
+
+                    }
+                    players.get(playersTurn).findBestPosition(0,0);
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
@@ -496,8 +503,8 @@ public class GameRunner {
         pointsForEveryTypeOfToken.add(new TokenForPoints(playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.BEAR));
         pointsForEveryTypeOfToken.add(new TokenForPoints(playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.ELK));
         pointsForEveryTypeOfToken.add(new TokenForPoints(playersSalmonScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.SALMON));
-        pointsForEveryTypeOfToken.add(new TokenForPoints(0, Wildlife.FOX));
-        //IN HERE NEED TO ADD FUNCTION THAT RETURNS POINTS FOR FOX
+        A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(foxPlacement.getPotentialScore(players.get(playersTurn)), Wildlife.FOX));
 
         A_Elk.insertionSort(pointsForEveryTypeOfToken);
 

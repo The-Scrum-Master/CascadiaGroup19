@@ -29,6 +29,7 @@ import java.util.ArrayList;
         public void strategy1(Player player){
             countFoxesPlaceHolders(player);
             countPotentialScore(player);
+            placeToken(player,getScore());
         }
 
         public void strategy2(Player player){
@@ -111,7 +112,6 @@ import java.util.ArrayList;
 
                 }
 
-             placeToken(player,getScore());
             }
 
 
@@ -195,6 +195,13 @@ import java.util.ArrayList;
                 return false;
             }
         }
+        public int getPotentialScore(Player player){
+            countFoxesPlaceHolders(player);
+            countPotentialScore(player);
+            getScore();
+           return getMaximumScore();
+        }
+
 
     }
 
