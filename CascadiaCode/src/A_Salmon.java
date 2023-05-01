@@ -26,6 +26,11 @@ public class A_Salmon{
         placeAnywhere();
     }
 
+    public int strategy3(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        return checkPointsFromRiver(playerBoard, playerMapGenerator);
+    }
+
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
         getIndexesForTokens(playerBoard, playerMapGenerator);
@@ -186,8 +191,6 @@ public class A_Salmon{
                 System.out.println("I have decided not to place token");
             }
             insertionSort(possiblePlacements);
-            for (TokenForPoints x : possiblePlacements){
-            }
             player.placeToken(possiblePlacements.get(0).getCordY(), possiblePlacements.get(0).getCordX());
             System.out.println("Token placed at "+possiblePlacements.get(0).getCordY()+","+possiblePlacements.get(0).getCordX());
         }
@@ -292,6 +295,46 @@ public class A_Salmon{
             }
         }
         return length;
+    }
+
+    public int checkPointsFromRiver(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        if(arrayOfTokens.isEmpty()){
+            return 2;
+            //points for 1 single salmon
+        }
+        else{
+            ArrayList<TokenForPoints> possiblePlacements = new ArrayList<>();
+            int length;
+            boolean valid;
+            for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                length=0;
+                valid=true;
+                length=recursiveRunCheckForPlaceholders(arrayOfPlaceholders.get(i), length, valid, arrayOfPlaceholders.get(i).getCordX(), arrayOfPlaceholders.get(i).getCordY(), true);
+                if(length!=0){
+                    arrayOfPlaceholders.get(i).setLength(length);
+                    possiblePlacements.add(arrayOfPlaceholders.get(i));
+                }
+            }
+            if(possiblePlacements.isEmpty()){
+                return 0;
+            }
+            getIndexes(playerBoard, playerMapGenerator);
+            int maxLengthRun = countLongestRun();
+            return turnLengthOfSalmonsIntoPoints(maxLengthRun+1) - turnLengthOfSalmonsIntoPoints(maxLengthRun);
+        }
+    }
+
+    public int countLongestRun() {
+        int length;
+        boolean valid;
+        int maxLength = -1;
+        for(int i=0; i<arrayOfTokens.size(); i++){
+            length=0;
+            valid=true;
+            length=recursiveRunCheck(arrayOfTokens.get(i), length, valid);
+            maxLength=Math.max(maxLength, length);
+        }
+        return maxLength;
     }
 
     public void placeAnywhere(){

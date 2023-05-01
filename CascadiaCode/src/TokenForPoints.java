@@ -14,10 +14,17 @@ public class TokenForPoints {
     //this is number of adjacent tokens
     private boolean singleColorTile=false;
     private int length=0;
+    private int riverPoints;
+    private Wildlife typeOfAnimal;
 
     public TokenForPoints(int cordX, int cordY){
         this.cordX = cordX;
         this.cordY = cordY;
+    }
+
+    public TokenForPoints(int riverPoints, Wildlife typeOfAnimal){
+        this.riverPoints=riverPoints;
+        this.typeOfAnimal=typeOfAnimal;
     }
 
     public int getCordX() {
@@ -70,11 +77,23 @@ public class TokenForPoints {
 
     public void setAlreadyPairedUp(boolean alreadyPairedUp) {this.alreadyPairedUp = alreadyPairedUp;}
 
-    public int getLength() {
-        return length;
+    public int getLength() { return length; }
+
+    public void setLength(int length) { this.length = length; }
+
+    public int getRiverPoints() {
+        return riverPoints;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setRiverPoints(int riverPoints) {
+        this.riverPoints = riverPoints;
+    }
+
+    public Wildlife getTypeOfAnimal() {
+        return typeOfAnimal;
+    }
+
+    public void setTypeOfAnimal(Wildlife typeOfAnimal) {
+        this.typeOfAnimal = typeOfAnimal;
     }
 }

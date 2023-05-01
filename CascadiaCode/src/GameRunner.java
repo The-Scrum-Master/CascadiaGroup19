@@ -5,6 +5,7 @@
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 public class GameRunner {
@@ -52,7 +53,7 @@ public class GameRunner {
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
-        int strategyChosen=Tile.randomNumberGenerator(2);
+        int strategyChosen=Tile.randomNumberGenerator(3);
         System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
         if(strategyChosen==0){
             System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
@@ -60,6 +61,8 @@ public class GameRunner {
         if(strategyChosen==1){
             System.out.println("This strategy is the random strat. It will pick the tile randomly and then place the token randomly.");
         }
+        if(strategyChosen==2){
+            System.out.println("This strategy picks the pair tile-token based on the token scoring. Then both the tile and token are placed to maximise points.");        }
 
         Thread.sleep(2000);
 
@@ -110,38 +113,73 @@ public class GameRunner {
 
                     IOcascadia.instructionsToChoosePair();
 
-                    int instructionsToChoosePairInput;
-                    if (strategyChosen == 0) {
-                        instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
-                    } else /*if(strategyChosen == 1)*/{
-                        instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
+                    boolean shouldBotCull=true;
+                    boolean alreadyPickedFromRiver=false;
+                    if(strategyChosen==0){
+                        //CHECKS WHILE NATURE TOKEN > 1 AND SPLIT PICKS BETWEEN THE BEST TILE AND TOKEN
+                        while(players.get(playersTurn).getNatureTokenNumber()>1 && shouldBotCull){
+                            shouldBotCull=shouldBotCull(playersTurn);
+                        }
+                        if(!shouldBotCull){
+                            int tokenToMaximisePointsIndexInRiver=0;
+                            ArrayList<TokenForPoints> pointsForEveryTypeOfToken = createArrayOfBestTokensToPlace(playersTurn);
+                            outerloop:
+                            for(int i=0 ; i<pointsForEveryTypeOfToken.size() ; i++){
+                                for(int j=0 ; j<TileDeck.getRiverTokens().length ; j++){
+                                    if(pointsForEveryTypeOfToken.get(i).getTypeOfAnimal()==TileDeck.getRiverTokensIndex(j)){
+                                        tokenToMaximisePointsIndexInRiver=j;
+                                        break outerloop;
+                                    }
+                                }
+                            }
+                            players.get(playersTurn).splitPick(players.get(playersTurn).chooseFromRiver(), tokenToMaximisePointsIndexInRiver);
+                            alreadyPickedFromRiver=true;
+                        }
+                    } else{
+                        while(players.get(playersTurn).getNatureTokenNumber()>0 && shouldBotCull){
+                            shouldBotCull=shouldBotCull(playersTurn);
+                        }
+                        //check what the best token to place would be based on points, search through the offered tokens in the river, and if it is not there, cull the river
                     }
 
-
-                    if (instructionsToChoosePairInput <= 5 && instructionsToChoosePairInput >= 0) {
-                        if (instructionsToChoosePairInput <= 3) {
-                            players.get(playersTurn).pickPair(instructionsToChoosePairInput);
-                        } else if (instructionsToChoosePairInput == 4) {
-                            if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
-                                System.out.println("You don't have nature tokens to use, try again");
-                            } else {
-                                //cull again
-                                System.out.println("The river has been culled");
-                                TileDeck.cullRiver(4);
-                                players.get(playersTurn).reduceNatureTokenNumberByOne();
-                                PairDisplay.showPairs();
-                            }
-
-                        } else {
-                            if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
-                                System.out.println("You don't have nature tokens to use, try again");
-                            } else {
-                                //pick one and one
-                                players.get(playersTurn).splitPick();
-                            }
+                    int instructionsToChoosePairInput = Tile.randomNumberGenerator(4);
+                    if (strategyChosen == 0) {
+                        if(!alreadyPickedFromRiver){
+                            instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
                         }
                     }
+                    if (strategyChosen == 2) {
+                        int pointsPerRiverToken=0;
+                        int maxPoints = -1;
+                        int maxPointsIndex=0;
+                        for(int i=0;i<TileDeck.getRiverTokens().length;i++){
+                            if(TileDeck.getRiverTokensIndex(i) == Wildlife.HAWK){
+                                pointsPerRiverToken=playersHawkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.BEAR){
+                                pointsPerRiverToken=playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if(TileDeck.getRiverTokensIndex(i) == Wildlife.FOX){
+                                pointsPerRiverToken=0;
+                                //IN HERE NEED TO ADD FUNCTION THAT RETURNS POINTS FOR FOX
+                            } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.ELK) {
+                                pointsPerRiverToken=playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.SALMON) {
+                                pointsPerRiverToken=playersSalmonScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                            }
 
+                            if(pointsPerRiverToken>=maxPoints){
+                                maxPoints=pointsPerRiverToken;
+                                maxPointsIndex=i;
+                            }
+                        }
+
+                        instructionsToChoosePairInput=maxPointsIndex;
+                    }
+
+                    if(!alreadyPickedFromRiver){
+                        if (instructionsToChoosePairInput <= 3) {
+                            players.get(playersTurn).pickPair(instructionsToChoosePairInput);
+                        }
+                    }
 
                     TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                     System.out.println();
@@ -149,24 +187,6 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
-                    System.out.println("Would you like to rotate tiles(yes or no)");
-                    boolean wrongInput = true;
-                    while (wrongInput) {
-                        String rotate = IOcascadia.makeLowerCase(IOcascadia.takeInput());
-                        if (rotate.equals("yes")) {
-                            players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
-                            TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
-                            g.generateFlipTile();
-                            g.printTile();
-
-
-                            wrongInput = false;
-                        } else if (rotate.equals("no")) {
-                            wrongInput = false;
-                        } else {
-                            System.out.println("Wrong input please try again");
-                        }
-                    }
                     players.get(playersTurn).findBestPosition(0);
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
@@ -177,7 +197,7 @@ public class GameRunner {
 
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        if(strategyChosen==0){
+                        if(strategyChosen==0 || strategyChosen==2){
                             if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
                                 playersHawkScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){
@@ -268,7 +288,7 @@ public class GameRunner {
                 players.get(playersTurn).habitatScore();
 
                 playersTurn++;
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             }
         }
         System.out.println("""
@@ -277,20 +297,40 @@ public class GameRunner {
                 """);
         for(int i=0;i<players.size();i++)
         {
+            int[] scores = new int[5];
+            int count =0;
             playersHawkScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for hawks are: " + playersHawkScores.get(i).countScore());
+            scores[count] = playersHawkScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for hawks are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
 
             playersBearScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + playersBearScores.get(i).countScore());
+            scores[count] = playersBearScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
 
             playersElkScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for elk lines are: " + playersElkScores.get(i).countScore());
+            scores[count] = playersElkScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for elk lines are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
 
             playersSalmonScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + playersSalmonScores.get(i).countScore());
+            scores[count] = playersSalmonScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
+
             fox.countFoxes(players.get(i));
-            System.out.println(players.get(i).getName() +"'s points for fox are: " + fox.countScore(players.get(i)) + "\n");
+            scores[count] = fox.countScore(players.get(i));
+            System.out.println(players.get(i).getName() +"'s points for fox are: " +scores[count]  + "\n");
+            players.get(i).totalScore.add(scores[count]);
+
+
         }
+
 
 
         playersTurn = 0;
@@ -401,11 +441,12 @@ public class GameRunner {
             }
             totalHabitatPoints=forestPoints+riverPoints+wetlandPoints+mountainPoints+prairiePoints;
             System.out.println("Points awarded for habitats: " + totalHabitatPoints + "\n");
+            players.get(playersTurn).totalScore.add(totalHabitatPoints);
 
 
             playersTurn++;
         }
-
+         getTotalScore();
         System.out.println("Thanks for playing!");
     }
 
@@ -414,5 +455,59 @@ public class GameRunner {
     }
     public static int getHelperIntToPrintMap(){
         return helperIntToPrintMap;
+    }
+    public static void getTotalScore(){
+        for(int j=0;j<players.size();j++) {
+            int sum=0;
+
+            for (int i = 0; i < players.get(j).totalScore.size(); i++) {
+                sum += players.get(j).totalScore.get(i);
+            }
+            sum+= players.get(j).getNatureTokenNumber();
+            System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber()+"\n");
+            System.out.println("Total score for "+players.get(j).getName()+" is "+ sum+"\n");
+        }
+    }
+
+    public static boolean shouldBotCull(int playersTurn){
+        ArrayList<TokenForPoints> pointsForEveryTypeOfToken = createArrayOfBestTokensToPlace(playersTurn);
+
+        boolean shouldBotCull=true;
+        for(int i=0 ; i<pointsForEveryTypeOfToken.size() ; i++){
+            for(int j=0 ; j<TileDeck.getRiverTokens().length ; j++){
+                if(pointsForEveryTypeOfToken.get(i).getTypeOfAnimal()==TileDeck.getRiverTokensIndex(j)){
+                    return false;
+                    //if we find the wildlife we are looking for, return false
+                }
+            }
+        }
+
+        System.out.println("The river has been culled");
+        TileDeck.cullRiver(4);
+        players.get(playersTurn).reduceNatureTokenNumberByOne();
+        PairDisplay.showPairs();
+
+        return shouldBotCull;
+    }
+
+    public static ArrayList<TokenForPoints> createArrayOfBestTokensToPlace(int playersTurn){
+        ArrayList<TokenForPoints> pointsForEveryTypeOfToken = new ArrayList<>();
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersHawkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.HAWK));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.BEAR));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.ELK));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(playersSalmonScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap()), Wildlife.SALMON));
+        pointsForEveryTypeOfToken.add(new TokenForPoints(0, Wildlife.FOX));
+        //IN HERE NEED TO ADD FUNCTION THAT RETURNS POINTS FOR FOX
+
+        A_Elk.insertionSort(pointsForEveryTypeOfToken);
+
+        for(int i=1; i<pointsForEveryTypeOfToken.size();i++){
+            if(pointsForEveryTypeOfToken.get(i).getRiverPoints()!=pointsForEveryTypeOfToken.get(0).getRiverPoints()){
+                pointsForEveryTypeOfToken.remove(i);
+                i--;
+            }
+        }
+
+        return pointsForEveryTypeOfToken;
     }
 }

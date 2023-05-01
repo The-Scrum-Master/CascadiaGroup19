@@ -40,6 +40,8 @@ public class Player {
     public Wildlife heldToken;
     public int natureTokenNumber;
     ArrayList<MaxCorridor> potentialSuitors = new ArrayList<>();
+    public  ArrayList<Integer> totalScore = new ArrayList<Integer>();
+
 
 
     public Player(String name, int order) {
@@ -339,7 +341,7 @@ public class Player {
         }
     }// if tile already has a token not let place
 
-    public void splitPick() {
+    public void splitPick(int tileIndex, int tokenIndex) {
         // is called when the player chooses to pick a tile and a token from the river
         // at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
@@ -692,7 +694,6 @@ public class Player {
     public void findBestPosition(int x) {
         System.out.println("Itss me find best habitat");
 //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
-//need to know what direction tiles are pointing in
 
         for (int i = 0; i < potentialSuitors.size(); i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {

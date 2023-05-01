@@ -26,6 +26,11 @@ public class A_Bear{
         placeAnywhere();
     }
 
+    public int strategy3(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        return checkPointsFromRiver();
+    }
+
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
         getIndexesForTokens(playerBoard, playerMapGenerator);
@@ -255,6 +260,54 @@ public class A_Bear{
                 player.placeToken(finalDraft.get(randomPosition).getCordY(), finalDraft.get(randomPosition).getCordX());
                 increaseNumberOfBearsPairs();
                 //randomise position and place
+            }
+        }
+    }
+
+    public int checkPointsFromRiver() {
+        if(arrayOfTokens.isEmpty()){
+            return 0;
+        }
+        else if(arrayOfPlaceholders.isEmpty()){
+            return 0;
+        }
+        else{
+            for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                boolean foundAdjacentBear=false;
+                int numberOfAdjacentBears=0;
+                for(int j=0; j<arrayOfTokens.size(); j++){
+                    if(arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                            arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                            arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1) {
+                        //looking for adjacent X cord
+
+                        if (arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() ||
+                                arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 ||
+                                arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() - 1) {
+                            //looking for adjacent Y cord
+
+                            numberOfAdjacentBears++;
+                            if(!arrayOfTokens.get(j).getAlreadyPairedUp()){
+                                foundAdjacentBear = true;
+                            }
+                        }
+                    }
+                }
+                if(foundAdjacentBear && numberOfAdjacentBears<2){
+                    arrayOfPlaceholders.get(i).setValid(true);
+                }
+            }
+
+            ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
+            for(TokenForPoints i : arrayOfPlaceholders){
+                if(i.getValid()){
+                    finalDraft.add(i);
+                }
+            }
+            if(finalDraft.size() == 0){
+                return 0;
+            } else {
+                return turnNumberOfPairsIntoPoints((player.getNumberOfBearPairs()+1)) - turnNumberOfPairsIntoPoints((player.getNumberOfBearPairs()));
             }
         }
     }

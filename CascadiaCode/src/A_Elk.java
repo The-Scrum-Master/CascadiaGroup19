@@ -26,6 +26,11 @@ public class A_Elk{
         placeAnywhere();
     }
 
+    public int strategy3(Tile[][] playerBoard, MapGenerator playerMapGenerator){
+        getIndexes(playerBoard, playerMapGenerator);
+        return checkPointsFromRiver(playerBoard, playerMapGenerator);
+    }
+
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
         getIndexesForTokens(playerBoard, playerMapGenerator);
@@ -247,6 +252,112 @@ public class A_Elk{
         }
     }
 
+    public int checkPointsFromRiver(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        if(arrayOfTokens.isEmpty()){
+            return 2;
+            //points for 1 single elk
+        }
+        else{
+            for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                for(int j=0; j<arrayOfTokens.size(); j++){
+                    if(     ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() + 1 )) ||
+                            ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() - 1 )) ||
+                            ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() + 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() )) ||
+                            ((arrayOfPlaceholders.get(i).getCordX()==arrayOfTokens.get(j).getCordX() - 1 ) && ( arrayOfPlaceholders.get(i).getCordY() == arrayOfTokens.get(j).getCordY() )) ){
+                        //looking for adjacent in cross
+
+                        arrayOfPlaceholders.get(i).setValid(true);
+                        arrayOfPlaceholders.get(i).setNumberOfAdjacent(arrayOfPlaceholders.get(i).getNumberOfAdjacent()+1);
+                    }
+                }
+            }
+
+            insertionSort(arrayOfPlaceholders);
+            ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
+            if(arrayOfPlaceholders.size()==0){
+                return 0;
+            }
+            else{
+                int max=arrayOfPlaceholders.get(0).getNumberOfAdjacent();
+                for(TokenForPoints i : arrayOfPlaceholders){
+                    if(i.getValid() && i.getNumberOfAdjacent()==max){
+                        finalDraft.add(i);
+                    }
+                }
+            }
+            if(finalDraft.size() == 0){
+                if(!arrayOfPlaceholders.isEmpty()){
+                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
+                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
+                            getIndexes(playerBoard, playerMapGenerator);
+                            int maxLengthRun = countLongestRun();
+                            return turnLengthOfElksIntoPoints(maxLengthRun+1) - turnLengthOfElksIntoPoints(maxLengthRun);
+                        }
+                    }
+                    return 0;
+                }
+                else{
+                    return 0;
+                }
+            } else{
+                getIndexes(playerBoard, playerMapGenerator);
+                int maxLengthRun = countLongestRun();
+                return turnLengthOfElksIntoPoints(maxLengthRun+1) - turnLengthOfElksIntoPoints(maxLengthRun);
+            }
+        }
+    }
+
+    public int countLongestRun() {
+        int maxLength = -1;
+        for(int i=0; i<arrayOfTokens.size(); i++){
+            int length=0;
+            boolean lookingAtHorizontal=false;
+            boolean lookingAtVertical=false;
+            if(arrayOfTokens.get(i).getAlreadyAccountedFor()){
+                continue;
+            }
+            arrayOfTokens.get(i).setValid(true);
+            for(int j=0; j<arrayOfTokens.size(); j++){
+                if(arrayOfTokens.get(j).getAlreadyAccountedFor()){
+                    continue;
+                }
+                if(j!=i) { //making sure that the element we are looking at isn't the same one we are comparing it to
+                    if(!lookingAtVertical && arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY() &&
+                            (arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()   ||
+                                    arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()+1 ||
+                                    arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX()-1))  { //looking for horizontal line
+
+                        lookingAtHorizontal=true;
+                        arrayOfTokens.get(j).setValid(true);
+                        recursiveHorizontalLineCheck(arrayOfTokens.get(i));
+                        recursiveHorizontalLineCheck(arrayOfTokens.get(j));
+                        break;
+                    }
+                    else if(!lookingAtHorizontal && arrayOfTokens.get(i).getCordX()==arrayOfTokens.get(j).getCordX() &&
+                            (arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()   ||
+                                    arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()+1 ||
+                                    arrayOfTokens.get(i).getCordY()==arrayOfTokens.get(j).getCordY()-1))  { //looking for vertical line
+
+                        lookingAtVertical=true;
+                        arrayOfTokens.get(j).setValid(true);
+                        recursiveVerticalLineCheck(arrayOfTokens.get(i));
+                        recursiveVerticalLineCheck(arrayOfTokens.get(j));
+                        break;
+                    }
+                }
+            }
+            for(int k=0; k<arrayOfTokens.size(); k++){
+                if(arrayOfTokens.get(k).getValid()){
+                    length++;
+                    arrayOfTokens.get(k).setAlreadyAccountedFor(true);
+                    arrayOfTokens.get(k).setValid(false);
+                }
+            }
+            maxLength=Math.max(maxLength, length);
+        }
+        return maxLength;
+    }
+
     public void placeAnywhere(){
         if(arrayOfPlaceholders.size()==0){
             System.out.println("Can't place token");
@@ -308,7 +419,7 @@ public class A_Elk{
         }
     }
 
-    public void insertionSort(ArrayList<TokenForPoints> arrayList) {
+    public static void insertionSort(ArrayList<TokenForPoints> arrayList) {
         //we use insertion sort because the arraylist size is not going to be bigger than 10 most probably, and a max size of 20
         int n = arrayList.size();
         for (int i = 1; i < n; i++) {
