@@ -265,10 +265,10 @@ public class A_Bear{
     }
 
     public int checkPointsFromRiver() {
-        if(arrayOfTokens.isEmpty()){
+        if(arrayOfPlaceholders.isEmpty()){
             return 0;
         }
-        else if(arrayOfPlaceholders.isEmpty()){
+        if(arrayOfTokens.isEmpty()){
             return 0;
         }
         else{
@@ -395,5 +395,12 @@ public class A_Bear{
         else{
             return false;
         }
+    }
+
+    public boolean areThereAnyPlaceholders(){
+        if(arrayOfPlaceholders.isEmpty()){
+            return false;
+        }
+        return true;
     }
 }

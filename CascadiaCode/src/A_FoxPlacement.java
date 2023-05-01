@@ -56,7 +56,13 @@ public class A_FoxPlacement {
                 }
             }
         }
+    }
 
+    public boolean areThereAnyPlaceholders(Player player){
+        if(coordX.isEmpty()){
+            return false;
+        }
+        return true;
     }
 
     public void countPotentialScore(Player player) {

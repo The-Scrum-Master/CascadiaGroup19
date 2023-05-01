@@ -298,6 +298,9 @@ public class A_Salmon{
     }
 
     public int checkPointsFromRiver(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        if(arrayOfPlaceholders.isEmpty()){
+            return 0;
+        }
         if(arrayOfTokens.isEmpty()){
             return 2;
             //points for 1 single salmon
@@ -392,5 +395,12 @@ public class A_Salmon{
             }
             arrayList.set(j+1, temp);
         }
+    }
+
+    public boolean areThereAnyPlaceholders(){
+        if(arrayOfPlaceholders.isEmpty()){
+            return false;
+        }
+        return true;
     }
 }

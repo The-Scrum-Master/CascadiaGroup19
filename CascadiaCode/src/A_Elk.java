@@ -253,6 +253,9 @@ public class A_Elk{
     }
 
     public int checkPointsFromRiver(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
+        if(arrayOfPlaceholders.isEmpty()){
+            return 0;
+        }
         if(arrayOfTokens.isEmpty()){
             return 2;
             //points for 1 single elk
@@ -274,15 +277,10 @@ public class A_Elk{
 
             insertionSort(arrayOfPlaceholders);
             ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
-            if(arrayOfPlaceholders.size()==0){
-                return 0;
-            }
-            else{
-                int max=arrayOfPlaceholders.get(0).getNumberOfAdjacent();
-                for(TokenForPoints i : arrayOfPlaceholders){
-                    if(i.getValid() && i.getNumberOfAdjacent()==max){
-                        finalDraft.add(i);
-                    }
+            int max=arrayOfPlaceholders.get(0).getNumberOfAdjacent();
+            for(TokenForPoints i : arrayOfPlaceholders){
+                if(i.getValid() && i.getNumberOfAdjacent()==max){
+                    finalDraft.add(i);
                 }
             }
             if(finalDraft.size() == 0){
@@ -431,5 +429,12 @@ public class A_Elk{
             }
             arrayList.set(j+1, temp);
         }
+    }
+
+    public boolean areThereAnyPlaceholders(){
+        if(arrayOfPlaceholders.isEmpty()){
+            return false;
+        }
+        return true;
     }
 }

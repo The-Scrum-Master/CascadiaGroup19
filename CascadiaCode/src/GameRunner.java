@@ -148,19 +148,35 @@ public class GameRunner {
                         int maxPoints = -1;
                         int maxPointsIndex=0;
                         for(int i=0;i<TileDeck.getRiverTokens().length;i++){
+                            boolean noPlaceholders=false;
                             if(TileDeck.getRiverTokensIndex(i) == Wildlife.HAWK){
                                 pointsPerRiverToken=playersHawkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                if(!playersHawkScores.get(playersTurn).areThereAnyPlaceholders()){
+                                    continue;
+                                }
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.BEAR){
                                 pointsPerRiverToken=playersBearScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                if(!playersBearScores.get(playersTurn).areThereAnyPlaceholders()){
+                                    continue;
+                                }
                             } else if(TileDeck.getRiverTokensIndex(i) == Wildlife.FOX){
                                 foxPlacement.countFoxesPlaceHolders(players.get(playersTurn));
+                                if(!foxPlacement.areThereAnyPlaceholders(players.get(playersTurn))){
+                                    continue;
+                                }
                                 foxPlacement.countPotentialScore(players.get(playersTurn));
                                 foxPlacement.getScore();
                                 pointsPerRiverToken= foxPlacement.getMaximumScore();
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.ELK) {
                                 pointsPerRiverToken=playersElkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                if(!playersElkScores.get(playersTurn).areThereAnyPlaceholders()){
+                                    continue;
+                                }
                             } else if (TileDeck.getRiverTokensIndex(i) == Wildlife.SALMON) {
                                 pointsPerRiverToken=playersSalmonScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
+                                if(!playersSalmonScores.get(playersTurn).areThereAnyPlaceholders()){
+                                    continue;
+                                }
                             }
 
                             if(pointsPerRiverToken>=maxPoints){
@@ -168,7 +184,6 @@ public class GameRunner {
                                 maxPointsIndex=i;
                             }
                         }
-
                         instructionsToChoosePairInput=maxPointsIndex;
                     }
 

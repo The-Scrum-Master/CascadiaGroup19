@@ -560,8 +560,6 @@ public class Player {
     }
 
     public void findSecondBestPosition() {
-
-
         for (int x = 0; x < playerBoard.length; x++) {
             innerloop:
             for (int y = 0; y < playerBoard.length; y++) {
@@ -573,18 +571,13 @@ public class Player {
                                     System.out.println("Entered if statement");
                                     x++;
                                     continue innerloop;
-
-
                                 }
-
                                 searchRadius(x, y);
                                 return;
                             }
                         }
                     }
-
                 }
-
             }
         }
     }

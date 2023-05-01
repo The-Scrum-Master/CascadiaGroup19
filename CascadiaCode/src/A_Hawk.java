@@ -189,6 +189,9 @@ public class A_Hawk{
     }
 
     public int checkPointsFromRiver() {
+        if(arrayOfPlaceholders.isEmpty()){
+            return 0;
+        }
         for(int i=0; i<arrayOfPlaceholders.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){
@@ -211,14 +214,9 @@ public class A_Hawk{
             }
         }
         ArrayList<TokenForPoints> finalDraft = new ArrayList<>();
-        if(arrayOfPlaceholders.size()==0){
-            return 0;
-        }
-        else{
-            for(TokenForPoints i : arrayOfPlaceholders){
-                if(i.getValid()){
-                    finalDraft.add(i);
-                }
+        for(TokenForPoints i : arrayOfPlaceholders){
+            if(i.getValid()){
+                finalDraft.add(i);
             }
         }
         if(finalDraft.size() == 0){
@@ -272,5 +270,12 @@ public class A_Hawk{
         else{
             return false;
         }
+    }
+
+    public boolean areThereAnyPlaceholders(){
+        if(arrayOfPlaceholders.isEmpty()){
+            return false;
+        }
+        return true;
     }
 }
