@@ -5,6 +5,7 @@
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 public class GameRunner {
@@ -113,14 +114,39 @@ public class GameRunner {
                     IOcascadia.instructionsToChoosePair();
 
                     boolean shouldBotCull=true;
-                    while(players.get(playersTurn).getNatureTokenNumber()>0 && shouldBotCull){
-                        shouldBotCull=shouldBotCull(playersTurn);
+                    boolean alreadyPickedFromRiver=false;
+                    if(strategyChosen==0){
+                        //CHECKS WHILE NATURE TOKEN > 1 AND SPLIT PICKS BETWEEN THE BEST TILE AND TOKEN
+                        while(players.get(playersTurn).getNatureTokenNumber()>1 && shouldBotCull){
+                            shouldBotCull=shouldBotCull(playersTurn);
+                        }
+                        if(!shouldBotCull){
+                            int tokenToMaximisePointsIndexInRiver=0;
+                            ArrayList<TokenForPoints> pointsForEveryTypeOfToken = createArrayOfBestTokensToPlace(playersTurn);
+                            outerloop:
+                            for(int i=0 ; i<pointsForEveryTypeOfToken.size() ; i++){
+                                for(int j=0 ; j<TileDeck.getRiverTokens().length ; j++){
+                                    if(pointsForEveryTypeOfToken.get(i).getTypeOfAnimal()==TileDeck.getRiverTokensIndex(j)){
+                                        tokenToMaximisePointsIndexInRiver=j;
+                                        break outerloop;
+                                    }
+                                }
+                            }
+                            players.get(playersTurn).splitPick(players.get(playersTurn).chooseFromRiver(), tokenToMaximisePointsIndexInRiver);
+                            alreadyPickedFromRiver=true;
+                        }
+                    } else{
+                        while(players.get(playersTurn).getNatureTokenNumber()>0 && shouldBotCull){
+                            shouldBotCull=shouldBotCull(playersTurn);
+                        }
+                        //check what the best token to place would be based on points, search through the offered tokens in the river, and if it is not there, cull the river
                     }
-                    //check what the best token to place would be based on points, search through the offered tokens in the river, and if it is not there, cull the river
 
                     int instructionsToChoosePairInput = Tile.randomNumberGenerator(4);
                     if (strategyChosen == 0) {
-                        instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
+                        if(!alreadyPickedFromRiver){
+                            instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
+                        }
                     }
                     if (strategyChosen == 2) {
                         int pointsPerRiverToken=0;
@@ -145,41 +171,15 @@ public class GameRunner {
                                 maxPointsIndex=i;
                             }
                         }
-                        /*for(int i:riverTokenPoints){
-                            System.out.println("riverForPoints point = " + i);
-                        }
-                        System.out.println("Max points= " + maxPoints);
-                        System.out.println("Max points index= " + maxPointsIndex);
-                         */
 
                         instructionsToChoosePairInput=maxPointsIndex;
                     }
 
-
-                    if (instructionsToChoosePairInput <= 5 && instructionsToChoosePairInput >= 0) {
+                    if(!alreadyPickedFromRiver){
                         if (instructionsToChoosePairInput <= 3) {
                             players.get(playersTurn).pickPair(instructionsToChoosePairInput);
-                        } else if (instructionsToChoosePairInput == 4) {
-                            if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
-                                System.out.println("You don't have nature tokens to use, try again");
-                            } else {
-                                //cull again
-                                System.out.println("The river has been culled");
-                                TileDeck.cullRiver(4);
-                                players.get(playersTurn).reduceNatureTokenNumberByOne();
-                                PairDisplay.showPairs();
-                            }
-
-                        } else {
-                            if (players.get(playersTurn).getNatureTokenNumber() <= 0) {
-                                System.out.println("You don't have nature tokens to use, try again");
-                            } else {
-                                //pick one and one
-                                players.get(playersTurn).splitPick();
-                            }
                         }
                     }
-
 
                     TileGenerator heldTileGenerator = new TileGenerator(players.get(playersTurn).heldTile);
                     System.out.println();
@@ -474,22 +474,18 @@ public class GameRunner {
 
         boolean shouldBotCull=true;
         for(int i=0 ; i<pointsForEveryTypeOfToken.size() ; i++){
-            if(shouldBotCull){
-                for(int j=0 ; j<TileDeck.getRiverTokens().length ; j++){
-                    if(pointsForEveryTypeOfToken.get(i).getTypeOfAnimal()==TileDeck.getRiverTokensIndex(j)){
-                        shouldBotCull=false;
-                        break;
-                    }
+            for(int j=0 ; j<TileDeck.getRiverTokens().length ; j++){
+                if(pointsForEveryTypeOfToken.get(i).getTypeOfAnimal()==TileDeck.getRiverTokensIndex(j)){
+                    return false;
+                    //if we find the wildlife we are looking for, return false
                 }
             }
         }
 
-        if(shouldBotCull){
-            System.out.println("The river has been culled");
-            TileDeck.cullRiver(4);
-            players.get(playersTurn).reduceNatureTokenNumberByOne();
-            PairDisplay.showPairs();
-        }
+        System.out.println("The river has been culled");
+        TileDeck.cullRiver(4);
+        players.get(playersTurn).reduceNatureTokenNumberByOne();
+        PairDisplay.showPairs();
 
         return shouldBotCull;
     }

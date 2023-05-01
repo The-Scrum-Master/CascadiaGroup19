@@ -341,7 +341,7 @@ public class Player {
         }
     }// if tile already has a token not let place
 
-    public void splitPick() {
+    public void splitPick(int tileIndex, int tokenIndex) {
         // is called when the player chooses to pick a tile and a token from the river
         // at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
