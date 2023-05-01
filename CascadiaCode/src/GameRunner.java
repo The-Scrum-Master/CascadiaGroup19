@@ -5,20 +5,14 @@
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 public class GameRunner {
-    private static final ArrayList<Player> players = new ArrayList<Player>();
-    private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<A_Hawk>();
-    private static final ArrayList<A_Bear> playersBearScores = new ArrayList<A_Bear>();
-    private static final ArrayList<A_Elk> playersElkScores = new ArrayList<A_Elk>();
-    private static final ArrayList<A_Salmon> playersSalmonScores = new ArrayList<A_Salmon>();
-
-    //arrayList of Player class to store players
-
-    public static PairDisplay p = new PairDisplay();
-    // to use the functions in the PairDisplay class to display the river
+    private static final ArrayList<Player> players = new ArrayList<>();
+    private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<>();
+    private static final ArrayList<A_Bear> playersBearScores = new ArrayList<>();
+    private static final ArrayList<A_Elk> playersElkScores = new ArrayList<>();
+    private static final ArrayList<A_Salmon> playersSalmonScores = new ArrayList<>();
     public static boolean continueGame = true;
     private static int helperIntToPrintMap = -1;
 
@@ -53,7 +47,7 @@ public class GameRunner {
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
-        int strategyChosen= 2 ;//Tile.randomNumberGenerator(3);
+        int strategyChosen = Tile.randomNumberGenerator(3);
         System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
         if(strategyChosen==0){
             System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
@@ -193,7 +187,6 @@ public class GameRunner {
                     if(strategyChosen!=0)
                     {
                         players.get(playersTurn).findBestPosition(0,1);
-
                     }
                     players.get(playersTurn).findBestPosition(0,0);
 

@@ -1,9 +1,9 @@
 /*Group: 19
- *Team Name: Front Row
- *Timi Salam- 21392803(Timisalam)
- *Patrick Kelly-21204063(Patkelly17)
- *Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
- */
+*Team Name: Front Row
+*Timi Salam- 21392803(Timisalam)
+*Patrick Kelly-21204063(Patkelly17)
+*Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
+*/
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +40,8 @@ public class Player {
     public Wildlife heldToken;
     public int natureTokenNumber;
     ArrayList<MaxCorridor> potentialSuitors = new ArrayList<>();
-    public ArrayList<Integer> totalScore = new ArrayList<Integer>();
+    public  ArrayList<Integer> totalScore = new ArrayList<Integer>();
+
 
 
     public Player(String name, int order) {
@@ -68,14 +69,13 @@ public class Player {
     public void setNumberOfBearPairs(int numberOfBearPairs) {
         this.numberOfBearPairs = numberOfBearPairs;
     }
-
     public int getNumberOfFoxes() {
         return numberOfFoxes;
     }
-
     public void setNumberOfFoxes(int numberOfFoxes) {
         this.numberOfFoxes = numberOfFoxes;
     }
+
 
 
     public Tile[][] getPlayerBoard() {
@@ -293,7 +293,6 @@ public class Player {
             for (int j = 0; j < playerBoard.length; j++) {
 
                 if (playerBoard[i][j] != null && !playerBoard[i][j].tokenPlayed) {
-
                     if (playerBoard[i][j].getSelect() == 1) {
                         if (playerBoard[i][j].getSlot(0) == heldToken && !playerBoard[i][j].getTokenPlaced()) {
                             hasToken = true;
@@ -314,7 +313,7 @@ public class Player {
                             // its gonna check and be like oh space available then it'll see if there is
                             // a token there already
                         }
-                    } else {
+                    } else{
                         hasToken = false;
                     }
 
@@ -682,11 +681,11 @@ public class Player {
         //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
 
 //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
-      if(strategy!=0){
-          potentialSuitors = new ArrayList<>();
-          MaxCorridor[] maxQuarters = habitatScore();
-          potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, maxQuarters.length));
-      }
+        if(strategy!=0){
+            potentialSuitors = new ArrayList<>();
+            MaxCorridor[] maxQuarters = habitatScore();
+            potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, maxQuarters.length));
+        }
         for (int i = 0; i < potentialSuitors.size(); i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {
                 if (potentialSuitors.get(i).getHabitatType().equals(heldTile.getHabitat(j))) {
@@ -820,19 +819,19 @@ public class Player {
     }
     public boolean searchSingleTileRadius(int x,int y) {
         if (map.getMap()[x][y + 1].getEmptyTile()) {
-           if(playerBoard[x][y].getSelect()==1){
-               if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
-                   placeTile(x,y+1);
-                   return true;
-               }
-           }else{
-               if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))){
-                   placeTile(x,y+1);
-                   return true;
-               }
-           }
+            if(playerBoard[x][y].getSelect()==1){
+                if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
+                    placeTile(x,y+1);
+                    return true;
+                }
+            }else{
+                if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))){
+                    placeTile(x,y+1);
+                    return true;
+                }
+            }
         }
-       else if (map.getMap()[x][y - 1].getEmptyTile()) {
+        else if (map.getMap()[x][y - 1].getEmptyTile()) {
             if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
                 placeTile(x,y-1);
                 return true;
