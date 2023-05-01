@@ -62,7 +62,7 @@ public class GameRunner {
             System.out.println("This strategy is the random strat. It will pick the tile randomly and then place the token randomly.");
         }
         if(strategyChosen==2){
-            System.out.println("This strategy picks the pair tile-token based on the token scoring. Then both the tile and token are placed to maximise points.");        }
+            System.out.println("This strategy picks the pair tile-token based on the token scoring. Then both the tile and token are placed to maximise points.");}
 
         Thread.sleep(2000);
 
@@ -110,6 +110,7 @@ public class GameRunner {
                     System.out.println(players.get(playersTurn).getName() + "'s turn:\n");
 
                     PairDisplay.showPairs();
+
 
                     IOcascadia.instructionsToChoosePair();
 
@@ -193,7 +194,6 @@ public class GameRunner {
                     players.get(playersTurn).printMap(helperIntToPrintMap);
 
                     players.get(playersTurn).setHeldTile(null);
-
 
                     if (players.get(playersTurn).checkToken()) {
                     } else {
