@@ -340,51 +340,51 @@ public class GameRunner {
         String winnerPrairie="none";
         String winnerMountain="none";
         String winnerRiver="none";
-        int maxForest = -1;
-        int maxWetland = -1;
-        int maxPrairie = -1;
-        int maxMountain = -1;
-        int maxRiver = -1;
+        // int maxForest = -1;
+        // int maxWetland = -1;
+        // int maxPrairie = -1;
+        // int maxMountain = -1;
+        // int maxRiver = -1;
 
-        while (playersTurn < numberOfPlayers) {
-            if (players.get(playersTurn).getForestMax() > maxForest) {
-                maxForest = players.get(playersTurn).getForestMax();
-                winnerForest = players.get(playersTurn).getName();
-            }
-            else if(players.get(playersTurn).getForestMax() == maxForest){
-                winnerForest = "none";
-            }
-            if (players.get(playersTurn).getMountainMax() > maxMountain) {
-                maxMountain = players.get(playersTurn).getMountainMax();
-                winnerMountain = players.get(playersTurn).getName();
-            }
-            else if(players.get(playersTurn).getMountainMax() == maxMountain){
-                winnerMountain = "none";
-            }
-            if (players.get(playersTurn).getWetlandMax() > maxWetland) {
-                maxWetland = players.get(playersTurn).getWetlandMax();
-                winnerWetland = players.get(playersTurn).getName();
-            }
-            else if(players.get(playersTurn).getWetlandMax() == maxWetland){
-                winnerWetland = "none";
-            }
-            if (players.get(playersTurn).getPrairieMax() > maxPrairie) {
-                maxPrairie = players.get(playersTurn).getPrairieMax();
-                winnerPrairie = players.get(playersTurn).getName();
-            }
-            else if(players.get(playersTurn).getPrairieMax() == maxPrairie){
-                winnerPrairie = "none";
-            }
-            if (players.get(playersTurn).getRiverMax() > maxRiver) {
-                maxRiver = players.get(playersTurn).getRiverMax();
-                winnerRiver = players.get(playersTurn).getName();
-            }
-            else if(players.get(playersTurn).getRiverMax() == maxRiver){
-                winnerRiver = "none";
-            }
+        // while (playersTurn < numberOfPlayers) {
+        //     if (players.get(playersTurn).getForestMax() > maxForest) {
+        //         maxForest = players.get(playersTurn).getForestMax();
+        //         winnerForest = players.get(playersTurn).getName();
+        //     }
+        //     else if(players.get(playersTurn).getForestMax() == maxForest){
+        //         winnerForest = "none";
+        //     }
+        //     if (players.get(playersTurn).getMountainMax() > maxMountain) {
+        //         maxMountain = players.get(playersTurn).getMountainMax();
+        //         winnerMountain = players.get(playersTurn).getName();
+        //     }
+        //     else if(players.get(playersTurn).getMountainMax() == maxMountain){
+        //         winnerMountain = "none";
+        //     }
+        //     if (players.get(playersTurn).getWetlandMax() > maxWetland) {
+        //         maxWetland = players.get(playersTurn).getWetlandMax();
+        //         winnerWetland = players.get(playersTurn).getName();
+        //     }
+        //     else if(players.get(playersTurn).getWetlandMax() == maxWetland){
+        //         winnerWetland = "none";
+        //     }
+        //     if (players.get(playersTurn).getPrairieMax() > maxPrairie) {
+        //         maxPrairie = players.get(playersTurn).getPrairieMax();
+        //         winnerPrairie = players.get(playersTurn).getName();
+        //     }
+        //     else if(players.get(playersTurn).getPrairieMax() == maxPrairie){
+        //         winnerPrairie = "none";
+        //     }
+        //     if (players.get(playersTurn).getRiverMax() > maxRiver) {
+        //         maxRiver = players.get(playersTurn).getRiverMax();
+        //         winnerRiver = players.get(playersTurn).getName();
+        //     }
+        //     else if(players.get(playersTurn).getRiverMax() == maxRiver){
+        //         winnerRiver = "none";
+        //     }
 
-            playersTurn++;
-        }
+        //     playersTurn++;
+        // }
 
 
         playersTurn = 0;

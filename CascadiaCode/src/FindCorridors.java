@@ -25,6 +25,7 @@ public class FindCorridors {
 
     public MaxCorridor[] mapIterator(Tile[][] board) {
         // iterates through the playerboard that is currently playable.
+        resetMaxCorridors();
         for (int i = 0 + 21 - GameRunner.getHelperIntToPrintMap(); i < 46 - 21
                 + GameRunner.getHelperIntToPrintMap(); i++) {
             for (int j = 0 + 21 - GameRunner.getHelperIntToPrintMap(); j < 46 - 21
@@ -33,43 +34,30 @@ public class FindCorridors {
                 if (cur != null) {
                     // System.out.println("checking tile " + j + " " + i);
                     firstHabitatCheck(cur);
-                    if (tileMatch(Direction.RIGHT, cur)) {
-                        Habitat corridorHabitat;
-                        if (cur.getSelect() == 1) {
-                            corridorHabitat = cur.getHabitat(0);
-                        } else {
-                            corridorHabitat = cur.getHabitat(1);
-                        }
-                        cur.getHabitat(0);
+                    Habitat corridorHabitat;
+                    if (corridorFound(Direction.RIGHT, cur)) {
+                        corridorHabitat = corridorFoundType(Direction.RIGHT, cur);
                         countedTiles.add(cur);
                         recursiveCheck(getAdjTile(Direction.RIGHT, cur), Direction.RIGHT, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
                     }
-                    if (tileMatch(Direction.DOWN, cur)) {
-                        Habitat corridorHabitat;
-                        if (cur.getSelect() == 1) {
-                            corridorHabitat = cur.getHabitat(0);
-                        } else {
-                            corridorHabitat = cur.getHabitat(1);
-                        }
-                        cur.getHabitat(0);
+                    if (corridorFound(Direction.DOWN, cur)) {
+                        corridorHabitat = corridorFoundType(Direction.DOWN, cur);
                         countedTiles.add(cur);
                         recursiveCheck(getAdjTile(Direction.DOWN, cur), Direction.DOWN, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
                     }
-                    if (tileMatch(Direction.LEFT, cur)) {
-                        Habitat corridorHabitat;
-                        corridorHabitat = cur.getHabitat(0);
+                    if (corridorFound(Direction.LEFT, cur)) {
+                        corridorHabitat = corridorFoundType(Direction.LEFT, cur);
                         countedTiles.add(cur);
                         recursiveCheck(getAdjTile(Direction.LEFT, cur), Direction.LEFT, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
                     }
-                    if (tileMatch(Direction.UP, cur)) {
-                        Habitat corridorHabitat;
-                        corridorHabitat = cur.getHabitat(0);
+                    if (corridorFound(Direction.UP, cur)) {
+                        corridorHabitat = corridorFoundType(Direction.UP, cur);
                         countedTiles.add(cur);
                         recursiveCheck(getAdjTile(Direction.UP, cur), Direction.UP, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
@@ -88,29 +76,58 @@ public class FindCorridors {
         if (curTile != null && !countedTiles.contains(curTile)) {
             // System.out.println("recursiveCheck added tile " + curTile.getBoardXIndex() + " " + curTile.getBoardYIndex() + "to corridor type " + corridorHabitat);
             countedTiles.add(curTile);
-            if (tileMatch(Direction.RIGHT, curTile)) {
+            if (corridorCheck(Direction.RIGHT, curTile, corridorHabitat)) {
                 // System.out.println("recursive check moves Right");
                 recursiveCheck(getAdjTile(Direction.RIGHT, curTile), Direction.RIGHT, corridorHabitat);
-            }
-            if (tileMatch(Direction.DOWN, curTile)) {
+            }else if (corridorCheck(Direction.DOWN, curTile, corridorHabitat)) {
                 // System.out.println("recursive check moves Down");
                 recursiveCheck(getAdjTile(Direction.DOWN, curTile), Direction.DOWN, corridorHabitat);
 
-            }
-            if (tileMatch(Direction.LEFT, curTile)) {
+            }else if (corridorCheck(Direction.LEFT, curTile, corridorHabitat)) {
                 // System.out.println("recursive check moves left");
                 recursiveCheck(getAdjTile(Direction.LEFT, curTile), Direction.LEFT, corridorHabitat);
-            }
-            if (tileMatch(Direction.UP, curTile)) {
+            }else if (corridorCheck(Direction.UP, curTile, corridorHabitat)) {
                 // System.out.println("recursive check moves up");
                 recursiveCheck(getAdjTile(Direction.UP, curTile), Direction.UP, corridorHabitat);
-            }
+            }else{}
             largestCorridorTracker(corridorHabitat);
-            countedTiles.clear();
         }
     }
 
-    private Boolean tileMatch(Direction direction, Tile current) {
+    private boolean corridorCheck(Direction direction, Tile current, Habitat corridorHabitat) {
+        if(corridorFound(direction, current) && corridorFoundType(direction, current) == corridorHabitat){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    private Habitat corridorFoundType(Direction direction, Tile current){
+        if(current == null){
+            throw new NullPointerException("current tile passed to tileMatch is null");
+        }
+        Habitat habitatTopAndLeft = current.getHabitat(0);
+        Habitat habitatBottomAndRight;
+        if (current.getSelect() == 1) {
+            habitatBottomAndRight = current.getHabitat(0);
+        } else {
+            habitatBottomAndRight = current.getHabitat(1);
+        }
+        if (direction == Direction.UP) {
+            return habitatTopAndLeft;
+        } else if (direction == Direction.LEFT) {
+            return habitatTopAndLeft;
+        } else if (direction == Direction.RIGHT) {
+            return habitatBottomAndRight;
+        } else if (direction == Direction.DOWN) {
+            return habitatBottomAndRight;
+        } else {
+            throw new IllegalArgumentException("The Direction is not a valid direction");
+        }
+    }
+
+    private Boolean corridorFound(Direction direction, Tile current) {
         if (current == null) {
             throw new NullPointerException("current tile passed to tileMatch is null");
         }
@@ -242,27 +259,27 @@ public class FindCorridors {
         }
     }
 
-    public void initializeCorridors() {
-        Tile startTileSolo = playerBoard[22][22];
-        Tile startTile1 = playerBoard[23][22];
-        Tile startTile2 = playerBoard[23][23];
-        if (startTileSolo == null || startTile1 == null || startTile2 == null) {
-            throw new IllegalStateException("starting tiles are null");
-        }
-        for (int i = 0; i < maxCorridors.length; i++) {
-            if (maxCorridors[i].getHabitatType() == startTileSolo.getHabitat(0)) {
-                maxCorridors[i].addCords(startTileSolo.getBoardXIndex(), startTileSolo.getBoardYIndex());
-            } else if (maxCorridors[i].getHabitatType() == startTile1.getHabitat(0)) {
-                maxCorridors[i].addCords(startTile1.getBoardXIndex(), startTile1.getBoardYIndex());
-            } else if (maxCorridors[i].getHabitatType() == startTile1.getHabitat(1)) {
-                maxCorridors[i].addCords(startTile1.getBoardXIndex(), startTile1.getBoardYIndex());
-            } else if (maxCorridors[i].getHabitatType() == startTile2.getHabitat(0)) {
-                maxCorridors[i].addCords(startTile2.getBoardXIndex(), startTile2.getBoardYIndex());
-            } else if (maxCorridors[i].getHabitatType() == startTile2.getHabitat(1)) {
-                maxCorridors[i].addCords(startTile2.getBoardXIndex(), startTile2.getBoardYIndex());
-            }
-        }
-    }
+    // public void initializeCorridors() {
+    //     Tile startTileSolo = playerBoard[22][22];
+    //     Tile startTile1 = playerBoard[23][22];
+    //     Tile startTile2 = playerBoard[23][23];
+    //     if (startTileSolo == null || startTile1 == null || startTile2 == null) {
+    //         throw new IllegalStateException("starting tiles are null");
+    //     }
+    //     for (int i = 0; i < maxCorridors.length; i++) {
+    //         if (maxCorridors[i].getHabitatType() == startTileSolo.getHabitat(0)) {
+    //             maxCorridors[i].addCords(startTileSolo.getBoardXIndex(), startTileSolo.getBoardYIndex());
+    //         } else if (maxCorridors[i].getHabitatType() == startTile1.getHabitat(0)) {
+    //             maxCorridors[i].addCords(startTile1.getBoardXIndex(), startTile1.getBoardYIndex());
+    //         } else if (maxCorridors[i].getHabitatType() == startTile1.getHabitat(1)) {
+    //             maxCorridors[i].addCords(startTile1.getBoardXIndex(), startTile1.getBoardYIndex());
+    //         } else if (maxCorridors[i].getHabitatType() == startTile2.getHabitat(0)) {
+    //             maxCorridors[i].addCords(startTile2.getBoardXIndex(), startTile2.getBoardYIndex());
+    //         } else if (maxCorridors[i].getHabitatType() == startTile2.getHabitat(1)) {
+    //             maxCorridors[i].addCords(startTile2.getBoardXIndex(), startTile2.getBoardYIndex());
+    //         }
+    //     }
+    // }
 
     private void firstHabitatCheck(Tile curTile) {
         Habitat habitat_index0 = curTile.getHabitat(0);
@@ -320,7 +337,7 @@ public class FindCorridors {
         };
     }
 
-
+    
     private  void printMaxCorridors(){ 
         System.out.println("Finished iterating through the playerboard for, the longest corridors are: ");
         for(int i = 0; i < maxCorridors.length; i++){
@@ -328,5 +345,10 @@ public class FindCorridors {
         }
     }
 
-}
+    public void resetMaxCorridors(){
+        for(int i = 0; i < maxCorridors.length; i++){
+            maxCorridors[i].clearCords();
+        }
+    }
 
+}
