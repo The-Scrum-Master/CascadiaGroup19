@@ -63,7 +63,7 @@ public class GameRunner {
 
         Thread.sleep(2000);
 
-        while (turnTheGameIsAt <= 20 && continueGame) {
+        while (turnTheGameIsAt <= 10 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
@@ -149,24 +149,6 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
-                    System.out.println("Would you like to rotate tiles(yes or no)");
-                    boolean wrongInput = true;
-                    while (wrongInput) {
-                        String rotate = IOcascadia.makeLowerCase(IOcascadia.takeInput());
-                        if (rotate.equals("yes")) {
-                            players.get(playersTurn).heldTile.flipTile(players.get(playersTurn).heldTile);
-                            TileGenerator g = new TileGenerator(players.get(playersTurn).heldTile);
-                            g.generateFlipTile();
-                            g.printTile();
-
-
-                            wrongInput = false;
-                        } else if (rotate.equals("no")) {
-                            wrongInput = false;
-                        } else {
-                            System.out.println("Wrong input please try again");
-                        }
-                    }
                     players.get(playersTurn).findBestPosition(0);
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
@@ -277,20 +259,40 @@ public class GameRunner {
                 """);
         for(int i=0;i<players.size();i++)
         {
+            int[] scores = new int[5];
+            int count =0;
             playersHawkScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for hawks are: " + playersHawkScores.get(i).countScore());
+            scores[count] = playersHawkScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for hawks are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
 
             playersBearScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + playersBearScores.get(i).countScore());
+            scores[count] = playersBearScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
 
             playersElkScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for elk lines are: " + playersElkScores.get(i).countScore());
+            scores[count] = playersElkScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for elk lines are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
 
             playersSalmonScores.get(i).getIndexesForTokens(players.get(i).getPlayerBoard(), players.get(i).getMap());
-            System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + playersSalmonScores.get(i).countScore());
+            scores[count] = playersSalmonScores.get(i).countScore();
+            System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + scores[count]);
+            players.get(i).totalScore.add(scores[count]);
+            count++;
+
             fox.countFoxes(players.get(i));
-            System.out.println(players.get(i).getName() +"'s points for fox are: " + fox.countScore(players.get(i)) + "\n");
+            scores[count] = fox.countScore(players.get(i));
+            System.out.println(players.get(i).getName() +"'s points for fox are: " +scores[count]  + "\n");
+            players.get(i).totalScore.add(scores[count]);
+
+
         }
+
 
 
         playersTurn = 0;
@@ -401,11 +403,12 @@ public class GameRunner {
             }
             totalHabitatPoints=forestPoints+riverPoints+wetlandPoints+mountainPoints+prairiePoints;
             System.out.println("Points awarded for habitats: " + totalHabitatPoints + "\n");
+            players.get(playersTurn).totalScore.add(totalHabitatPoints);
 
 
             playersTurn++;
         }
-
+         getTotalScore();
         System.out.println("Thanks for playing!");
     }
 
@@ -414,5 +417,18 @@ public class GameRunner {
     }
     public static int getHelperIntToPrintMap(){
         return helperIntToPrintMap;
+    }
+    public static void getTotalScore(){
+        for(int j=0;j<players.size();j++) {
+            int sum=0;
+
+            for (int i = 0; i < players.get(j).totalScore.size(); i++) {
+                sum += players.get(j).totalScore.get(i);
+            }
+            sum+= players.get(j).getNatureTokenNumber();
+            System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber()+"\n");
+            System.out.println("Total score for "+players.get(j).getName()+" is "+ sum+"\n");
+        }
+
     }
 }

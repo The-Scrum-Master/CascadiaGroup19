@@ -9,13 +9,8 @@ public class A_Fox {
     ArrayList<Wildlife> animals = new ArrayList<Wildlife>();
     ArrayList<Integer> score = new ArrayList<Integer>();
 
-
-
-
-
     public A_Fox(Player player) {
         this.player = player;
-
     }
 
     public void countFoxes(Player player) {

@@ -40,6 +40,8 @@ public class Player {
     public Wildlife heldToken;
     public int natureTokenNumber;
     ArrayList<MaxCorridor> potentialSuitors = new ArrayList<>();
+    public  ArrayList<Integer> totalScore = new ArrayList<Integer>();
+
 
 
     public Player(String name, int order) {
