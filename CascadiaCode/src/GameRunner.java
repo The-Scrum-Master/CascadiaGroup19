@@ -188,7 +188,9 @@ public class GameRunner {
                     {
                         players.get(playersTurn).findBestPosition(0,1);
                     }
-                    players.get(playersTurn).findBestPosition(0,0);
+                    else{
+                        players.get(playersTurn).findBestPosition(0,0);
+                    }
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
                     players.get(playersTurn).printMap(helperIntToPrintMap);
