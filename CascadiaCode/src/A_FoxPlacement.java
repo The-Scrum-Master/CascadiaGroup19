@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
     public class A_FoxPlacement {
         Player player;
+        private int maximumScore = 0;
         private ArrayList<Integer> coordX = new ArrayList<Integer>();
         private ArrayList<Integer> coordY = new ArrayList<Integer>();
 
@@ -17,6 +18,9 @@ import java.util.ArrayList;
         }
 
 
+        public int getMaximumScore() {
+            return maximumScore;
+        }
 
         public A_FoxPlacement(Player player) {
             this.player = player;
@@ -139,6 +143,7 @@ import java.util.ArrayList;
                     j= i;
                 }
             }
+            maximumScore = max;
             return j;
         }
 

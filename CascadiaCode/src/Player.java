@@ -694,7 +694,6 @@ public class Player {
     public void findBestPosition(int x) {
         System.out.println("Itss me find best habitat");
 //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
-//need to know what direction tiles are pointing in
 
         for (int i = 0; i < potentialSuitors.size(); i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {
