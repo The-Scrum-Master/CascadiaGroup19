@@ -114,7 +114,7 @@ public class GameRunner {
                     if (strategyChosen == 0) {
                         instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
                     } else /*if(strategyChosen == 1)*/{
-                        instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
+                        instructionsToChoosePairInput = Tile.randomNumberGenerator(4);;
                     }
 
 
