@@ -346,25 +346,17 @@ public class Player {
         // at different indexes
         System.out.println("You have chosen to pick any one tile and wildlife token from the river" +
                 "\nEnter the index of the tile you would like to chose:");
-        int indexChoiceTile = IOcascadia.takeIntInput() - 1;
-        while (indexChoiceTile < 0 || indexChoiceTile > 3) {
-            System.out.println("The number you have inputted is not a valid index.");
-            indexChoiceTile = IOcascadia.takeIntInput();
-        }
-        this.heldTile = TileDeck.getRiverTilesIndex(indexChoiceTile);
+        System.out.println(tileIndex);
+        this.heldTile = TileDeck.getRiverTilesIndex(tileIndex);
         // moves the tile from the river to the players hand
-        TileDeck.ReplaceRiverTilesIndex(indexChoiceTile);
+        TileDeck.ReplaceRiverTilesIndex(tileIndex);
         // replaces the tile in the river with a new tile
         TileDeck.emptyDeckCheck();
 
         System.out.println("Enter the index of the token you would like to chose:");
-        int indexChoiceToken = IOcascadia.takeIntInput() - 1;
-        while (indexChoiceToken < 0 || indexChoiceToken > 3) {
-            System.out.println("The number you have inputted is not a valid index.");
-            indexChoiceToken = IOcascadia.takeIntInput();
-        }
-        this.heldToken = TileDeck.getRiverTokensIndex(indexChoiceToken);
-        TileDeck.ReplaceRiverTokensIndex(indexChoiceToken);
+        System.out.println(tokenIndex);
+        this.heldToken = TileDeck.getRiverTokensIndex(tokenIndex);
+        TileDeck.ReplaceRiverTokensIndex(tokenIndex);
         // replaces the token in the river with a new token
         natureTokenNumber--;
         System.out.println("You now have " + natureTokenNumber + " NatureTokens left");
