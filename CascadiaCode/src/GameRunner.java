@@ -4,8 +4,6 @@
  * Patrick Kelly-21204063(Patkelly17)
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
-
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 public class GameRunner {
     private static final ArrayList<Player> players = new ArrayList<>();
