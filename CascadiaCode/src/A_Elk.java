@@ -188,27 +188,26 @@ public class A_Elk{
             }
             if(finalDraft.size() == 0){
                 if(!arrayOfPlaceholders.isEmpty()){
-                    boolean havePlacedToken=false;
-                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
-                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
-                            player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
-                            System.out.println("Token placed at "+arrayOfPlaceholders.get(i).getCordY()+","+arrayOfPlaceholders.get(i).getCordX());
-                            havePlacedToken=true;
-                            break;
-                        }
-                    }
-                    if(!havePlacedToken){
-                        System.out.println("Don't want to place token");
-                    }
+                    placeAnywhere();
+//                    boolean havePlacedToken=false;
+//                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
+//                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
+//                            player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
+//                            System.out.println("Token placed at "+arrayOfPlaceholders.get(i).getCordY()+","+arrayOfPlaceholders.get(i).getCordX());
+//                            havePlacedToken=true;
+//                            break;
+//                        }
+//                    }
+//                    if(!havePlacedToken){
+//                        System.out.println("Don't want to place token");
+//                    }
                 }
                 else{
-                    System.out.println("Don't want to place token");
+                    System.out.println("Can't place token");
                 }
-                //dont place
             } else if(finalDraft.size() == 1){
                 player.placeToken(finalDraft.get(0).getCordY(), finalDraft.get(0).getCordX());
                 System.out.println("Token placed at "+finalDraft.get(0).getCordY()+","+finalDraft.get(0).getCordX());
-
                 //place in the one position
             }
             else{
@@ -253,14 +252,16 @@ public class A_Elk{
             }
             if(finalDraft.size() == 0){
                 if(!arrayOfPlaceholders.isEmpty()){
-                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
-                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
-                            getIndexes(playerBoard, playerMapGenerator);
-                            int maxLengthRun = countLongestRun();
-                            return turnLengthOfElksIntoPoints(maxLengthRun+1) - turnLengthOfElksIntoPoints(maxLengthRun);
-                        }
-                    }
-                    return 0;
+                    return 2;
+                    //points for 1 single elk
+//                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
+//                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
+//                            getIndexes(playerBoard, playerMapGenerator);
+//                            int maxLengthRun = countLongestRun();
+//                            return turnLengthOfElksIntoPoints(maxLengthRun+1) - turnLengthOfElksIntoPoints(maxLengthRun);
+//                        }
+//                    }
+//                    return 0;
                 }
                 else{
                     return 0;
