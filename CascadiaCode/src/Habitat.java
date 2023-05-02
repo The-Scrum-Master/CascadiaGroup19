@@ -41,7 +41,7 @@ public enum Habitat{
         }
         @Override
         public String toString() {
-                return "Habitat: " + symbolToString(symbol);
+                return "Habitat: " + colour + " " + symbolToString(symbol);
         }
 
         public char getSymbol()
