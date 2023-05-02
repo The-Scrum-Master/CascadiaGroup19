@@ -67,8 +67,8 @@ public class GameRunner {
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
                 turnTheGameIsAt++;
-                if(turnTheGameIsAt>4){
-                    if(turnTheGameIsAt%3==0){
+                if(turnTheGameIsAt>5){
+                    if(turnTheGameIsAt%4==0){
                         helperIntToPrintMap++;
                     }
                 } else{
@@ -87,7 +87,7 @@ public class GameRunner {
                     players.get(playersTurn).generateInitialMap();
                     System.out.println(players.get(playersTurn).getName() +" these are your starter tiles!!!");
                     System.out.println();
-                    Thread.sleep(1000);
+                    // Thread.sleep(1000);
                 } else {
                     if(playersTurn==1) {
                         System.out.println(players.get(0).getName() + " map:");
@@ -203,11 +203,11 @@ public class GameRunner {
 
                     if(players.get(playersTurn).getStrategy()==0)
                     {
-                        players.get(playersTurn).findBestPosition(0,1);
+                        players.get(playersTurn).findBestPosition(0,0);
                     } else if (players.get(playersTurn).getStrategy()==1) {
                         players.get(playersTurn).placeAnywhere();
                     } else{
-                        players.get(playersTurn).placeTileBasedOnToken();
+                        players.get(playersTurn).findBestPosition(0,1);
                     }
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
@@ -262,7 +262,7 @@ public class GameRunner {
                 fox.countFoxes(players.get(playersTurn));
                 System.out.println(players.get(playersTurn).getName() + "'s number of fox points so far are: " + fox.countScore(players.get(playersTurn)));
                 playersTurn++;
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
             }
         }
         System.out.println("""

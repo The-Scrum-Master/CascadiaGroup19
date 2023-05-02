@@ -53,7 +53,7 @@ public class Player {
         heldToken = null;
         natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
-        strategy = 0;//Tile.randomNumberGenerator(3);
+        strategy = 2;//Tile.randomNumberGenerator(3);
     }
 
     public int getStrategy() {
@@ -560,27 +560,7 @@ public class Player {
     //     return potentialTilesToAddTo;
     // }
 
-    private boolean isTileAvailbleToPlayOff(int xCord, int yCord) {
-        if (playerBoard[yCord][xCord] == null) {
-            System.out.println("the tile you are attmepting to place next to is null");
-            return false;
-        } else {
-            if (isSpotAvailable(xCord - 1, yCord) || isSpotAvailable(xCord + 1, yCord) ||
-                    isSpotAvailable(xCord, yCord - 1) || isSpotAvailable(xCord, yCord + 1)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
 
-    private boolean isSpotAvailable(int xCord, int yCord) {
-        if (playerBoard[yCord][xCord] == null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
     public void findBestPosition(int x, int strategy) {
@@ -617,12 +597,14 @@ public class Player {
                         x++;
                         if(x<potentialSuitors.get(i).getXcordArrayList().size())
                         {
-                            searchRadius(X.get(x), Y.get(x));
+                            isTilePlaced=searchRadius(X.get(x), Y.get(x));
                         }
                         else{
                             placeAnywhere();
-                            return;
+                            isTilePlaced=true;
                         }
+
+
                     }
                     return;
                 }
@@ -636,8 +618,8 @@ public class Player {
         System.out.println("the coordinnates I have been given are " + x + "," + y);
         if (heldTile.getSelect() == 1) {
             System.out.println("entered if statement");
-            searchSingleTileRadius(x, y);
-            return true;
+           return searchSingleTileRadius(x, y);
+
         }
         if (map.getMap()[x][y + 1].getEmptyTile()) {
             System.out.println("This is the right side ");
@@ -736,10 +718,11 @@ public class Player {
             }
 
 
-        } else{
+        } else {
             System.out.println("FAILED");
-            //sometimes the coords of the top dog is surrounded need to pick the next best one
         }
+        System.out.println("FAiled2");
+
         return false;
     }
 
@@ -789,6 +772,13 @@ public class Player {
             }
         }  if (map.getMap()[x + 1][y].getEmptyTile()) {
             System.out.println("This is the below ");
+            if(playerBoard[x][y].getSelect()==1){
+                if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0)));
+                {
+                    placeTile(x + 1, y);
+                    return true;
+                }
+            }
             if (playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
                 placeTile(x + 1, y);
                 return true;
@@ -796,57 +786,16 @@ public class Player {
 
         } else {
             System.out.println("Failed");
-
+           return false;
         }
+        System.out.println("failed2");
         return false;
 
     }
 
-    public void findSecondBestPosition() {
 
 
-        for (int x = 0; x < playerBoard.length; x++) {
-            innerloop:
-            for (int y = 0; y < playerBoard.length; y++) {
-                if (!map.getMap()[x][y].getEmptyTile()) {
-                    for (int k = 0; k < playerBoard[x][y].getHabitats().length; k++) {
-                        for (int l = 0; l < heldTile.getHabitats().length; l++) {
-                            if (heldTile.getHabitat(l).equals(playerBoard[x][y].getHabitat(k))) {
-                                if (x == potentialSuitors.get(0).getYcordArrayList().get(0)) {
-                                    System.out.println("Entered if statement");
-                                    x++;
-                                    continue innerloop;
 
-
-                                }
-
-                                searchRadius(x, y);
-                                return;
-                            }
-                        }
-                    }
-
-                }
-
-            }
-        }
-        placeAnywhere();
-    }
-
-    public void placeTileBasedOnToken() {
-        for (int rows = 0; rows < 46; rows++) {
-            for (int columns = 0; columns < 46; columns++) {
-                if (!map.getMap()[rows][columns].getEmptyTile()) {
-                    if (checkHabitats(playerBoard[rows][columns])) {
-                        searchRadius(rows, columns);
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    //need to see if I can place it another way cuz otherwise map builds to the left all the time
     public boolean checkHabitats(Tile board) {
         for (int i = 0; i < board.getHabitats().length; i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {
