@@ -600,6 +600,7 @@ public class Player {
                     if (count == 7) {
 
                         if (randomNumber == 1) {
+                            if(heldTile.getSelect()!=1)
                             flipPlayersTile();
                         }
                         //randomly flip tiles
@@ -612,7 +613,8 @@ public class Player {
         }
 
         if (randomNumber == 1) {
-            flipPlayersTile();
+            if(heldTile.getSelect()!=1)
+                flipPlayersTile();
         }
         placeTile(coordX.get(coordX.size() - 1), coordY.get(coordY.size() - 1));
         return true;
