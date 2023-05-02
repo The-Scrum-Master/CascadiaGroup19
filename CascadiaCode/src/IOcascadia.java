@@ -15,7 +15,7 @@ public class IOcascadia {
     static public ArrayList<Integer> order= new ArrayList<>();
 
     public static String takeInput(){
-        Scanner in =new Scanner(System.in);
+        Scanner in = new Scanner(System.in);
         return in.nextLine().trim();
     }
     public static boolean onlyDigits(String str, int n) {
@@ -158,8 +158,23 @@ public class IOcascadia {
     }
 
     public static void botsIntro(){
-        System.out.println("How many players are going to play? (between 2 and 4)\n"+numberOfBots+"\n");
-        System.out.println("Enter player 1 name: Bot_1\nEnter next player's name: Bot_2\n");
-        playerNames.add("Bot_1"); playerNames.add("Bot_2");
+        System.out.println("How many players are going to play? (between 2 and 4)\n In this game "+numberOfBots+" Bots will play eachother.\n");
+        System.out.println("Would you like to name them?");
+        String strInput = takeInput();
+        strInput = makeLowerCase(strInput);
+        while(!strInput.equals("yes") && !strInput.equals("no")){
+            System.out.println("Invalid input: Please type yes or no.");
+            strInput = takeInput();
+            strInput = makeLowerCase(strInput);
+        }
+        if(strInput.equals("yes")){
+            System.out.println("What would you like to name them?");
+            playerNames();
+            System.out.println("Player 1 name: " + playerNames.get(0) + "\n Player 2 name: " + playerNames.get(1) + "\n");
+        }else{
+            playerNames.add(0, "Bot_1");
+            playerNames.add(1, "Bot_2");
+            System.out.println("Player 1 name: " + playerNames.get(0) + "\n Player 2 name: " + playerNames.get(1) + "\n");
+        }
     }
 }

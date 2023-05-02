@@ -312,7 +312,9 @@ public class GameRunner {
             MaxCorridor[] playersMaxCorridors = playerFindCorridors.mapIterator(players.get(playersTurn).getPlayerBoard());
             int sumOfCorridors = 0;
             for(int i = 0; i < playersMaxCorridors.length; i++){
-                sumOfCorridors += playersMaxCorridors[i].getSize();
+                int corridorSize = playersMaxCorridors[i].getSize();
+                System.out.println("Received: " +corridorSize + " points for max corridor" + playersMaxCorridors[i].getHabitatType());
+                sumOfCorridors += corridorSize;
             }
             System.out.println("\n");
             System.out.println(players.get(playersTurn).getName() +"'s points for habitat corridors: " + sumOfCorridors + "\n");

@@ -30,21 +30,11 @@ public class FindCorridors {
             for (int j = 0; j < 46; j++) {
                 Tile cur = board[i][j];
                 if (cur != null) {
-                    System.out.println("checking tile " + i + " " + j);
-                    Habitat habitatTopAndLeft = cur.getHabitat(0);
-                    Habitat habitatBottomAndRight;
-                    System.out.println(habitatTopAndLeft);
-                    if (cur.getSelect() != 1) {
-                        habitatBottomAndRight = cur.getHabitat(1);
-                        System.out.println(habitatBottomAndRight);
-                    }
                     firstHabitatCheck(cur);
                     Habitat corridorHabitat;
                     if (corridorFound(Direction.RIGHT, cur)) {
                         corridorHabitat = corridorFoundType(Direction.RIGHT, cur);
                         countedTiles.add(cur);
-                        // System.out.println("match found, move right");
-                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.RIGHT, cur), Direction.RIGHT, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -52,8 +42,6 @@ public class FindCorridors {
                     if (corridorFound(Direction.DOWN, cur)) {
                         corridorHabitat = corridorFoundType(Direction.DOWN, cur);
                         countedTiles.add(cur);
-                        // System.out.println("match found, move down");
-                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.DOWN, cur), Direction.DOWN, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -61,8 +49,6 @@ public class FindCorridors {
                     if (corridorFound(Direction.LEFT, cur)) {
                         corridorHabitat = corridorFoundType(Direction.LEFT, cur);
                         countedTiles.add(cur);
-                        // System.out.println("match found, move left");
-                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.LEFT, cur), Direction.LEFT, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -70,47 +56,32 @@ public class FindCorridors {
                     if (corridorFound(Direction.UP, cur)) {
                         corridorHabitat = corridorFoundType(Direction.UP, cur);
                         countedTiles.add(cur);
-                        // System.out.println("match found, move up");
-                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.UP, cur), Direction.UP, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
                     }
-                    // System.out.println("Iterated to the next tile in the playerboard");
                 }
             }
         }
-        System.out.println("BEFORE");
         MaxCorridor[] copyofMaxCorridor = new MaxCorridor[5];
-        printMaxCorridors(maxCorridors);
         for(int i = 0; i < maxCorridors.length; i ++){
             copyofMaxCorridor[i] = maxCorridors[i];
         }
-        System.out.println("AFTER");
-        printMaxCorridors(insertionSort(copyofMaxCorridor));
         return insertionSort(copyofMaxCorridor);
     }
 
     private void recursiveCheck(Tile curTile, Direction direction, Habitat corridorHabitat) {
         if (curTile != null && !countedTiles.contains(curTile)) {
             if (corridorCheck(Direction.RIGHT, curTile, corridorHabitat)){
-                // System.out.println("match found, move right");
-                // System.out.println("match type" + corridorHabitat);
                 countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.RIGHT, curTile), Direction.RIGHT, corridorHabitat);
             }else if (corridorCheck(Direction.DOWN, curTile, corridorHabitat)) {
-                // System.out.println("match found, move down");
-                // System.out.println("match type" + corridorHabitat);
                 countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.DOWN, curTile), Direction.DOWN, corridorHabitat);
             }else if (corridorCheck(Direction.LEFT, curTile, corridorHabitat)) {
-                // System.out.println("match found, move left");
-                // System.out.println("match type" + corridorHabitat);
                 countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.LEFT, curTile), Direction.LEFT, corridorHabitat);
             }else if(corridorCheck(Direction.UP, curTile, corridorHabitat)) {
-                // System.out.println("match found, move up");
-                // System.out.println("match type" + corridorHabitat);
                 countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.UP, curTile), Direction.UP, corridorHabitat);
             }else{
@@ -320,12 +291,9 @@ public class FindCorridors {
         int n = arrayMaxCorridors.length;
         for (int i = 1; i < n; i++) {
             MaxCorridor temp = arrayMaxCorridors[i];
-            System.out.println(temp.getSize()  + " " + temp.getHabitatType());
             int j = i - 1;
             while (j >= 0 && arrayMaxCorridors[j].getSize() < temp.getSize()) {
                 arrayMaxCorridors[j+1] =  arrayMaxCorridors[j];
-                // System.out.println(arrayMaxCorridors[j + 1].getSize() + " "+ arrayMaxCorridors[j + 1].getHabitatType()  + " is set to " + arrayMaxCorridors[j].getSize() + " "+arrayMaxCorridors[j].getHabitatType());
-
                 j = j - 1;
             }
             arrayMaxCorridors[j+1] = temp;

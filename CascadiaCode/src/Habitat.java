@@ -13,17 +13,35 @@ public enum Habitat{
 
         private HabitatColour colour;
         private char symbol;
+        private String name;
         Habitat(char symbol, HabitatColour colour){
                 this.symbol = symbol;
                 this.colour = colour;
         }
 
+        private String symbolToString(char ch){
+                switch(ch){
+                        case 'R':
+                        name = "River";
+                        return name;
+                        case 'F':
+                        name = "Forrest";
+                        return name;
+                        case 'M':
+                        name = "Mountain";
+                        return name;
+                        case 'P':
+                        name = "Prairie";
+                        return name;
+                        case 'W':
+                        name = "Wetland";
+                        return name;
+                        default: throw new IllegalArgumentException("unknown character passed to symbolToString");
+                }
+        }
         @Override
         public String toString() {
-                return "Habitat{" +
-                        "colour=" + colour +
-                        ", name='" + symbol + '\'' +
-                        '}';
+                return "Habitat: " + symbolToString(symbol);
         }
 
         public char getSymbol()
