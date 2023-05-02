@@ -329,6 +329,8 @@ public class GameRunner {
 
             playersTurn++;
         }
+        getTotalScore();
+
         System.out.println("Thanks for playing!");
     }
     public static void setContinueGame(boolean cont) {

@@ -53,7 +53,7 @@ public class Player {
         heldToken = null;
         natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
-        strategy= Tile.randomNumberGenerator(3);
+        strategy= 0 ;//Tile.randomNumberGenerator(3);
     }
 
     public int getStrategy() {

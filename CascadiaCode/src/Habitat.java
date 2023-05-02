@@ -25,7 +25,7 @@ public enum Habitat{
                         name = "River";
                         return name;
                         case 'F':
-                        name = "Forrest";
+                        name = "Forest";
                         return name;
                         case 'M':
                         name = "Mountain";
