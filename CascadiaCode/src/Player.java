@@ -53,7 +53,7 @@ public class Player {
         heldToken = null;
         natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
-        strategy=Tile.randomNumberGenerator(3);
+        strategy= Tile.randomNumberGenerator(3);
     }
 
     public int getStrategy() {
@@ -721,7 +721,7 @@ public class Player {
 
         }else {
             System.out.println("FAILED");
-
+             placeAnywhere();
             //sometimes the coords of the top dog is surrounded need to pick the next best one
         }
         return false;
@@ -735,6 +735,8 @@ public class Player {
     }
     public boolean searchSingleTileRadius(int x,int y) {
         if (map.getMap()[x][y + 1].getEmptyTile()) {
+            System.out.println("This is the right side ");
+
             if(playerBoard[x][y].getSelect()==1){
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
                     placeTile(x,y+1);
@@ -748,33 +750,24 @@ public class Player {
             }
         }
         else if (map.getMap()[x][y - 1].getEmptyTile()) {
-            if(playerBoard[x][y].getSelect()==1){
-                if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
-                    placeTile(x,y-1);
-                    return true;
-                }
-            }
-            else{
-                if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    placeTile(x, y - 1);
-                    return true;
-                }
+            System.out.println("This is the left side ");
+
+            if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
+                placeTile(x,y-1);
+                return true;
             }
         }
-        if (map.getMap()[x-1][y].getEmptyTile()) {
-            if (playerBoard[x][y].getSelect()== 1) {
-                if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    placeTile(x-1, y );
-                    return true;
-                }
-            } else {
-                if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    placeTile(x - 1, y);
-                    return true;
-                }
+        else if (map.getMap()[x-1][y].getEmptyTile()) {
+            System.out.println("This is above");
+
+            if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
+                placeTile(x-1, y );
+                return true;
             }
         }
-        if (map.getMap()[x+1][y].getEmptyTile()) {
+       else  if (map.getMap()[x+1][y].getEmptyTile()) {
+            System.out.println("This is the below ");
+
             if(playerBoard[x][y].getSelect()==1){
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))){
                     placeTile(x+1,y);
@@ -789,7 +782,6 @@ public class Player {
         }
         else{
             System.out.println("Failed");
-            findSecondBestPosition();
 
         }
         return false;
@@ -826,10 +818,32 @@ public class Player {
         }
         placeAnywhere();
     }
-
+    public void placeTileBasedOnToken() {
+        for (int rows = 0; rows < 46; rows++) {
+            for (int columns = 0; columns < 46; columns++) {
+                if (!map.getMap()[rows][columns].getEmptyTile()) {
+                    if(checkHabitats(playerBoard[rows][columns])){
+                        searchRadius(rows,columns);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+//need to see if I can place it another way cuz otherwise map builds to the left all the time
+    public boolean checkHabitats(Tile board){
+        for(int i=0;i<board.getHabitats().length;i++){
+            for(int j=0;j<heldTile.getHabitats().length;j++){
+                if(board.getHabitat(i).equals(heldTile.getHabitat(j))){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public boolean placeAnywhere() {
-        System.out.println("its me placeAnywhere");
+        //function to randomly place tiles
         int count=0;
         coordX = new ArrayList<>();
         coordY  =new ArrayList<>();
@@ -842,22 +856,22 @@ public class Player {
                         count++;
 
                     }
+                    //go through map if a tile is available count++
 
                     if(count==5){
-                        System.out.println("count is 7");
-                        System.out.println("coorda are "+coordX.get(coordX.size()-1)+","+coordY.get(coordY.size()-1));
 
                         if(randomNumber==2){
                             flipPlayersTile();
                         }
+                        //randomly flip tiles
                         placeTile(coordX.get(coordX.size()-1),coordY.get(coordY.size()-1));
                         return true;
                     }
+                    //this is make sure tiles are not placed one sided
                 }
             }
         }
-        System.out.println("finishing iuterating");
-        System.out.println("coorda are "+coordX.get(coordX.size()-1)+","+coordY.get(coordY.size()-1));
+
         if(randomNumber==2){
             flipPlayersTile();
         }

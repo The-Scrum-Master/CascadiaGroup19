@@ -207,7 +207,7 @@ public class GameRunner {
                     } else if (players.get(playersTurn).getStrategy()==1) {
                         players.get(playersTurn).placeAnywhere();
                     } else{
-                        players.get(playersTurn).findBestPosition(0,0);
+                        players.get(playersTurn).placeTileBasedOnToken();
                     }
 
                     players.get(playersTurn).map.fillMapWithAllowedTilePlacements();
@@ -318,7 +318,8 @@ public class GameRunner {
             System.out.println(players.get(playersTurn).getName() +"'s points for habitat corridors: " + sumOfCorridors + "\n");
             players.get(playersTurn).totalScore.add(sumOfCorridors);
         }
-        
+
+
 
         playersTurn = 0;
         while (playersTurn < numberOfPlayers) {
