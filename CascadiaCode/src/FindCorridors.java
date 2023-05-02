@@ -9,13 +9,8 @@ import java.util.ArrayList;
 public class FindCorridors {
     private Tile[][] playerBoard;
     private static ArrayList<Tile> countedTiles = new ArrayList<>();
-    private MaxCorridor[] maxCorridors = { new MaxCorridor(Habitat.RIVER), new MaxCorridor(Habitat.FOREST),
-            new MaxCorridor(Habitat.PRAIRIE), new MaxCorridor(Habitat.MOUNTAIN), new MaxCorridor(Habitat.WETLANDS) };
-    public static int RiverCorridor_index = 0;
-    public static int ForrestCorridor_index = 1;
-    public static int PrairieCorridor_index = 2;
-    public static int MountainCorridor_index = 3;
-    public static int WetlandCorridor_index = 4;
+    private MaxCorridor[] maxCorridors = { new MaxCorridor(Habitat.RIVER, 0) , new MaxCorridor(Habitat.FOREST, 1),
+            new MaxCorridor(Habitat.PRAIRIE, 2), new MaxCorridor(Habitat.MOUNTAIN, 3), new MaxCorridor(Habitat.WETLANDS ,4) };
 
     enum Direction {
         UP,
@@ -31,18 +26,25 @@ public class FindCorridors {
     public MaxCorridor[] mapIterator(Tile[][] board) {
         // iterates through the playerboard that is currently playable.
         resetMaxCorridors();
-        for (int i = 0 + 21 - GameRunner.getHelperIntToPrintMap(); i < 46 - 21
-                + GameRunner.getHelperIntToPrintMap(); i++) {
-            for (int j = 0 + 21 - GameRunner.getHelperIntToPrintMap(); j < 46 - 21
-                    + GameRunner.getHelperIntToPrintMap(); j++) {
+        for (int i = 0; i < 46; i++) {
+            for (int j = 0; j < 46; j++) {
                 Tile cur = board[i][j];
                 if (cur != null) {
-                    // System.out.println("checking tile " + j + " " + i);
+                    System.out.println("checking tile " + i + " " + j);
+                    Habitat habitatTopAndLeft = cur.getHabitat(0);
+                    Habitat habitatBottomAndRight;
+                    System.out.println(habitatTopAndLeft);
+                    if (cur.getSelect() != 1) {
+                        habitatBottomAndRight = cur.getHabitat(1);
+                        System.out.println(habitatBottomAndRight);
+                    }
                     firstHabitatCheck(cur);
                     Habitat corridorHabitat;
                     if (corridorFound(Direction.RIGHT, cur)) {
                         corridorHabitat = corridorFoundType(Direction.RIGHT, cur);
                         countedTiles.add(cur);
+                        // System.out.println("match found, move right");
+                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.RIGHT, cur), Direction.RIGHT, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -50,6 +52,8 @@ public class FindCorridors {
                     if (corridorFound(Direction.DOWN, cur)) {
                         corridorHabitat = corridorFoundType(Direction.DOWN, cur);
                         countedTiles.add(cur);
+                        // System.out.println("match found, move down");
+                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.DOWN, cur), Direction.DOWN, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -57,6 +61,8 @@ public class FindCorridors {
                     if (corridorFound(Direction.LEFT, cur)) {
                         corridorHabitat = corridorFoundType(Direction.LEFT, cur);
                         countedTiles.add(cur);
+                        // System.out.println("match found, move left");
+                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.LEFT, cur), Direction.LEFT, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -64,6 +70,8 @@ public class FindCorridors {
                     if (corridorFound(Direction.UP, cur)) {
                         corridorHabitat = corridorFoundType(Direction.UP, cur);
                         countedTiles.add(cur);
+                        // System.out.println("match found, move up");
+                        // System.out.println("match type" + corridorHabitat);
                         recursiveCheck(getAdjTile(Direction.UP, cur), Direction.UP, corridorHabitat);
                         largestCorridorTracker(corridorHabitat);
                         countedTiles.clear();
@@ -72,25 +80,42 @@ public class FindCorridors {
                 }
             }
         }
-        reorderMaxCorridors(maxCorridors);
-        printMaxCorridors();
-        return maxCorridors;
+        System.out.println("BEFORE");
+        MaxCorridor[] copyofMaxCorridor = new MaxCorridor[5];
+        printMaxCorridors(maxCorridors);
+        for(int i = 0; i < maxCorridors.length; i ++){
+            copyofMaxCorridor[i] = maxCorridors[i];
+        }
+        System.out.println("AFTER");
+        printMaxCorridors(insertionSort(copyofMaxCorridor));
+        return insertionSort(copyofMaxCorridor);
     }
 
     private void recursiveCheck(Tile curTile, Direction direction, Habitat corridorHabitat) {
         if (curTile != null && !countedTiles.contains(curTile)) {
-            countedTiles.add(curTile);
-            if (corridorCheck(Direction.RIGHT, curTile, corridorHabitat)) {
+            if (corridorCheck(Direction.RIGHT, curTile, corridorHabitat)){
+                // System.out.println("match found, move right");
+                // System.out.println("match type" + corridorHabitat);
+                countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.RIGHT, curTile), Direction.RIGHT, corridorHabitat);
             }else if (corridorCheck(Direction.DOWN, curTile, corridorHabitat)) {
+                // System.out.println("match found, move down");
+                // System.out.println("match type" + corridorHabitat);
+                countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.DOWN, curTile), Direction.DOWN, corridorHabitat);
-
             }else if (corridorCheck(Direction.LEFT, curTile, corridorHabitat)) {
+                // System.out.println("match found, move left");
+                // System.out.println("match type" + corridorHabitat);
+                countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.LEFT, curTile), Direction.LEFT, corridorHabitat);
-            }else if (corridorCheck(Direction.UP, curTile, corridorHabitat)) {
+            }else if(corridorCheck(Direction.UP, curTile, corridorHabitat)) {
+                // System.out.println("match found, move up");
+                // System.out.println("match type" + corridorHabitat);
+                countedTiles.add(curTile);
                 recursiveCheck(getAdjTile(Direction.UP, curTile), Direction.UP, corridorHabitat);
-            }else{}
+            }else{
             largestCorridorTracker(corridorHabitat);
+            }
         }
     }
 
@@ -202,50 +227,65 @@ public class FindCorridors {
         }
     }
 
+    private int getIndexOfType(Habitat habitat){
+        for(int i = 0; i < maxCorridors.length; i++){
+            if(maxCorridors[i].getHabitatType() == habitat){
+                return maxCorridors[i].getIndex();
+            }
+        }
+        throw new IllegalStateException("There is a an invalid habitat inputed into getindexType");
+    }
+
     public void largestCorridorTracker(Habitat habitat) {
         // if the counter is greater than the max, set the max to the counter
+        int index;
         switch (habitat) {
             case RIVER:
-                if (countedTiles.size() > maxCorridors[RiverCorridor_index].getSize()) {
-                    maxCorridors[RiverCorridor_index].clearCords();
+                index = getIndexOfType(Habitat.RIVER);
+                if (countedTiles.size() > maxCorridors[index].getSize()) {
+                    maxCorridors[index].clearCords();
                     for (int i = 0; i < countedTiles.size(); i++) {
-                        maxCorridors[RiverCorridor_index].addCords(countedTiles.get(i).getBoardXIndex(),
+                        maxCorridors[index].addCords(countedTiles.get(i).getBoardXIndex(),
                                 countedTiles.get(i).getBoardYIndex());
                     }
                 }
                 break;
             case FOREST:
-                if (countedTiles.size() > maxCorridors[ForrestCorridor_index].getSize()) {
-                    maxCorridors[ForrestCorridor_index].clearCords();
+                index = getIndexOfType(Habitat.FOREST);
+                if (countedTiles.size() > maxCorridors[index].getSize()) {
+                    maxCorridors[index].clearCords();
                     for (int i = 0; i < countedTiles.size(); i++) {
-                        maxCorridors[ForrestCorridor_index].addCords(countedTiles.get(i).getBoardXIndex(),
+                        maxCorridors[index].addCords(countedTiles.get(i).getBoardXIndex(),
                                 countedTiles.get(i).getBoardYIndex());
                     }
                 }
                 break;
             case PRAIRIE:
-                if (countedTiles.size() > maxCorridors[PrairieCorridor_index].getSize()) {
-                    maxCorridors[PrairieCorridor_index].clearCords();
+                index = getIndexOfType(Habitat.PRAIRIE);
+                if (countedTiles.size() > maxCorridors[index].getSize()) {
+                    maxCorridors[index].clearCords();
                     for (int i = 0; i < countedTiles.size(); i++) {
-                        maxCorridors[PrairieCorridor_index].addCords(countedTiles.get(i).getBoardXIndex(),
+                        maxCorridors[index].addCords(countedTiles.get(i).getBoardXIndex(),
                                 countedTiles.get(i).getBoardYIndex());
                     }
                 }
                 break;
             case MOUNTAIN:
-                if (countedTiles.size() > maxCorridors[MountainCorridor_index].getSize()) {
-                    maxCorridors[MountainCorridor_index].clearCords();
+                index = getIndexOfType(Habitat.MOUNTAIN);
+                if (countedTiles.size() > maxCorridors[index].getSize()) {
+                    maxCorridors[index].clearCords();
                     for (int i = 0; i < countedTiles.size(); i++) {
-                        maxCorridors[MountainCorridor_index].addCords(countedTiles.get(i).getBoardXIndex(),
+                        maxCorridors[index].addCords(countedTiles.get(i).getBoardXIndex(),
                                 countedTiles.get(i).getBoardYIndex());
                     }
                 }
                 break;
             case WETLANDS:
-                if (countedTiles.size() > maxCorridors[WetlandCorridor_index].getSize()) {
-                    maxCorridors[WetlandCorridor_index].clearCords();
+                index = getIndexOfType(Habitat.WETLANDS);
+                if (countedTiles.size() > maxCorridors[index].getSize()) {
+                    maxCorridors[index].clearCords();
                     for (int i = 0; i < countedTiles.size(); i++) {
-                        maxCorridors[WetlandCorridor_index].addCords(countedTiles.get(i).getBoardXIndex(),
+                        maxCorridors[index].addCords(countedTiles.get(i).getBoardXIndex(),
                                 countedTiles.get(i).getBoardYIndex());
                     }
                 }
@@ -274,48 +314,29 @@ public class FindCorridors {
         }
     }
 
-    private void reorderMaxCorridors(MaxCorridor[] maxCorridors){
-        for(int i = 0; i < maxCorridors.length; i++){
-            for(int j = i; j < maxCorridors.length; j++){
-                if(maxCorridors[i].getSize() < maxCorridors[j].getSize()){
-                    MaxCorridor temp = maxCorridors[i];
-                    switchIndex(i, j);
-                    maxCorridors[i] = maxCorridors[j];
-                    switchIndex(j, i);
-                    maxCorridors[j] = temp;
-                }
+
+    private MaxCorridor[] insertionSort(MaxCorridor[] arrayMaxCorridors) {
+        //we use insertion sort because the arraylist size is not going to be bigger than 10 most probably, and a max size of 20
+        int n = arrayMaxCorridors.length;
+        for (int i = 1; i < n; i++) {
+            MaxCorridor temp = arrayMaxCorridors[i];
+            System.out.println(temp.getSize()  + " " + temp.getHabitatType());
+            int j = i - 1;
+            while (j >= 0 && arrayMaxCorridors[j].getSize() < temp.getSize()) {
+                arrayMaxCorridors[j+1] =  arrayMaxCorridors[j];
+                // System.out.println(arrayMaxCorridors[j + 1].getSize() + " "+ arrayMaxCorridors[j + 1].getHabitatType()  + " is set to " + arrayMaxCorridors[j].getSize() + " "+arrayMaxCorridors[j].getHabitatType());
+
+                j = j - 1;
             }
+            arrayMaxCorridors[j+1] = temp;
         }
+        return arrayMaxCorridors;
     }
 
-    private void switchIndex(int origianl, int newIndex){
-        maxCorridors[origianl].getHabitatType();
-        switch(maxCorridors[origianl].getHabitatType()){
-            case RIVER:
-                RiverCorridor_index = newIndex;
-                break;
-            case FOREST:
-                ForrestCorridor_index = newIndex;
-                break;
-            case PRAIRIE:
-                PrairieCorridor_index = newIndex;
-                break;
-            case MOUNTAIN:
-                MountainCorridor_index = newIndex;
-                break;
-            case WETLANDS:
-                WetlandCorridor_index = newIndex;
-                break;
-            default:
-                throw new IllegalStateException("The Habitat is not a valid state in switchIndex");
-        };
-    }
-
-
-    private  void printMaxCorridors(){
+    public void printMaxCorridors(MaxCorridor[] array){
         System.out.println("Finished iterating through the playerboard for, the longest corridors are: ");
-        for(int i = 0; i < maxCorridors.length; i++){
-            System.out.println("Corridor " + i + " is of type: " + maxCorridors[i].getHabitatType() + " and has a size of: " + maxCorridors[i].getSize());
+        for(int i = 0; i < array.length; i++){
+            System.out.println("Corridor " + i + " is of type: " + array[i].getHabitatType() + " and has a size of: " + array[i].getSize());
         }
     }
 

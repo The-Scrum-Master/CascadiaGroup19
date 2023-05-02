@@ -40,6 +40,8 @@ public class Tile {
             select = randomNumberGenerator(3) + 1;
             // this generates a number between 0 and 2 plus 1, between 1 and 3
         }
+        boardXIndex = -1;
+        boardYIndex = -1;
         this.select = select;
         Played = false;
         tokenPlayed = false;

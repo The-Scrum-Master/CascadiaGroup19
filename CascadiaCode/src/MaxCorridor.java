@@ -10,9 +10,11 @@ public class MaxCorridor {
     private ArrayList<Integer> Xcordinates;
     private ArrayList<Integer> Ycordinates;
     private Habitat habitatType;
+    private int index;
 
-    public MaxCorridor(Habitat habitat) {
+    public MaxCorridor(Habitat habitat, int index) {
         this.habitatType = habitat;
+        this.index = index;
         Xcordinates = new ArrayList<>();
         Ycordinates = new ArrayList<>();
     }
@@ -29,6 +31,10 @@ public class MaxCorridor {
     public void clearCords(){
         Xcordinates.clear();
         Ycordinates.clear();
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public int getSize() {

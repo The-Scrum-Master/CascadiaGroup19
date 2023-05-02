@@ -258,10 +258,6 @@ public class GameRunner {
 
                 fox.countFoxes(players.get(playersTurn));
                 System.out.println(players.get(playersTurn).getName() + "'s number of fox points so far are: " + fox.countScore(players.get(playersTurn)));
-
-                System.out.println("\nSo far, the habitat score is the following:");
-                players.get(playersTurn).habitatScore();
-
                 playersTurn++;
                 Thread.sleep(1000);
             }
@@ -305,96 +301,30 @@ public class GameRunner {
         }
 
 
-        playersTurn = 0;
-        System.out.println("largest Habitats");
-        String winnerForest="none";
-        String winnerWetland="none";
-        String winnerPrairie="none";
-        String winnerMountain="none";
-        String winnerRiver="none";
-        // int maxForest = -1;
-        // int maxWetland = -1;
-        // int maxPrairie = -1;
-        // int maxMountain = -1;
-        // int maxRiver = -1;
+        System.out.println("The points recieved for habitat corridors are the following");
+        for(playersTurn = 0; playersTurn < numberOfPlayers; playersTurn++){
+            FindCorridors playerFindCorridors = players.get(playersTurn).getPlayerCorridors();
+            MaxCorridor[] playersMaxCorridors = playerFindCorridors.mapIterator(players.get(playersTurn).getPlayerBoard());
+            int sumOfCorridors = 0;
+            for(int i = 0; i < playersMaxCorridors.length; i++){
+                sumOfCorridors += playersMaxCorridors[i].getSize();
+            }
+            System.out.println("\n");
+            System.out.println(players.get(playersTurn).getName() +"'s points for habitat corridors: " + sumOfCorridors + "\n");
+            players.get(playersTurn).totalScore.add(sumOfCorridors);
+        }
+        
 
-        // while (playersTurn < numberOfPlayers) {
-        //     if (players.get(playersTurn).getForestMax() > maxForest) {
-        //         maxForest = players.get(playersTurn).getForestMax();
-        //         winnerForest = players.get(playersTurn).getName();
-        //     }
-        //     else if(players.get(playersTurn).getForestMax() == maxForest){
-        //         winnerForest = "none";
-        //     }
-        //     if (players.get(playersTurn).getMountainMax() > maxMountain) {
-        //         maxMountain = players.get(playersTurn).getMountainMax();
-        //         winnerMountain = players.get(playersTurn).getName();
-        //     }
-        //     else if(players.get(playersTurn).getMountainMax() == maxMountain){
-        //         winnerMountain = "none";
-        //     }
-        //     if (players.get(playersTurn).getWetlandMax() > maxWetland) {
-        //         maxWetland = players.get(playersTurn).getWetlandMax();
-        //         winnerWetland = players.get(playersTurn).getName();
-        //     }
-        //     else if(players.get(playersTurn).getWetlandMax() == maxWetland){
-        //         winnerWetland = "none";
-        //     }
-        //     if (players.get(playersTurn).getPrairieMax() > maxPrairie) {
-        //         maxPrairie = players.get(playersTurn).getPrairieMax();
-        //         winnerPrairie = players.get(playersTurn).getName();
-        //     }
-        //     else if(players.get(playersTurn).getPrairieMax() == maxPrairie){
-        //         winnerPrairie = "none";
-        //     }
-        //     if (players.get(playersTurn).getRiverMax() > maxRiver) {
-        //         maxRiver = players.get(playersTurn).getRiverMax();
-        //         winnerRiver = players.get(playersTurn).getName();
-        //     }
-        //     else if(players.get(playersTurn).getRiverMax() == maxRiver){
-        //         winnerRiver = "none";
-        //     }
-
-        //     playersTurn++;
-        // }
 
 
         playersTurn = 0;
         while (playersTurn < numberOfPlayers) {
             System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
 
-            int totalHabitatPoints;
-            int forestPoints=0;
-            if(Objects.equals(winnerForest, players.get(playersTurn).getName())){
-                forestPoints=2;
-            }
-            int prairiePoints=0;
-            if(Objects.equals(winnerPrairie, players.get(playersTurn).getName())){
-                prairiePoints=2;
-            }
-            int wetlandPoints=0;
-            if(Objects.equals(winnerWetland, players.get(playersTurn).getName())){
-                wetlandPoints=2;
-            }
-            int mountainPoints=0;
-            if(Objects.equals(winnerMountain, players.get(playersTurn).getName())){
-                mountainPoints=2;
-            }
-            int riverPoints=0;
-            if(Objects.equals(winnerRiver, players.get(playersTurn).getName())){
-                riverPoints=2;
-            }
-            totalHabitatPoints=forestPoints+riverPoints+wetlandPoints+mountainPoints+prairiePoints;
-            System.out.println("Points awarded for habitats: " + totalHabitatPoints + "\n");
-            players.get(playersTurn).totalScore.add(totalHabitatPoints);
-
-
             playersTurn++;
         }
-         getTotalScore();
         System.out.println("Thanks for playing!");
     }
-
     public static void setContinueGame(boolean cont) {
         continueGame = cont;
     }
