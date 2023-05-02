@@ -346,20 +346,25 @@ public class GameRunner {
         for(int i = 0; i < 2; i++){
             System.out.println(players.get(i).getName() + " had a final score of " + finalScores[i] + " points");
         }
-        System.out.println("");
+        System.out.println("\n");
         if(finalScores[0] == finalScores[1]){
             System.out.println("There was a tie so the player with more nature tokens wins");
             if(players.get(0).getNatureTokenNumber() > players.get(1).getNatureTokenNumber()){
                 winner = 0;
-            }else{
+                System.out.println("Congratulations "+players.get(winner).getName()+" you have won!!\n");
+            }else if(players.get(0).getNatureTokenNumber() < players.get(1).getNatureTokenNumber()){
                 winner = 1;
+                System.out.println("Congratulations "+players.get(winner).getName()+" you have won!!\n");
+            }else{
+                System.out.println("The Player have tied with the same score and number of Nature Tokens");
             }
         }else if(finalScores[0] > finalScores[1]){
             winner = 0;
+            System.out.println("Congratulations "+players.get(winner).getName()+" you have won!!\n");
         }else{
             winner = 1;
+            System.out.println("Congratulations "+players.get(winner).getName()+" you have won!!\n");
         }
-        System.out.println("Congratulations "+players.get(winner).getName()+" you have won!!\n");
     }
 
     public static boolean shouldBotCull(int playersTurn){
