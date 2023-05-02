@@ -32,44 +32,12 @@ public class A_Elk{
     }
 
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
-        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
-        getIndexesForTokens(playerBoard, playerMapGenerator);
+        arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.ELK);
+        arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.ELK);
     }
 
-    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        //get indexes of all places there are bear placeholders
-        arrayOfPlaceholders = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(!playerBoard[rows][columns].getTokenPlaced()){
-                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
-                            //loop through placeholders of the tile
-                            if(i.equals(Wildlife.ELK)){
-                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        arrayOfTokens = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.ELK)){
-                            arrayOfTokens.add(new TokenForPoints(columns, rows));
-                        }
-                    }
-                }
-            }
-        }
+    public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
+        arrayOfTokens=array;
     }
 
     public void recursiveHorizontalLineCheck(TokenForPoints validElk){

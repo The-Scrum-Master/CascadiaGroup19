@@ -8,7 +8,7 @@
 import java.util.ArrayList;
 
 public class A_Bear{
-    private ArrayList<TokenForPoints> arrayOfTokens;
+    public ArrayList<TokenForPoints> arrayOfTokens;
     private ArrayList<TokenForPoints> arrayOfPlaceholders;
     Player player;
 
@@ -32,9 +32,13 @@ public class A_Bear{
     }
 
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
-        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
-        getIndexesForTokens(playerBoard, playerMapGenerator);
+        arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.BEAR);
+        arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.BEAR);
         checkForPairs();
+    }
+
+    public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
+        arrayOfTokens=array;
     }
 
     public void checkForPairs(){
@@ -108,22 +112,6 @@ public class A_Bear{
             }
         }
         return turnNumberOfPairsIntoPoints(numberOfPairs);
-    }
-
-    public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        arrayOfTokens = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.BEAR)){
-                            arrayOfTokens.add(new TokenForPoints(columns, rows));
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public int turnNumberOfPairsIntoPoints(int pairs){
@@ -337,26 +325,6 @@ public class A_Bear{
                 int randomPosition=Tile.randomNumberGenerator(arrayOfPlaceholders.size());
                 player.placeToken(arrayOfPlaceholders.get(randomPosition).getCordY(), arrayOfPlaceholders.get(randomPosition).getCordX());
                 System.out.println("Token placed at "+ arrayOfPlaceholders.get(randomPosition).getCordY()+ ","+ arrayOfPlaceholders.get(randomPosition).getCordX());
-            }
-        }
-    }
-
-    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        //get indexes of all places there are bear placeholders
-        arrayOfPlaceholders = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(!playerBoard[rows][columns].getTokenPlaced()){
-                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
-                            //loop through placeholders of the tile
-                            if(i.equals(Wildlife.BEAR)){
-                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                            }
-                        }
-                    }
-                }
             }
         }
     }

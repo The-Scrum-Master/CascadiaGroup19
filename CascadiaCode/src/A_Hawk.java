@@ -33,8 +33,12 @@ public class A_Hawk{
     }
 
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
-        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
-        getIndexesForTokens(playerBoard, playerMapGenerator);
+        arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.HAWK);
+        arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.HAWK);
+    }
+
+    public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
+        arrayOfTokens=array;
     }
 
     public int countScore() {
@@ -68,23 +72,6 @@ public class A_Hawk{
             }
         }
         return turnNumberOfHawksIntoPoints(numberOfHawks);
-    }
-
-    public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        arrayOfTokens = new ArrayList<>();
-        //maybe the line above is not necessary
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.HAWK)){
-                            arrayOfTokens.add(new TokenForPoints(columns, rows));
-                        }
-                    }
-                }
-            }
-        }
     }
 
     public int turnNumberOfHawksIntoPoints(int hawks){
@@ -165,26 +152,6 @@ public class A_Hawk{
             System.out.println("Token placed at "+ finalDraft.get(randomPosition).getCordY() +","+ finalDraft.get(randomPosition).getCordX());
             increaseNumberOfHawks();
             //randomise position and place
-        }
-    }
-
-    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        //get indexes of all places there are hawk placeholders
-        arrayOfPlaceholders = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(!playerBoard[rows][columns].getTokenPlaced()){
-                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
-                            //loop through placeholders of the tile
-                            if(i.equals(Wildlife.HAWK)){
-                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 

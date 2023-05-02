@@ -32,8 +32,12 @@ public class A_Salmon{
     }
 
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
-        getIndexesOfPlaceholders(playerBoard, playerMapGenerator);
-        getIndexesForTokens(playerBoard, playerMapGenerator);
+        arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.SALMON);
+        arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.SALMON);
+    }
+
+    public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
+        arrayOfTokens=array;
     }
 
     public int recursiveRunCheck(TokenForPoints validSalmon, int length, boolean valid){
@@ -120,22 +124,6 @@ public class A_Salmon{
         return totalPoints;
     }
 
-    public void getIndexesForTokens(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        arrayOfTokens = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(playerBoard[rows][columns].getTokenPlaced()){
-                        if(playerBoard[rows][columns].tokenPlayedType.equals(Wildlife.SALMON)){
-                            arrayOfTokens.add(new TokenForPoints(columns, rows));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     public int turnLengthOfSalmonsIntoPoints(int Salmons){
         if(Salmons==0) return 0;
         else if(Salmons==1) return 2;
@@ -147,26 +135,6 @@ public class A_Salmon{
         else if(Salmons>=7) return 26;
         else{
             throw new IllegalArgumentException("number of pairs can't be negative");
-        }
-    }
-
-    public void getIndexesOfPlaceholders(Tile[][] playerBoard, MapGenerator playerMapGenerator) {
-        //get indexes of all places there are bear placeholders
-        arrayOfPlaceholders = new ArrayList<>();
-        for(int rows = 0; rows < 46; rows++ ){
-            for(int columns =0; columns < 46; columns++){
-                if(!playerMapGenerator.getMap()[rows][columns].getEmptyTile()){
-                    //if emptyTile is false=if the tile is occupied
-                    if(!playerBoard[rows][columns].getTokenPlaced()){
-                        for(Wildlife i : playerBoard[rows][columns].getSlots()){
-                            //loop through placeholders of the tile
-                            if(i.equals(Wildlife.SALMON)){
-                                arrayOfPlaceholders.add(new TokenForPoints(columns, rows));
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
