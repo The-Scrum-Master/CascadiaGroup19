@@ -24,7 +24,7 @@ public class FindCorridors {
     }
 
     public MaxCorridor[] mapIterator(Tile[][] board) {
-        // iterates through the playerboard that is currently playable.
+        // iterates through the playerboard calls recurisive check on any corridors found
         resetMaxCorridors();
         for (int i = 0; i < 46; i++) {
             for (int j = 0; j < 46; j++) {
@@ -70,6 +70,7 @@ public class FindCorridors {
         return insertionSort(copyofMaxCorridor);
     }
 
+    //recursivly checks for corridores of a certain type in all adjecent tiles to current, if found calls on the adj tile
     private void recursiveCheck(Tile curTile, Direction direction, Habitat corridorHabitat) {
         if (curTile != null && !countedTiles.contains(curTile)) {
             if (corridorCheck(Direction.RIGHT, curTile, corridorHabitat)){
@@ -94,7 +95,7 @@ public class FindCorridors {
         return corridorFound(direction, current) && corridorFoundType(direction, current) == corridorHabitat;
     }
 
-
+    //gets the habitat type of a corridor that has been found
     private Habitat corridorFoundType(Direction direction, Tile current){
         if(current == null){
             throw new NullPointerException("current tile passed to tileMatch is null");
@@ -119,6 +120,7 @@ public class FindCorridors {
         }
     }
 
+    //checks if tile current creates a corridor with a tile adjenct in a given direction.
     private Boolean corridorFound(Direction direction, Tile current) {
         if (current == null) {
             throw new NullPointerException("current tile passed to tileMatch is null");
@@ -148,6 +150,7 @@ public class FindCorridors {
         }
     }
 
+    //gets the tile adjencent to current tile in a given direction
     private Tile getAdjTile(Direction direction, Tile current) {
         if (current == null) {
             throw new NullPointerException("current tile passed to getAdjTile is null");
@@ -166,6 +169,7 @@ public class FindCorridors {
         }
     }
 
+    //checks that the tile has habitat type habitatTocheck is facing the directionComingFrom
     private boolean adjHabitatCheck(Direction directionComingFrom, Tile tileInDirection, Habitat habitatToCheck) {
         if (tileInDirection != null) {
             if (tileInDirection.getSelect() == 1) {
@@ -197,7 +201,7 @@ public class FindCorridors {
             return false;
         }
     }
-
+    //gets the index of a given corridor type
     private int getIndexOfType(Habitat habitat){
         for(int i = 0; i < maxCorridors.length; i++){
             if(maxCorridors[i].getHabitatType() == habitat){
@@ -265,7 +269,7 @@ public class FindCorridors {
                 throw new IllegalStateException("The Habitat is not a valid state in LargetCorridorTracker");
         }
     }
-
+    //checks for corridors of size 1
     private void firstHabitatCheck(Tile curTile) {
         Habitat habitat_index0 = curTile.getHabitat(0);
         for (int i = 0; i < maxCorridors.length; i++) {

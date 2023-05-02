@@ -317,7 +317,7 @@ public class GameRunner {
                 sumOfCorridors += corridorSize;
             }
             System.out.println(players.get(playersTurn).getName() +"'s points for habitat corridors: " + sumOfCorridors + "\n");
-            System.out.println("\n");
+            System.out.println("");
             players.get(playersTurn).totalScore.add(sumOfCorridors);
         }
 
@@ -343,6 +343,7 @@ public class GameRunner {
             System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber());
             finalScores[j] = sum;
         }
+        System.out.println("\n");
         for(int i = 0; i < 2; i++){
             System.out.println(players.get(i).getName() + " had a final score of " + finalScores[i] + " points");
         }
