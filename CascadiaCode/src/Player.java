@@ -28,6 +28,7 @@ import java.util.Random;
 
 public class Player {
     private final int order;
+    private final int strategy;
     private int numberOfBearPairs = 0;
     private int numberOfHawks = 0;
     private int numberOfFoxes = 0;
@@ -41,13 +42,9 @@ public class Player {
     public int natureTokenNumber;
     ArrayList<MaxCorridor> potentialSuitors = new ArrayList<>();
     public  ArrayList<Integer> totalScore = new ArrayList<Integer>();
-     FindCorridors playerCorridors;
-
+    FindCorridors playerCorridors;
     private ArrayList<Integer> coordX = new ArrayList<Integer>();
     private ArrayList<Integer> coordY = new ArrayList<Integer>();
-
-
-
 
     public Player(String name, int order) {
         this.name = name;
@@ -56,7 +53,11 @@ public class Player {
         heldToken = null;
         natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
+        strategy=Tile.randomNumberGenerator(3);
+    }
 
+    public int getStrategy() {
+        return strategy;
     }
 
     public int getNumberOfHawks() {
@@ -80,9 +81,6 @@ public class Player {
     public void setNumberOfFoxes(int numberOfFoxes) {
         this.numberOfFoxes = numberOfFoxes;
     }
-
-
-
     public Tile[][] getPlayerBoard() {
         return playerBoard;
     }

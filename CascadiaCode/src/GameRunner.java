@@ -47,18 +47,20 @@ public class GameRunner {
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
-        int strategyChosen = 1; //Tile.randomNumberGenerator(3);
-        System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
-        if(strategyChosen==0){
-            System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if(players.get(i).getStrategy()==0){
+                System.out.println("\nThe strategy randomly selected for "+ players.get(i).getName() +" is strategy 1.\nThis strategy picks the " +
+                        "pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
+            }
+            if(players.get(i).getStrategy()==1){
+                System.out.println("\nThe strategy randomly selected for "+ players.get(i).getName() +" is strategy 2.\nThis strategy is the " +
+                        "random strategy. It will pick the tile randomly and then place the token randomly.");
+            }
+            if(players.get(i).getStrategy()==2){
+                System.out.println("\nThe strategy randomly selected for "+ players.get(i).getName() +" is strategy 3.\nThis strategy picks the " +
+                        "pair tile-token based on the token scoring. Then both the tile and token are placed to maximise points.\n");}
+            Thread.sleep(2000);
         }
-        if(strategyChosen==1){
-            System.out.println("This strategy is the random strat. It will pick the tile randomly and then place the token randomly.");
-        }
-        if(strategyChosen==2){
-            System.out.println("This strategy picks the pair tile-token based on the token scoring. Then both the tile and token are placed to maximise points.");}
-
-        Thread.sleep(2000);
 
         while (turnTheGameIsAt <= 10 && continueGame) {
             //main loop that runs the game until 20 turns pass
@@ -110,7 +112,7 @@ public class GameRunner {
 
                     boolean shouldBotCull=true;
                     boolean alreadyPickedFromRiver=false;
-                    if(strategyChosen==0){
+                    if(players.get(playersTurn).getStrategy()==0){
                         //CHECKS WHILE NATURE TOKEN > 1 AND SPLIT PICKS BETWEEN THE BEST TILE AND TOKEN
                         while(players.get(playersTurn).getNatureTokenNumber()>1 && shouldBotCull){
                             shouldBotCull=shouldBotCull(playersTurn);
@@ -138,12 +140,12 @@ public class GameRunner {
                     }
 
                     int instructionsToChoosePairInput = Tile.randomNumberGenerator(4);
-                    if (strategyChosen == 0) {
+                    if (players.get(playersTurn).getStrategy() == 0) {
                         if(!alreadyPickedFromRiver){
                             instructionsToChoosePairInput = players.get(playersTurn).chooseFromRiver();
                         }
                     }
-                    if (strategyChosen == 2) {
+                    if (players.get(playersTurn).getStrategy() == 2) {
                         int pointsPerRiverToken=0;
                         int maxPoints = -1;
                         int maxPointsIndex=0;
@@ -199,10 +201,10 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
-                    if(strategyChosen==0)
+                    if(players.get(playersTurn).getStrategy()==0)
                     {
                         players.get(playersTurn).findBestPosition(0,1);
-                    } else if (strategyChosen==1) {
+                    } else if (players.get(playersTurn).getStrategy()==1) {
                         players.get(playersTurn).placeAnywhere();
                     } else{
                         players.get(playersTurn).findBestPosition(0,0);
@@ -214,7 +216,7 @@ public class GameRunner {
 
                     if (players.get(playersTurn).checkToken()) {
                     } else {
-                        if(strategyChosen==0 || strategyChosen==2){
+                        if(players.get(playersTurn).getStrategy()==0 || players.get(playersTurn).getStrategy()==2){
                             if(players.get(playersTurn).heldToken.equals(Wildlife.HAWK)){
                                 playersHawkScores.get(playersTurn).strategy1(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                             } else if(players.get(playersTurn).heldToken.equals(Wildlife.BEAR)){

@@ -223,7 +223,7 @@ public class A_Hawk{
     }
 
     public static void explainHawkCard() {
-        System.out.println("This is Hawk Scorecard A. Points are given for total number of hawks that are not adjacent to any other hawk.\n");
+        System.out.println("\n\tThis is Hawk Scorecard A. Points are given for total number of hawks that are not adjacent to any other hawk.\n");
     }
 
     public void increaseNumberOfHawks(){

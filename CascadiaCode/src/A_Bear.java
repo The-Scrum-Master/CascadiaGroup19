@@ -330,7 +330,8 @@ public class A_Bear{
     }
 
     public static void explainBearCard() {
-        System.out.println("This is Bear Scorecard A. Points are given for total number of pairs of bears.\nA pair of bears is exactly two bears adjacent to each other.\n");
+        System.out.println("\tThis is Bear Scorecard A. Points are given for total number of pairs of bears.\n\tA pair of bears " +
+                "is exactly two bears adjacent to each other.\n");
     }
 
     public void increaseNumberOfBearsPairs(){

@@ -45,7 +45,7 @@ public class IOcascadia {
     }
 
     public static void welcomeMessage(){
-        System.out.println("Welcome to Cascadia! Let's start the game!");
+        System.out.println("Welcome to Cascadia! Let's start the game!\n");
     }
 
     public static void numberOfPlayers(){
@@ -158,8 +158,8 @@ public class IOcascadia {
     }
 
     public static void botsIntro(){
-        System.out.println("How many players are going to play? (between 2 and 4)\n"+numberOfBots);
-        System.out.println("Enter player 1 name: Bot_1\nEnter next player's name: Bot_2");
+        System.out.println("How many players are going to play? (between 2 and 4)\n"+numberOfBots+"\n");
+        System.out.println("Enter player 1 name: Bot_1\nEnter next player's name: Bot_2\n");
         playerNames.add("Bot_1"); playerNames.add("Bot_2");
     }
 }

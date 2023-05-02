@@ -339,8 +339,8 @@ public class A_Salmon{
 
     public static void explainCard() {
         System.out.println("""
-                This is Salmon Scorecard A. Points are given for each run of salmon, depending on its length.\s
-                A run is defined as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.
+                \tThis is Salmon Scorecard A. Points are given for each run of salmon, depending on its length.\s
+                \tA run is defined as a group of adjacent salmon where each salmon is adjacent to no more than two other salmon.
                 """);
     }
 

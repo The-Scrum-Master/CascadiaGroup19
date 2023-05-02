@@ -373,7 +373,8 @@ public class A_Elk{
     }
 
     public static void explainCard() {
-        System.out.println("This is Elk Scorecard A. Score points are given for each straight line of adjacent elk, depending on length of the line. \nLines don't necessarily have to be horizontal.\n");
+        System.out.println("\tThis is Elk Scorecard A. Score points are given for each straight line of adjacent elk, depending on length" +
+                " of the line. \n\tLines don't necessarily have to be horizontal.\n");
     }
 
     public boolean checkForSingleTile(int x, int y){
