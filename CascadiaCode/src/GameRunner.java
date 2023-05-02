@@ -273,26 +273,27 @@ public class GameRunner {
         {
             int[] scores = new int[5];
             int count =0;
-            playersHawkScores.get(playersTurn).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap(), Wildlife.HAWK));
+
+            playersHawkScores.get(i).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(i).getPlayerBoard(), players.get(i).getMap(), Wildlife.HAWK));
             scores[count] = playersHawkScores.get(i).countScore();
             System.out.println(players.get(i).getName() +"'s points for hawks are: " + scores[count]);
             players.get(i).totalScore.add(scores[count]);
             count++;
 
-            playersBearScores.get(playersTurn).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap(), Wildlife.BEAR));
-            playersBearScores.get(playersTurn).checkForPairs();
+            playersBearScores.get(i).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(i).getPlayerBoard(), players.get(i).getMap(), Wildlife.BEAR));
+            playersBearScores.get(i).checkForPairs();
             scores[count] = playersBearScores.get(i).countScore();
             System.out.println(players.get(i).getName() +"'s points for bear pairs are: " + scores[count]);
             players.get(i).totalScore.add(scores[count]);
             count++;
 
-            playersElkScores.get(playersTurn).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap(), Wildlife.ELK));
+            playersElkScores.get(i).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(i).getPlayerBoard(), players.get(i).getMap(), Wildlife.ELK));
             scores[count] = playersElkScores.get(i).countScore();
             System.out.println(players.get(i).getName() +"'s points for elk lines are: " + scores[count]);
             players.get(i).totalScore.add(scores[count]);
             count++;
 
-            playersSalmonScores.get(playersTurn).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap(), Wildlife.SALMON));
+            playersSalmonScores.get(i).initialiseArrayOfTokens(A_CommonTokenFunctions.getIndexesOfTokens(players.get(i).getPlayerBoard(), players.get(i).getMap(), Wildlife.SALMON));
             scores[count] = playersSalmonScores.get(i).countScore();
             System.out.println(players.get(i).getName() +"'s points for salmon runs are: " + scores[count]);
             players.get(i).totalScore.add(scores[count]);
@@ -317,8 +318,6 @@ public class GameRunner {
             System.out.println(players.get(playersTurn).getName() +"'s points for habitat corridors: " + sumOfCorridors + "\n");
             players.get(playersTurn).totalScore.add(sumOfCorridors);
         }
-        
-
 
 
         playersTurn = 0;
