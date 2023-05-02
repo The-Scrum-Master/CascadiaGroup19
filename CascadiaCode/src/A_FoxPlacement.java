@@ -145,7 +145,6 @@ public class A_FoxPlacement {
             boolean atLeastOneSingleColorTile=false;
             System.out.println(coordX.size());
             for(int i=0; i<coordX.size();i++){
-                System.out.println("x- "+ coordX.get(i) + " Y-"+coordY.get(i));
                 if(checkForSingleTile(player, coordX.get(i), coordY.get(i))){
                     singleColorTile.add(1);
                     atLeastOneSingleColorTile=true;
