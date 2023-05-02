@@ -47,7 +47,7 @@ public class GameRunner {
         A_Fox fox = new A_Fox(players.get(playersTurn));
         A_FoxPlacement foxPlacement = new A_FoxPlacement(players.get(playersTurn));
 
-        int strategyChosen = Tile.randomNumberGenerator(3);
+        int strategyChosen = 1; //Tile.randomNumberGenerator(3);
         System.out.println("The strategy to be implemented this game is strategy " + (strategyChosen+1));
         if(strategyChosen==0){
             System.out.println("This strategy picks the pair tile-token based on the habitat scoring. Then both the tile and token are placed to maximise points.");
@@ -199,11 +199,12 @@ public class GameRunner {
                     String token = Wildlife.animalSymbol(players.get(playersTurn).heldToken);
                     System.out.println(token + "\n");
 
-                    if(strategyChosen!=0)
+                    if(strategyChosen==0)
                     {
                         players.get(playersTurn).findBestPosition(0,1);
-                    }
-                    else{
+                    } else if (strategyChosen==1) {
+                        players.get(playersTurn).placeAnywhere();
+                    } else{
                         players.get(playersTurn).findBestPosition(0,0);
                     }
 
@@ -401,6 +402,9 @@ public class GameRunner {
         return helperIntToPrintMap;
     }
     public static void getTotalScore(){
+        int[] finalScores = new int[2];
+        int max = 0;
+        int winner=0;
         for(int j=0;j<players.size();j++) {
             int sum=0;
 
@@ -410,7 +414,15 @@ public class GameRunner {
             sum+= players.get(j).getNatureTokenNumber();
             System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber()+"\n");
             System.out.println("Total score for "+players.get(j).getName()+" is "+ sum+"\n");
+            finalScores[j] = sum;
         }
+        for(int i=0;i<finalScores.length;i++){
+            if(max<finalScores[i]){
+                max = finalScores[i];
+                winner = i;
+            }
+        }
+        System.out.println("Congratulations "+players.get(winner).getName()+" you have won\n");
     }
 
     public static boolean shouldBotCull(int playersTurn){
