@@ -378,11 +378,7 @@ public class Player {
 
     public MaxCorridor[] habitatScore() {
         MaxCorridor[] top = playerCorridors.mapIterator(playerBoard);
-        for (int i = 0; i < top.length; i++) {
-            for (int j = i; j < top[i].getSize(); j++) {
-                System.out.println("(" + top[i].getYcordArrayList().get(j) + ", " + top[i].getXcordArrayList().get(j) + ")");
-            }
-        }
+
         return top;
     }
 
@@ -440,6 +436,7 @@ public class Player {
                     }
                 }
                 if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
+                    //if they now match placeTile
                     placeTile(x, y + 1);
                     return true;
                 }
@@ -462,7 +459,6 @@ public class Player {
 
             if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    //if flipping tile matches the habitats do so
 
                     flipPlayersTile();
                 }
@@ -479,7 +475,6 @@ public class Player {
 
             if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    //if flipping tile matches the habitats do so
 
                     flipPlayersTile();
                 }
@@ -495,7 +490,6 @@ public class Player {
             if (playerBoard[x][y].getSelect() == 1) {
                 if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                     if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                        //if flipping tile matches the habitats do so
                         flipPlayersTile();
                     }
                 }
@@ -507,7 +501,6 @@ public class Player {
             } else {
                 if (!playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
                     if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(1))){
-                        //if flipping tile matches the habitats do so
 
                         flipPlayersTile();
                     }
@@ -539,8 +532,7 @@ public class Player {
 
     public boolean searchSingleTileRadius(int x, int y) {
         // Check if there is any empty tile adjacent to the current position when heldtile is a singleHabitat tile
-        if (map.getMap()[x][y + 1].getEmptyTile()) {
-
+        if (map.getMap()[x][y + 1].getEmptyTile()) {//checking right
             if (playerBoard[x][y].getSelect() == 1) {
                 if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                     placeTile(x, y + 1);
@@ -553,18 +545,19 @@ public class Player {
                 }
             }
         } if (map.getMap()[x][y - 1].getEmptyTile()) {
-
+           //checking left
             if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                 placeTile(x, y - 1);
                 return true;
             }
         }  if (map.getMap()[x - 1][y].getEmptyTile()) {
-
+            //checks above
             if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                 placeTile(x - 1, y);
                 return true;
             }
         }  if (map.getMap()[x + 1][y].getEmptyTile()) {
+            //checks below
             if(playerBoard[x][y].getSelect()==1){
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0)));
                 {
@@ -587,23 +580,13 @@ public class Player {
 
 
 
-    public boolean checkHabitats(Tile board) {
-        for (int i = 0; i < board.getHabitats().length; i++) {
-            for (int j = 0; j < heldTile.getHabitats().length; j++) {
-                if (board.getHabitat(i).equals(heldTile.getHabitat(j))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+
 
     public boolean placeAnywhere() {
         //function to randomly place tiles
         int count = Tile.randomNumberGenerator(6);
         coordX = new ArrayList<>();
         coordY = new ArrayList<>();
-        Random rand = new Random();
         int randomNumber = Tile.randomNumberGenerator(2);
         for (int rows = 0; rows < 46; rows++) {
             for (int columns = 0; columns < 46; columns++) {
@@ -675,28 +658,13 @@ public class Player {
 
 
     public int chooseFromRiver() {
-        System.out.println("its me choose from river");
         potentialSuitors = new ArrayList<>();
         MaxCorridor[] maxQuarters = habitatScore();
         potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, maxQuarters.length));
         boolean hasBestHabitat = false;
 
         int position = 0;
-       /* int maxQuarterRanking = 0;
-        boolean isInvalidSuitor = true;
-        if(isAvailable(maxQuarterRanking)){
-           isInvalidSuitor =false;
-        }
-        while (isInvalidSuitor){
-            maxQuarterRanking++;
-            if(isAvailable(maxQuarterRanking)){
-                isInvalidSuitor = false;
-            }
-        }*/
-        //checking if positions for MaxCorridor are available
-       /*if(checkSingleTileInRiver(0)>0){
-           return checkSingleTileInRiver(0);
-       }*/
+
         int k = 0;
         while (k < 5) {
             for (int i = 0; i < 4; i++) {
@@ -704,7 +672,6 @@ public class Player {
                     if (potentialSuitors.get(k).getHabitatType().equals(TileDeck.getRiverTilesIndex(i).getHabitat(j))) {
                         hasBestHabitat = true;
                         position = i;
-                        System.out.println("this is the max quarter habitat " + potentialSuitors.get(k).getHabitatType());
                     }
                 }
                 if (hasBestHabitat) {
@@ -713,9 +680,7 @@ public class Player {
 
             }
             k++;
-            /*if(checkSingleTileInRiver(k)>0){
-                return checkSingleTileInRiver(k);
-            }*/
+
         }
         //loops through the tiles in the river and checks if their habitat types match the habitat type of max quarter
 
