@@ -313,7 +313,7 @@ public class GameRunner {
             int sumOfCorridors = 0;
             for(int i = 0; i < playersMaxCorridors.length; i++){
                 int corridorSize = playersMaxCorridors[i].getSize();
-                System.out.println("Received: " +corridorSize + " points for max corridor" + playersMaxCorridors[i].getHabitatType());
+                System.out.println("Received: " +corridorSize + " points for max corridor of " + playersMaxCorridors[i].getHabitatType());
                 sumOfCorridors += corridorSize;
             }
             System.out.println("\n");
