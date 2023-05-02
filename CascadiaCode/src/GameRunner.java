@@ -313,24 +313,15 @@ public class GameRunner {
             int sumOfCorridors = 0;
             for(int i = 0; i < playersMaxCorridors.length; i++){
                 int corridorSize = playersMaxCorridors[i].getSize();
-                System.out.println("Received: " +corridorSize + " points for max corridor of " + playersMaxCorridors[i].getHabitatType());
+                System.out.println("Received: " + corridorSize + " points for max corridor of " + playersMaxCorridors[i].getHabitatType());
                 sumOfCorridors += corridorSize;
             }
-            System.out.println("\n");
             System.out.println(players.get(playersTurn).getName() +"'s points for habitat corridors: " + sumOfCorridors + "\n");
+            System.out.println("\n");
             players.get(playersTurn).totalScore.add(sumOfCorridors);
         }
 
-
-
-        playersTurn = 0;
-        while (playersTurn < numberOfPlayers) {
-            System.out.println(players.get(playersTurn).getName() + "'s points for this game are:");
-
-            playersTurn++;
-        }
         getTotalScore();
-
         System.out.println("Thanks for playing!");
     }
     public static void setContinueGame(boolean cont) {
@@ -341,26 +332,34 @@ public class GameRunner {
     }
     public static void getTotalScore(){
         int[] finalScores = new int[2];
-        int max = 0;
         int winner=0;
+
         for(int j=0;j<players.size();j++) {
             int sum=0;
-
             for (int i = 0; i < players.get(j).totalScore.size(); i++) {
                 sum += players.get(j).totalScore.get(i);
             }
             sum+= players.get(j).getNatureTokenNumber();
-            System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber()+"\n");
-            System.out.println("Total score for "+players.get(j).getName()+" is "+ sum+"\n");
+            System.out.println("Points awarded for "+players.get(j).getName()+"'s "+" nature tokens "+players.get(j).getNatureTokenNumber());
             finalScores[j] = sum;
         }
-        for(int i=0;i<finalScores.length;i++){
-            if(max<finalScores[i]){
-                max = finalScores[i];
-                winner = i;
-            }
+        for(int i = 0; i < 2; i++){
+            System.out.println(players.get(i).getName() + " had a final score of " + finalScores[i] + " points");
         }
-        System.out.println("Congratulations "+players.get(winner).getName()+" you have won\n");
+        System.out.println("");
+        if(finalScores[0] == finalScores[1]){
+            System.out.println("There was a tie so the player with more nature tokens wins");
+            if(players.get(0).getNatureTokenNumber() > players.get(1).getNatureTokenNumber()){
+                winner = 0;
+            }else{
+                winner = 1;
+            }
+        }else if(finalScores[0] > finalScores[1]){
+            winner = 0;
+        }else{
+            winner = 1;
+        }
+        System.out.println("Congratulations "+players.get(winner).getName()+" you have won!!\n");
     }
 
     public static boolean shouldBotCull(int playersTurn){
