@@ -53,7 +53,7 @@ public class Player {
         heldToken = null;
         natureTokenNumber = 0;
         playerBoard = new Tile[46][46];
-        strategy = 2;//Tile.randomNumberGenerator(3);
+        strategy = Tile.randomNumberGenerator(3);
     }
 
     public int getStrategy() {
@@ -386,209 +386,22 @@ public class Player {
         return top;
     }
 
-    // public int getIndexToChooseFromRiver(){
-    //     MaxCorridor[] corridorsToAddTo = habitatScore();
-    //     MaxCorridor corridorChosen = pickCorridorToBuildOff(corridorsToAddTo);
-    //     int indexOfTileToPlace = checkRiverForHabitat(corridorChosen.getHabitatType());
-    //     return indexOfTileToPlace;
-    // }
-
-    // public void placeTileinBestCorridor(){
-    //     MaxCorridor[] corridorsToAddTo = habitatScore();
-    //     MaxCorridor corridorChosen = pickCorridorToBuildOff(corridorsToAddTo);
-    //     ArrayList<Tile> potentialSpots = getPotentialTilesToAddTo(corridorChosen);
-    //     spotFinder(potentialSpots, corridorChosen.getHabitatType(), true);
-    // }
-
-    // private MaxCorridor pickCorridorToBuildOff(MaxCorridor[] maxCorridorsArray){
-    //     ArrayList<Tile> tilesToBuildOff;
-    //     Habitat corridorType;
-    //     int indexOfRiverTile;
-    //     //while the maxcorridor of of a habitat doesnt have a potential spot to place a tile increment corridor type
-    //     for(int index = 0; index < maxCorridorsArray.length; index++){
-    //         tilesToBuildOff = getPotentialTilesToAddTo(maxCorridorsArray[index]);
-    //         corridorType = maxCorridorsArray[index].getHabitatType();
-    //         indexOfRiverTile = checkRiverForHabitat(corridorType);
-    //         if(indexOfRiverTile < -1 || indexOfRiverTile > 4){
-    //             throw new IllegalStateException("index of river Tile is outside the possible values");
-    //         }
-    //         if(indexOfRiverTile != -1){
-    //             if(spotFinder(tilesToBuildOff, corridorType, false) != -1){
-    //                 return maxCorridorsArray[index];
-    //             }
-    //         }
-    //     }
-    //     throw new IllegalStateException("There is no possible corridors to add too");
-    // }
-
-    // private int checkRiverForHabitat(Habitat habitatToCheck){
-    //     Tile curTile;
-    //     for(int index = 0; index < TileDeck.getRiverTiles().length; index++){
-    //         curTile = TileDeck.getRiverTilesIndex(index);
-    //         if(curTile.getHabitat(0) == habitatToCheck){
-    //             return index;
-    //         }
-    //         if(curTile.getSelect() != 1){
-    //             if (curTile.getHabitat(1) == habitatToCheck){
-    //                 return index;
-    //             }
-    //         }
-    //     }
-    //     return -1;
-    // }
-
-    // private int spotFinder(ArrayList<Tile> tilesToBuildOff, Habitat corridorType, Boolean placeHeldTile){
-    //     Tile curTile;
-    //     int canBeBuiltOff;
-    //     //int that tells what direction to build off, 0 left, 1 up, 2 right, 3 bottom, -1 cant.
-    //     for(int i = 0; i < tilesToBuildOff.size(); i++){
-    //         curTile = tilesToBuildOff.get(i);
-    //         if(curTile.getSelect() == 1){
-    //             canBeBuiltOff = buildOffSoloTile(curTile, corridorType);
-    //             if(canBeBuiltOff != -1){
-    //                 if(placeHeldTile){
-    //                     integerToPlaceTile(curTile, canBeBuiltOff);
-    //                 }
-    //                 return canBeBuiltOff;
-    //             }
-    //         }else{
-    //             canBeBuiltOff = buildOffDoubleTile(curTile, corridorType);
-    //             if(canBeBuiltOff != -1){
-    //                 if(placeHeldTile){
-    //                     integerToPlaceTile(curTile, canBeBuiltOff);
-    //                 }
-    //                 return canBeBuiltOff;
-    //             }
-    //         }
-    //     }
-    //     return -1;
-    // }
-
-    // private void integerToPlaceTile(Tile curTile, int input){
-    //     int xCord = curTile.getBoardXIndex();
-    //     int yCord = curTile.getBoardYIndex();
-    //     switch(input){
-    //         case 0:
-    //         placeTile(xCord - 1, yCord);
-    //         break;
-    //         case 1:
-    //         placeTile(xCord, yCord - 1);
-    //         break;
-    //         case 2:
-    //         placeTile(xCord + 1, yCord);
-    //         break;
-    //         case 3:
-    //         placeTile(xCord, yCord + 1);
-    //         break;
-    //         default: throw new IllegalArgumentException("integerToTile only takes in ints between 0 - 3");
-    //     }
-    // }
-
-    // private int buildOffDoubleTile(Tile tileToBuildOff, Habitat corridorType){
-    //     //checks if any spots can be build off a double type for a given habitat, returns - 1 otherwise
-    //     if(tileToBuildOff == null || tileToBuildOff.getSelect() == 1){
-    //         throw new IllegalArgumentException("the tile handed to BuildOffDoubleTile is null or a solo-tile");
-    //     }
-    //     int currentXCord = tileToBuildOff.getBoardXIndex();
-    //     int currentYCord = tileToBuildOff.getBoardYIndex();
-    //     Habitat tilesTopandLeft = tileToBuildOff.getHabitat(0);
-    //     Habitat tilesRightandBottom = tileToBuildOff.getHabitat(1);
-    //     // Habitat tilesRightandBottom;
-    //     if(tilesTopandLeft == corridorType){
-    //         if(isSpotAvailable(currentXCord - 1, currentYCord)){
-    //             //check left
-    //             return 0;
-    //         }else if(isSpotAvailable(currentXCord, currentYCord - 1)){
-    //             //check up
-    //             return 1;
-    //         }
-    //         return -1;
-    //     }else if(tilesRightandBottom == corridorType){
-    //         if(isSpotAvailable(currentXCord + 1, currentYCord)){
-    //             //check right
-    //             return 2;
-    //         }else if(isSpotAvailable(currentXCord, currentYCord + 1)){
-    //             return 3;
-    //         }
-    //         return -1;
-    //     }else{
-    //         return -1;
-    //     }
-    // }
-    // private int buildOffSoloTile(Tile tileToBuildOff, Habitat corridorType){
-    //     //checks if any spots can be build off a solo type for a given habitat, returns - 1 otherwise
-    //     if(tileToBuildOff.getSelect() != 1){
-    //         throw new IllegalArgumentException("Non Solo-tile handed to buildOffSoloTile for solo-tile");
-    //     }
-    //     Habitat habitatType = tileToBuildOff.getHabitat(0);
-    //     int currentXCord = tileToBuildOff.getBoardXIndex();
-    //     int currentYCord = tileToBuildOff.getBoardYIndex();
-    //     if(habitatType == corridorType){
-    //         if(isSpotAvailable(currentXCord - 1, currentYCord)){
-    //             //check left
-    //             return 0;
-    //         }
-    //         if(isSpotAvailable(currentXCord, currentYCord - 1)){
-    //             //check up
-    //             return 1;
-    //         }
-    //         if(isSpotAvailable(currentXCord + 1, currentYCord)){
-    //             //check right
-    //             return 2;
-    //         }
-    //         if(isSpotAvailable(currentXCord, currentYCord + 1)){
-    //             //check down
-    //             return 3;
-    //         }
-    //     }
-    //     return -1;
-    // }
-
-
-    // private ArrayList<Tile> getPotentialTilesToAddTo(MaxCorridor Corridor){
-    //     ArrayList<Tile> potentialTilesToAddTo = new ArrayList<>();
-    //     for(int i = 0; i < Corridor.getSize(); i++){
-    //         int xCord = Corridor.getXcordArrayList().get(i);
-    //         int yCord = Corridor.getYcordArrayList().get(i);
-    //         if(isTileAvailbleToPlayOff(xCord, yCord)){
-    //             potentialTilesToAddTo.add(playerBoard[yCord][xCord]);
-    //         }
-    //     }
-    //     if(potentialTilesToAddTo.size() < 1){
-    //         System.out.println("there are no avialble spots to add to this corridor");
-    //     }
-    //     return potentialTilesToAddTo;
-    // }
-
-
-
-
     public void findBestPosition(int x, int strategy) {
-        System.out.println("Itss me find best habitat");
-        //potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
-
-//potential edge case where if tile which coords point to is surrounded error have code foe this but need to wait till pat fixes his function
         if (strategy != 0) {
             potentialSuitors = new ArrayList<>();
             MaxCorridor[] maxQuarters = habitatScore();
             potentialSuitors.addAll(Arrays.asList(maxQuarters).subList(0, maxQuarters.length));
         }
-        for (int i = 0; i < potentialSuitors.size(); i++) {
-            System.out.println("Potential suitors habitats " + potentialSuitors.get(i).getHabitatType());
-        }
-        for (int j = 0; j < potentialSuitors.size(); j++) {
-            for (int i = 0; i < potentialSuitors.get(j).getXcordArrayList().size(); i++) {
-                System.out.println("habitat coords " + potentialSuitors.get(j).getXcordArrayList().get(i) + "," + potentialSuitors.get(0).getYcordArrayList().get(i));
-            }
-        }
+
         for (int i = 0; i < potentialSuitors.size(); i++) {
             for (int j = 0; j < heldTile.getHabitats().length; j++) {
                 if (potentialSuitors.get(i).getHabitatType().equals(heldTile.getHabitat(j))) {
+                    //linear search to go through the habitats of the maxQuarters and the heldtile finds match then searches for where to place tile
                     ArrayList<Integer> Y = potentialSuitors.get(i).getXcordArrayList();
                     ArrayList<Integer> X = potentialSuitors.get(i).getYcordArrayList();
-                    System.out.println("THis is the length of the coords array " + potentialSuitors.get(i).getXcordArrayList().size());
-                    System.out.println("this is the max quarter habitat " + potentialSuitors.get(i).getHabitatType());
+
                     if(potentialSuitors.get(i).getXcordArrayList().size()==0){
+                        //if the tile chosen does not have any other matching habitats on the board place anywhere
                         placeAnywhere();
                         return;
                     }
@@ -603,9 +416,8 @@ public class Player {
                             placeAnywhere();
                             isTilePlaced=true;
                         }
-
-
                     }
+                    //while the tile which has the matching habitat is found and heldtile cannot be placed around it go to the next matching habitat tile
                     return;
                 }
             }
@@ -613,19 +425,17 @@ public class Player {
     }
 
     public boolean searchRadius(int x, int y) {
-        //0 is top 1 is bottom
-        System.out.println("its me search radius");
-        System.out.println("the coordinnates I have been given are " + x + "," + y);
+// Check if there is any empty tile adjacent to the current position
         if (heldTile.getSelect() == 1) {
-            System.out.println("entered if statement");
            return searchSingleTileRadius(x, y);
-
         }
         if (map.getMap()[x][y + 1].getEmptyTile()) {
-            System.out.println("This is the right side ");
+            //checking the right
             if (playerBoard[x][y].getSelect() == 1) {
+                //if tile on the board is a single habitat tile
                 if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                     if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                        //if flipping tile matches the habitats do so
                         flipPlayersTile();
                     }
                 }
@@ -648,38 +458,29 @@ public class Player {
 
 
         }  if (map.getMap()[x][y - 1].getEmptyTile()) {
-            System.out.println("This is the left side ");
+            //checking the left
 
-            if (playerBoard[x][y].getSelect() == 1) {
-                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                    if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                        flipPlayersTile();
-                    }
+            if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
+                    //if flipping tile matches the habitats do so
 
-                }
-                if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                    placeTile(x, y - 1);
-                    return true;
-                }
-            } else {
-                if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                    if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                        flipPlayersTile();
-                    }
-                }
-                if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
-                    placeTile(x, y - 1);
-                    return true;
+                    flipPlayersTile();
                 }
 
+            }
+            if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                placeTile(x, y - 1);
+                return true;
             }
 
 
         }  if (map.getMap()[x - 1][y].getEmptyTile()) {
-            System.out.println("This is above");
+            //checking above
 
             if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
+                    //if flipping tile matches the habitats do so
+
                     flipPlayersTile();
                 }
             }
@@ -690,11 +491,11 @@ public class Player {
 
 
         } if (map.getMap()[x + 1][y].getEmptyTile()) {
-            System.out.println("This is the below ");
-
+            //checking below
             if (playerBoard[x][y].getSelect() == 1) {
                 if (!playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                     if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(1))) {
+                        //if flipping tile matches the habitats do so
                         flipPlayersTile();
                     }
                 }
@@ -706,6 +507,8 @@ public class Player {
             } else {
                 if (!playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(0))) {
                     if(playerBoard[x][y].getHabitat(1).equals(heldTile.getHabitat(1))){
+                        //if flipping tile matches the habitats do so
+
                         flipPlayersTile();
                     }
                 }
@@ -719,9 +522,9 @@ public class Player {
 
 
         } else {
-            System.out.println("FAILED");
+            return false;
+
         }
-        System.out.println("FAiled2");
 
         return false;
     }
@@ -735,8 +538,8 @@ public class Player {
     }
 
     public boolean searchSingleTileRadius(int x, int y) {
+        // Check if there is any empty tile adjacent to the current position when heldtile is a singleHabitat tile
         if (map.getMap()[x][y + 1].getEmptyTile()) {
-            System.out.println("This is the right side ");
 
             if (playerBoard[x][y].getSelect() == 1) {
                 if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
@@ -750,28 +553,18 @@ public class Player {
                 }
             }
         } if (map.getMap()[x][y - 1].getEmptyTile()) {
-            System.out.println("This is the left side ");
 
             if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
                 placeTile(x, y - 1);
                 return true;
             }
         }  if (map.getMap()[x - 1][y].getEmptyTile()) {
-            System.out.println("This is above");
 
-            if (playerBoard[x][y].getSelect() == 1) {
-                if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    placeTile(x - 1, y);
-                    return true;
-                }
-            } else {
-                if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
-                    placeTile(x - 1, y);
-                    return true;
-                }
+            if (playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0))) {
+                placeTile(x - 1, y);
+                return true;
             }
         }  if (map.getMap()[x + 1][y].getEmptyTile()) {
-            System.out.println("This is the below ");
             if(playerBoard[x][y].getSelect()==1){
                 if(playerBoard[x][y].getHabitat(0).equals(heldTile.getHabitat(0)));
                 {
@@ -785,10 +578,8 @@ public class Player {
             }
 
         } else {
-            System.out.println("Failed");
            return false;
         }
-        System.out.println("failed2");
         return false;
 
     }
@@ -809,11 +600,11 @@ public class Player {
 
     public boolean placeAnywhere() {
         //function to randomly place tiles
-        int count = 0;
+        int count = Tile.randomNumberGenerator(6);
         coordX = new ArrayList<>();
         coordY = new ArrayList<>();
         Random rand = new Random();
-        int randomNumber = rand.nextInt(2);
+        int randomNumber = Tile.randomNumberGenerator(2);
         for (int rows = 0; rows < 46; rows++) {
             for (int columns = 0; columns < 46; columns++) {
                 if (!map.getMap()[rows][columns].getEmptyTile()) {
@@ -823,9 +614,9 @@ public class Player {
                     }
                     //go through map if a tile is available count++
 
-                    if (count == 5) {
+                    if (count == 7) {
 
-                        if (randomNumber == 2) {
+                        if (randomNumber == 1) {
                             flipPlayersTile();
                         }
                         //randomly flip tiles
@@ -837,7 +628,7 @@ public class Player {
             }
         }
 
-        if (randomNumber == 2) {
+        if (randomNumber == 1) {
             flipPlayersTile();
         }
         placeTile(coordX.get(coordX.size() - 1), coordY.get(coordY.size() - 1));

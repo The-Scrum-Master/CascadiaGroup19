@@ -62,13 +62,13 @@ public class GameRunner {
             Thread.sleep(2000);
         }
 
-        while (turnTheGameIsAt <= 10 && continueGame) {
+        while (turnTheGameIsAt <= 20 && continueGame) {
             //main loop that runs the game until 20 turns pass
             if (playersTurn == numberOfPlayers) {
                 playersTurn = 0;
                 turnTheGameIsAt++;
                 if(turnTheGameIsAt>5){
-                    if(turnTheGameIsAt%4==0){
+                    if(turnTheGameIsAt%7==0){
                         helperIntToPrintMap++;
                     }
                 } else{
@@ -344,7 +344,7 @@ public class GameRunner {
             finalScores[j] = sum;
         }
         for(int i = 0; i < 2; i++){
-            System.out.println(players.get(i).getName() + " had a final score of " + finalScores[i] + " points");
+            System.out.println(players.get(i).getName() + " had a final score of " + finalScores[i] + " points using strategy "+(players.get(i).getStrategy()+1));
         }
         System.out.println("\n");
         if(finalScores[0] == finalScores[1]){
