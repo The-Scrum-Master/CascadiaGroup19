@@ -688,26 +688,7 @@ public class Player {
         return -1;
     }
 
-    public int checkSingleTileInRiver(int habitatToCheck) {
-        //checks if single habitat tile in river matches max quarter habitat if so return index of tile in river
 
-        ArrayList<Integer> singleTileIndexes = new ArrayList<Integer>();
-        for (int i = 0; i < TileDeck.getRiverTiles().length; i++) {
-            if (TileDeck.getRiverTilesIndex(i).getSelect() == 1) {
-                singleTileIndexes.add(i);
-            }
-        }
-        //add single habitat tiles in river to array
-        for (int i = 0; i < potentialSuitors.size(); i++) {
-            for (int j = 0; j < singleTileIndexes.size(); j++) {
-                if (TileDeck.getRiverTilesIndex(singleTileIndexes.get(j)).getHabitat(0).equals(potentialSuitors.get(habitatToCheck).getHabitatType())) {
-                    return singleTileIndexes.get(j);
-                }
-            }
-        }
-        //checks if they match the habitat type of max quarter
-        return -1;
-    }
 
 
     public MapGenerator getMap() {
