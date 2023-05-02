@@ -18,7 +18,7 @@ public class A_Elk{
 
     public void strategy1(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexes(playerBoard, playerMapGenerator);
-        placeholdersScore();
+        checkMapPositionAndPlaceToken();
     }
 
     public void strategy2(Tile[][] playerBoard, MapGenerator playerMapGenerator){
@@ -34,6 +34,7 @@ public class A_Elk{
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.ELK);
         arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.ELK);
+        //get indexes of tokens and placeholders
     }
 
     public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
@@ -138,7 +139,7 @@ public class A_Elk{
         }
     }
 
-    public void placeholdersScore() {
+    public void checkMapPositionAndPlaceToken() {
         if(arrayOfTokens.isEmpty()){
             placeAnywhere();
         }
@@ -189,18 +190,6 @@ public class A_Elk{
             if(finalDraft.size() == 0){
                 if(!arrayOfPlaceholders.isEmpty()){
                     placeAnywhere();
-//                    boolean havePlacedToken=false;
-//                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
-//                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
-//                            player.placeToken(arrayOfPlaceholders.get(i).getCordY(), arrayOfPlaceholders.get(i).getCordX());
-//                            System.out.println("Token placed at "+arrayOfPlaceholders.get(i).getCordY()+","+arrayOfPlaceholders.get(i).getCordX());
-//                            havePlacedToken=true;
-//                            break;
-//                        }
-//                    }
-//                    if(!havePlacedToken){
-//                        System.out.println("Don't want to place token");
-//                    }
                 }
                 else{
                     System.out.println("Can't place token");
@@ -253,15 +242,6 @@ public class A_Elk{
             if(finalDraft.size() == 0){
                 if(!arrayOfPlaceholders.isEmpty()){
                     return 2;
-                    //points for 1 single elk
-//                    for(int i=0; i<arrayOfPlaceholders.size(); i++){
-//                        if(atLeastAPartner(arrayOfPlaceholders.get(i))){
-//                            getIndexes(playerBoard, playerMapGenerator);
-//                            int maxLengthRun = countLongestRun();
-//                            return turnLengthOfElksIntoPoints(maxLengthRun+1) - turnLengthOfElksIntoPoints(maxLengthRun);
-//                        }
-//                    }
-//                    return 0;
                 }
                 else{
                     return 0;

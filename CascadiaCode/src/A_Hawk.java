@@ -19,7 +19,7 @@ public class A_Hawk{
 
     public void strategy1(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexes(playerBoard, playerMapGenerator);
-        placeholdersScore();
+        checkMapPositionAndPlaceToken();
     }
 
     public void strategy2(Tile[][] playerBoard, MapGenerator playerMapGenerator){
@@ -35,6 +35,7 @@ public class A_Hawk{
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.HAWK);
         arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.HAWK);
+        //get indexes of tokens and placeholders
     }
 
     public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
@@ -89,7 +90,7 @@ public class A_Hawk{
         }
     }
 
-    public void placeholdersScore() {
+    public void checkMapPositionAndPlaceToken() {
         for(int i=0; i<arrayOfPlaceholders.size(); i++){
             boolean foundAdjacentHawk=false;
             for(int j=0; j<arrayOfTokens.size(); j++){

@@ -5,8 +5,8 @@
  * Sergio Jimenez- 21710801(Fletcher53&&The-Scrum-Master)
  */
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
-import java.util.Objects;
 public class GameRunner {
     private static final ArrayList<Player> players = new ArrayList<>();
     private static final ArrayList<A_Hawk> playersHawkScores = new ArrayList<>();
@@ -75,19 +75,11 @@ public class GameRunner {
                     helperIntToPrintMap++;
                 }
             } else {
-
-                //here, if a bool hasAlreadyStarted==false, then the starter tiles should be displayed
-                //here, the 4 pairs habitats-tokens have to be displayed for a player to choose
-                //then the player will choose and place his habitat, then his token
-                //then the player will terminate his turn or the game (for the sake of terminating the program, in the future
-                //the game will end when the players reach 20 turns
-
-
                 if (!players.get(playersTurn).isFirstTurnPlayed()) {
                     players.get(playersTurn).generateInitialMap();
                     System.out.println(players.get(playersTurn).getName() +" these are your starter tiles!!!");
                     System.out.println();
-                    // Thread.sleep(1000);
+                    Thread.sleep(1000);
                 } else {
                     if(playersTurn==1) {
                         System.out.println(players.get(0).getName() + " map:");
@@ -106,7 +98,6 @@ public class GameRunner {
                     System.out.println(players.get(playersTurn).getName() + "'s turn:\n");
 
                     PairDisplay.showPairs();
-
 
                     IOcascadia.instructionsToChoosePair();
 
@@ -150,7 +141,6 @@ public class GameRunner {
                         int maxPoints = -1;
                         int maxPointsIndex=0;
                         for(int i=0;i<TileDeck.getRiverTokens().length;i++){
-                            boolean noPlaceholders=false;
                             if(TileDeck.getRiverTokensIndex(i) == Wildlife.HAWK){
                                 pointsPerRiverToken=playersHawkScores.get(playersTurn).strategy3(players.get(playersTurn).getPlayerBoard(), players.get(playersTurn).getMap());
                                 if(!playersHawkScores.get(playersTurn).areThereAnyPlaceholders()){
@@ -262,7 +252,7 @@ public class GameRunner {
                 fox.countFoxes(players.get(playersTurn));
                 System.out.println(players.get(playersTurn).getName() + "'s number of fox points so far are: " + fox.countScore(players.get(playersTurn)));
                 playersTurn++;
-                //Thread.sleep(1000);
+                Thread.sleep(1000);
             }
         }
         System.out.println("""
@@ -306,7 +296,7 @@ public class GameRunner {
         }
 
 
-        System.out.println("The points recieved for habitat corridors are the following");
+        System.out.println("The points received for habitat corridors are the following");
         for(playersTurn = 0; playersTurn < numberOfPlayers; playersTurn++){
             FindCorridors playerFindCorridors = players.get(playersTurn).getPlayerCorridors();
             MaxCorridor[] playersMaxCorridors = playerFindCorridors.mapIterator(players.get(playersTurn).getPlayerBoard());
@@ -326,9 +316,6 @@ public class GameRunner {
     }
     public static void setContinueGame(boolean cont) {
         continueGame = cont;
-    }
-    public static int getHelperIntToPrintMap(){
-        return helperIntToPrintMap;
     }
     public static void getTotalScore(){
         int[] finalScores = new int[2];

@@ -18,7 +18,7 @@ public class A_Bear{
 
     public void strategy1(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexes(playerBoard, playerMapGenerator);
-        placeholdersScore();
+        checkMapPositionAndPlaceToken();
     }
 
     public void strategy2(Tile[][] playerBoard, MapGenerator playerMapGenerator){
@@ -35,6 +35,7 @@ public class A_Bear{
         arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.BEAR);
         arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.BEAR);
         checkForPairs();
+        //get indexes of tokens and placeholders
     }
 
     public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
@@ -78,14 +79,6 @@ public class A_Bear{
             if(arrayOfTokens.get(i).getValid()){
                 continue;
             }
-
-            /*for(int j=0; j<arrayOfTokens.size(); j++){
-                if(arrayOfTokens.get(j).getValid()){
-                    arrayOfTokens.remove(j);
-                    j--;
-                }
-            }
-             */
             for(int j=0; j<arrayOfTokens.size(); j++){
                 if(arrayOfTokens.get(j).getValid()){
                     continue;
@@ -125,7 +118,7 @@ public class A_Bear{
         }
     }
 
-    public void placeholdersScore() {
+    public void checkMapPositionAndPlaceToken() {
         if(arrayOfTokens.isEmpty()){
             placeAnywhere();
         }

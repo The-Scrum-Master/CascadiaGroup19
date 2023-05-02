@@ -18,7 +18,7 @@ public class A_Salmon{
 
     public void strategy1(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         getIndexes(playerBoard, playerMapGenerator);
-        placeholdersScore();
+        checkMapPositionAndPlaceToken();
     }
 
     public void strategy2(Tile[][] playerBoard, MapGenerator playerMapGenerator){
@@ -34,6 +34,7 @@ public class A_Salmon{
     public void getIndexes(Tile[][] playerBoard, MapGenerator playerMapGenerator){
         arrayOfPlaceholders=A_CommonTokenFunctions.getIndexesOfPlaceholders(playerBoard, playerMapGenerator, Wildlife.SALMON);
         arrayOfTokens=A_CommonTokenFunctions.getIndexesOfTokens(playerBoard, playerMapGenerator, Wildlife.SALMON);
+        //get indexes of tokens and placeholders
     }
 
     public void initialiseArrayOfTokens(ArrayList<TokenForPoints> array){
@@ -138,7 +139,7 @@ public class A_Salmon{
         }
     }
 
-    public void placeholdersScore() {
+    public void checkMapPositionAndPlaceToken() {
         if(arrayOfTokens.isEmpty()){
             placeAnywhere();
         }
@@ -158,9 +159,11 @@ public class A_Salmon{
             if(possiblePlacements.isEmpty()){
                 System.out.println("I have decided not to place token");
             }
-            insertionSort(possiblePlacements);
-            player.placeToken(possiblePlacements.get(0).getCordY(), possiblePlacements.get(0).getCordX());
-            System.out.println("Token placed at "+possiblePlacements.get(0).getCordY()+","+possiblePlacements.get(0).getCordX());
+            else{
+                insertionSort(possiblePlacements);
+                player.placeToken(possiblePlacements.get(0).getCordY(), possiblePlacements.get(0).getCordX());
+                System.out.println("Token placed at "+possiblePlacements.get(0).getCordY()+","+possiblePlacements.get(0).getCordX());
+            }
         }
     }
 

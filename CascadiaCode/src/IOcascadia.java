@@ -19,14 +19,14 @@ public class IOcascadia {
         return in.nextLine().trim();
     }
     public static boolean onlyDigits(String str, int n) {
-        // Traverse the string from start to end
+        //Traverse the string from start to end
         for (int i = 0; i < n; i++) {
-            // Check if character is not a digit between 0-9 then return false
+            //Check if character is not a digit between 0-9 then return false
             if (str.charAt(i) < '0'|| str.charAt(i) > '9') {
                 return false;
             }
         }
-        // If we reach here, that means all characters were digits.
+        //If we reach here, that means all characters were digits.
         return true;
     }
     public static int takeIntInput(){
@@ -158,7 +158,7 @@ public class IOcascadia {
     }
 
     public static void botsIntro(){
-        System.out.println("How many players are going to play? (between 2 and 4)\n In this game "+numberOfBots+" Bots will play eachother.\n");
+        System.out.println("How many players are going to play? (between 2 and 4)\n In this game "+numberOfBots+" Bots will play each other.\n");
         System.out.println("Would you like to name them?");
         String strInput = takeInput();
         strInput = makeLowerCase(strInput);
@@ -170,11 +170,11 @@ public class IOcascadia {
         if(strInput.equals("yes")){
             System.out.println("What would you like to name them?");
             playerNames();
-            System.out.println("Player 1 name: " + playerNames.get(0) + "\n Player 2 name: " + playerNames.get(1) + "\n");
+            System.out.println("Player 1 name: " + playerNames.get(0) + "\nPlayer 2 name: " + playerNames.get(1) + "\n");
         }else{
             playerNames.add(0, "Bot_1");
             playerNames.add(1, "Bot_2");
-            System.out.println("Player 1 name: " + playerNames.get(0) + "\n Player 2 name: " + playerNames.get(1) + "\n");
+            System.out.println("Player 1 name: " + playerNames.get(0) + "\nPlayer 2 name: " + playerNames.get(1) + "\n");
         }
     }
 }
